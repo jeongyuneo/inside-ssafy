@@ -45,3 +45,10 @@ include::{snippets}/get-posts-success/http-request.adoc[]
 
 .response
 include::{snippets}/get-posts-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-posts-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-posts-fail/http-response.adoc[]
