@@ -1,0 +1,37 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+= MountainDo Api Specification
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:author: Inside-SSAFY, INSSA
+:email: https://inside-ssafy.com
+
+== 공통 응답
+=== 성공
+```java
+# 성공
+status code: 200
+```
+
+=== 실패
+
+```java
+# 클라이언트 입력 예외
+status code: 400
+
+# 인증 예외
+status code: 401
+
+# 권한 예외
+status code: 403
+
+# 탐색 예외
+status code: 404
+
+# 서버 내부 예외
+status code: 500
+```
