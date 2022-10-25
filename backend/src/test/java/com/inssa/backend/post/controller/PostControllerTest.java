@@ -1,8 +1,11 @@
 package com.inssa.backend.post.controller;
 
 import com.inssa.backend.ApiDocument;
+import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.post.controller.dto.PostsResponse;
 import com.inssa.backend.post.service.PostService;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.mockito.BDDMockito.willReturn;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -56,6 +60,17 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_목록_조회_성공(resultActions);
     }
 
+    @DisplayName("익명 게시판 목록 조회 실패")
+    @Test
+    void get_posts_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_GET_POSTS.getMessage())).given(postService).getPosts();
+        // when
+        ResultActions resultActions = 익명_게시판_목록_조회_요청();
+        // then
+        익명_게시판_목록_조회_실패(resultActions, new Message(ErrorMessage.FAIL_TO_GET_POSTS));
+    }
+
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1"));
@@ -66,5 +81,12 @@ public class PostControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(postsResponses)))
                 .andDo(print())
                 .andDo(toDocument("get-posts-success"));
+    }
+
+    private void 익명_게시판_목록_조회_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("get-posts-fail"));
     }
 }
