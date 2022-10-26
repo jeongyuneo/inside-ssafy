@@ -1,8 +1,10 @@
 package com.inssa.backend.member.controller;
 
 import com.inssa.backend.ApiDocument;
+import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.member.controller.dto.MemberRequest;
 import com.inssa.backend.member.service.MemberService;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,6 +54,17 @@ public class MemberControllerTest extends ApiDocument {
         회원가입_성공(resultActions);
     }
 
+    @DisplayName("회원가입 실패")
+    @Test
+    void join_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_JOIN.getMessage())).given(memberService).join(any(MemberRequest.class));
+        // when
+        ResultActions resultActions = 회원가입_요청(memberRequest);
+        // then
+        회원가입_실패(resultActions);
+    }
+
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members")
                 .contextPath("/api/v1")
@@ -62,5 +76,11 @@ public class MemberControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("join-success"));
+    }
+
+    private void 회원가입_실패(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andDo(print())
+                .andDo(toDocument("join-fail"));
     }
 }
