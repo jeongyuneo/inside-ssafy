@@ -84,6 +84,17 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_검색_성공(resultActions);
     }
 
+    @DisplayName("익명 게시판 제목 또는 내용 검색 실패")
+    @Test
+    void search_post_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEARCH_POST.getMessage())).given(postService).searchPost(anyString());
+        // when
+        ResultActions resultActions = 익명_게시판_검색_요청(KEYWORD);
+        // then
+        익명_게시판_검색_실패(resultActions, new Message(ErrorMessage.FAIL_TO_SEARCH_POST));
+    }
+
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1"));
@@ -114,5 +125,12 @@ public class PostControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(postsResponses)))
                 .andDo(print())
                 .andDo(toDocument("search-post-success"));
+    }
+
+    private void 익명_게시판_검색_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("search-post-fail"));
     }
 }
