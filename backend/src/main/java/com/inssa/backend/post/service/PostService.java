@@ -13,6 +13,10 @@ public class PostService {
         return null;
     }
 
+    public List<PostsResponse> searchPost(String keyword) {
+        return null;
+    }
+
     public PostResponse getPost(Long postId) {
         return null;
     }

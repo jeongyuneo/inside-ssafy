@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -36,12 +37,14 @@ public class PostControllerTest extends ApiDocument {
     private static final String CONTENT = "본문";
     private static final String URL = "{file_url}";
     private static final Long ID = 1L;
+    private static final String KEYWORD = "검색 키워드";
+
 
     @MockBean
     private PostService postService;
 
-    private PostResponse postResponse;
     private List<PostsResponse> postsResponses;
+    private PostResponse postResponse;
 
     @BeforeEach
     void setUp() {
@@ -104,6 +107,28 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_목록_조회_실패(resultActions, new Message(ErrorMessage.FAIL_TO_GET_POSTS));
     }
 
+    @DisplayName("익명 게시판 제목 또는 내용 검색 성공")
+    @Test
+    void search_post_success() throws Exception {
+        // given
+        willReturn(postsResponses).given(postService).searchPost(anyString());
+        // when
+        ResultActions resultActions = 익명_게시판_검색_요청(KEYWORD);
+        // then
+        익명_게시판_검색_성공(resultActions);
+    }
+
+    @DisplayName("익명 게시판 제목 또는 내용 검색 실패")
+    @Test
+    void search_post_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEARCH_POST.getMessage())).given(postService).searchPost(anyString());
+        // when
+        ResultActions resultActions = 익명_게시판_검색_요청(KEYWORD);
+        // then
+        익명_게시판_검색_실패(resultActions, new Message(ErrorMessage.FAIL_TO_SEARCH_POST));
+    }
+
     @DisplayName("익명 게시판 상세 조회 성공")
     @Test
     void get_post_success() throws Exception {
@@ -143,6 +168,26 @@ public class PostControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("get-posts-fail"));
+    }
+
+    private ResultActions 익명_게시판_검색_요청(String keyword) throws Exception {
+        return mockMvc.perform(get("/api/v1/posts/search")
+                .contextPath("/api/v1")
+                .param("keyword", keyword));
+    }
+
+    private void 익명_게시판_검색_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().json(toJson(postsResponses)))
+                .andDo(print())
+                .andDo(toDocument("search-post-success"));
+    }
+
+    private void 익명_게시판_검색_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("search-post-fail"));
     }
 
     private ResultActions 익명_게시판_상세_조회_요청(Long postId) throws Exception {

@@ -53,6 +53,21 @@ include::{snippets}/get-posts-fail/http-request.adoc[]
 .response
 include::{snippets}/get-posts-fail/http-response.adoc[]
 
+==== 익명 게시판 검색
+===== 성공
+.request
+include::{snippets}/search-post-success/http-request.adoc[]
+
+.response
+include::{snippets}/search-post-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/search-post-fail/http-request.adoc[]
+
+.response
+include::{snippets}/search-post-fail/http-response.adoc[]
+
 ==== 익명 게시판 상세 조회
 ===== 성공
 .request

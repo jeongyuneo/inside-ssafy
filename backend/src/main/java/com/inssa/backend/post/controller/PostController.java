@@ -5,10 +5,7 @@ import com.inssa.backend.post.controller.dto.PostsResponse;
 import com.inssa.backend.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,11 @@ public class PostController {
     @GetMapping
     public ResponseEntity<List<PostsResponse>> getPosts() {
         return ResponseEntity.ok().body(postService.getPosts());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<PostsResponse>> searchPost(@RequestParam String keyword) {
+        return ResponseEntity.ok().body(postService.searchPost(keyword));
     }
 
     @GetMapping("/{postId}")
