@@ -3,6 +3,7 @@ package com.inssa.backend.post.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
+import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.post.controller.dto.*;
 import com.inssa.backend.post.service.PostService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -114,6 +115,17 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_상세_조회_성공(resultActions);
     }
 
+    @DisplayName("익명 게시판 상세 조회 실패")
+    @Test
+    void get_post_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).getPost(anyLong());
+        // when
+        ResultActions resultActions = 익명_게시판_상세_조회_요청(ID);
+        // then
+        익명_게시판_상세_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_POST));
+    }
+
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1"));
@@ -143,5 +155,12 @@ public class PostControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(postResponse)))
                 .andDo(print())
                 .andDo(toDocument("get-post-success"));
+    }
+
+    private void 익명_게시판_상세_조회_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("get-post-fail"));
     }
 }
