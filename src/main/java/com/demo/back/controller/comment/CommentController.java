@@ -1,40 +1,53 @@
 package com.demo.back.controller.comment;
 
-import java.util.Map;
-
+import com.demo.back.dto.comment.request.CommentCreateRequest;
+import com.demo.back.dto.comment.request.CommentUpdateRequest;
+import com.demo.back.dto.comment.response.CommentsFindResponse;
+import com.demo.back.service.comment.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.RequiredArgsConstructor;
-
-import com.demo.back.controller.Controller;
-import com.demo.back.dto.comment.request.CommentCreateRequestDto;
-import com.demo.back.dto.comment.request.CommentUpdateRequestDto;
-import com.demo.back.service.comment.CommentService;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/comment")
-public class CommentController extends Controller {
+@RequestMapping("/comments")
+public class CommentController {
+
     private final CommentService commentService;
 
-    @PostMapping("")
-    public ResponseEntity<Map<String, Object>> commentAdd(@RequestBody CommentCreateRequestDto commentCreateRequestDto) {
-        return getResponseEntity(commentService.addComment(commentCreateRequestDto));
+    @PostMapping("/{postId}")
+    public ResponseEntity<Long> addComment(@PathVariable long postId, @RequestParam long userId,
+                                           @RequestBody CommentCreateRequest commentCreateRequestDto) {
+        return ResponseEntity.ok().body(commentService.addComment(postId, userId, commentCreateRequestDto));
     }
 
-    @PutMapping("")
-    public ResponseEntity<Map<String, Object>> commentModify(@RequestBody CommentUpdateRequestDto commentUpdateRequestDto) throws Exception {
-        return getResponseEntity(commentService.modifyComment(commentUpdateRequestDto));
+    @GetMapping("/{postId}")
+    public ResponseEntity<List<CommentsFindResponse>> findComments(@PathVariable long postId, @RequestParam long userId) {
+        return ResponseEntity.ok().body(commentService.findComments(postId, userId));
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<Map<String, Object>> commentRemove(@RequestParam String userId, @RequestParam long commentId) throws Exception {
-        return getResponseEntity(commentService.removeComment(userId, commentId));
+    @PatchMapping("/{commentId}")
+    public ResponseEntity<String> modifyComment(@PathVariable long commentId, @RequestParam long userId,
+                                                @RequestBody CommentUpdateRequest commentUpdateRequestDto) {
+        String response;
+        try {
+            response = String.valueOf(commentService.modifyComment(commentId, userId, commentUpdateRequestDto));
+        } catch (Exception e) {
+            response = e.getMessage();
+        }
+        return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<Map<String, Object>> commentList(@RequestParam long postId) {
-        return getResponseEntity(commentService.findCommentList(postId));
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<String> removeComment(@PathVariable long commentId, @RequestParam long userId) {
+        String response;
+        try {
+            response = String.valueOf(commentService.removeComment(commentId, userId));
+        } catch (Exception e) {
+            response = e.getMessage();
+        }
+        return ResponseEntity.ok().body(response);
     }
 }

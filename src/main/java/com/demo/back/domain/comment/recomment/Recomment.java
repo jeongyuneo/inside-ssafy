@@ -1,7 +1,7 @@
-package com.demo.back.domain.comment;
+package com.demo.back.domain.comment.recomment;
 
 import com.demo.back.domain.BaseEntity;
-import com.demo.back.domain.post.Post;
+import com.demo.back.domain.comment.Comment;
 import com.demo.back.domain.user.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,14 +15,14 @@ import javax.persistence.*;
 @SuperBuilder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AttributeOverride(name = "id", column = @Column(name = "comment_id"))
+@AttributeOverride(name = "id", column = @Column(name = "recomment_id"))
 @Entity
-public class Comment extends BaseEntity {
+public class Recomment extends BaseEntity {
 
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Post post;
+    private Comment comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;

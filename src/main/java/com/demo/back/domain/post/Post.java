@@ -1,56 +1,45 @@
 package com.demo.back.domain.post;
 
-import java.time.LocalDateTime;
+import com.demo.back.domain.BaseEntity;
+import com.demo.back.domain.user.User;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import com.demo.back.domain.user.User;
-import com.demo.back.dto.post.request.PostUpdateRequestDto;
-
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity(name = "posts")
-@EntityListeners(AuditingEntityListener.class)
-public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String title;
+@SuperBuilder
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AttributeOverride(name = "id", column = @Column(name = "post_id"))
+@Entity
+public class Post extends BaseEntity {
+
+    private int likeCount;
+    private int viewCount;
     private String content;
-    @CreatedDate
-    private LocalDateTime registDate;
-    private int viewCnt;
+    private String title;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    private User writer;
+    private User user;
 
-    public void update(PostUpdateRequestDto postUpdateRequestDto) {
-        updateTitle(postUpdateRequestDto.getTitle());
-        updateContent(postUpdateRequestDto.getContent());
-    }
-
-    private void updateTitle(String title) {
+    public void update(String content, String title) {
+        this.content = content;
         this.title = title;
     }
 
-    private void updateContent(String content) {
-        this.content = content;
+    public void view() {
+        viewCount++;
     }
 
-    public void addViewCnt() {
-        viewCnt++;
+    public void like() {
+        likeCount++;
     }
 
-    public boolean isControllable(User user) {
-        return writer == user;
+    public boolean isAuthorized(User user) {
+        return this.user.equals(user);
     }
 }

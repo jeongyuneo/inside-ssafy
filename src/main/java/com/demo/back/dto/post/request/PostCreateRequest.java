@@ -1,24 +1,23 @@
 package com.demo.back.dto.post.request;
 
-import lombok.Builder;
-import lombok.Getter;
-
 import com.demo.back.domain.post.Post;
 import com.demo.back.domain.user.User;
+import lombok.*;
 
 @Getter
 @Builder
-public class PostCreateRequestDto {
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class PostCreateRequest {
+
     private String title;
     private String content;
-    private String userId;
 
     public Post toEntity(User user) {
         return Post.builder()
-                .title(title)
                 .content(content)
-                .viewCnt(0)
-                .writer(user)
+                .title(title)
+                .user(user)
                 .build();
     }
 }

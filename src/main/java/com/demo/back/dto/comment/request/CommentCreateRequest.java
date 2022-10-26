@@ -1,27 +1,25 @@
 package com.demo.back.dto.comment.request;
 
-import org.springframework.lang.Nullable;
-
-import lombok.Getter;
-
 import com.demo.back.domain.comment.Comment;
 import com.demo.back.domain.post.Post;
 import com.demo.back.domain.user.User;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class CommentCreateRequestDto {
-    @Nullable
-    private Long upper;
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class CommentCreateRequest {
+
     private String content;
-    private String writer;
-    private long post;
 
     public Comment toEntity(User user, Post post) {
         return Comment.builder()
-                .upper(upper)
                 .content(content)
-                .writer(user)
                 .post(post)
+                .user(user)
                 .build();
     }
 }
