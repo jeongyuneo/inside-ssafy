@@ -37,6 +37,22 @@ status code: 500
 ```
 
 == 기능
+=== 회원관리
+==== 회원가입
+===== 성공
+.request
+include::{snippets}/join-success/http-request.adoc[]
+
+.response
+include::{snippets}/join-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/join-fail/http-request.adoc[]
+
+.response
+include::{snippets}/join-fail/http-response.adoc[]
+
 === 익명 게시판
 ==== 익명 게시판 목록 조회
 ===== 성공
@@ -82,3 +98,4 @@ include::{snippets}/get-post-fail/http-request.adoc[]
 
 .response
 include::{snippets}/get-post-fail/http-response.adoc[]
+
