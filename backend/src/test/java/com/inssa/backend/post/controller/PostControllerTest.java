@@ -3,7 +3,8 @@ package com.inssa.backend.post.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
-import com.inssa.backend.post.controller.dto.PostsResponse;
+import com.inssa.backend.common.exception.NotFoundException;
+import com.inssa.backend.post.controller.dto.*;
 import com.inssa.backend.post.service.PostService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -27,26 +29,57 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(PostController.class)
 public class PostControllerTest extends ApiDocument {
 
-    private static final String TITLE = "익명 게시글 제목";
+    private static final String TITLE = "제목";
     private static final int LIKE_COUNT = 5;
     private static final int COMMENT_COUNT = 3;
     private static final String CREATED_DATE = "10/25 10:19";
-
-    private List<PostsResponse> postsResponses;
+    private static final String CONTENT = "본문";
+    private static final String URL = "{file_url}";
+    private static final Long ID = 1L;
 
     @MockBean
     private PostService postService;
 
+    private PostResponse postResponse;
+    private List<PostsResponse> postsResponses;
+
     @BeforeEach
     void setUp() {
-        postsResponses = IntStream.range(0, 2)
-                .mapToObj(n -> PostsResponse.builder()
-                        .title(TITLE)
-                        .likeCount(LIKE_COUNT)
-                        .commentCount(COMMENT_COUNT)
+        PostsResponse postsResponse = PostsResponse.builder()
+                .title(TITLE)
+                .likeCount(LIKE_COUNT)
+                .commentCount(COMMENT_COUNT)
+                .createdDate(CREATED_DATE)
+                .build();
+        List<FileResponse> fileResponses = IntStream.range(0, 2)
+                .mapToObj(n -> FileResponse.builder()
+                        .url(URL)
+                        .build())
+                .collect(Collectors.toList());
+        List<ReCommentResponse> reCommentResponses = IntStream.range(0, 2)
+                .mapToObj(m -> ReCommentResponse.builder()
+                        .content(CONTENT)
                         .createdDate(CREATED_DATE)
                         .build())
                 .collect(Collectors.toList());
+        List<CommentResponse> commentResponses = IntStream.range(0, 2)
+                .mapToObj(n -> CommentResponse.builder()
+                        .content(CONTENT)
+                        .createdDate(CREATED_DATE)
+                        .reCommentResponses(reCommentResponses)
+                        .build())
+                .collect(Collectors.toList());
+        postsResponses = IntStream.range(0, 2)
+                .mapToObj(n -> postsResponse)
+                .collect(Collectors.toList());
+        postResponse = PostResponse.builder()
+                .title(TITLE)
+                .likeCount(LIKE_COUNT)
+                .commentCount(COMMENT_COUNT)
+                .content(CONTENT)
+                .files(fileResponses)
+                .commentResponses(commentResponses)
+                .build();
     }
 
     @DisplayName("익명 게시판 목록 조회 성공")
@@ -71,6 +104,28 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_목록_조회_실패(resultActions, new Message(ErrorMessage.FAIL_TO_GET_POSTS));
     }
 
+    @DisplayName("익명 게시판 상세 조회 성공")
+    @Test
+    void get_post_success() throws Exception {
+        // given
+        willReturn(postResponse).given(postService).getPost(anyLong());
+        // when
+        ResultActions resultActions = 익명_게시판_상세_조회_요청(ID);
+        // then
+        익명_게시판_상세_조회_성공(resultActions);
+    }
+
+    @DisplayName("익명 게시판 상세 조회 실패")
+    @Test
+    void get_post_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).getPost(anyLong());
+        // when
+        ResultActions resultActions = 익명_게시판_상세_조회_요청(ID);
+        // then
+        익명_게시판_상세_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_POST));
+    }
+
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1"));
@@ -88,5 +143,24 @@ public class PostControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("get-posts-fail"));
+    }
+
+    private ResultActions 익명_게시판_상세_조회_요청(Long postId) throws Exception {
+        return mockMvc.perform(get("/api/v1/posts/" + postId)
+                .contextPath("/api/v1"));
+    }
+
+    private void 익명_게시판_상세_조회_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().json(toJson(postResponse)))
+                .andDo(print())
+                .andDo(toDocument("get-post-success"));
+    }
+
+    private void 익명_게시판_상세_조회_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("get-post-fail"));
     }
 }
