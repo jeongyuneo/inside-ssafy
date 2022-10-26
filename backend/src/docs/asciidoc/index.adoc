@@ -91,3 +91,10 @@ include::{snippets}/create-menu-success/http-request.adoc[]
 
 .response
 include::{snippets}/create-menu-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/create-menu-fail/http-request.adoc[]
+
+.response
+include::{snippets}/create-menu-fail/http-response.adoc[]
