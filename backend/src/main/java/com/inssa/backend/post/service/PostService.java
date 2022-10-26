@@ -11,4 +11,8 @@ public class PostService {
     public List<PostsResponse> getPosts() {
         return null;
     }
+
+    public List<PostsResponse> searchPost(String keyword) {
+        return null;
+    }
 }
