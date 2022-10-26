@@ -60,3 +60,10 @@ include::{snippets}/search-post-success/http-request.adoc[]
 
 .response
 include::{snippets}/search-post-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/search-post-fail/http-request.adoc[]
+
+.response
+include::{snippets}/search-post-fail/http-response.adoc[]
