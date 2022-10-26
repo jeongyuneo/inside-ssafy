@@ -1,8 +1,11 @@
 package com.inssa.backend.menu.controller;
 
 import com.inssa.backend.ApiDocument;
+import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.menu.controller.dto.MenuRequest;
 import com.inssa.backend.menu.service.MenuService;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +17,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MenuController.class)
@@ -52,6 +57,17 @@ public class MenuControllerTest extends ApiDocument {
         식단_등록_성공(resultActions);
     }
 
+    @DisplayName("식단 등록 실패")
+    @Test
+    void create_menu_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_MENU.getMessage())).given(menuService).createMenu(anyLong(), any(MenuRequest.class));
+        // when
+        ResultActions resultActions = 식단_등록_요청(menuRequest);
+        // then
+        식단_등록_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CREATE_MENU));
+    }
+
     private ResultActions 식단_등록_요청(MenuRequest menuRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/menus")
                 .header(USER_ID, ID)
@@ -64,5 +80,12 @@ public class MenuControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("create-menu-success"));
+    }
+
+    private void 식단_등록_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("create-menu-fail"));
     }
 }
