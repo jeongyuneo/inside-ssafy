@@ -1,7 +1,7 @@
 package com.inssa.backend.member.controller;
 
 import com.inssa.backend.member.controller.dto.MemberRequest;
-import com.inssa.backend.member.controller.dto.MemberResponses;
+import com.inssa.backend.member.controller.dto.MemberResponse;
 import com.inssa.backend.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class MemberController {
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<MemberResponses> getMember(@PathVariable Long memberId) {
+    public ResponseEntity<MemberResponse> getMember(@PathVariable Long memberId) {
         return ResponseEntity.ok().body(memberService.getMember(memberId));
     }
 }
