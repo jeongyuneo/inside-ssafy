@@ -26,6 +26,9 @@ public class PostService {
     public void createPost(PostRequest postRequest, List<MultipartFile> files) {
     }
 
+    public void updatePost(long postId, PostRequest postRequest, List<MultipartFile> files) {
+    }
+
     public void deletePost(Long postId) {
     }
 }

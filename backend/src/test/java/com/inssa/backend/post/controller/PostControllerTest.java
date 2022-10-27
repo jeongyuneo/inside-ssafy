@@ -190,6 +190,28 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_등록_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CREATE_POST));
     }
 
+    @DisplayName("익명 게시판 수정 성공")
+    @Test
+    void update_post_success() throws Exception {
+        // given
+        willDoNothing().given(postService).updatePost(anyLong(), any(PostRequest.class), anyList());
+        // when
+        ResultActions resultActions = 익명_게시판_수정_요청(ID);
+        // then
+        익명_게시판_수정_성공(resultActions);
+    }
+
+    @DisplayName("익명 게시판 수정 실패")
+    @Test
+    void update_post_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).updatePost(anyLong(), any(PostRequest.class), anyList());
+        // when
+        ResultActions resultActions = 익명_게시판_수정_요청(ID);
+        // then
+        익명_게시판_수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_POST));
+    }
+
     @DisplayName("익명 게시판 삭제 성공")
     @Test
     void delete_post_success() throws Exception {
@@ -303,10 +325,32 @@ public class PostControllerTest extends ApiDocument {
                 .andDo(toDocument("delete-post-success"));
     }
 
+    private void 익명_게시판_수정_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("update-post-success"));
+    }
+
+    private void 익명_게시판_수정_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("update-post-fail"));
+    }
+
     private void 익명_게시판_삭제_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("delete-post-fail"));
+    }
+
+    private ResultActions 익명_게시판_수정_요청(Long postId) throws Exception {
+        return mockMvc.perform(multipart("/api/v1/posts/update/" + postId)
+                .file(postRequestPart)
+                .file(file)
+                .file(file)
+                .accept(MediaType.APPLICATION_JSON)
+                .contextPath("/api/v1"));
     }
 }
