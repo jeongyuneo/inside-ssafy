@@ -34,7 +34,7 @@ public class MenuControllerTest extends ApiDocument {
 
     private static final Long ID = 1L;
     private static final String USER_ID_HEADER_NAME = "userId";
-    private static final List<String> ITEM = new ArrayList<>(Collections
+    private static final List<String> ITEMS = new ArrayList<>(Collections
             .singletonList("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치"));
     private static final String DATE = "2022-10-27";
     private static final String DAY_OF_THE_WEEK = "목";
