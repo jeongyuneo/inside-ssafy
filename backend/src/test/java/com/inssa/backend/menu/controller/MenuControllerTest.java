@@ -53,7 +53,7 @@ public class MenuControllerTest extends ApiDocument {
                 .dayOfTheWeek(DAY_OF_THE_WEEK)
                 .build();
         menuResponse = MenuResponse.builder()
-                .item(ITEM)
+                .items(ITEMS)
                 .date(DATE)
                 .dayOfTheWeek(DAY_OF_THE_WEEK)
                 .build();
