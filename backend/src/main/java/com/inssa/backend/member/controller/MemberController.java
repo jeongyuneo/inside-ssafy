@@ -1,13 +1,11 @@
 package com.inssa.backend.member.controller;
 
 import com.inssa.backend.member.controller.dto.MemberRequest;
+import com.inssa.backend.member.controller.dto.MemberResponses;
 import com.inssa.backend.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,5 +18,10 @@ public class MemberController {
     public ResponseEntity<Void> join(@RequestBody MemberRequest memberRequest) {
         memberService.join(memberRequest);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MemberResponses> getMember(@PathVariable Long memberId) {
+        return ResponseEntity.ok().body(memberService.getMember(memberId));
     }
 }
