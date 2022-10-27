@@ -38,6 +38,7 @@ public class MenuControllerTest extends ApiDocument {
             .singletonList("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치"));
     private static final String DATE = "2022-10-27";
     private static final String DAY_OF_THE_WEEK = "목";
+    private static final String DATE_PARAMETER_NAME = "date";
 
     @MockBean
     private MenuService menuService;
@@ -126,7 +127,7 @@ public class MenuControllerTest extends ApiDocument {
     private ResultActions 식단_조회_요청(String date) throws Exception {
         return mockMvc.perform(get("/api/v1/menus")
                 .contextPath("/api/v1")
-                .param("date", DATE));
+                .param(DATE_PARAMETER_NAME, date));
     }
 
     private void 식단_조회_성공(ResultActions resultActions) throws Exception {
