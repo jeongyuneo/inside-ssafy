@@ -189,6 +189,14 @@ include::{snippets}/create-comment-fail/http-request.adoc[]
 .response
 include::{snippets}/create-comment-fail/http-response.adoc[]
 
+==== 익명 게시판 대댓글 등록
+===== 성공
+.request
+include::{snippets}/create-recomment-success/http-request.adoc[]
+
+.response
+include::{snippets}/create-recomment-success/http-response.adoc[]
+
 === 식단
 ==== 식단 등록
 ===== 성공
