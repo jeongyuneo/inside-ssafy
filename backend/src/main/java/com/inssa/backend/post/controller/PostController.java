@@ -1,11 +1,13 @@
 package com.inssa.backend.post.controller;
 
+import com.inssa.backend.post.controller.dto.PostRequest;
 import com.inssa.backend.post.controller.dto.PostResponse;
 import com.inssa.backend.post.controller.dto.PostsResponse;
 import com.inssa.backend.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,5 +31,11 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponse> getPost(@PathVariable Long postId) {
         return ResponseEntity.ok().body(postService.getPost(postId));
+    }
+
+    @PostMapping("/update/{postId}")
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+        postService.updatePost(postId, postRequest, files);
+        return ResponseEntity.ok().build();
     }
 }
