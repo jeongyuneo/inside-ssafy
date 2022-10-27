@@ -13,8 +13,8 @@ public class MenuController {
 
     private final MenuService menuService;
 
-    @PostMapping
-    public ResponseEntity<Void> createMenu(@RequestHeader Long userId, @RequestBody MenuRequest menuRequest) {
+    @PostMapping("/{userId}")
+    public ResponseEntity<Void> createMenu(@PathVariable Long userId, @RequestBody MenuRequest menuRequest) {
         menuService.createMenu(userId, menuRequest);
         return ResponseEntity.ok().build();
     }
