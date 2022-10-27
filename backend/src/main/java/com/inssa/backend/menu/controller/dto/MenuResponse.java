@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MenuResponse {
+
     private List<String> item;
     private String date;
     private String dayOfTheWeek;
