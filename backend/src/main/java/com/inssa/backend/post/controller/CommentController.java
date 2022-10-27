@@ -18,4 +18,10 @@ public class CommentController {
         commentService.createComment(postId, commentRequest);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("/{commentId}")
+    public ResponseEntity<Void> updateComment(@PathVariable Long commentId, @RequestBody CommentRequest commentRequest) {
+        commentService.updateComment(commentId, commentRequest);
+        return ResponseEntity.ok().build();
+    }
 }
