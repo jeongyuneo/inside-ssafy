@@ -131,6 +131,17 @@ public class MemberControllerTest extends ApiDocument {
         회원수정_성공(resultActions);
     }
 
+    @DisplayName("회원수정 실패")
+    @Test
+    void update_member_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_UPDATE_MEMBER)).given(memberService).updateMember(anyLong(), any(MemberUpdateRequest.class));
+        // when
+        ResultActions resultActions = 회원수정_요청(ID);
+        // then
+        회원수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_UPDATE_MEMBER));
+    }
+
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members")
                 .contextPath("/api/v1")
@@ -181,5 +192,12 @@ public class MemberControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("update-member-success"));
+    }
+
+    private void 회원수정_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("update-member-fail"));
     }
 }
