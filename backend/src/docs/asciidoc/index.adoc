@@ -182,6 +182,13 @@ include::{snippets}/update-comment-success/http-request.adoc[]
 .response
 include::{snippets}/update-comment-success/http-response.adoc[]
 
+===== 실패
+.request
+include::{snippets}/update-comment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/update-comment-fail/http-response.adoc[]
+
 === 식단
 ==== 식단 등록
 ===== 성공
