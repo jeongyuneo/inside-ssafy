@@ -48,7 +48,7 @@ public class MenuControllerTest extends ApiDocument {
     @BeforeEach
     void setUp() {
         menuRequest = MenuRequest.builder()
-                .item(ITEM)
+                .items(ITEMS)
                 .date(DATE)
                 .dayOfTheWeek(DAY_OF_THE_WEEK)
                 .build();

@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MenuRequest {
 
-    private List<String> item;
+    private List<String> items;
     private String date;
     private String dayOfTheWeek;
 }
