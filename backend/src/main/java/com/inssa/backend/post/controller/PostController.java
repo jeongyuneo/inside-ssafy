@@ -40,7 +40,7 @@ public class PostController {
     }
 
     @PostMapping("/update/{postId}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+    public ResponseEntity<Void> updatePost(@PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
         postService.updatePost(postId, postRequest, files);
         return ResponseEntity.ok().build();
     }
