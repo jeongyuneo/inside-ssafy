@@ -39,7 +39,6 @@ public class PostControllerTest extends ApiDocument {
     private static final Long ID = 1L;
     private static final String KEYWORD = "검색 키워드";
 
-
     @MockBean
     private PostService postService;
 
