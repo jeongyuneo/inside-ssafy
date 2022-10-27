@@ -53,6 +53,21 @@ include::{snippets}/join-fail/http-request.adoc[]
 .response
 include::{snippets}/join-fail/http-response.adoc[]
 
+==== 회원조회
+===== 성공
+.request
+include::{snippets}/get-member-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-member-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-member-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-member-fail/http-response.adoc[]
+
 === 익명 게시판
 ==== 익명 게시판 목록 조회
 ===== 성공
