@@ -52,7 +52,7 @@ public class MenuControllerTest extends ApiDocument {
         // given
         willDoNothing().given(menuService).createMenu(anyLong(), any(MenuRequest.class));
         // when
-        ResultActions resultActions = 식단_등록_요청(menuRequest);
+        ResultActions resultActions = 식단_등록_요청(ID, menuRequest);
         // then
         식단_등록_성공(resultActions);
     }
@@ -63,15 +63,14 @@ public class MenuControllerTest extends ApiDocument {
         // given
         willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_MENU.getMessage())).given(menuService).createMenu(anyLong(), any(MenuRequest.class));
         // when
-        ResultActions resultActions = 식단_등록_요청(menuRequest);
+        ResultActions resultActions = 식단_등록_요청(ID, menuRequest);
         // then
         식단_등록_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CREATE_MENU));
     }
 
-    private ResultActions 식단_등록_요청(MenuRequest menuRequest) throws Exception {
-        return mockMvc.perform(post("/api/v1/menus")
+    private ResultActions 식단_등록_요청(Long userId, MenuRequest menuRequest) throws Exception {
+        return mockMvc.perform(post("/api/v1/menus/" + userId)
                 .contextPath("/api/v1")
-                .header(USER_ID_HEADER_NAME, ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(menuRequest)));
     }
