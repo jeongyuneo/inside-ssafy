@@ -2,7 +2,7 @@ package com.inssa.backend.member.service;
 
 import com.inssa.backend.member.controller.dto.MemberRequest;
 import com.inssa.backend.member.controller.dto.MemberResponse;
-import com.inssa.backend.member.controller.dto.MemberUpdateRequest;
+import com.inssa.backend.member.controller.dto.PasswordUpdateRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +15,6 @@ public class MemberService {
         return null;
     }
 
-    public void updateMember(long memberId, MemberUpdateRequest memberUpdateRequest) {
+    public void updateMember(Long memberId, PasswordUpdateRequest memberUpdateRequest) {
     }
 }
