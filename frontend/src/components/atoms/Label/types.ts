@@ -1,5 +1,6 @@
 export interface PropTypes {
-  children: string | JSX.Element;
+  children: string;
+  type?: string;
   width?: number;
   height?: number;
   fontSize?: number;
