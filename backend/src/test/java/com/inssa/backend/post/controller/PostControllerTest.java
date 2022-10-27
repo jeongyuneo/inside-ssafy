@@ -48,6 +48,7 @@ public class PostControllerTest extends ApiDocument {
     @BeforeEach
     void setUp() {
         PostsResponse postsResponse = PostsResponse.builder()
+                .postId(ID)
                 .title(TITLE)
                 .likeCount(LIKE_COUNT)
                 .commentCount(COMMENT_COUNT)

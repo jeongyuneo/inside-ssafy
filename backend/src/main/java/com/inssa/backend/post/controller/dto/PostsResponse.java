@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostsResponse {
 
+    private Long postId;
     private String title;
     private int likeCount;
     private int commentCount;
