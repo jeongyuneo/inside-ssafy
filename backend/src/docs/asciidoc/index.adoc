@@ -174,3 +174,11 @@ include::{snippets}/create-menu-fail/http-request.adoc[]
 
 .response
 include::{snippets}/create-menu-fail/http-response.adoc[]
+
+==== 식단 조회
+===== 성공
+.request
+include::{snippets}/get-menu-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-menu-success/http-response.adoc[]
