@@ -325,19 +325,6 @@ public class PostControllerTest extends ApiDocument {
                 .andDo(toDocument("delete-post-success"));
     }
 
-    private void 익명_게시판_수정_성공(ResultActions resultActions) throws Exception {
-        resultActions.andExpect(status().isOk())
-                .andDo(print())
-                .andDo(toDocument("update-post-success"));
-    }
-
-    private void 익명_게시판_수정_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isNotFound())
-                .andExpect(content().json(toJson(message)))
-                .andDo(print())
-                .andDo(toDocument("update-post-fail"));
-    }
-
     private void 익명_게시판_삭제_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
@@ -352,5 +339,18 @@ public class PostControllerTest extends ApiDocument {
                 .file(file)
                 .accept(MediaType.APPLICATION_JSON)
                 .contextPath("/api/v1"));
+    }
+
+    private void 익명_게시판_수정_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("update-post-success"));
+    }
+
+    private void 익명_게시판_수정_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("update-post-fail"));
     }
 }
