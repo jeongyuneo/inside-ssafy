@@ -3,6 +3,7 @@ package com.inssa.backend.post.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
+import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.post.controller.dto.CommentRequest;
 import com.inssa.backend.post.service.CommentService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -73,6 +74,23 @@ public class CommentControllerTest extends ApiDocument {
         ResultActions resultActions = 익명_게시판_댓글_수정_요청(ID, commentRequest);
         // then
         익명_게시판_댓글_수정_성공(resultActions);
+    }
+
+    @DisplayName("익명 게시판 댓글 수정 실패")
+    @Test
+    void update_comment_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT)).given(commentService).updateComment(anyLong(), any(CommentRequest.class));
+        // when
+        ResultActions resultActions = 익명_게시판_댓글_수정_요청(ID, commentRequest);
+        // then
+        익명_게시판_댓글_수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_COMMENT));
+    }
+
+    private void 익명_게시판_댓글_수정_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andDo(print())
+                .andDo(toDocument("update-comment-fail"));
     }
 
     private ResultActions 익명_게시판_댓글_등록_요청(Long postId, CommentRequest commentRequest) throws Exception {
