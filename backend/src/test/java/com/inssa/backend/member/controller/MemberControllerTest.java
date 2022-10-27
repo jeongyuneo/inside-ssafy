@@ -6,6 +6,7 @@ import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.controller.dto.MemberRequest;
 import com.inssa.backend.member.controller.dto.MemberResponse;
+import com.inssa.backend.member.controller.dto.MemberUpdateRequest;
 import com.inssa.backend.member.service.MemberService;
 import com.inssa.backend.post.controller.dto.PostsResponse;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -22,8 +23,7 @@ import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,12 +40,14 @@ public class MemberControllerTest extends ApiDocument {
     private static final int LIKE_COUNT = 5;
     private static final int COMMENT_COUNT = 3;
     private static final String CREATED_DATE = "10/25 10:19";
+    public static final String NEW_PASSWORD = "newssafy";
 
     @MockBean
     private MemberService memberService;
 
     private MemberRequest memberRequest;
     private MemberResponse memberResponse;
+    private MemberUpdateRequest memberUpdateRequest;
 
     @BeforeEach
     void setUp() {
@@ -67,6 +69,10 @@ public class MemberControllerTest extends ApiDocument {
                 .postsResponses(IntStream.range(0, 2)
                         .mapToObj(n -> postsResponse)
                         .collect(Collectors.toList()))
+                .build();
+        memberUpdateRequest = MemberUpdateRequest.builder()
+                .password(PASSWORD)
+                .newPassword(NEW_PASSWORD)
                 .build();
     }
 
@@ -114,6 +120,17 @@ public class MemberControllerTest extends ApiDocument {
         회원조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
+    @DisplayName("회원수정 성공")
+    @Test
+    void update_member_success() throws Exception {
+        // given
+        willDoNothing().given(memberService).updateMember(anyLong(),any(MemberUpdateRequest.class));
+        // when
+        ResultActions resultActions = 회원수정_요청(ID);
+        // then
+        회원수정_성공(resultActions);
+    }
+
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members")
                 .contextPath("/api/v1")
@@ -151,5 +168,18 @@ public class MemberControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("get-member-fail"));
+    }
+
+    private ResultActions 회원수정_요청(Long memberId) throws Exception {
+        return mockMvc.perform(patch("/api/v1/members/update/" + memberId)
+                .contextPath("/api/v1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(memberUpdateRequest)));
+    }
+
+    private void 회원수정_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("update-member-success"));
     }
 }
