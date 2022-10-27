@@ -82,3 +82,11 @@ include::{snippets}/get-post-fail/http-request.adoc[]
 
 .response
 include::{snippets}/get-post-fail/http-response.adoc[]
+
+==== 익명 게시판 등록
+===== 성공
+.request
+include::{snippets}/create-post-success/http-request.adoc[]
+
+.response
+include::{snippets}/create-post-success/http-response.adoc[]
