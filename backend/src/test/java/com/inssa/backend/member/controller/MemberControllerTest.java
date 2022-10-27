@@ -144,7 +144,7 @@ public class MemberControllerTest extends ApiDocument {
 
     @DisplayName("회원탈퇴 성공")
     @Test
-    void delete_member() throws Exception {
+    void delete_member_success() throws Exception {
         // given
         willDoNothing().given(memberService).deleteMember(anyLong());
         // when
