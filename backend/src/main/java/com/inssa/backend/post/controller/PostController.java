@@ -40,13 +40,13 @@ public class PostController {
     }
 
     @PostMapping("/update/{postId}")
-    public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+    public ResponseEntity<Void> updatePost(@PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
         postService.updatePost(postId, postRequest, files);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<PostResponse> deletePost(@PathVariable Long postId) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         return ResponseEntity.ok().build();
     }
