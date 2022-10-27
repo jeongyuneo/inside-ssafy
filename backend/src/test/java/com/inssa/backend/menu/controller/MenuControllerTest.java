@@ -132,6 +132,7 @@ public class MenuControllerTest extends ApiDocument {
 
     private void 식단_조회_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
+                .andExpect(content().json(toJson(menuResponse)))
                 .andDo(print())
                 .andDo(toDocument("get-menu-success"));
     }
