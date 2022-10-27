@@ -40,7 +40,7 @@ public class MemberControllerTest extends ApiDocument {
     private static final int LIKE_COUNT = 5;
     private static final int COMMENT_COUNT = 3;
     private static final String CREATED_DATE = "10/25 10:19";
-    public static final String NEW_PASSWORD = "newssafy";
+    private static final String NEW_PASSWORD = "newssafy";
 
     @MockBean
     private MemberService memberService;
@@ -120,26 +120,26 @@ public class MemberControllerTest extends ApiDocument {
         회원조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
-    @DisplayName("회원수정 성공")
+    @DisplayName("비밀번호 수정 성공")
     @Test
     void update_member_success() throws Exception {
         // given
-        willDoNothing().given(memberService).updateMember(anyLong(),any(PasswordUpdateRequest.class));
+        willDoNothing().given(memberService).updatePassword(anyLong(), any(PasswordUpdateRequest.class));
         // when
-        ResultActions resultActions = 회원수정_요청(ID);
+        ResultActions resultActions = 비밀번호_수정_요청(ID);
         // then
-        회원수정_성공(resultActions);
+        비밀번호_수정_성공(resultActions);
     }
 
-    @DisplayName("회원수정 실패")
+    @DisplayName("비밀번호 수정 실패")
     @Test
     void update_member_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER)).given(memberService).updateMember(anyLong(), any(PasswordUpdateRequest.class));
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER)).given(memberService).updatePassword(anyLong(), any(PasswordUpdateRequest.class));
         // when
-        ResultActions resultActions = 회원수정_요청(ID);
+        ResultActions resultActions = 비밀번호_수정_요청(ID);
         // then
-        회원수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
+        비밀번호_수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
@@ -181,23 +181,23 @@ public class MemberControllerTest extends ApiDocument {
                 .andDo(toDocument("get-member-fail"));
     }
 
-    private ResultActions 회원수정_요청(Long memberId) throws Exception {
+    private ResultActions 비밀번호_수정_요청(Long memberId) throws Exception {
         return mockMvc.perform(patch("/api/v1/members/" + memberId)
                 .contextPath("/api/v1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(memberUpdateRequest)));
     }
 
-    private void 회원수정_성공(ResultActions resultActions) throws Exception {
+    private void 비밀번호_수정_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
-                .andDo(toDocument("update-member-success"));
+                .andDo(toDocument("update-password-success"));
     }
 
-    private void 회원수정_실패(ResultActions resultActions, Message message) throws Exception {
+    private void 비밀번호_수정_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
-                .andDo(toDocument("update-member-fail"));
+                .andDo(toDocument("update-password-fail"));
     }
 }

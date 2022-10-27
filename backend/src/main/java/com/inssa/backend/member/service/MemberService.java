@@ -15,6 +15,6 @@ public class MemberService {
         return null;
     }
 
-    public void updateMember(Long memberId, PasswordUpdateRequest memberUpdateRequest) {
+    public void updatePassword(Long memberId, PasswordUpdateRequest memberUpdateRequest) {
     }
 }
