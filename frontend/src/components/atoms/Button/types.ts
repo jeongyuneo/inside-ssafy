@@ -7,6 +7,7 @@ export interface PropTypes {
   fontSize?: number;
   textColor?: string;
   backgroundColor?: string;
+  isText?: boolean;
   clickHandler?: MouseEventHandler<HTMLButtonElement>;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
