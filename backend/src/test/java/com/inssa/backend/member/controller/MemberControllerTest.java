@@ -3,8 +3,9 @@ package com.inssa.backend.member.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
+import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.controller.dto.MemberRequest;
-import com.inssa.backend.member.controller.dto.MemberResponses;
+import com.inssa.backend.member.controller.dto.MemberResponse;
 import com.inssa.backend.member.service.MemberService;
 import com.inssa.backend.post.controller.dto.PostsResponse;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -44,8 +45,7 @@ public class MemberControllerTest extends ApiDocument {
     private MemberService memberService;
 
     private MemberRequest memberRequest;
-
-    private MemberResponses memberResponses;
+    private MemberResponse memberResponse;
 
     @BeforeEach
     void setUp() {
@@ -61,7 +61,7 @@ public class MemberControllerTest extends ApiDocument {
                 .name(NAME)
                 .studentNumber(STUDENT_NUMBER)
                 .build();
-        memberResponses = MemberResponses.builder()
+        memberResponse = MemberResponse.builder()
                 .name(NAME)
                 .studentNumber(STUDENT_NUMBER)
                 .postsResponses(IntStream.range(0, 2)
@@ -96,7 +96,7 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void get_member_success() throws Exception {
         // given
-        willReturn(memberResponses).given(memberService).getMember(anyLong());
+        willReturn(memberResponse).given(memberService).getMember(anyLong());
         // when
         ResultActions resultActions = 회원조회_요청(ID);
         // then
@@ -107,11 +107,11 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void get_member_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_GET_MEMBER.getMessage())).given(memberService).getMember(anyLong());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER)).given(memberService).getMember(anyLong());
         // when
         ResultActions resultActions = 회원조회_요청(ID);
         // then
-        회원조회_실패(resultActions,new Message(ErrorMessage.FAIL_TO_GET_MEMBER));
+        회원조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
@@ -141,13 +141,13 @@ public class MemberControllerTest extends ApiDocument {
 
     private void 회원조회_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(memberResponses)))
+                .andExpect(content().json(toJson(memberResponse)))
                 .andDo(print())
                 .andDo(toDocument("get-member-success"));
     }
 
     private void 회원조회_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isInternalServerError())
+        resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("get-member-fail"));
