@@ -18,6 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.BDDMockito.willThrow;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -63,6 +64,17 @@ public class CommentControllerTest extends ApiDocument {
         익명_게시판_댓글_등록_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CREATE_COMMENT));
     }
 
+    @DisplayName("익명 게시판 댓글 삭제 성공")
+    @Test
+    void delete_comment_success() throws Exception {
+        // given
+        willDoNothing().given(commentService).deleteComment(anyLong());
+        // when
+        ResultActions resultActions = 익명_게시판_댓글_삭제_요청(ID);
+        // then
+        익명_게시판_댓글_삭제_성공(resultActions);
+    }
+
     private ResultActions 익명_게시판_댓글_등록_요청(Long postId, CommentRequest commentRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/comments/posts/" + postId)
                 .contextPath("/api/v1")
@@ -81,5 +93,16 @@ public class CommentControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("create-comment-fail"));
+    }
+
+    private ResultActions 익명_게시판_댓글_삭제_요청(Long commentId) throws Exception {
+        return mockMvc.perform(delete("/api/v1/comments/" + commentId)
+                .contextPath("/api/v1"));
+    }
+
+    private void 익명_게시판_댓글_삭제_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("delete-comment-success"));
     }
 }
