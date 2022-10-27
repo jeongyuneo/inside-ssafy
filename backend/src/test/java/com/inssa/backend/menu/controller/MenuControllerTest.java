@@ -3,6 +3,7 @@ package com.inssa.backend.menu.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
+import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.menu.controller.dto.MenuRequest;
 import com.inssa.backend.menu.controller.dto.MenuResponse;
 import com.inssa.backend.menu.service.MenuService;
@@ -82,13 +83,24 @@ public class MenuControllerTest extends ApiDocument {
 
     @DisplayName("식단 조회 성공")
     @Test
-    void get_menus() throws Exception {
+    void get_menus_success() throws Exception {
         // given
         willReturn(menuResponse).given(menuService).getMenu(anyString());
         // when
         ResultActions resultActions = 식단_조회_요청(DATE);
         // then
         식단_조회_성공(resultActions);
+    }
+    
+    @DisplayName("식단 조회 실패")
+    @Test
+    void get_menus_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MENU)).given(menuService).getMenu(anyString());
+        // when
+        ResultActions resultActions = 식단_조회_요청(DATE);
+        // then
+        식단_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MENU));
     }
 
     private ResultActions 식단_등록_요청(Long userId, MenuRequest menuRequest) throws Exception {
@@ -121,5 +133,12 @@ public class MenuControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("get-menu-success"));
+    }
+
+    private void 식단_조회_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("get-menu-fail"));
     }
 }
