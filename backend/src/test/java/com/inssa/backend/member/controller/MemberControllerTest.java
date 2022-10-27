@@ -2,6 +2,7 @@ package com.inssa.backend.member.controller;
 
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.member.controller.dto.MemberRequest;
 import com.inssa.backend.member.service.MemberService;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -18,6 +19,7 @@ import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
@@ -62,7 +64,7 @@ public class MemberControllerTest extends ApiDocument {
         // when
         ResultActions resultActions = 회원가입_요청(memberRequest);
         // then
-        회원가입_실패(resultActions);
+        회원가입_실패(resultActions, new Message(ErrorMessage.FAIL_TO_JOIN));
     }
 
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
@@ -78,8 +80,9 @@ public class MemberControllerTest extends ApiDocument {
                 .andDo(toDocument("join-success"));
     }
 
-    private void 회원가입_실패(ResultActions resultActions) throws Exception {
+    private void 회원가입_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("join-fail"));
     }
