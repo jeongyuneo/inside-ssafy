@@ -1,42 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,TouchableOpacity, Alert } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Main from "./src/pages/Main/index";
+import Driving from "./src/pages/Driving/index";
 
-const App = () =>  {
+const Stack = createStackNavigator();
 
-  const busNumber = [1,2,3,4,5,6];
-
+const App = () => {
   return (
-    <View style={styles.container}>
-    {busNumber.map(num =>
-    <TouchableOpacity
-    key={num}
-      onPress={() => Alert.alert(`${num}호차`)}
-      style={styles.button}>
-      <Text style={{ fontSize: 100, color: '#fff' }}>{num}</Text>
-    </TouchableOpacity> )}
-    <StatusBar style="auto" />
-  </View>
+    <NavigationContainer initialRouteName="Main">
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Main"
+          component={Main}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Driving"
+          component={Driving}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignContent: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: "wrap",
-    // padding: 10
-  },
-  button: {
-    width: 150,
-    height: 200,
-    backgroundColor: '#01A7EB',
-    margin: 10,
-    justifyContent: 'center',
-    alignItems:"center"
-  },
-});
+};
 
 export default App;
