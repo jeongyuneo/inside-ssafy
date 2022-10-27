@@ -20,4 +20,7 @@ public class PostService {
     public PostResponse getPost(Long postId) {
         return null;
     }
+
+    public void deletePost(Long postId) {
+    }
 }

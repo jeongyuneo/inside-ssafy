@@ -99,6 +99,21 @@ include::{snippets}/get-post-fail/http-request.adoc[]
 .response
 include::{snippets}/get-post-fail/http-response.adoc[]
 
+==== 익명 게시판 삭제
+===== 성공
+.request
+include::{snippets}/delete-post-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-post-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-post-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-post-fail/http-response.adoc[]
+
 === 식단
 ==== 식단 등록
 ===== 성공
