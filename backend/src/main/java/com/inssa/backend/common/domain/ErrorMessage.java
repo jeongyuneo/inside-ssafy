@@ -9,7 +9,6 @@ public enum ErrorMessage {
 
     NOT_FOUND_POST("해당 게시글을 찾을 수 없습니다."),
     NOT_FOUND_MEMBER("회원 조회에 실패했습니다"),
-    NOT_FOUND_UPDATE_MEMBER("회원 수정에 실패했습니다"),
 
     FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
