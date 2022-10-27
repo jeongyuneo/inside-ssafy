@@ -1,8 +1,11 @@
 package com.inssa.backend.post.controller;
 
 import com.inssa.backend.ApiDocument;
+import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.post.controller.dto.CommentRequest;
 import com.inssa.backend.post.service.CommentService;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +17,10 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CommentController.class)
@@ -47,6 +52,17 @@ public class CommentControllerTest extends ApiDocument {
         익명_게시판_댓글_등록_성공(resultActions);
     }
 
+    @DisplayName("익명 게시판 댓글 등록 실패")
+    @Test
+    void create_comment_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_COMMENT.getMessage())).given(commentService).createComment(anyLong(), any(CommentRequest.class));
+        // when
+        ResultActions resultActions = 익명_게시판_댓글_등록_요청(ID, commentRequest);
+        // then
+        익명_게시판_댓글_등록_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CREATE_COMMENT));
+    }
+
     private ResultActions 익명_게시판_댓글_등록_요청(Long postId, CommentRequest commentRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/comments/posts/" + postId)
                 .contextPath("/api/v1")
@@ -58,5 +74,12 @@ public class CommentControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("create-comment-success"));
+    }
+
+    private void 익명_게시판_댓글_등록_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("create-comment-fail"));
     }
 }
