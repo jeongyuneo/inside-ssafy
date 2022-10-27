@@ -20,8 +20,8 @@ import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.willReturn;
-import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -151,6 +151,17 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_상세_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_POST));
     }
 
+    @DisplayName("익명 게시판 삭제 성공")
+    @Test
+    void delete_post_success() throws Exception {
+        // given
+        willDoNothing().given(postService).deletePost(anyLong());
+        // when
+        ResultActions resultActions = 익명_게시판_삭제_요청(ID);
+        // then
+        익명_게시판_삭제_성공(resultActions);
+    }
+
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1"));
@@ -207,5 +218,16 @@ public class PostControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("get-post-fail"));
+    }
+
+    private ResultActions 익명_게시판_삭제_요청(Long postId) throws Exception {
+        return mockMvc.perform(delete("/api/v1/posts/"+postId)
+                .contextPath("/api/v1"));
+    }
+
+    private void 익명_게시판_삭제_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("delete-post-success"));
     }
 }
