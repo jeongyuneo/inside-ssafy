@@ -5,5 +5,4 @@ export interface PropTypes {
   fontSize?: number;
   textColor?: string;
   backgroundColor?: string;
-  isText?: boolean;
 }

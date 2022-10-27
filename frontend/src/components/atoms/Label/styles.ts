@@ -20,16 +20,11 @@ export const StyledLabel = styled.label<PropTypes>`
       font-size: ${fontSize}rem;
     `}
 
-  ${({ isText, textColor, backgroundColor }) =>
-    isText
-      ? css`
-          color: black;
-          background: none;
-        `
-      : css`
-          color: ${textColor || 'none'};
-          background-color: ${backgroundColor};
-        `}
+  ${({ textColor, backgroundColor }) =>
+    css`
+      color: ${textColor || 'none'};
+      background-color: ${backgroundColor};
+    `}
 
   border: none;
 `;
