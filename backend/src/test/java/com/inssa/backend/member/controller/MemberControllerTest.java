@@ -103,6 +103,17 @@ public class MemberControllerTest extends ApiDocument {
         회원조회_성공(resultActions);
     }
 
+    @DisplayName("회원조회 실패")
+    @Test
+    void get_member_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_GET_MEMBER.getMessage())).given(memberService).getMember(anyLong());
+        // when
+        ResultActions resultActions = 회원조회_요청(ID);
+        // then
+        회원조회_실패(resultActions,new Message(ErrorMessage.FAIL_TO_GET_MEMBER));
+    }
+
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members")
                 .contextPath("/api/v1")
@@ -133,5 +144,12 @@ public class MemberControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(memberResponses)))
                 .andDo(print())
                 .andDo(toDocument("get-member-success"));
+    }
+
+    private void 회원조회_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("get-member-fail"));
     }
 }
