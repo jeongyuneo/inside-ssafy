@@ -179,6 +179,17 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_등록_성공(resultActions);
     }
 
+    @DisplayName("익명 게시판 등록 실패")
+    @Test
+    void create_post_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_POST.getMessage())).given(postService).createPost(any(PostRequest.class), anyList());
+        // when
+        ResultActions resultActions = 익명_게시판_등록_요청(postRequest);
+        // then
+        익명_게시판_등록_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CREATE_POST));
+    }
+
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1"));
@@ -250,5 +261,12 @@ public class PostControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("create-post-success"));
+    }
+
+    private void 익명_게시판_등록_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("create-post-fail"));
     }
 }
