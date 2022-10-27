@@ -14,6 +14,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -28,7 +32,8 @@ public class MenuControllerTest extends ApiDocument {
 
     private static final Long ID = 1L;
     private static final String USER_ID_HEADER_NAME = "userId";
-    private static final String ITEM = "코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치";
+    private static final List<String> ITEM = new ArrayList<>(Collections
+            .singletonList("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치"));
     private static final String DATE = "2022-10-27";
     private static final String DAY_OF_THE_WEEK = "목";
 
