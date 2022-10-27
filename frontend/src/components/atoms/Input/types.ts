@@ -7,7 +7,7 @@ export interface PropTypes {
   textColor?: string;
   backgroundColor?: string;
   changeHandler?: (name: string, value: string) => void;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
   textType?: string;
   name?: string;
