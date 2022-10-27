@@ -2,6 +2,7 @@ package com.inssa.backend.member.controller;
 
 import com.inssa.backend.member.controller.dto.MemberRequest;
 import com.inssa.backend.member.controller.dto.MemberResponse;
+import com.inssa.backend.member.controller.dto.PasswordUpdateRequest;
 import com.inssa.backend.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,11 @@ public class MemberController {
     @GetMapping("/{memberId}")
     public ResponseEntity<MemberResponse> getMember(@PathVariable Long memberId) {
         return ResponseEntity.ok().body(memberService.getMember(memberId));
+    }
+
+    @PatchMapping("/{memberId}")
+    public ResponseEntity<Void> updatePassword(@PathVariable Long memberId, @RequestBody PasswordUpdateRequest memberUpdateRequest) {
+        memberService.updatePassword(memberId, memberUpdateRequest);
+        return ResponseEntity.ok().build();
     }
 }
