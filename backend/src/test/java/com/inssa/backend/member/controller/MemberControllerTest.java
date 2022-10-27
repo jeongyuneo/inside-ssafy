@@ -6,7 +6,7 @@ import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.controller.dto.MemberRequest;
 import com.inssa.backend.member.controller.dto.MemberResponse;
-import com.inssa.backend.member.controller.dto.MemberUpdateRequest;
+import com.inssa.backend.member.controller.dto.PasswordUpdateRequest;
 import com.inssa.backend.member.service.MemberService;
 import com.inssa.backend.post.controller.dto.PostsResponse;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -47,7 +47,7 @@ public class MemberControllerTest extends ApiDocument {
 
     private MemberRequest memberRequest;
     private MemberResponse memberResponse;
-    private MemberUpdateRequest memberUpdateRequest;
+    private PasswordUpdateRequest memberUpdateRequest;
 
     @BeforeEach
     void setUp() {
@@ -70,7 +70,7 @@ public class MemberControllerTest extends ApiDocument {
                         .mapToObj(n -> postsResponse)
                         .collect(Collectors.toList()))
                 .build();
-        memberUpdateRequest = MemberUpdateRequest.builder()
+        memberUpdateRequest = PasswordUpdateRequest.builder()
                 .password(PASSWORD)
                 .newPassword(NEW_PASSWORD)
                 .build();
@@ -124,7 +124,7 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void update_member_success() throws Exception {
         // given
-        willDoNothing().given(memberService).updateMember(anyLong(),any(MemberUpdateRequest.class));
+        willDoNothing().given(memberService).updateMember(anyLong(),any(PasswordUpdateRequest.class));
         // when
         ResultActions resultActions = 회원수정_요청(ID);
         // then
@@ -135,11 +135,11 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void update_member_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_UPDATE_MEMBER)).given(memberService).updateMember(anyLong(), any(MemberUpdateRequest.class));
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER)).given(memberService).updateMember(anyLong(), any(PasswordUpdateRequest.class));
         // when
         ResultActions resultActions = 회원수정_요청(ID);
         // then
-        회원수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_UPDATE_MEMBER));
+        회원수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
@@ -182,7 +182,7 @@ public class MemberControllerTest extends ApiDocument {
     }
 
     private ResultActions 회원수정_요청(Long memberId) throws Exception {
-        return mockMvc.perform(patch("/api/v1/members/update/" + memberId)
+        return mockMvc.perform(patch("/api/v1/members/" + memberId)
                 .contextPath("/api/v1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(memberUpdateRequest)));
