@@ -1,7 +1,6 @@
 import { MouseEventHandler } from 'react';
 
-export interface PropTypes {
-  children: string | JSX.Element;
+export interface ButtonPropTypes {
   width?: number;
   height?: number;
   fontSize?: number;
@@ -10,4 +9,8 @@ export interface PropTypes {
   isText?: boolean;
   clickHandler?: MouseEventHandler<HTMLButtonElement>;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+}
+
+export interface PropTypes extends ButtonPropTypes {
+  children: string | JSX.Element;
 }
