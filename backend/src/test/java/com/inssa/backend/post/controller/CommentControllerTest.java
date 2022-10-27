@@ -87,12 +87,6 @@ public class CommentControllerTest extends ApiDocument {
         익명_게시판_댓글_수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_COMMENT));
     }
 
-    private void 익명_게시판_댓글_수정_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isNotFound())
-                .andDo(print())
-                .andDo(toDocument("update-comment-fail"));
-    }
-
     private ResultActions 익명_게시판_댓글_등록_요청(Long postId, CommentRequest commentRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/comments/posts/" + postId)
                 .contextPath("/api/v1")
@@ -124,5 +118,11 @@ public class CommentControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("update-comment-success"));
+    }
+
+    private void 익명_게시판_댓글_수정_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andDo(print())
+                .andDo(toDocument("update-comment-fail"));
     }
 }
