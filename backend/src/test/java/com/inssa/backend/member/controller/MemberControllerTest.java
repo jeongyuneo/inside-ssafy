@@ -142,6 +142,28 @@ public class MemberControllerTest extends ApiDocument {
         비밀번호_수정_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
+    @DisplayName("회원탈퇴 성공")
+    @Test
+    void delete_member_success() throws Exception {
+        // given
+        willDoNothing().given(memberService).deleteMember(anyLong());
+        // when
+        ResultActions resultActions = 회원탈퇴_요청(ID);
+        // then
+        회원탈퇴_성공(resultActions);
+    }
+
+    @DisplayName("회원탈퇴 실패")
+    @Test
+    void delete_member_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER)).given(memberService).deleteMember(anyLong());
+        // when
+        ResultActions resultActions = 회원탈퇴_요청(ID);
+        // then
+        회원탈퇴_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
+    }
+
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members")
                 .contextPath("/api/v1")
@@ -199,5 +221,23 @@ public class MemberControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("update-password-fail"));
+    }
+
+    private ResultActions 회원탈퇴_요청(Long memberId) throws Exception {
+        return mockMvc.perform(delete("/api/v1/members/" + memberId)
+                .contextPath("/api/v1"));
+    }
+
+    private void 회원탈퇴_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("delete-member-success"));
+    }
+
+    private void 회원탈퇴_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("delete-member-fail"));
     }
 }
