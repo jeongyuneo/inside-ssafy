@@ -70,8 +70,8 @@ public class MenuControllerTest extends ApiDocument {
 
     private ResultActions 식단_등록_요청(MenuRequest menuRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/menus")
-                .header(USER_ID_HEADER_NAME, ID)
                 .contextPath("/api/v1")
+                .header(USER_ID_HEADER_NAME, ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(menuRequest)));
     }
