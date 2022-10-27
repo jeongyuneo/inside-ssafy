@@ -63,13 +63,6 @@ public class ReCommentControllerTest extends ApiDocument {
         익명_게시판_대댓글_등록_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_RECOMMENT));
     }
 
-    private void 익명_게시판_대댓글_등록_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isNotFound())
-                .andExpect(content().json(toJson(message)))
-                .andDo(print())
-                .andDo(toDocument("create-recomment-fail"));
-    }
-
     private ResultActions 익명_게시판_대댓글_등록_요청(Long reCommentId, CommentRequest commentRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/recomments/" + reCommentId)
                 .contextPath("/api/v1")
@@ -81,5 +74,12 @@ public class ReCommentControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("create-recomment-success"));
+    }
+
+    private void 익명_게시판_대댓글_등록_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("create-recomment-fail"));
     }
 }
