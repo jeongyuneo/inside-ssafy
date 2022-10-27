@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorMessage {
 
-    FAIL_TO_JOIN("회원 가입에 실패했습니다."),
-
     NOT_FOUND_POST("해당 게시글을 찾을 수 없습니다."),
 
+    FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
     FAIL_TO_SEARCH_POST("익명 게시판 검색에 실패했습니다."),
 
