@@ -182,3 +182,10 @@ include::{snippets}/get-menu-success/http-request.adoc[]
 
 .response
 include::{snippets}/get-menu-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-menu-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-menu-fail/http-response.adoc[]
