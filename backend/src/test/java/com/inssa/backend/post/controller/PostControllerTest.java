@@ -12,6 +12,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
@@ -21,8 +23,7 @@ import java.util.stream.IntStream;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,12 +39,22 @@ public class PostControllerTest extends ApiDocument {
     private static final String URL = "{file_url}";
     private static final Long ID = 1L;
     private static final String KEYWORD = "검색 키워드";
+    private static final String POST_REQUEST_PARAMETER_NAME = "postRequest";
+    private static final String POST_REQUEST_FILENAME = "";
+    private static final String POST_REQUEST_CONTENT_TYPE = "application/json";
+    private static final String IMAGE_PARAMETER_NAME = "files";
+    private static final String IMAGE = "image.png";
+    private static final String IMAGE_CONTENT_TYPE = "image/png";
+    private static final byte[] IMAGE_CONTENT = "<image data>".getBytes();
 
     @MockBean
     private PostService postService;
 
     private List<PostsResponse> postsResponses;
     private PostResponse postResponse;
+    private PostRequest postRequest;
+    private MockMultipartFile file;
+    private MockMultipartFile postRequestPart;
 
     @BeforeEach
     void setUp() {
@@ -83,6 +94,12 @@ public class PostControllerTest extends ApiDocument {
                 .files(fileResponses)
                 .commentResponses(commentResponses)
                 .build();
+        postRequest = PostRequest.builder()
+                .title(TITLE)
+                .content(CONTENT)
+                .build();
+        postRequestPart = new MockMultipartFile(POST_REQUEST_PARAMETER_NAME, POST_REQUEST_FILENAME, POST_REQUEST_CONTENT_TYPE, toJson(postRequest).getBytes());
+        file = new MockMultipartFile(IMAGE_PARAMETER_NAME, IMAGE, IMAGE_CONTENT_TYPE, IMAGE_CONTENT);
     }
 
     @DisplayName("익명 게시판 목록 조회 성공")
@@ -149,6 +166,28 @@ public class PostControllerTest extends ApiDocument {
         ResultActions resultActions = 익명_게시판_상세_조회_요청(ID);
         // then
         익명_게시판_상세_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_POST));
+    }
+
+    @DisplayName("익명 게시판 등록 성공")
+    @Test
+    void create_post_success() throws Exception {
+        // given
+        willDoNothing().given(postService).createPost(any(PostRequest.class), anyList());
+        // when
+        ResultActions resultActions = 익명_게시판_등록_요청(postRequest);
+        // then
+        익명_게시판_등록_성공(resultActions);
+    }
+
+    @DisplayName("익명 게시판 등록 실패")
+    @Test
+    void create_post_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_POST.getMessage())).given(postService).createPost(any(PostRequest.class), anyList());
+        // when
+        ResultActions resultActions = 익명_게시판_등록_요청(postRequest);
+        // then
+        익명_게시판_등록_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CREATE_POST));
     }
 
     @DisplayName("익명 게시판 삭제 성공")
@@ -229,6 +268,28 @@ public class PostControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("get-post-fail"));
+    }
+
+    private ResultActions 익명_게시판_등록_요청(PostRequest postRequest) throws Exception {
+        return mockMvc.perform(multipart("/api/v1/posts")
+                .file(postRequestPart)
+                .file(file)
+                .file(file)
+                .accept(MediaType.APPLICATION_JSON)
+                .contextPath("/api/v1"));
+    }
+
+    private void 익명_게시판_등록_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("create-post-success"));
+    }
+
+    private void 익명_게시판_등록_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("create-post-fail"));
     }
 
     private ResultActions 익명_게시판_삭제_요청(Long postId) throws Exception {
