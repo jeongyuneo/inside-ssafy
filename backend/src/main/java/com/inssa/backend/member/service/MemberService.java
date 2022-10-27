@@ -18,6 +18,6 @@ public class MemberService {
     public void updatePassword(Long memberId, PasswordUpdateRequest memberUpdateRequest) {
     }
 
-    public void deleteMember(Long anyLong) {
+    public void deleteMember(Long memberId) {
     }
 }
