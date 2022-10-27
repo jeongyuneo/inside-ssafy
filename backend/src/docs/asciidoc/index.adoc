@@ -213,3 +213,10 @@ include::{snippets}/get-bus-success/http-request.adoc[]
 
 .response
 include::{snippets}/get-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-bus-fail/http-response.adoc[]
