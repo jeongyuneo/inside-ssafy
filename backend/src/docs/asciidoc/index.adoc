@@ -324,3 +324,19 @@ include::{snippets}/get-menu-fail/http-request.adoc[]
 
 .response
 include::{snippets}/get-menu-fail/http-response.adoc[]
+
+=== 버스
+==== 버스 조회
+===== 성공
+.request
+include::{snippets}/get-bus-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-bus-fail/http-response.adoc[]
