@@ -132,10 +132,17 @@ include::{snippets}/get-favorites-bus-fail/http-response.adoc[]
 ==== 메인페이지 조회
 ===== 성공
 .request
-include::{snippets}/get_main_success/http-request.adoc[]
+include::{snippets}/get-main-success/http-request.adoc[]
 
 .response
-include::{snippets}/get_main_success/http-response.adoc[]
+include::{snippets}/get-main-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-main-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-main-fail/http-response.adoc[]
 
 === 익명 게시판
 ==== 익명 게시판 목록 조회
