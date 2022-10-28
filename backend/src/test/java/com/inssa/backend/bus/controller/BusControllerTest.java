@@ -2,7 +2,6 @@ package com.inssa.backend.bus.controller;
 
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.bus.controller.dto.BusResponse;
-import com.inssa.backend.bus.controller.dto.BusStopResponse;
 import com.inssa.backend.bus.service.BusService;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
@@ -32,10 +31,9 @@ public class BusControllerTest extends ApiDocument {
     private static final int NUMBER = 1;
     private static final String NUMBER_PARAMETER_NAME = "number";
     private static final String NAME = "name";
-    private static final double LATITUDE = 0D;
-    private static final double LONGITUDE = 0D;
     private static final int LAST_BUS_NUMBER = 2;
     private static final int LAST_VISITED_ROUTE = 1;
+    private static final String BUS_STOP_NAME = "삼성화재연수원";
 
     @MockBean
     private BusService busService;
@@ -44,17 +42,13 @@ public class BusControllerTest extends ApiDocument {
 
     @BeforeEach
     void setUp() {
-        List<BusStopResponse> busStopResponses = IntStream.range(0, 2)
-                .mapToObj(n -> BusStopResponse.builder()
-                        .name(NAME)
-                        .latitude(LATITUDE)
-                        .longitude(LONGITUDE)
-                        .build())
+        List<String> busStopNames = IntStream.range(0, 2)
+                .mapToObj(n -> BUS_STOP_NAME)
                 .collect(Collectors.toList());
         busResponse = BusResponse.builder()
                 .lastBusNumber(LAST_BUS_NUMBER)
                 .lastVisitedRoute(LAST_VISITED_ROUTE)
-                .busStopResponses(busStopResponses)
+                .busStopNames(busStopNames)
                 .build();
     }
 
