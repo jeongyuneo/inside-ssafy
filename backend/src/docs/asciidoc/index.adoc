@@ -348,3 +348,10 @@ include::{snippets}/like-bus-success/http-request.adoc[]
 
 .response
 include::{snippets}/like-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/like-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/like-bus-fail/http-response.adoc[]
