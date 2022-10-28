@@ -113,6 +113,22 @@ include::{snippets}/login-fail/http-request.adoc[]
 .response
 include::{snippets}/login-fail/http-response.adoc[]
 
+=== 메인페이지
+==== 즐겨찾는 버스 정보
+===== 성공
+.request
+include::{snippets}/get-favorites-bus-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-favorites-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-favorites-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-favorites-bus-fail/http-response.adoc[]
+
 === 익명 게시판
 ==== 익명 게시판 목록 조회
 ===== 성공
