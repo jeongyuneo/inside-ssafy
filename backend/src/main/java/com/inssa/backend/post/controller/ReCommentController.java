@@ -14,8 +14,8 @@ public class ReCommentController {
     private final ReCommentService reCommentService;
 
     @PostMapping("/{reCommentId}")
-    public ResponseEntity<Void> createReComment(@PathVariable Long reCommentId, @RequestBody CommentRequest commentRequest) {
-        reCommentService.createReComment(reCommentId, commentRequest);
+    public ResponseEntity<Void> createReComment(@RequestHeader("Authorization") String token, @PathVariable Long reCommentId, @RequestBody CommentRequest commentRequest) {
+        reCommentService.createReComment(1L, reCommentId, commentRequest);
         return ResponseEntity.ok().build();
     }
 }
