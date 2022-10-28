@@ -12,4 +12,5 @@ export interface PropTypes {
   textType?: string;
   name?: string;
   id?: string;
+  placeholder?: string;
 }
