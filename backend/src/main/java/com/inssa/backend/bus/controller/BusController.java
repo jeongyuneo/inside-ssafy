@@ -23,4 +23,10 @@ public class BusController {
         busService.createBusLike(1L, number);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/like")
+    public ResponseEntity<Void> deleteBusLike(@RequestHeader("Authorization") String token, @RequestParam int number) {
+        busService.deleteBusLike(1L, number);
+        return ResponseEntity.ok().build();
+    }
 }
