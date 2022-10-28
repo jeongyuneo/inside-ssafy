@@ -10,6 +10,6 @@ public class BusService {
         return null;
     }
 
-    public void likeBus(Long memberId, int number) {
+    public void createBusLike(Long memberId, int number) {
     }
 }

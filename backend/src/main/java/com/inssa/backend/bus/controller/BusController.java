@@ -19,8 +19,8 @@ public class BusController {
     }
 
     @GetMapping("like")
-    public ResponseEntity<Void> likeBus(@RequestHeader("Authorization") String token, @RequestParam int number) {
-        busService.likeBus(1L, number);
+    public ResponseEntity<Void> createBusLike(@RequestHeader("Authorization") String token, @RequestParam int number) {
+        busService.createBusLike(1L, number);
         return ResponseEntity.ok().build();
     }
 }

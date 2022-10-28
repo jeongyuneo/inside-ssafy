@@ -344,14 +344,14 @@ include::{snippets}/get-bus-fail/http-response.adoc[]
 ==== 버스 조회
 ===== 성공
 .request
-include::{snippets}/like-bus-success/http-request.adoc[]
+include::{snippets}/create-bus-like-success/http-request.adoc[]
 
 .response
-include::{snippets}/like-bus-success/http-response.adoc[]
+include::{snippets}/create-bus-like-success/http-response.adoc[]
 
 ===== 실패
 .request
-include::{snippets}/like-bus-fail/http-request.adoc[]
+include::{snippets}/create-bus-like-fail/http-request.adoc[]
 
 .response
-include::{snippets}/like-bus-fail/http-response.adoc[]
+include::{snippets}/create-bus-like-fail/http-response.adoc[]
