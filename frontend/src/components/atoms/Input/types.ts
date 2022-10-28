@@ -6,12 +6,14 @@ export interface PropTypes {
   fontSize?: number;
   textColor?: string;
   backgroundColor?: string;
-  changeHandler?: (name: string, value: string) => void;
+  changeHandler?: (index: string, value: string) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
   textType?: string;
   name?: string;
   id?: string;
+  index?: string;
   placeholder?: string;
   borderRadius?: number;
+  paddingLeft?: number;
 }

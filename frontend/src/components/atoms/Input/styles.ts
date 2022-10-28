@@ -25,6 +25,12 @@ export const StyledInput = styled.input<PropTypes>`
   border: none;
   outline: none;
 
+  ${({ paddingLeft }) =>
+    paddingLeft &&
+    css`
+      padding-left: ${paddingLeft}rem;
+    `}
+
   ${({ borderRadius }) =>
     borderRadius &&
     css`
