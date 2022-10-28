@@ -16,9 +16,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -34,8 +34,7 @@ public class MenuControllerTest extends ApiDocument {
 
     private static final Long ID = 1L;
     private static final String USER_ID_HEADER_NAME = "userId";
-    private static final List<String> ITEMS = new ArrayList<>(
-            Collections.singletonList("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치"));
+    private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(", ")).collect(Collectors.toList());
     private static final String DATE = "2022-10-27";
     private static final String DAY_OF_THE_WEEK = "목";
     private static final String DATE_PARAMETER_NAME = "date";
@@ -92,7 +91,7 @@ public class MenuControllerTest extends ApiDocument {
         // then
         식단_조회_성공(resultActions);
     }
-    
+
     @DisplayName("식단 조회 실패")
     @Test
     void get_menus_fail() throws Exception {
