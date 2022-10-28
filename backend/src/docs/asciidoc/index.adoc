@@ -340,3 +340,11 @@ include::{snippets}/get-bus-fail/http-request.adoc[]
 
 .response
 include::{snippets}/get-bus-fail/http-response.adoc[]
+
+==== 버스 조회
+===== 성공
+.request
+include::{snippets}/like-bus-success/http-request.adoc[]
+
+.response
+include::{snippets}/like-bus-success/http-response.adoc[]
