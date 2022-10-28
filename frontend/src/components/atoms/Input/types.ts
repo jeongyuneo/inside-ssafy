@@ -13,4 +13,5 @@ export interface PropTypes {
   name?: string;
   id?: string;
   placeholder?: string;
+  borderRadius?: number;
 }

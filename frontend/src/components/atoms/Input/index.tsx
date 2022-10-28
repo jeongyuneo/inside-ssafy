@@ -21,11 +21,13 @@ const Input = ({
   id,
   placeholder,
   changeHandler,
+  borderRadius,
 }: PropTypes) => {
   return (
     <StyledInput
       width={width}
       height={height}
+      borderRadius={borderRadius}
       fontSize={fontSize}
       textColor={textColor}
       backgroundColor={backgroundColor}
