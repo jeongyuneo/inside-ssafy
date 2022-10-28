@@ -30,7 +30,6 @@ public class BusControllerTest extends ApiDocument {
 
     private static final int NUMBER = 1;
     private static final String NUMBER_PARAMETER_NAME = "number";
-    private static final String NAME = "name";
     private static final int LAST_BUS_NUMBER = 2;
     private static final int LAST_VISITED_ROUTE = 1;
     private static final String BUS_STOP_NAME = "삼성화재연수원";
