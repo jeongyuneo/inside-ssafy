@@ -18,6 +18,7 @@ const Input = ({
   value,
   textType,
   name,
+  id,
   changeHandler,
 }: PropTypes) => {
   return (
@@ -30,6 +31,7 @@ const Input = ({
       value={value}
       type={textType}
       name={name}
+      id={id}
       onChange={e => changeHandler?.(e.target.name, e.target.value)}
     />
   );
