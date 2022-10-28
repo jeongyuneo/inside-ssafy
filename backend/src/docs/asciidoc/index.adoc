@@ -257,6 +257,13 @@ include::{snippets}/delete-recomment-success/http-request.adoc[]
 .response
 include::{snippets}/delete-recomment-success/http-response.adoc[]
 
+===== 실패
+.request
+include::{snippets}/delete-recomment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-recomment-fail/http-response.adoc[]
+
 === 식단
 ==== 식단 등록
 ===== 성공
