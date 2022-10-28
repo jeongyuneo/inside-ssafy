@@ -18,6 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.BDDMockito.willThrow;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -66,6 +67,17 @@ public class ReCommentControllerTest extends ApiDocument {
         익명_게시판_대댓글_등록_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_RECOMMENT));
     }
 
+    @DisplayName("익명 게시판 대댓글 삭제 성공")
+    @Test
+    void delete_recomment_success() throws Exception {
+        // given
+        willDoNothing().given(reCommentService).deleteReComment(anyLong(), anyLong());
+        // when
+        ResultActions resultActions = 익명_게시판_대댓글_삭제_요청(ID);
+        // then
+        익명_게시판_대댓글_삭제_성공(resultActions);
+    }
+
     private ResultActions 익명_게시판_대댓글_등록_요청(Long reCommentId, CommentRequest commentRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/recomments/" + reCommentId)
                 .contextPath("/api/v1")
@@ -85,5 +97,17 @@ public class ReCommentControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("create-recomment-fail"));
+    }
+
+    private ResultActions 익명_게시판_대댓글_삭제_요청(Long reCommentId) throws Exception {
+        return mockMvc.perform(delete("/api/v1/recomments/" + reCommentId)
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+    }
+
+    private void 익명_게시판_대댓글_삭제_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("delete-recomment-success"));
     }
 }
