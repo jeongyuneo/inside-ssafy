@@ -18,4 +18,10 @@ public class ReCommentController {
         reCommentService.createReComment(1L, reCommentId, commentRequest);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{reCommentId}")
+    public ResponseEntity<Void> deleteReComment(@PathVariable Long reCommentId) {
+        reCommentService.deleteReComment(1L, reCommentId);
+        return ResponseEntity.ok().build();
+    }
 }
