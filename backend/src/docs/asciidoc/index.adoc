@@ -363,3 +363,10 @@ include::{snippets}/delete-bus-like-success/http-request.adoc[]
 
 .response
 include::{snippets}/delete-bus-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-bus-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-bus-like-fail/http-response.adoc[]
