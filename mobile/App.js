@@ -1,38 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Main from "./src/pages/Main/index";
+import Driving from "./src/pages/Driving/index";
 
+const Stack = createStackNavigator();
+
+/**
+ * 초기 페이지를 Main으로 지정합니다.
+ * Main과 Driving 페이지를 선언합니다.
+ * headerShown값을 false로 주어,
+ * 기본 생성되는 네비게이션바를 제거합니다.
+ *
+ * author jini
+ */
 const App = () => {
-  const busNumber = [1, 2, 3, 4, 5, 6];
-
   return (
-    <View style={styles.container}>
-      {busNumber.map((num) => (
-        <TouchableOpacity key={num} onPress={() => Alert.alert(`${num}호차`)} style={styles.button}>
-          <Text style={{ fontSize: 100, color: '#fff' }}>{num}</Text>
-        </TouchableOpacity>
-      ))}
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer initialRouteName="Main">
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Main"
+          component={Main}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Driving"
+          component={Driving}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignContent: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  button: {
-    width: 150,
-    height: 200,
-    backgroundColor: '#01A7EB',
-    margin: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;

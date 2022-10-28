@@ -8,4 +8,10 @@ public class CommentService {
 
     public void createComment(Long postId, CommentRequest commentRequest) {
     }
+
+    public void updateComment(Long commentId, CommentRequest commentRequest) {
+    }
+
+    public void deleteComment(Long commentId) {
+    }
 }

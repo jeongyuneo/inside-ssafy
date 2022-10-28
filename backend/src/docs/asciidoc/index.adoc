@@ -68,6 +68,51 @@ include::{snippets}/get-member-fail/http-request.adoc[]
 .response
 include::{snippets}/get-member-fail/http-response.adoc[]
 
+==== 비밀번호수정
+===== 성공
+.request
+include::{snippets}/update-password-success/http-request.adoc[]
+
+.response
+include::{snippets}/update-password-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/update-password-fail/http-request.adoc[]
+
+.response
+include::{snippets}/update-password-fail/http-response.adoc[]
+
+==== 회원삭제
+===== 성공
+.request
+include::{snippets}/delete-member-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-member-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-member-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-member-fail/http-response.adoc[]
+
+==== 로그인
+===== 성공
+.request
+include::{snippets}/login-success/http-request.adoc[]
+
+.response
+include::{snippets}/login-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/login-fail/http-request.adoc[]
+
+.response
+include::{snippets}/login-fail/http-response.adoc[]
+
 === 익명 게시판
 ==== 익명 게시판 목록 조회
 ===== 성공
@@ -173,6 +218,81 @@ include::{snippets}/create-comment-fail/http-request.adoc[]
 
 .response
 include::{snippets}/create-comment-fail/http-response.adoc[]
+
+==== 익명 게시판 댓글 수정
+===== 성공
+.request
+include::{snippets}/update-comment-success/http-request.adoc[]
+
+.response
+include::{snippets}/update-comment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/update-comment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/update-comment-fail/http-response.adoc[]
+
+==== 익명 게시판 댓글 삭제
+===== 성공
+.request
+include::{snippets}/delete-comment-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-comment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-comment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-comment-fail/http-response.adoc[]
+
+==== 익명 게시판 대댓글 등록
+===== 성공
+.request
+include::{snippets}/create-recomment-success/http-request.adoc[]
+
+.response
+include::{snippets}/create-recomment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/create-recomment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/create-recomment-fail/http-response.adoc[]
+
+==== 익명 게시판 대댓글 수정
+===== 성공
+.request
+include::{snippets}/update-recomment-success/http-request.adoc[]
+
+.response
+include::{snippets}/update-recomment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/update-recomment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/update-recomment-fail/http-response.adoc[]
+
+==== 익명 게시판 대댓글 삭제
+===== 성공
+.request
+include::{snippets}/delete-recomment-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-recomment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-recomment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-recomment-fail/http-response.adoc[]
 
 === 식단
 ==== 식단 등록
