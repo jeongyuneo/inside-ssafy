@@ -12,4 +12,7 @@ public class BusService {
 
     public void createBusLike(Long memberId, int number) {
     }
+
+    public void deleteBusLike(Long memberId, int number) {
+    }
 }
