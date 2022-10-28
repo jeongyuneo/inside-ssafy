@@ -13,9 +13,5 @@ export const StyledLabel = styled.label<PropTypes>`
       color: ${textColor || 'none'};
     `}
 
-  ${({ backgroundColor }) => css`
-    background-color: ${backgroundColor};
-  `}
-  
   border: none;
 `;
