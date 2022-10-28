@@ -181,6 +181,17 @@ public class MemberControllerTest extends ApiDocument {
         로그인_성공(resultActions);
     }
 
+    @DisplayName("로그인 실패")
+    @Test
+    void login_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER)).given(memberService).login(any(LoginRequest.class));
+        // when
+        ResultActions resultActions = 로그인_요청(loginRequest);
+        // then
+        로그인_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
+    }
+
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members")
                 .contextPath("/api/v1")
@@ -269,5 +280,12 @@ public class MemberControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("login-success"));
+    }
+
+    private void 로그인_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("login-fail"));
     }
 }
