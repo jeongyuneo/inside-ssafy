@@ -1,5 +1,6 @@
 package com.inssa.backend.member.service;
 
+import com.inssa.backend.member.controller.dto.LoginRequest;
 import com.inssa.backend.member.controller.dto.MemberRequest;
 import com.inssa.backend.member.controller.dto.MemberResponse;
 import com.inssa.backend.member.controller.dto.PasswordUpdateRequest;
@@ -19,5 +20,8 @@ public class MemberService {
     }
 
     public void deleteMember(Long memberId) {
+    }
+
+    public void login(LoginRequest loginRequest) {
     }
 }
