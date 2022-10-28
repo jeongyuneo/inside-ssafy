@@ -8,9 +8,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
  * author jini
  */
 const Driving = ({ navigation }) => {
-  movePage = () => {
+  const movePage = () => {
     navigation.navigate("Main");
   };
+
   return (
     <StyledDriving>
       <MainText>

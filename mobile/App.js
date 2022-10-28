@@ -8,6 +8,8 @@ const Stack = createStackNavigator();
 /**
  * 초기 페이지를 Main으로 지정합니다.
  * Main과 Driving 페이지를 선언합니다.
+ * headerShown값을 false로 주어,
+ * 기본 생성되는 네비게이션바를 제거합니다.
  *
  * author jini
  */

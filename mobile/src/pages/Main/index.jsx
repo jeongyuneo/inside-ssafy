@@ -11,7 +11,7 @@ import { Alert } from "react-native";
 const Main = ({ navigation }) => {
   const busNumber = [1, 2, 3, 4, 5, 6];
 
-  movePage = () => {
+  const movePage = () => {
     navigation.navigate("Driving");
   };
 
