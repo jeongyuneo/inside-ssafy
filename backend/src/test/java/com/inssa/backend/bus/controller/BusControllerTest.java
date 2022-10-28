@@ -108,6 +108,17 @@ public class BusControllerTest extends ApiDocument {
         버스_즐겨찾기_삭제_성공(resultActions);
     }
 
+    @DisplayName("버스 즐겨찾기 삭제 실패")
+    @Test
+    void delete_bus_like_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).deleteBusLike(anyLong(), anyInt());
+        // when
+        ResultActions resultActions = 버스_즐겨찾기_삭제_요청(NUMBER);
+        // then
+        버스_즐겨찾기_삭제_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
+    }
+
     private ResultActions 버스_조회_요청(int number) throws Exception {
         return mockMvc.perform(get("/api/v1/buses")
                 .contextPath("/api/v1")
@@ -159,5 +170,12 @@ public class BusControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("delete-bus-like-success"));
+    }
+
+    private void 버스_즐겨찾기_삭제_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("delete-bus-like-fail"));
     }
 }
