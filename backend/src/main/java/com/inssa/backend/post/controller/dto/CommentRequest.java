@@ -6,11 +6,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PostsResponse {
+public class CommentRequest {
 
-    private Long postId;
-    private String title;
-    private int likeCount;
-    private int commentCount;
-    private String createdDate;
+    private String content;
 }
