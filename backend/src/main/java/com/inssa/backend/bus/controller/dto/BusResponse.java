@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BusResponse {
 
-    private int lastBusNumber;
+    private boolean isLast;
     private String lastVisitedBusStop;
     private List<String> busStops;
 }
