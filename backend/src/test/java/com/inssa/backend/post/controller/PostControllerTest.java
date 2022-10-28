@@ -248,6 +248,17 @@ public class PostControllerTest extends ApiDocument {
         익명_게시판_좋아요_삭제_성공(resultActions);
     }
 
+    @DisplayName("익명 게시판 좋아요 삭제 실패")
+    @Test
+    void delete_post_like_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).deletePostLike(anyLong(), anyLong());
+        // when
+        ResultActions resultActions = 익명_게시판_좋아요_삭제_요청(ID);
+        // then
+        익명_게시판_좋아요_삭제_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_POST));
+    }
+
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1"));
@@ -378,5 +389,12 @@ public class PostControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("delete-post-like-success"));
+    }
+
+    private void 익명_게시판_좋아요_삭제_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("delete-post-like-fail"));
     }
 }
