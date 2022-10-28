@@ -4,10 +4,7 @@ import com.inssa.backend.bus.controller.dto.BusResponse;
 import com.inssa.backend.bus.service.BusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,5 +16,11 @@ public class BusController {
     @GetMapping
     public ResponseEntity<BusResponse> getBus(@RequestParam int number) {
         return ResponseEntity.ok().body(busService.getBus(number));
+    }
+
+    @GetMapping("like")
+    public ResponseEntity<Void> likeBus(@RequestHeader("Authorization") String token, @RequestParam int number) {
+        busService.likeBus(1L, number);
+        return ResponseEntity.ok().build();
     }
 }
