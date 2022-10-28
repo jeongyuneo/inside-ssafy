@@ -20,7 +20,7 @@ public class ReCommentController {
     }
 
     @DeleteMapping("/{reCommentId}")
-    public ResponseEntity<Void> deleteReComment(@PathVariable Long reCommentId) {
+    public ResponseEntity<Void> deleteReComment(@RequestHeader("Authorization") String token, @PathVariable Long reCommentId) {
         reCommentService.deleteReComment(1L, reCommentId);
         return ResponseEntity.ok().build();
     }
