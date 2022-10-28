@@ -340,3 +340,18 @@ include::{snippets}/get-bus-fail/http-request.adoc[]
 
 .response
 include::{snippets}/get-bus-fail/http-response.adoc[]
+
+==== 버스 즐겨찾기 등록
+===== 성공
+.request
+include::{snippets}/create-bus-like-success/http-request.adoc[]
+
+.response
+include::{snippets}/create-bus-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/create-bus-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/create-bus-like-fail/http-response.adoc[]

@@ -9,4 +9,7 @@ public class BusService {
     public BusResponse getBus(int number) {
         return null;
     }
+
+    public void createBusLike(Long memberId, int number) {
+    }
 }
