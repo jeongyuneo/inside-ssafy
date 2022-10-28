@@ -11,6 +11,6 @@ import java.util.List;
 public class BusResponse {
 
     private int lastBusNumber;
-    private int lastVisitedRoute;
+    private String lastVisitedBusStop;
     private List<String> busStopNames;
 }
