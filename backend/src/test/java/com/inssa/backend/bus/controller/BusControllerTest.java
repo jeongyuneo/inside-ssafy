@@ -20,6 +20,7 @@ import java.util.stream.IntStream;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -96,6 +97,17 @@ public class BusControllerTest extends ApiDocument {
         버스_즐겨찾기_등록_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
 
+    @DisplayName("버스 즐겨찾기 삭제 성공")
+    @Test
+    void delete_bus_like_success() throws Exception {
+        // given
+        willDoNothing().given(busService).deleteBusLike(anyLong(), anyInt());
+        // when
+        ResultActions resultActions = 버스_즐겨찾기_삭제_요청(NUMBER);
+        // then
+        버스_즐겨찾기_삭제_성공(resultActions);
+    }
+
     private ResultActions 버스_조회_요청(int number) throws Exception {
         return mockMvc.perform(get("/api/v1/buses")
                 .contextPath("/api/v1")
@@ -134,5 +146,18 @@ public class BusControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("create-bus-like-fail"));
+    }
+
+    private ResultActions 버스_즐겨찾기_삭제_요청(int number) throws Exception {
+        return mockMvc.perform(delete("/api/v1/buses/like")
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
+    }
+
+    private void 버스_즐겨찾기_삭제_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("delete-bus-like-success"));
     }
 }
