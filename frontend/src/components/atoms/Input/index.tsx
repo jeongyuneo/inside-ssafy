@@ -19,7 +19,7 @@ const Input = ({
   textColor,
   backgroundColor,
   value,
-  textType,
+  type,
   name,
   id,
   index,
@@ -37,7 +37,7 @@ const Input = ({
       textColor={textColor}
       backgroundColor={backgroundColor}
       value={value}
-      type={textType}
+      type={type}
       name={name}
       id={id}
       index={index}
