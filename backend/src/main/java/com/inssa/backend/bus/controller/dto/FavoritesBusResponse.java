@@ -1,4 +1,4 @@
-package com.inssa.backend.common.controller.dto;
+package com.inssa.backend.bus.controller.dto;
 
 import lombok.*;
 
