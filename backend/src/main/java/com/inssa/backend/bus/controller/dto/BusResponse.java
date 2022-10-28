@@ -12,5 +12,5 @@ public class BusResponse {
 
     private int lastBusNumber;
     private String lastVisitedBusStop;
-    private List<String> busStopNames;
+    private List<String> busStops;
 }

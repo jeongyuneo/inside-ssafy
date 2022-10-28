@@ -40,13 +40,13 @@ public class BusControllerTest extends ApiDocument {
 
     @BeforeEach
     void setUp() {
-        List<String> busStopNames = IntStream.range(0, 2)
+        List<String> busStops = IntStream.range(0, 2)
                 .mapToObj(n -> BUS_STOP_NAME)
                 .collect(Collectors.toList());
         busResponse = BusResponse.builder()
                 .lastBusNumber(LAST_BUS_NUMBER)
                 .lastVisitedBusStop(BUS_STOP_NAME)
-                .busStopNames(busStopNames)
+                .busStops(busStops)
                 .build();
     }
 
