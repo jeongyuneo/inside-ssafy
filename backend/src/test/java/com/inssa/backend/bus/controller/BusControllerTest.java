@@ -76,13 +76,24 @@ public class BusControllerTest extends ApiDocument {
 
     @DisplayName("버스 즐겨찾기 등록 성공")
     @Test
-    void like_buse_success() throws Exception {
+    void like_bus_success() throws Exception {
         // given
         willDoNothing().given(busService).likeBus(anyLong(), anyInt());
         // when
         ResultActions resultActions = 버스_즐겨찾기_등록_요청(NUMBER);
         // then
         버스_즐겨찾기_등록_성공(resultActions);
+    }
+
+    @DisplayName("버스 즐겨찾기 등록 실패")
+    @Test
+    void like_bus_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).likeBus(anyLong(), anyInt());
+        // when
+        ResultActions resultActions = 버스_즐겨찾기_등록_요청(NUMBER);
+        // then
+        버스_즐겨찾기_등록_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
 
     private ResultActions 버스_조회_요청(int number) throws Exception {
@@ -116,5 +127,12 @@ public class BusControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("like-bus-success"));
+    }
+
+    private void 버스_즐겨찾기_등록_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("like-bus-fail"));
     }
 }
