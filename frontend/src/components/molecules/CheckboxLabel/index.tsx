@@ -13,8 +13,8 @@ import { PropTypes } from './types';
 const CheckboxLabel = ({ text, id, isColumn }: PropTypes) => {
   return (
     <StyledCheckboxLabel isColumn={isColumn}>
-      <Label htmlFor={id}>{text}</Label>
       <Checkbox id={id} />
+      <Label htmlFor={id}>{text}</Label>
     </StyledCheckboxLabel>
   );
 };
