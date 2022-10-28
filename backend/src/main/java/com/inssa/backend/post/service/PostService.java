@@ -31,4 +31,7 @@ public class PostService {
 
     public void deletePost(Long postId) {
     }
+
+    public void deletePostLike(Long memberId, Long postId) {
+    }
 }
