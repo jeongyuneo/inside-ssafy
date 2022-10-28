@@ -9,7 +9,7 @@ export interface PropTypes {
   changeHandler?: (index: string, value: string) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
-  textType?: string;
+  type?: string;
   name?: string;
   id?: string;
   index?: string;
