@@ -7,11 +7,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorMessage {
 
-    NOT_FOUND_MEMBER("회원 조회에 실패했습니다"),
+    NOT_FOUND_MEMBER("해당 회원을 찾을 수 없습니다."),
     NOT_FOUND_POST("해당 게시글을 찾을 수 없습니다."),
     NOT_FOUND_COMMENT("해당 댓글을 찾을 수 없습니다."),
-    NOT_FOUND_MENU("해당 식단을 찾을 수 없습니다."),
     NOT_FOUND_RECOMMENT("해당 대댓글을 찾을 수 없습니다."),
+    NOT_FOUND_MENU("해당 식단을 찾을 수 없습니다."),
+    NOT_FOUND_BUS("해당 버스를 찾을 수 없습니다."),
 
     FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
