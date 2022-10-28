@@ -4,6 +4,7 @@ import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
+import com.inssa.backend.member.controller.dto.LoginRequest;
 import com.inssa.backend.member.controller.dto.MemberRequest;
 import com.inssa.backend.member.controller.dto.MemberResponse;
 import com.inssa.backend.member.controller.dto.PasswordUpdateRequest;
@@ -48,6 +49,7 @@ public class MemberControllerTest extends ApiDocument {
     private MemberRequest memberRequest;
     private MemberResponse memberResponse;
     private PasswordUpdateRequest memberUpdateRequest;
+    private LoginRequest loginRequest;
 
     @BeforeEach
     void setUp() {
@@ -73,6 +75,10 @@ public class MemberControllerTest extends ApiDocument {
         memberUpdateRequest = PasswordUpdateRequest.builder()
                 .password(PASSWORD)
                 .newPassword(NEW_PASSWORD)
+                .build();
+        loginRequest = LoginRequest.builder()
+                .email(EMAIL)
+                .password(PASSWORD)
                 .build();
     }
 
@@ -164,6 +170,17 @@ public class MemberControllerTest extends ApiDocument {
         회원탈퇴_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
+    @DisplayName("로그인 성공")
+    @Test
+    void login_success() throws Exception {
+        // given
+        willDoNothing().given(memberService).login(any(LoginRequest.class));
+        // when
+        ResultActions resultActions = 로그인_요청(loginRequest);
+        // then
+        로그인_성공(resultActions);
+    }
+
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members")
                 .contextPath("/api/v1")
@@ -239,5 +256,18 @@ public class MemberControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("delete-member-fail"));
+    }
+
+    private ResultActions 로그인_요청(LoginRequest loginRequest) throws Exception {
+        return mockMvc.perform(post("/api/v1/members/login")
+                .contextPath("/api/v1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(loginRequest)));
+    }
+
+    private void 로그인_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("login-success"));
     }
 }
