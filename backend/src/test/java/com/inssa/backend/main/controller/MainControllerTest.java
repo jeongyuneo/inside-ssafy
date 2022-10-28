@@ -106,6 +106,17 @@ public class MainControllerTest extends ApiDocument {
         메인페이지_조회_성공(resultActions);
     }
 
+    @DisplayName("메인페이지 조회 실패")
+    @Test
+    void get_main_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(mainService).getMain();
+        // when
+        ResultActions resultActions = 메인페이지_조회_요청();
+        // then
+        메인페이지_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_POST));
+    }
+
     private ResultActions 자주타는_버스정보_조회_요청(Long memberId) throws Exception {
         return mockMvc.perform(get("/api/v1/buses/" + memberId)
                 .contextPath("/api/v1"));
@@ -134,6 +145,13 @@ public class MainControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andExpect(content().json(toJson(mainResponse)))
                 .andDo(print())
-                .andDo(toDocument("get_main_success"));
+                .andDo(toDocument("get-main-success"));
+    }
+
+    private void 메인페이지_조회_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("get-main-fail"));
     }
 }
