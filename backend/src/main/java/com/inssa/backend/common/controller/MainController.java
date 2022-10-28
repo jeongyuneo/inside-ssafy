@@ -1,6 +1,7 @@
 package com.inssa.backend.common.controller;
 
 import com.inssa.backend.common.controller.dto.FavoritesBusResponse;
+import com.inssa.backend.common.controller.dto.MainResponse;
 import com.inssa.backend.common.service.MainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,10 @@ public class MainController {
     @GetMapping("/buses/{memberId}")
     public ResponseEntity<List<FavoritesBusResponse>> getFavoritesBus(@PathVariable Long memberId) {
         return ResponseEntity.ok().body(mainService.getFavoritesBus(memberId));
+    }
+
+    @GetMapping
+    public ResponseEntity<MainResponse> getMain() {
+        return ResponseEntity.ok().body(mainService.getMain());
     }
 }
