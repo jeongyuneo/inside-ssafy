@@ -4,10 +4,7 @@ import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
-import com.inssa.backend.member.controller.dto.LoginRequest;
-import com.inssa.backend.member.controller.dto.MemberRequest;
-import com.inssa.backend.member.controller.dto.MemberResponse;
-import com.inssa.backend.member.controller.dto.PasswordUpdateRequest;
+import com.inssa.backend.member.controller.dto.*;
 import com.inssa.backend.member.service.MemberService;
 import com.inssa.backend.post.controller.dto.PostsResponse;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -42,6 +39,7 @@ public class MemberControllerTest extends ApiDocument {
     private static final int COMMENT_COUNT = 3;
     private static final String CREATED_DATE = "10/25 10:19";
     private static final String NEW_PASSWORD = "newssafy";
+    private static final String ACCESS_TOKEN = "aksdljlafsdiofb3924ajkdajfasfnasdfj";
 
     @MockBean
     private MemberService memberService;
@@ -50,6 +48,7 @@ public class MemberControllerTest extends ApiDocument {
     private MemberResponse memberResponse;
     private PasswordUpdateRequest memberUpdateRequest;
     private LoginRequest loginRequest;
+    private TokenResponse tokenResponse;
 
     @BeforeEach
     void setUp() {
@@ -79,6 +78,9 @@ public class MemberControllerTest extends ApiDocument {
         loginRequest = LoginRequest.builder()
                 .email(EMAIL)
                 .password(PASSWORD)
+                .build();
+        tokenResponse = TokenResponse.builder()
+                .accessToken(ACCESS_TOKEN)
                 .build();
     }
 
@@ -174,7 +176,7 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void login_success() throws Exception {
         // given
-        willDoNothing().given(memberService).login(any(LoginRequest.class));
+        willReturn(tokenResponse).given(memberService).login(any(LoginRequest.class));
         // when
         ResultActions resultActions = 로그인_요청(loginRequest);
         // then
@@ -278,6 +280,7 @@ public class MemberControllerTest extends ApiDocument {
 
     private void 로그인_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
+                .andExpect(content().json(toJson(tokenResponse)))
                 .andDo(print())
                 .andDo(toDocument("login-success"));
     }
