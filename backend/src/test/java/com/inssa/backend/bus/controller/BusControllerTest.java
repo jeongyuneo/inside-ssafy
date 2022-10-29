@@ -1,7 +1,7 @@
 package com.inssa.backend.bus.controller;
 
 import com.inssa.backend.ApiDocument;
-import com.inssa.backend.bus.controller.dto.FavoritesBusResponse;
+import com.inssa.backend.bus.controller.dto.FavoriteBusesResponse;
 import com.inssa.backend.bus.service.BusService;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(BusController.class)
 public class BusControllerTest extends ApiDocument {
+
     private static final Long ID = 1L;
     private static final int BUS_ID = 1;
     private static final String BEFORE_BUS_STOP = "수통골";
@@ -35,12 +36,12 @@ public class BusControllerTest extends ApiDocument {
     @MockBean
     private BusService busService;
 
-    private List<FavoritesBusResponse> favoritesBusResponses;
+    private List<FavoriteBusesResponse> favoritesBusResponses;
 
     @BeforeEach
     void setUp() {
-        FavoritesBusResponse favoritesBusResponse = FavoritesBusResponse.builder()
-                .busId(BUS_ID)
+        FavoriteBusesResponse favoritesBusResponse = FavoriteBusesResponse.builder()
+                .number(BUS_ID)
                 .beforeBusStop(BEFORE_BUS_STOP)
                 .afterBusStop(AFTER_BUS_STOP)
                 .build();
