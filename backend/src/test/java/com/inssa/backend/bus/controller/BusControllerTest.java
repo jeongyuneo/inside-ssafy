@@ -29,32 +29,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BusControllerTest extends ApiDocument {
 
     private static final Long ID = 1L;
-    private static final int BUS_ID = 1;
-    private static final String BEFORE_BUS_STOP = "수통골";
-    private static final String AFTER_BUS_STOP = "한밭대";
+    private static final int BUS_NUMBER = 1;
+    private static final String PREVIOUS_BUS_STOP = "수통골";
+    private static final String NEXT_BUS_STOP = "한밭대";
 
     @MockBean
     private BusService busService;
 
-    private List<FavoriteBusesResponse> favoritesBusResponses;
+    private List<FavoriteBusesResponse> favoriteBusesResponses;
 
     @BeforeEach
     void setUp() {
         FavoriteBusesResponse favoritesBusResponse = FavoriteBusesResponse.builder()
-                .number(BUS_ID)
-                .beforeBusStop(BEFORE_BUS_STOP)
-                .afterBusStop(AFTER_BUS_STOP)
+                .number(BUS_NUMBER)
+                .previousBusStop(PREVIOUS_BUS_STOP)
+                .nextBusStop(NEXT_BUS_STOP)
                 .build();
-        favoritesBusResponses = IntStream.range(0, 2)
+        favoriteBusesResponses = IntStream.range(0, 2)
                 .mapToObj(n -> favoritesBusResponse)
                 .collect(Collectors.toList());
     }
 
-    @DisplayName("자주타는 버스정보 조회 성공 ")
+    @DisplayName("자주타는 버스정보 조회 성공")
     @Test
     void favorites_bus_success() throws Exception {
         // given
-        willReturn(favoritesBusResponses).given(busService).getFavoritesBus(anyLong());
+        willReturn(favoriteBusesResponses).given(busService).getBusLike(anyLong());
         // when
         ResultActions resultActions = 자주타는_버스정보_조회_요청(ID);
         // then
@@ -65,7 +65,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void favorites_bus_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getFavoritesBus(anyLong());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getBusLike(anyLong());
         // when
         ResultActions resultActions = 자주타는_버스정보_조회_요청(ID);
         // then
@@ -79,15 +79,15 @@ public class BusControllerTest extends ApiDocument {
 
     private void 자주타는_버스정보_조회_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(favoritesBusResponses)))
+                .andExpect(content().json(toJson(favoriteBusesResponses)))
                 .andDo(print())
-                .andDo(toDocument("get-favorites-bus-success"));
+                .andDo(toDocument("get-favorite-buses-success"));
     }
 
     private void 자주타는_버스정보_조회_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
-                .andDo(toDocument("get-favorites-bus-fail"));
+                .andDo(toDocument("get-favorite-buses-fail"));
     }
 }
