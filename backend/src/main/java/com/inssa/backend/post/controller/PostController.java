@@ -50,4 +50,10 @@ public class PostController {
         postService.deletePost(postId);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/like/{postId}")
+    public ResponseEntity<Void> createPostLike(@RequestHeader("Authorization") String token, @PathVariable Long postId) {
+        postService.createPostLike(1L, postId);
+        return ResponseEntity.ok().build();
+    }
 }
