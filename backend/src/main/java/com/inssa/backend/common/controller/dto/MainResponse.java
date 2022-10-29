@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MainResponse {
 
-    private List<String> items;
-    private List<PostsResponse> postsResponses;
+    private List<String> menus;
+    private List<PostsResponse> hotposts;
 }
