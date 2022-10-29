@@ -355,3 +355,11 @@ include::{snippets}/create-bus-like-fail/http-request.adoc[]
 
 .response
 include::{snippets}/create-bus-like-fail/http-response.adoc[]
+
+==== 버스 노선 이미지 조회
+===== 성공
+.request
+include::{snippets}/get-route-image-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-route-image-success/http-response.adoc[]
