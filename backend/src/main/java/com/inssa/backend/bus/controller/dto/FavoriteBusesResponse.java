@@ -9,6 +9,6 @@ import lombok.*;
 public class FavoriteBusesResponse {
 
     private int number;
-    private String beforeBusStop;
-    private String afterBusStop;
+    private String previousBusStop;
+    private String nextBusStop;
 }
