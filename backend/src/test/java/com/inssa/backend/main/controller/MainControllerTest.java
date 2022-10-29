@@ -51,7 +51,7 @@ public class MainControllerTest extends ApiDocument {
                 .build();
         mainResponse = MainResponse.builder()
                 .menus(ITEMS)
-                .hotposts(IntStream.range(0, 2)
+                .hotPosts(IntStream.range(0, 2)
                         .mapToObj(n -> postsResponse)
                         .collect(Collectors.toList()))
                 .build();
