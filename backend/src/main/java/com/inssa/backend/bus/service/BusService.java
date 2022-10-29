@@ -1,6 +1,6 @@
 package com.inssa.backend.bus.service;
 
-import com.inssa.backend.bus.controller.dto.FavoriteBusesResponse;
+import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public class BusService {
 
-    public List<FavoriteBusesResponse> getBusLikes(Long memberId) {
+    public List<BusLikeResponse> getBusLikes(Long memberId) {
         return null;
     }
 }
