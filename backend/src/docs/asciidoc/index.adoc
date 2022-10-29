@@ -312,17 +312,17 @@ include::{snippets}/get-menu-fail/http-request.adoc[]
 include::{snippets}/get-menu-fail/http-response.adoc[]
 
 === 버스
-==== 즐겨찾는 버스 정보
+==== 즐겨찾는 버스 정보 조회
 ===== 성공
 .request
-include::{snippets}/get-favorite-buses-success/http-request.adoc[]
+include::{snippets}/get-bus-likes-success/http-request.adoc[]
 
 .response
-include::{snippets}/get-favorite-buses-success/http-response.adoc[]
+include::{snippets}/get-bus-likes-success/http-response.adoc[]
 
 ===== 실패
 .request
-include::{snippets}/get-favorite-buses-fail/http-request.adoc[]
+include::{snippets}/get-bus-likes-fail/http-request.adoc[]
 
 .response
-include::{snippets}/get-favorite-buses-fail/http-response.adoc[]
+include::{snippets}/get-bus-likes-fail/http-response.adoc[]
