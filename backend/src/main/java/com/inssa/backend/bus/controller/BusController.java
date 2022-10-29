@@ -1,7 +1,7 @@
 package com.inssa.backend.bus.controller;
 
 import com.inssa.backend.bus.service.BusService;
-import com.inssa.backend.bus.controller.dto.FavoritesBusResponse;
+import com.inssa.backend.bus.controller.dto.FavoriteBusesResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class BusController {
     private final BusService busService;
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<List<FavoritesBusResponse>> getFavoritesBus(@PathVariable Long memberId) {
+    public ResponseEntity<List<FavoriteBusesResponse>> getFavoriteBuses(@PathVariable Long memberId) {
         return ResponseEntity.ok().body(busService.getFavoritesBus(memberId));
     }
 }
