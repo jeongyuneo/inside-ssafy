@@ -132,6 +132,17 @@ public class BusControllerTest extends ApiDocument {
         버스_위치_최신화_성공(resultActions);
     }
 
+    @DisplayName("버스 위치 최신화 실패")
+    @Test
+    void arrive_at_bus_stop_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE)).given(busService).arriveAtBusStop(anyLong());
+        // when
+        ResultActions resultActions = 버스_위치_최신화_요청(ID);
+        // then
+        버스_위치_최신화_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_ROUTE));
+    }
+
     private ResultActions 버스_조회_요청(int number) throws Exception {
         return mockMvc.perform(get("/api/v1/buses")
                 .contextPath("/api/v1")
@@ -201,5 +212,12 @@ public class BusControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(toDocument("arrive-at-bus-stop-success"));
+    }
+
+    private void 버스_위치_최신화_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("arrive-at-bus-stop-fail"));
     }
 }
