@@ -12,5 +12,5 @@ import java.util.List;
 public class MainResponse {
 
     private List<String> menus;
-    private List<PostsResponse> hotposts;
+    private List<PostsResponse> hotPosts;
 }
