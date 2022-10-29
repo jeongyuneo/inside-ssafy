@@ -363,3 +363,10 @@ include::{snippets}/get-route-image-success/http-request.adoc[]
 
 .response
 include::{snippets}/get-route-image-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-route-image-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-route-image-fail/http-response.adoc[]
