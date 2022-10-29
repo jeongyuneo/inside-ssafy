@@ -6,9 +6,9 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FavoritesBusResponse {
+public class FavoriteBusesResponse {
 
-    private int busId;
+    private int number;
     private String beforeBusStop;
     private String afterBusStop;
 }
