@@ -113,6 +113,17 @@ public class BusControllerTest extends ApiDocument {
         버스_노선_이미지_조회_성공(resultActions);
     }
 
+    @DisplayName("버스 노선 이미지 조회 실패")
+    @Test
+    void get_route_image_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE_IMAGE)).given(busService).getRouteImage(anyInt());
+        // when
+        ResultActions resultActions = 버스_노선_이미지_조회_요청(NUMBER);
+        // then
+        버스_노선_이미지_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_ROUTE_IMAGE));
+    }
+
     private ResultActions 버스_조회_요청(int number) throws Exception {
         return mockMvc.perform(get("/api/v1/buses")
                 .contextPath("/api/v1")
@@ -164,5 +175,12 @@ public class BusControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(routeImageResponse)))
                 .andDo(print())
                 .andDo(toDocument("get-route-image-success"));
+    }
+
+    private void 버스_노선_이미지_조회_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("get-route-image-fail"));
     }
 }
