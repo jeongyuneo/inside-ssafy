@@ -1,7 +1,7 @@
 package com.inssa.backend.bus.controller;
 
 import com.inssa.backend.ApiDocument;
-import com.inssa.backend.bus.controller.dto.FavoriteBusesResponse;
+import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.service.BusService;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
@@ -36,17 +36,17 @@ public class BusControllerTest extends ApiDocument {
     @MockBean
     private BusService busService;
 
-    private List<FavoriteBusesResponse> favoriteBusesResponses;
+    private List<BusLikeResponse> busLikeResponses;
 
     @BeforeEach
     void setUp() {
-        FavoriteBusesResponse favoritesBusResponse = FavoriteBusesResponse.builder()
+        BusLikeResponse bulLikeResponse = BusLikeResponse.builder()
                 .number(BUS_NUMBER)
                 .previousBusStop(PREVIOUS_BUS_STOP)
                 .nextBusStop(NEXT_BUS_STOP)
                 .build();
-        favoriteBusesResponses = IntStream.range(0, 2)
-                .mapToObj(n -> favoritesBusResponse)
+        busLikeResponses = IntStream.range(0, 2)
+                .mapToObj(n -> bulLikeResponse)
                 .collect(Collectors.toList());
     }
 
@@ -54,7 +54,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void get_like_bus_success() throws Exception {
         // given
-        willReturn(favoriteBusesResponses).given(busService).getBusLikes(anyLong());
+        willReturn(busLikeResponses).given(busService).getBusLikes(anyLong());
         // when
         ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청(ID);
         // then
@@ -73,21 +73,21 @@ public class BusControllerTest extends ApiDocument {
     }
 
     private ResultActions 버스_즐겨찾기_목록_조회_요청(Long memberId) throws Exception {
-        return mockMvc.perform(get("/api/v1/buses/" + memberId)
+        return mockMvc.perform(get("/api/v1/buses/likes/" + memberId)
                 .contextPath("/api/v1"));
     }
 
     private void 버스_즐겨찾기_목록_조회_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(favoriteBusesResponses)))
+                .andExpect(content().json(toJson(busLikeResponses)))
                 .andDo(print())
-                .andDo(toDocument("get-favorite-buses-success"));
+                .andDo(toDocument("get-bus-likes-success"));
     }
 
     private void 버스_즐겨찾기_목록_조회_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
-                .andDo(toDocument("get-favorite-buses-fail"));
+                .andDo(toDocument("get-bus-likes-fail"));
     }
 }
