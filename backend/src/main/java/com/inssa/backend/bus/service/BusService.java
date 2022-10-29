@@ -1,6 +1,7 @@
 package com.inssa.backend.bus.service;
 
 import com.inssa.backend.bus.controller.dto.BusResponse;
+import com.inssa.backend.bus.controller.dto.RouteImageResponse;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,5 +12,9 @@ public class BusService {
     }
 
     public void createBusLike(Long memberId, int number) {
+    }
+
+    public RouteImageResponse getRouteImage(int number) {
+        return null;
     }
 }
