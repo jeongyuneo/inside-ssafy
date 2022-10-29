@@ -378,3 +378,10 @@ include::{snippets}/start-bus-service-success/http-request.adoc[]
 
 .response
 include::{snippets}/start-bus-service-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/start-bus-service-fail/http-request.adoc[]
+
+.response
+include::{snippets}/start-bus-service-fail/http-response.adoc[]
