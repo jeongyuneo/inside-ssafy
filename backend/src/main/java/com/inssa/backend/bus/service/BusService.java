@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public class BusService {
 
-    public List<FavoriteBusesResponse> getBusLike(Long memberId) {
+    public List<FavoriteBusesResponse> getBusLikes(Long memberId) {
         return null;
     }
 }
