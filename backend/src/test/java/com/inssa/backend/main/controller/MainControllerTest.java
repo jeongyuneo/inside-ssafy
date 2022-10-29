@@ -1,7 +1,6 @@
 package com.inssa.backend.main.controller;
 
 import com.inssa.backend.ApiDocument;
-import com.inssa.backend.bus.controller.dto.FavoritesBusResponse;
 import com.inssa.backend.common.controller.MainController;
 import com.inssa.backend.common.controller.dto.MainResponse;
 import com.inssa.backend.common.domain.ErrorMessage;
@@ -51,8 +50,8 @@ public class MainControllerTest extends ApiDocument {
                 .createdDate(CREATED_DATE)
                 .build();
         mainResponse = MainResponse.builder()
-                .items(ITEMS)
-                .postsResponses(IntStream.range(0, 2)
+                .menus(ITEMS)
+                .hotposts(IntStream.range(0, 2)
                         .mapToObj(n -> postsResponse)
                         .collect(Collectors.toList()))
                 .build();
