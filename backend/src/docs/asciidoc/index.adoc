@@ -315,14 +315,14 @@ include::{snippets}/get-menu-fail/http-response.adoc[]
 ==== 즐겨찾는 버스 정보
 ===== 성공
 .request
-include::{snippets}/get-favorites-bus-success/http-request.adoc[]
+include::{snippets}/get-favorite-buses-success/http-request.adoc[]
 
 .response
-include::{snippets}/get-favorites-bus-success/http-response.adoc[]
+include::{snippets}/get-favorite-buses-success/http-response.adoc[]
 
 ===== 실패
 .request
-include::{snippets}/get-favorites-bus-fail/http-request.adoc[]
+include::{snippets}/get-favorite-buses-fail/http-request.adoc[]
 
 .response
-include::{snippets}/get-favorites-bus-fail/http-response.adoc[]
+include::{snippets}/get-favorite-buses-fail/http-response.adoc[]
