@@ -370,3 +370,11 @@ include::{snippets}/delete-bus-like-fail/http-request.adoc[]
 
 .response
 include::{snippets}/delete-bus-like-fail/http-response.adoc[]
+
+==== 버스 운행 시작
+===== 성공
+.request
+include::{snippets}/start-bus-service-success/http-request.adoc[]
+
+.response
+include::{snippets}/start-bus-service-success/http-response.adoc[]
