@@ -29,4 +29,10 @@ public class BusController {
         busService.deleteBusLike(1L, number);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/arrive-at-bus-stop/{routeId}")
+    public ResponseEntity<Void> arriveAtBusStop(@PathVariable Long routeId) {
+        busService.arriveAtBusStop(routeId);
+        return ResponseEntity.ok().build();
+    }
 }
