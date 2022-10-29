@@ -50,41 +50,41 @@ public class BusControllerTest extends ApiDocument {
                 .collect(Collectors.toList());
     }
 
-    @DisplayName("자주타는 버스정보 조회 성공")
+    @DisplayName("버스 즐겨찾기 목록 조회 성공")
     @Test
-    void favorites_bus_success() throws Exception {
+    void get_like_bus_success() throws Exception {
         // given
-        willReturn(favoriteBusesResponses).given(busService).getBusLike(anyLong());
+        willReturn(favoriteBusesResponses).given(busService).getBusLikes(anyLong());
         // when
-        ResultActions resultActions = 자주타는_버스정보_조회_요청(ID);
+        ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청(ID);
         // then
-        자주타는_버스정보_조회_성공(resultActions);
+        버스_즐겨찾기_목록_조회_성공(resultActions);
     }
 
-    @DisplayName("자주타는 버스정보 조회 실패")
+    @DisplayName("버스 즐겨찾기 목록 조회 실패")
     @Test
-    void favorites_bus_fail() throws Exception {
+    void get_like_bus_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getBusLike(anyLong());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getBusLikes(anyLong());
         // when
-        ResultActions resultActions = 자주타는_버스정보_조회_요청(ID);
+        ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청(ID);
         // then
-        자주타는_버스정보_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
+        버스_즐겨찾기_목록_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
 
-    private ResultActions 자주타는_버스정보_조회_요청(Long memberId) throws Exception {
+    private ResultActions 버스_즐겨찾기_목록_조회_요청(Long memberId) throws Exception {
         return mockMvc.perform(get("/api/v1/buses/" + memberId)
                 .contextPath("/api/v1"));
     }
 
-    private void 자주타는_버스정보_조회_성공(ResultActions resultActions) throws Exception {
+    private void 버스_즐겨찾기_목록_조회_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
                 .andExpect(content().json(toJson(favoriteBusesResponses)))
                 .andDo(print())
                 .andDo(toDocument("get-favorite-buses-success"));
     }
 
-    private void 자주타는_버스정보_조회_실패(ResultActions resultActions, Message message) throws Exception {
+    private void 버스_즐겨찾기_목록_조회_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
