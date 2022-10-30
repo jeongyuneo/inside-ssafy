@@ -17,6 +17,9 @@ import javax.persistence.*;
 @Entity
 public class Route extends BaseEntity {
 
+    @Column(name = "route_order")
+    private int order;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_id")
     private Bus bus;
