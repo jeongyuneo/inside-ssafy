@@ -20,6 +20,10 @@ public class Bus extends BaseEntity {
     @NotNull
     private int number;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "last_visited_bus_stop_id")
+    private BusStop lastVisitedBusStop;
+
     @Builder.Default
     @OneToMany(mappedBy = "bus", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Route> routes = new ArrayList<>();
