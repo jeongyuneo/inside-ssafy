@@ -19,8 +19,7 @@ import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -122,7 +121,7 @@ public class BusControllerTest extends ApiDocument {
 
     @DisplayName("버스 위치 최신화 성공")
     @Test
-    void arrive_at_bus_stop_success() throws Exception {
+    void arrive_at_success() throws Exception {
         // given
         willDoNothing().given(busService).arriveAt(anyLong());
         // when
@@ -133,7 +132,7 @@ public class BusControllerTest extends ApiDocument {
 
     @DisplayName("버스 위치 최신화 실패")
     @Test
-    void arrive_at_bus_stop_fail() throws Exception {
+    void arrive_at_fail() throws Exception {
         // given
         willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE)).given(busService).arriveAt(anyLong());
         // when
@@ -203,20 +202,20 @@ public class BusControllerTest extends ApiDocument {
     }
 
     private ResultActions 버스_위치_최신화_요청(Long routeId) throws Exception {
-        return mockMvc.perform(get("/api/v1/buses/arrive-at-bus-stop/" + routeId)
+        return mockMvc.perform(post("/api/v1/buses/arrive/" + routeId)
                 .contextPath("/api/v1"));
     }
 
     private void 버스_위치_최신화_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
-                .andDo(toDocument("arrive-at-bus-stop-success"));
+                .andDo(toDocument("arrive-at-success"));
     }
 
     private void 버스_위치_최신화_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
-                .andDo(toDocument("arrive-at-bus-stop-fail"));
+                .andDo(toDocument("arrive-at-fail"));
     }
 }
