@@ -1,10 +1,13 @@
 package com.inssa.backend.bus.controller;
 
+import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.controller.dto.BusResponse;
 import com.inssa.backend.bus.service.BusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,7 +21,7 @@ public class BusController {
         return ResponseEntity.ok().body(busService.getBus(number));
     }
 
-    @GetMapping("/like")
+    @PostMapping("/like")
     public ResponseEntity<Void> createBusLike(@RequestHeader("Authorization") String token, @RequestParam int number) {
         busService.createBusLike(1L, number);
         return ResponseEntity.ok().build();
@@ -28,5 +31,10 @@ public class BusController {
     public ResponseEntity<Void> deleteBusLike(@RequestHeader("Authorization") String token, @RequestParam int number) {
         busService.deleteBusLike(1L, number);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/like/{memberId}")
+    public ResponseEntity<List<BusLikeResponse>> getBusLikes(@PathVariable Long memberId) {
+        return ResponseEntity.ok().body(busService.getBusLikes(memberId));
     }
 }
