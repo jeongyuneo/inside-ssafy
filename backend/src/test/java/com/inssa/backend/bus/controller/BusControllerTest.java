@@ -217,7 +217,7 @@ public class BusControllerTest extends ApiDocument {
     }
 
     private ResultActions 버스_운행_시작_요청(int number) throws Exception {
-        return mockMvc.perform(get("/api/v1/buses/start-service")
+        return mockMvc.perform(get("/api/v1/buses/start")
                 .contextPath("/api/v1")
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
@@ -226,13 +226,13 @@ public class BusControllerTest extends ApiDocument {
         resultActions.andExpect(status().isOk())
                 .andExpect(content().json(toJson(routeResponses)))
                 .andDo(print())
-                .andDo(toDocument("start-bus-service-success"));
+                .andDo(toDocument("start-bus-success"));
     }
 
     private void 버스_운행_시작_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
-                .andDo(toDocument("start-bus-service-fail"));
+                .andDo(toDocument("start-bus-fail"));
     }
 }
