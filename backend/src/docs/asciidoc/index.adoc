@@ -374,14 +374,14 @@ include::{snippets}/delete-bus-like-fail/http-response.adoc[]
 ==== 버스 위치 최신화
 ===== 성공
 .request
-include::{snippets}/arrive-at-success/http-request.adoc[]
+include::{snippets}/arrive-at-bus-stop-success/http-request.adoc[]
 
 .response
-include::{snippets}/arrive-at-success/http-response.adoc[]
+include::{snippets}/arrive-at-bus-stop-success/http-response.adoc[]
 
 ===== 실패
 .request
-include::{snippets}/arrive-at-fail/http-request.adoc[]
+include::{snippets}/arrive-at-bus-stop-fail/http-request.adoc[]
 
 .response
-include::{snippets}/arrive-at-fail/http-response.adoc[]
+include::{snippets}/arrive-at-bus-stop-fail/http-response.adoc[]
