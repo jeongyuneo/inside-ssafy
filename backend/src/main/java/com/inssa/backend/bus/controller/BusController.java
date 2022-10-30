@@ -1,6 +1,7 @@
 package com.inssa.backend.bus.controller;
 
 import com.inssa.backend.bus.controller.dto.BusResponse;
+import com.inssa.backend.bus.controller.dto.RouteImageResponse;
 import com.inssa.backend.bus.service.BusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,10 @@ public class BusController {
     public ResponseEntity<Void> deleteBusLike(@RequestHeader("Authorization") String token, @RequestParam int number) {
         busService.deleteBusLike(1L, number);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/route/image")
+    public ResponseEntity<RouteImageResponse> getRouteImage(@RequestParam int number) {
+        return ResponseEntity.ok().body(busService.getRouteImage(number));
     }
 }
