@@ -138,7 +138,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void start_bus_service_success() throws Exception {
         // given
-        willReturn(routeResponses).given(busService).startBusService(anyInt());
+        willReturn(routeResponses).given(busService).startBus(anyInt());
         // when
         ResultActions resultActions = 버스_운행_시작_요청(NUMBER);
         // then
@@ -149,7 +149,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void start_bus_service_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).startBusService(anyInt());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).startBus(anyInt());
         // when
         ResultActions resultActions = 버스_운행_시작_요청(NUMBER);
         // then

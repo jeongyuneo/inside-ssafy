@@ -33,8 +33,8 @@ public class BusController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/start-service")
-    public ResponseEntity<List<RouteResponse>> startBusService(@RequestParam int number) {
-        return ResponseEntity.ok().body(busService.startBusService(number));
+    @GetMapping("/start")
+    public ResponseEntity<List<RouteResponse>> startBus(@RequestParam int number) {
+        return ResponseEntity.ok().body(busService.startBus(number));
     }
 }

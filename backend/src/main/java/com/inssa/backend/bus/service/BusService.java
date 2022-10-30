@@ -19,7 +19,7 @@ public class BusService {
     public void deleteBusLike(Long memberId, int number) {
     }
 
-    public List<RouteResponse> startBusService(int number) {
+    public List<RouteResponse> startBus(int number) {
         return null;
     }
 }
