@@ -204,6 +204,36 @@ include::{snippets}/delete-post-fail/http-request.adoc[]
 .response
 include::{snippets}/delete-post-fail/http-response.adoc[]
 
+==== 익명 게시판 좋아요 등록
+===== 성공
+.request
+include::{snippets}/create-post-like-success/http-request.adoc[]
+
+.response
+include::{snippets}/create-post-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/create-post-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/create-post-like-fail/http-response.adoc[]
+
+==== 익명 게시판 좋아요 삭제
+===== 성공
+.request
+include::{snippets}/delete-post-like-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-post-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-post-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-post-like-fail/http-response.adoc[]
+
 ==== 익명 게시판 댓글 등록
 ===== 성공
 .request
