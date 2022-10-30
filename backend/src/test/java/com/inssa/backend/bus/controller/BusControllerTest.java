@@ -204,7 +204,7 @@ public class BusControllerTest extends ApiDocument {
     }
 
     private ResultActions 버스_위치_최신화_요청(Long routeId) throws Exception {
-        return mockMvc.perform(get("/api/v1/buses/arrive-at-bus-stop/" + ID)
+        return mockMvc.perform(get("/api/v1/buses/arrive-at-bus-stop/" + routeId)
                 .contextPath("/api/v1"));
     }
 
