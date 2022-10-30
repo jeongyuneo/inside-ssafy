@@ -208,7 +208,7 @@ public class BusControllerTest extends ApiDocument {
     }
 
     private ResultActions 버스_노선_이미지_조회_요청(int number) throws Exception {
-        return mockMvc.perform(get("/api/v1/buses/route-image")
+        return mockMvc.perform(get("/api/v1/buses/route/image")
                 .contextPath("/api/v1")
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
