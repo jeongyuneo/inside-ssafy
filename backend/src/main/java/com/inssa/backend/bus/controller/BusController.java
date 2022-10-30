@@ -30,9 +30,9 @@ public class BusController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/arrive-at-bus-stop/{routeId}")
-    public ResponseEntity<Void> arriveAtBusStop(@PathVariable Long routeId) {
-        busService.arriveAtBusStop(routeId);
+    @PostMapping("/arrive/{routeId}")
+    public ResponseEntity<Void> arriveAt(@PathVariable Long routeId) {
+        busService.arriveAt(routeId);
         return ResponseEntity.ok().build();
     }
 }
