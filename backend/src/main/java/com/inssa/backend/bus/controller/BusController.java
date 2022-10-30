@@ -25,6 +25,12 @@ public class BusController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/like")
+    public ResponseEntity<Void> deleteBusLike(@RequestHeader("Authorization") String token, @RequestParam int number) {
+        busService.deleteBusLike(1L, number);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/route/image")
     public ResponseEntity<RouteImageResponse> getRouteImage(@RequestParam int number) {
         return ResponseEntity.ok().body(busService.getRouteImage(number));

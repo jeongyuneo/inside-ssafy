@@ -356,6 +356,21 @@ include::{snippets}/create-bus-like-fail/http-request.adoc[]
 .response
 include::{snippets}/create-bus-like-fail/http-response.adoc[]
 
+==== 버스 즐겨찾기 삭제
+===== 성공
+.request
+include::{snippets}/delete-bus-like-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-bus-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-bus-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-bus-like-fail/http-response.adoc[]
+
 ==== 버스 노선 이미지 조회
 ===== 성공
 .request
