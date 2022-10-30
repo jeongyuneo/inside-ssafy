@@ -1,4 +1,4 @@
-import { ButtonPropTypes } from '../Button/types';
+import { ButtonPropTypes } from '../../atoms/Button/types';
 
 export interface PropTypes extends ButtonPropTypes {
   buttonInfos?: Array<{

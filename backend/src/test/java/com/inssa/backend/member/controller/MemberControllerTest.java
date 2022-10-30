@@ -4,9 +4,7 @@ import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
-import com.inssa.backend.member.controller.dto.MemberRequest;
-import com.inssa.backend.member.controller.dto.MemberResponse;
-import com.inssa.backend.member.controller.dto.PasswordUpdateRequest;
+import com.inssa.backend.member.controller.dto.*;
 import com.inssa.backend.member.service.MemberService;
 import com.inssa.backend.post.controller.dto.PostsResponse;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
@@ -41,6 +39,7 @@ public class MemberControllerTest extends ApiDocument {
     private static final int COMMENT_COUNT = 3;
     private static final String CREATED_DATE = "10/25 10:19";
     private static final String NEW_PASSWORD = "newssafy";
+    private static final String ACCESS_TOKEN = "aksdljlafsdiofb3924ajkdajfasfnasdfj";
 
     @MockBean
     private MemberService memberService;
@@ -48,6 +47,8 @@ public class MemberControllerTest extends ApiDocument {
     private MemberRequest memberRequest;
     private MemberResponse memberResponse;
     private PasswordUpdateRequest memberUpdateRequest;
+    private LoginRequest loginRequest;
+    private TokenResponse tokenResponse;
 
     @BeforeEach
     void setUp() {
@@ -73,6 +74,13 @@ public class MemberControllerTest extends ApiDocument {
         memberUpdateRequest = PasswordUpdateRequest.builder()
                 .password(PASSWORD)
                 .newPassword(NEW_PASSWORD)
+                .build();
+        loginRequest = LoginRequest.builder()
+                .email(EMAIL)
+                .password(PASSWORD)
+                .build();
+        tokenResponse = TokenResponse.builder()
+                .accessToken(ACCESS_TOKEN)
                 .build();
     }
 
@@ -164,6 +172,28 @@ public class MemberControllerTest extends ApiDocument {
         회원탈퇴_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
+    @DisplayName("로그인 성공")
+    @Test
+    void login_success() throws Exception {
+        // given
+        willReturn(tokenResponse).given(memberService).login(any(LoginRequest.class));
+        // when
+        ResultActions resultActions = 로그인_요청(loginRequest);
+        // then
+        로그인_성공(resultActions);
+    }
+
+    @DisplayName("로그인 실패")
+    @Test
+    void login_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER)).given(memberService).login(any(LoginRequest.class));
+        // when
+        ResultActions resultActions = 로그인_요청(loginRequest);
+        // then
+        로그인_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
+    }
+
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members")
                 .contextPath("/api/v1")
@@ -239,5 +269,26 @@ public class MemberControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("delete-member-fail"));
+    }
+
+    private ResultActions 로그인_요청(LoginRequest loginRequest) throws Exception {
+        return mockMvc.perform(post("/api/v1/members/login")
+                .contextPath("/api/v1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(loginRequest)));
+    }
+
+    private void 로그인_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().json(toJson(tokenResponse)))
+                .andDo(print())
+                .andDo(toDocument("login-success"));
+    }
+
+    private void 로그인_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("login-fail"));
     }
 }

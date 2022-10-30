@@ -18,4 +18,16 @@ public class ReCommentController {
         reCommentService.createReComment(1L, reCommentId, commentRequest);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("/{reCommentId}")
+    public ResponseEntity<Void> updateReComment(@RequestHeader("Authorization") String token, @PathVariable Long reCommentId, @RequestBody CommentRequest commentRequest) {
+        reCommentService.updateReComment(1L, reCommentId, commentRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{reCommentId}")
+    public ResponseEntity<Void> deleteReComment(@RequestHeader("Authorization") String token, @PathVariable Long reCommentId) {
+        reCommentService.deleteReComment(1L, reCommentId);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -8,4 +8,10 @@ public class ReCommentService {
 
     public void createReComment(Long memberId, Long reCommentId, CommentRequest commentRequest) {
     }
+
+    public void updateReComment(Long memberId, Long reCommentId, CommentRequest commentRequest) {
+    }
+
+    public void deleteReComment(Long memberId, Long reCommentId) {
+    }
 }
