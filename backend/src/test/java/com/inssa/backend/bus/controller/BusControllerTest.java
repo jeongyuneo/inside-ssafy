@@ -209,13 +209,13 @@ public class BusControllerTest extends ApiDocument {
     private void 버스_위치_최신화_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
                 .andDo(print())
-                .andDo(toDocument("arrive-at-success"));
+                .andDo(toDocument("arrive-at-bus-stop-success"));
     }
 
     private void 버스_위치_최신화_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
-                .andDo(toDocument("arrive-at-fail"));
+                .andDo(toDocument("arrive-at-bus-stop-fail"));
     }
 }
