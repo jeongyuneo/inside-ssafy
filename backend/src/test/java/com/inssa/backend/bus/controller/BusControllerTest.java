@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.ResultActions;
-import org.yaml.snakeyaml.events.Event;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +19,8 @@ import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.*;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -125,7 +124,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void arrive_at_bus_stop_success() throws Exception {
         // given
-        willDoNothing().given(busService).arriveAtBusStop(anyLong());
+        willDoNothing().given(busService).arriveAt(anyLong());
         // when
         ResultActions resultActions = 버스_위치_최신화_요청(ID);
         // then
@@ -136,7 +135,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void arrive_at_bus_stop_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE)).given(busService).arriveAtBusStop(anyLong());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE)).given(busService).arriveAt(anyLong());
         // when
         ResultActions resultActions = 버스_위치_최신화_요청(ID);
         // then

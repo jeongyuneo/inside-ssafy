@@ -16,6 +16,6 @@ public class BusService {
     public void deleteBusLike(Long memberId, int number) {
     }
 
-    public void arriveAtBusStop(long routeId) {
+    public void arriveAt(Long routeId) {
     }
 }
