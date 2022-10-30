@@ -23,5 +23,6 @@ public class Image extends BaseEntity {
     @NotNull
     private String url;
 
+    @Column(name = "image_order")
     private int order;
 }
