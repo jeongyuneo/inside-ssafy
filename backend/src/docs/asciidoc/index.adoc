@@ -1,7 +1,7 @@
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
-= MountainDo Api Specification
+= Inside-SSAFY Api Specification
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
