@@ -312,7 +312,7 @@ include::{snippets}/get-menu-fail/http-request.adoc[]
 include::{snippets}/get-menu-fail/http-response.adoc[]
 
 === 버스
-==== 즐겨찾는 버스 정보 조회
+==== 버스 즐겨찾기 목록 조회
 ===== 성공
 .request
 include::{snippets}/get-bus-likes-success/http-request.adoc[]
