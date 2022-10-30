@@ -18,8 +18,8 @@ public class BusController {
 
     private final BusService busService;
 
-    @GetMapping("/likes/{memberId}")
-    public ResponseEntity<List<BusLikeResponse>> getBusLike(@PathVariable Long memberId) {
+    @GetMapping("/like/{memberId}")
+    public ResponseEntity<List<BusLikeResponse>> getBusLikes(@PathVariable Long memberId) {
         return ResponseEntity.ok().body(busService.getBusLikes(memberId));
     }
 }

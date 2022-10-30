@@ -73,7 +73,7 @@ public class BusControllerTest extends ApiDocument {
     }
 
     private ResultActions 버스_즐겨찾기_목록_조회_요청(Long memberId) throws Exception {
-        return mockMvc.perform(get("/api/v1/buses/likes/" + memberId)
+        return mockMvc.perform(get("/api/v1/buses/like/" + memberId)
                 .contextPath("/api/v1"));
     }
 
