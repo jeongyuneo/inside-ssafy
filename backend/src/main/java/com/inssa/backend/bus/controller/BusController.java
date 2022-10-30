@@ -25,7 +25,7 @@ public class BusController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/route-image")
+    @GetMapping("/route/image")
     public ResponseEntity<RouteImageResponse> getRouteImage(@RequestParam int number) {
         return ResponseEntity.ok().body(busService.getRouteImage(number));
     }
