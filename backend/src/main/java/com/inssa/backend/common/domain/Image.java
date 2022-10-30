@@ -1,4 +1,4 @@
-package com.inssa.backend.member.domain;
+package com.inssa.backend.common.domain;
 
 import com.inssa.backend.common.domain.BaseEntity;
 import lombok.AccessLevel;
