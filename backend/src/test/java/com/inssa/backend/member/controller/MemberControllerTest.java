@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -37,7 +38,7 @@ public class MemberControllerTest extends ApiDocument {
     private static final String TITLE = "제목";
     private static final int LIKE_COUNT = 5;
     private static final int COMMENT_COUNT = 3;
-    private static final String CREATED_DATE = "10/25 10:19";
+    private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final String NEW_PASSWORD = "newssafy";
     private static final String ACCESS_TOKEN = "aksdljlafsdiofb3924ajkdajfasfnasdfj";
 
