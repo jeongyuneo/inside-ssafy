@@ -46,7 +46,7 @@ public class CommentControllerTest extends ApiDocument {
     @Test
     void create_comment_success() throws Exception {
         // given
-        willDoNothing().given(commentService).createComment(anyLong(), any(CommentRequest.class));
+        willDoNothing().given(commentService).createComment(anyLong(), anyLong(), any(CommentRequest.class));
         // when
         ResultActions resultActions = 익명_게시판_댓글_등록_요청(ID, commentRequest);
         // then
@@ -57,7 +57,7 @@ public class CommentControllerTest extends ApiDocument {
     @Test
     void create_comment_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_COMMENT.getMessage())).given(commentService).createComment(anyLong(), any(CommentRequest.class));
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_COMMENT.getMessage())).given(commentService).createComment(anyLong(), anyLong(), any(CommentRequest.class));
         // when
         ResultActions resultActions = 익명_게시판_댓글_등록_요청(ID, commentRequest);
         // then
