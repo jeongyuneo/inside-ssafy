@@ -8,7 +8,7 @@ import Label from '../../atoms/Label';
  * Input 컴포넌트와 label 컴포넌트를 합친 컴포넌트
  * label의 htmlFor와 input의 id를 id로 통합하였다
  * fontSize와 textColor, backgroundColor 와 같이 두 컴포넌트가 중복되는부분은
- * inputFontSize, labelTextColor, inputBackgroundColor 등
+ * inputFontSize, labelTextColor, inputBackgroundColor 등 컴포넌트 이름을 앞에 붙여 구분한다
  *
  * @author jun
  */
