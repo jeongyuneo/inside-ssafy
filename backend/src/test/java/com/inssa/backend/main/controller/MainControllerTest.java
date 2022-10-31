@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class MainControllerTest extends ApiDocument {
     private static final String TITLE = "제목";
     private static final int LIKE_COUNT = 5;
     private static final int COMMENT_COUNT = 3;
-    private static final String CREATED_DATE = "10/25 10:19";
+    private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(", ")).collect(Collectors.toList());
 
     @MockBean

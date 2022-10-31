@@ -431,3 +431,48 @@ include::{snippets}/get-bus-likes-fail/http-request.adoc[]
 
 .response
 include::{snippets}/get-bus-likes-fail/http-response.adoc[]
+
+==== 버스 노선 이미지 조회
+===== 성공
+.request
+include::{snippets}/get-route-image-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-route-image-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-route-image-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-route-image-fail/http-response.adoc[]
+
+==== 버스 운행 시작
+===== 성공
+.request
+include::{snippets}/start-bus-success/http-request.adoc[]
+
+.response
+include::{snippets}/start-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/start-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/start-bus-fail/http-response.adoc[]
+
+==== 버스 위치 최신화
+===== 성공
+.request
+include::{snippets}/arrive-at-bus-stop-success/http-request.adoc[]
+
+.response
+include::{snippets}/arrive-at-bus-stop-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/arrive-at-bus-stop-fail/http-request.adoc[]
+
+.response
+include::{snippets}/arrive-at-bus-stop-fail/http-response.adoc[]

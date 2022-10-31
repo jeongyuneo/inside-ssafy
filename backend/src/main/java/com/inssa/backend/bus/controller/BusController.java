@@ -2,6 +2,8 @@ package com.inssa.backend.bus.controller;
 
 import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.controller.dto.BusResponse;
+import com.inssa.backend.bus.controller.dto.RouteImageResponse;
+import com.inssa.backend.bus.controller.dto.RouteResponse;
 import com.inssa.backend.bus.service.BusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +38,21 @@ public class BusController {
     @GetMapping("/like/{memberId}")
     public ResponseEntity<List<BusLikeResponse>> getBusLikes(@PathVariable Long memberId) {
         return ResponseEntity.ok().body(busService.getBusLikes(memberId));
+    }
+
+    @GetMapping("/route/image")
+    public ResponseEntity<RouteImageResponse> getRouteImage(@RequestParam int number) {
+        return ResponseEntity.ok().body(busService.getRouteImage(number));
+    }
+
+    @GetMapping("/start")
+    public ResponseEntity<List<RouteResponse>> startBus(@RequestParam int number) {
+        return ResponseEntity.ok().body(busService.startBus(number));
+    }
+
+    @PostMapping("/arrive/{routeId}")
+    public ResponseEntity<Void> arriveAt(@PathVariable Long routeId) {
+        busService.arriveAt(routeId);
+        return ResponseEntity.ok().build();
     }
 }
