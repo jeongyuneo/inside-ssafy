@@ -2,7 +2,6 @@ export interface PropTypes {
   labelValue: string;
   labelColor?: string;
   labelFontSize?: number;
-
   id: string;
   name?: string;
   index?: string;
