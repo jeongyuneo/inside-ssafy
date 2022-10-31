@@ -1,6 +1,9 @@
 package com.inssa.backend.post.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -12,5 +15,7 @@ public class PostsResponse {
     private String title;
     private int likeCount;
     private int commentCount;
-    private String createdDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime createdDate;
 }
