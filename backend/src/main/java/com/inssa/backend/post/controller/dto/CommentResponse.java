@@ -1,7 +1,9 @@
 package com.inssa.backend.post.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -10,7 +12,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentResponse {
 
-    private String createdDate;
     private String content;
     private List<ReCommentResponse> reCommentResponses;
+
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
+    private LocalDateTime createdDate;
 }
