@@ -3,6 +3,7 @@ package com.inssa.backend.bus.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.controller.dto.BusResponse;
+import com.inssa.backend.bus.controller.dto.RouteImageResponse;
 import com.inssa.backend.bus.service.BusService;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
@@ -40,12 +41,14 @@ public class BusControllerTest extends ApiDocument {
     private static final int BUS_NUMBER = 1;
     private static final String PREVIOUS_BUS_STOP = "수통골";
     private static final String NEXT_BUS_STOP = "한밭대";
+    private static String URL = "https://j7b304.p.ssafy.io/api/image/1";
 
     @MockBean
     private BusService busService;
 
     private BusResponse busResponse;
     private List<BusLikeResponse> busLikeResponses;
+    private RouteImageResponse routeImageResponse;
 
     @BeforeEach
     void setUp() {
@@ -64,6 +67,9 @@ public class BusControllerTest extends ApiDocument {
         busLikeResponses = IntStream.range(0, 2)
                 .mapToObj(n -> bulLikeResponse)
                 .collect(Collectors.toList());
+        routeImageResponse = RouteImageResponse.builder()
+                .url(URL)
+                .build();
     }
 
     @DisplayName("버스 조회 성공")
@@ -154,6 +160,28 @@ public class BusControllerTest extends ApiDocument {
         버스_즐겨찾기_목록_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
 
+    @DisplayName("버스 노선 이미지 조회 성공")
+    @Test
+    void get_route_image_success() throws Exception {
+        // given
+        willReturn(routeImageResponse).given(busService).getRouteImage(anyInt());
+        // when
+        ResultActions resultActions = 버스_노선_이미지_조회_요청(NUMBER);
+        // then
+        버스_노선_이미지_조회_성공(resultActions);
+    }
+
+    @DisplayName("버스 노선 이미지 조회 실패")
+    @Test
+    void get_route_image_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE_IMAGE)).given(busService).getRouteImage(anyInt());
+        // when
+        ResultActions resultActions = 버스_노선_이미지_조회_요청(NUMBER);
+        // then
+        버스_노선_이미지_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_ROUTE_IMAGE));
+    }
+
     private ResultActions 버스_조회_요청(int number) throws Exception {
         return mockMvc.perform(get("/api/v1/buses")
                 .contextPath("/api/v1")
@@ -231,5 +259,25 @@ public class BusControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("get-bus-likes-fail"));
+    }
+
+    private ResultActions 버스_노선_이미지_조회_요청(int number) throws Exception {
+        return mockMvc.perform(get("/api/v1/buses/route/image")
+                .contextPath("/api/v1")
+                .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
+    }
+
+    private void 버스_노선_이미지_조회_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().json(toJson(routeImageResponse)))
+                .andDo(print())
+                .andDo(toDocument("get-route-image-success"));
+    }
+
+    private void 버스_노선_이미지_조회_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("get-route-image-fail"));
     }
 }
