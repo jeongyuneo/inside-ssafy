@@ -6,7 +6,6 @@ import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.post.controller.dto.CommentRequest;
 import com.inssa.backend.post.domain.Comment;
-import com.inssa.backend.post.domain.CommentRepository;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,22 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CommentService {
 
-    private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
 
     @Transactional
     public void createComment(Long memberId, Long postId, CommentRequest commentRequest) {
-        Member member = findMember(memberId);
         Post post = findPost(postId);
-        commentRepository.save(
-                Comment.builder()
-                        .content(commentRequest.getContent())
-                        .member(member)
-                        .post(post)
-                        .build()
-        );
-        post.addComment();
+        post.addComment(Comment.builder()
+                .content(commentRequest.getContent())
+                .member(findMember(memberId))
+                .post(post)
+                .build());
         postRepository.save(post);
     }
 
