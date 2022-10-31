@@ -3,6 +3,7 @@ package com.inssa.backend.bus.service;
 import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.controller.dto.BusResponse;
 import com.inssa.backend.bus.controller.dto.RouteImageResponse;
+import com.inssa.backend.bus.controller.dto.RouteResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class BusService {
     }
 
     public RouteImageResponse getRouteImage(int number) {
+        return null;
+    }
+
+    public List<RouteResponse> startBus(int number) {
         return null;
     }
 }

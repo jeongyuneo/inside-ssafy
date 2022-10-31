@@ -446,3 +446,18 @@ include::{snippets}/get-route-image-fail/http-request.adoc[]
 
 .response
 include::{snippets}/get-route-image-fail/http-response.adoc[]
+
+==== 버스 운행 시작
+===== 성공
+.request
+include::{snippets}/start-bus-success/http-request.adoc[]
+
+.response
+include::{snippets}/start-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/start-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/start-bus-fail/http-response.adoc[]

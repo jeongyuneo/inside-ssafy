@@ -3,6 +3,7 @@ package com.inssa.backend.bus.controller;
 import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.controller.dto.BusResponse;
 import com.inssa.backend.bus.controller.dto.RouteImageResponse;
+import com.inssa.backend.bus.controller.dto.RouteResponse;
 import com.inssa.backend.bus.service.BusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,10 @@ public class BusController {
     @GetMapping("/route/image")
     public ResponseEntity<RouteImageResponse> getRouteImage(@RequestParam int number) {
         return ResponseEntity.ok().body(busService.getRouteImage(number));
+    }
+
+    @GetMapping("/start")
+    public ResponseEntity<List<RouteResponse>> startBus(@RequestParam int number) {
+        return ResponseEntity.ok().body(busService.startBus(number));
     }
 }
