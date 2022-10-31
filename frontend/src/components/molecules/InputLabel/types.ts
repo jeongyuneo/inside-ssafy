@@ -1,5 +1,5 @@
 export interface PropTypes {
-  children: string;
+  labelValue: string;
   labelColor?: string;
   labelFontSize?: number;
 

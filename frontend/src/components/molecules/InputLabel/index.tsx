@@ -21,7 +21,7 @@ const InputLabel = ({
   inputBackgroundColor,
 
   // label
-  children,
+  labelValue,
   labelColor,
   labelFontSize,
   ...inputPropsRest
@@ -30,7 +30,7 @@ const InputLabel = ({
     <StyledInputLabel>
       <StyledLabelWrap>
         <Label htmlFor={id} fontSize={labelFontSize} textColor={labelColor}>
-          {children}
+          {labelValue}
         </Label>
       </StyledLabelWrap>
       <StyledInputWrap>
