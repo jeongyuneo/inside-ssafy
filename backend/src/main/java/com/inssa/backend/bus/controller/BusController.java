@@ -49,4 +49,10 @@ public class BusController {
     public ResponseEntity<List<RouteResponse>> startBus(@RequestParam int number) {
         return ResponseEntity.ok().body(busService.startBus(number));
     }
+
+    @PostMapping("/arrive/{routeId}")
+    public ResponseEntity<Void> arriveAt(@PathVariable Long routeId) {
+        busService.arriveAt(routeId);
+        return ResponseEntity.ok().build();
+    }
 }

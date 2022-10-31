@@ -32,4 +32,7 @@ public class BusService {
     public List<RouteResponse> startBus(int number) {
         return null;
     }
+
+    public void arriveAt(Long routeId) {
+    }
 }

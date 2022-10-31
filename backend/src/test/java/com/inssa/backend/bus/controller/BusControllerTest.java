@@ -44,8 +44,8 @@ public class BusControllerTest extends ApiDocument {
     private static final String NEXT_BUS_STOP = "한밭대";
     private static final String URL = "https://j7b304.p.ssafy.io/api/image/1";
     private static final String NAME = "삼성화재유성연수원";
-    private static double LATITUDE = 36.355327727196915;
-    private static double LONGITUDE = 127.29848167977559;
+    private static final double LATITUDE = 36.355327727196915;
+    private static final double LONGITUDE = 127.29848167977559;
 
     @MockBean
     private BusService busService;
@@ -218,6 +218,28 @@ public class BusControllerTest extends ApiDocument {
         버스_운행_시작_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
 
+    @DisplayName("버스 위치 최신화 성공")
+    @Test
+    void arrive_at_success() throws Exception {
+        // given
+        willDoNothing().given(busService).arriveAt(anyLong());
+        // when
+        ResultActions resultActions = 버스_위치_최신화_요청(ID);
+        // then
+        버스_위치_최신화_성공(resultActions);
+    }
+
+    @DisplayName("버스 위치 최신화 실패")
+    @Test
+    void arrive_at_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE)).given(busService).arriveAt(anyLong());
+        // when
+        ResultActions resultActions = 버스_위치_최신화_요청(ID);
+        // then
+        버스_위치_최신화_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_ROUTE));
+    }
+
     private ResultActions 버스_조회_요청(int number) throws Exception {
         return mockMvc.perform(get("/api/v1/buses")
                 .contextPath("/api/v1")
@@ -335,5 +357,23 @@ public class BusControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("start-bus-fail"));
+    }
+
+    private ResultActions 버스_위치_최신화_요청(Long routeId) throws Exception {
+        return mockMvc.perform(post("/api/v1/buses/arrive/" + routeId)
+                .contextPath("/api/v1"));
+    }
+
+    private void 버스_위치_최신화_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("arrive-at-bus-stop-success"));
+    }
+
+    private void 버스_위치_최신화_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("arrive-at-bus-stop-fail"));
     }
 }
