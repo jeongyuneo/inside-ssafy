@@ -35,7 +35,6 @@ public class PostService {
         List<Post> posts = postRepository.findSearchAndIsActiveTrue(keyword);
         return posts
                 .stream()
-                .filter(Post::isActive)
                 .map(post -> PostsResponse.builder()
                         .postId(post.getId())
                         .title(post.getTitle())
