@@ -11,6 +11,7 @@ import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -20,6 +21,7 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
 
+    @Transactional
     public void createComment(Long memberId, Long postId, CommentRequest commentRequest) {
         Member member = findMember(memberId);
         Post post = findPost(postId);
