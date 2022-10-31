@@ -4,19 +4,18 @@ import { StyledInputLabel, StyledInputWrap, StyledLabelWrap } from './styles';
 import Input from '../../atoms/Input';
 import Label from '../../atoms/Label';
 
+/**
+ * Input 컴포넌트와 label 컴포넌트를 합친 컴포넌트
+ * label의 htmlFor와 input의 id를 id로 통합하였다
+ * fontSize와 textColor, backgroundColor 와 같이 두 컴포넌트가 중복되는부분은
+ * inputFontSize, labelTextColor, inputBackgroundColor 등
+ *
+ * @author jun
+ */
+
 const InputLabel = ({
   // input
   id,
-  changeHandler,
-  name,
-  index,
-  height,
-  width,
-  value,
-  type,
-  placeholder,
-  borderRadius,
-  paddingLeft,
   inputFontSize,
   inputTextColor,
   inputBackgroundColor,
@@ -25,6 +24,7 @@ const InputLabel = ({
   children,
   labelColor,
   labelFontSize,
+  ...inputPropsRest
 }: PropTypes) => {
   return (
     <StyledInputLabel>
@@ -35,20 +35,10 @@ const InputLabel = ({
       </StyledLabelWrap>
       <StyledInputWrap>
         <Input
-          id={id}
-          name={name}
-          index={index}
-          height={height}
-          width={width}
-          value={value}
-          changeHandler={changeHandler}
-          type={type}
-          placeholder={placeholder}
-          borderRadius={borderRadius}
-          paddingLeft={paddingLeft}
           fontSize={inputFontSize}
           textColor={inputTextColor}
           backgroundColor={inputBackgroundColor}
+          {...inputPropsRest}
         />
       </StyledInputWrap>
     </StyledInputLabel>
@@ -56,5 +46,3 @@ const InputLabel = ({
 };
 
 export default InputLabel;
-
-//flex direction
