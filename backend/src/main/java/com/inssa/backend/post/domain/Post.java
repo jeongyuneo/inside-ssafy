@@ -34,4 +34,8 @@ public class Post extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments = new ArrayList<>();
+
+    public void addComment() {
+        commentCount++;
+    }
 }
