@@ -32,7 +32,7 @@ public class PostService {
     }
 
     public List<PostsResponse> searchPost(String keyword) {
-        List<Post> posts = postRepository.findByTitleContainingOrContentContaining(keyword, keyword);
+        List<Post> posts = postRepository.findSearchAndIsActiveTrue(keyword);
         return posts
                 .stream()
                 .filter(Post::isActive)
