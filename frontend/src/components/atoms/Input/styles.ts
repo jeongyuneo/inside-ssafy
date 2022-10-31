@@ -24,16 +24,6 @@ export const StyledInput = styled.input<PropTypes>`
   background-color: ${({ backgroundColor }) => backgroundColor || '#D1EBFA'};
   border: none;
   outline: none;
-
-  ${({ paddingLeft }) =>
-    paddingLeft &&
-    css`
-      padding-left: ${paddingLeft}rem;
-    `}
-
-  ${({ borderRadius }) =>
-    borderRadius &&
-    css`
-      border-radius: ${borderRadius}rem;
-    `}
+  padding-left: 0.5rem;
+  border-radius: 0.4rem;
 `;
