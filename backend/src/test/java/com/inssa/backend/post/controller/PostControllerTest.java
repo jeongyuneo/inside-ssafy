@@ -38,6 +38,7 @@ public class PostControllerTest extends ApiDocument {
     private static final String TITLE = "제목";
     private static final int LIKE_COUNT = 5;
     private static final int COMMENT_COUNT = 3;
+    private static final boolean TRUE = true;
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final String CONTENT = "본문";
     private static final String URL = "{file_url}";
@@ -77,12 +78,14 @@ public class PostControllerTest extends ApiDocument {
         List<ReCommentResponse> reCommentResponses = IntStream.range(0, 2)
                 .mapToObj(m -> ReCommentResponse.builder()
                         .content(CONTENT)
+                        .isEditable(TRUE)
                         .createdDate(CREATED_DATE)
                         .build())
                 .collect(Collectors.toList());
         List<CommentResponse> commentResponses = IntStream.range(0, 2)
                 .mapToObj(n -> CommentResponse.builder()
                         .content(CONTENT)
+                        .isEditable(TRUE)
                         .createdDate(CREATED_DATE)
                         .reCommentResponses(reCommentResponses)
                         .build())
@@ -95,6 +98,8 @@ public class PostControllerTest extends ApiDocument {
                 .likeCount(LIKE_COUNT)
                 .commentCount(COMMENT_COUNT)
                 .content(CONTENT)
+                .hasPostLike(TRUE)
+                .isEditable(TRUE)
                 .files(fileResponses)
                 .commentResponses(commentResponses)
                 .build();
