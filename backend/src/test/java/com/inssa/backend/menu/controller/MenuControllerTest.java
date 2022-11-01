@@ -39,16 +39,14 @@ public class MenuControllerTest extends ApiDocument {
     private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(", ")).collect(Collectors.toList());
     private static final LocalDate DATE = LocalDate.parse("2022-10-27");
     private static final String DAY_OF_THE_WEEK = "목";
-    private static final String START_DATE = "2022-10-31";
-    private static final String END_DATE = "2022-11-04";
+    private static final LocalDate START_DATE = LocalDate.parse("2022-10-31");
+    private static final LocalDate END_DATE = LocalDate.parse("2022-11-04");
 
     @MockBean
     private MenuService menuService;
 
     private MenuRequest menuRequest;
     private MenuResponse menuResponse;
-
-    private ItemsResponse itemsResponse;
 
     @BeforeEach
     void setUp() {
@@ -65,8 +63,8 @@ public class MenuControllerTest extends ApiDocument {
                 .dayOfTheWeek(DAY_OF_THE_WEEK)
                 .build();
         menuResponse = MenuResponse.builder()
-                .startDate(LocalDate.parse(START_DATE))
-                .endDate(LocalDate.parse(END_DATE))
+                .startDate(START_DATE)
+                .endDate(END_DATE)
                 .menus(itemsResponse)
                 .build();
     }
@@ -138,7 +136,6 @@ public class MenuControllerTest extends ApiDocument {
     private ResultActions 식단_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/menus")
                 .contextPath("/api/v1"));
-
     }
 
     private void 식단_조회_성공(ResultActions resultActions) throws Exception {
