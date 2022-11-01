@@ -4,6 +4,7 @@ import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
+import com.inssa.backend.menu.controller.dto.ItemsResponse;
 import com.inssa.backend.menu.controller.dto.MenuRequest;
 import com.inssa.backend.menu.controller.dto.MenuResponse;
 import com.inssa.backend.menu.service.MenuService;
@@ -19,6 +20,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -33,11 +35,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MenuControllerTest extends ApiDocument {
 
     private static final Long ID = 1L;
-    private static final String USER_ID_HEADER_NAME = "userId";
     private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(", ")).collect(Collectors.toList());
     private static final String DATE = "2022-10-27";
     private static final String DAY_OF_THE_WEEK = "목";
-    private static final String DATE_PARAMETER_NAME = "date";
+    private static final String START_DATE = "2022-10-31";
+    private static final String END_DATE = "2022-11-04";
 
     @MockBean
     private MenuService menuService;
@@ -45,17 +47,26 @@ public class MenuControllerTest extends ApiDocument {
     private MenuRequest menuRequest;
     private MenuResponse menuResponse;
 
+    private ItemsResponse itemsResponse;
+
     @BeforeEach
     void setUp() {
+        List<ItemsResponse> itemsResponse = IntStream.range(0, 5)
+                .mapToObj(n -> ItemsResponse.builder()
+                        .date(DATE)
+                        .dayOfTheWeek(DAY_OF_THE_WEEK)
+                        .items(ITEMS)
+                        .build())
+                .collect(Collectors.toList());
         menuRequest = MenuRequest.builder()
                 .items(ITEMS)
                 .date(DATE)
                 .dayOfTheWeek(DAY_OF_THE_WEEK)
                 .build();
         menuResponse = MenuResponse.builder()
-                .items(ITEMS)
-                .date(DATE)
-                .dayOfTheWeek(DAY_OF_THE_WEEK)
+                .startDate(START_DATE)
+                .endDate(END_DATE)
+                .menus(itemsResponse)
                 .build();
     }
 
@@ -85,9 +96,9 @@ public class MenuControllerTest extends ApiDocument {
     @Test
     void get_menus_success() throws Exception {
         // given
-        willReturn(menuResponse).given(menuService).getMenu(anyString());
+        willReturn(menuResponse).given(menuService).getMenu();
         // when
-        ResultActions resultActions = 식단_조회_요청(DATE);
+        ResultActions resultActions = 식단_조회_요청();
         // then
         식단_조회_성공(resultActions);
     }
@@ -96,9 +107,9 @@ public class MenuControllerTest extends ApiDocument {
     @Test
     void get_menus_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MENU)).given(menuService).getMenu(anyString());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_MENU)).given(menuService).getMenu();
         // when
-        ResultActions resultActions = 식단_조회_요청(DATE);
+        ResultActions resultActions = 식단_조회_요청();
         // then
         식단_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MENU));
     }
@@ -123,10 +134,10 @@ public class MenuControllerTest extends ApiDocument {
                 .andDo(toDocument("create-menu-fail"));
     }
 
-    private ResultActions 식단_조회_요청(String date) throws Exception {
+    private ResultActions 식단_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/menus")
-                .contextPath("/api/v1")
-                .param(DATE_PARAMETER_NAME, date));
+                .contextPath("/api/v1"));
+
     }
 
     private void 식단_조회_성공(ResultActions resultActions) throws Exception {
