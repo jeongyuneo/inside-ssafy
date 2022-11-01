@@ -21,13 +21,9 @@ export const StyledInput = styled.input<PropTypes>`
   `}
 
   ${({ textColor }) =>
-    textColor
-      ? css`
-          color: ${textColor};
-        `
-      : css`
-          color: ${DEFAULT_TEXTCOLOR};
-        `}
+    css`
+      color: ${textColor || DEFAULT_TEXTCOLOR};
+    `}
   
   background-color: ${({ backgroundColor }) => backgroundColor || '#D1EBFA'};
   border: none;
