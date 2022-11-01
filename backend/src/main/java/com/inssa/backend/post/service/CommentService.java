@@ -60,7 +60,7 @@ public class CommentService {
 
     private void checkEditable(Member member, Comment comment) {
         if (!member.isEditable(comment.getMember().getId())) {
-            throw new UnAuthorizedException(ErrorMessage.NOT_ALLOWED_MEMBER);
+            throw new UnAuthorizedException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
     }
 }
