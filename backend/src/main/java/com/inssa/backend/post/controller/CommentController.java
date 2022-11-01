@@ -20,8 +20,8 @@ public class CommentController {
     }
 
     @PatchMapping("/{commentId}")
-    public ResponseEntity<Void> updateComment(@PathVariable Long commentId, @RequestBody CommentRequest commentRequest) {
-        commentService.updateComment(commentId, commentRequest);
+    public ResponseEntity<Void> updateComment(@RequestHeader("Authorization") String token, @PathVariable Long commentId, @RequestBody CommentRequest commentRequest) {
+        commentService.updateComment(1L, commentId, commentRequest);
         return ResponseEntity.ok().build();
     }
 

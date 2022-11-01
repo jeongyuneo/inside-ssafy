@@ -22,16 +22,16 @@ public class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @CreatedDate
-    private LocalDateTime createdDate;
+    protected LocalDateTime createdDate;
 
     @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    protected LocalDateTime lastModifiedDate;
 
-    private LocalDateTime deletedDate;
-    private boolean isActive;
+    protected LocalDateTime deletedDate;
+    protected boolean isActive;
 
     public void delete() {
         isActive = false;

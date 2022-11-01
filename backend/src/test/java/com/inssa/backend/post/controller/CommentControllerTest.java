@@ -71,7 +71,7 @@ public class CommentControllerTest extends ApiDocument {
     @Test
     void update_comment_success() throws Exception {
         // given
-        willDoNothing().given(commentService).updateComment(anyLong(), any(CommentRequest.class));
+        willDoNothing().given(commentService).updateComment(anyLong(), anyLong(), any(CommentRequest.class));
         // when
         ResultActions resultActions = 익명_게시판_댓글_수정_요청(ID, commentRequest);
         // then
@@ -82,7 +82,7 @@ public class CommentControllerTest extends ApiDocument {
     @Test
     void update_comment_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT)).given(commentService).updateComment(anyLong(), any(CommentRequest.class));
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT)).given(commentService).updateComment(anyLong(), anyLong(), any(CommentRequest.class));
         // when
         ResultActions resultActions = 익명_게시판_댓글_수정_요청(ID, commentRequest);
         // then
@@ -135,6 +135,7 @@ public class CommentControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_댓글_수정_요청(Long commentId, CommentRequest commentRequest) throws Exception {
         return mockMvc.perform(patch("/api/v1/comments/" + commentId)
                 .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(commentRequest)));
     }
@@ -147,6 +148,7 @@ public class CommentControllerTest extends ApiDocument {
 
     private void 익명_게시판_댓글_수정_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("update-comment-fail"));
     }
