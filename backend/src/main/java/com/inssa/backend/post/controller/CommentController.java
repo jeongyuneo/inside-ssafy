@@ -14,8 +14,8 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/posts/{postId}")
-    public ResponseEntity<Void> createComment(@PathVariable Long postId, @RequestBody CommentRequest commentRequest) {
-        commentService.createComment(postId, commentRequest);
+    public ResponseEntity<Void> createComment(@RequestHeader("Authorization") String token, @PathVariable Long postId, @RequestBody CommentRequest commentRequest) {
+        commentService.createComment(1L, postId, commentRequest);
         return ResponseEntity.ok().build();
     }
 
