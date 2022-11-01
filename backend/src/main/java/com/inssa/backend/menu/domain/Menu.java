@@ -26,7 +26,7 @@ public class Menu extends BaseEntity {
 
     @NotNull
     @Column(name = "menu_date")
-    private String date;
+    private LocalDate date;
 
     @NotNull
     private String dayOfTheWeek;

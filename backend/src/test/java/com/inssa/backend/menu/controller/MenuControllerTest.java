@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ public class MenuControllerTest extends ApiDocument {
 
     private static final Long ID = 1L;
     private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(", ")).collect(Collectors.toList());
-    private static final String DATE = "2022-10-27";
+    private static final LocalDate DATE = LocalDate.parse("2022-10-27");
     private static final String DAY_OF_THE_WEEK = "목";
     private static final String START_DATE = "2022-10-31";
     private static final String END_DATE = "2022-11-04";
@@ -64,8 +65,8 @@ public class MenuControllerTest extends ApiDocument {
                 .dayOfTheWeek(DAY_OF_THE_WEEK)
                 .build();
         menuResponse = MenuResponse.builder()
-                .startDate(START_DATE)
-                .endDate(END_DATE)
+                .startDate(LocalDate.parse(START_DATE))
+                .endDate(LocalDate.parse(END_DATE))
                 .menus(itemsResponse)
                 .build();
     }

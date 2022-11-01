@@ -17,6 +17,7 @@ public class MenuService {
 
     private static final int MONDAY = 0;
     private static final int FRIDAY = 4;
+    private static final String DELIMITER = ", ";
 
     private final MenuRepository menuRepository;
 
@@ -29,7 +30,7 @@ public class MenuService {
                 .map(menu -> ItemsResponse.builder()
                         .date(menu.getDate())
                         .dayOfTheWeek(menu.getDayOfTheWeek())
-                        .items(Arrays.stream(menu.getItem().split(", ")).collect(Collectors.toList()))
+                        .items(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
         return MenuResponse.builder()
