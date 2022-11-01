@@ -10,6 +10,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByIsActiveTrue();
 
-    @Query(value = "SELECT * FROM post WHERE is_active = true AND ( title LIKE %:keyword% OR content LIKE %:keyword% )", nativeQuery = true)
-    List<Post> findSearchAndIsActiveTrue(@Param("keyword") String keyword);
+    @Query("SELECT p FROM Post p WHERE p.isActive = true AND (p.title LIKE CONCAT('%', :keyword, '%') OR p.content LIKE CONCAT('%', :keyword, '%'))")
+    List<Post> SearchByTitleOrContentAndIsActiveTrue(@Param("keyword") String keyword);
 }
