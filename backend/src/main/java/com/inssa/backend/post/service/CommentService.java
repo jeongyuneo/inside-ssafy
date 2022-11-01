@@ -40,7 +40,16 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public void deleteComment(Long commentId) {
+    public void deleteComment(Long memberId, Long commentId) {
+        Comment comment = findComment(commentId);
+        checkEditable(findMember(memberId), comment);
+        comment.delete();
+        commentRepository.save(comment);
+    }
+
+    private Comment findComment(Long commentId) {
+        return commentRepository.findByIdAndIsActiveTrue(commentId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT));
     }
 
     private Comment findComment(Long commentId) {
