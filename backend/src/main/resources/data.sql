@@ -1,13 +1,3 @@
-INSERT INTO post(created_date, last_modified_date, is_active, title, content, comment_count, like_count)
-VALUES (now(), now(), 1, '제목', '본문', 1, 2);
-INSERT INTO post(created_date, last_modified_date, is_active, title, content, comment_count, like_count)
-VALUES (now(), now(), 1, '문제23', '본문265456', 2, 3);
-INSERT INTO post(created_date, last_modified_date, is_active, title, content, comment_count, like_count)
-VALUES (now(), now(), 0, '아리랑', '본문1111', 2, 3);
-INSERT INTO post(created_date, last_modified_date, is_active, title, content, comment_count, like_count)
-VALUES (now(), now(), 0, '오늘 점심 존맛', '본문0986', 2, 3);
-INSERT INTO post(created_date, last_modified_date, is_active, title, content, comment_count, like_count)
-VALUES (now(), now(), 0, '제목은 왜 제목', '본문0986', 2, 3);
 INSERT INTO menu(created_date, last_modified_date, is_active, item, menu_date, day_of_the_week)
 VALUES (now(), now(), 1, '치즈함박스테이크 , 쌀밥/크림스프, 푸실리샐러드, 오이피클&할라피뇨 , 그린샐러드, 포기김치, 숭늉', '2022-10-31', '월요일');
 INSERT INTO menu(created_date, last_modified_date, is_active, item, menu_date, day_of_the_week)
