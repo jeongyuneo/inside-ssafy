@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ReCommentResponse {
 
     private String content;
+    private boolean isEditable;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
     private LocalDateTime createdDate;
