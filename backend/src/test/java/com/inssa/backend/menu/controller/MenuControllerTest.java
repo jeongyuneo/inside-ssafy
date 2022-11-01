@@ -113,8 +113,8 @@ public class MenuControllerTest extends ApiDocument {
         식단_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MENU));
     }
 
-    private ResultActions 식단_등록_요청(Long userId, MenuRequest menuRequest) throws Exception {
-        return mockMvc.perform(post("/api/v1/menus/users/" + userId)
+    private ResultActions 식단_등록_요청(Long memberId, MenuRequest menuRequest) throws Exception {
+        return mockMvc.perform(post("/api/v1/menus/users/" + memberId)
                 .contextPath("/api/v1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(menuRequest)));
