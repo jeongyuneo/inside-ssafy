@@ -62,7 +62,7 @@ public class MenuService {
 
     private void checkManager(Member member) {
         if (!member.isManager()) {
-            throw new UnAuthorizedException(ErrorMessage.FAIL_TO_CREATE_MENU);
+            throw new UnAuthorizedException(ErrorMessage.NOT_FOUND_AUTHORITY);
         }
     }
 }
