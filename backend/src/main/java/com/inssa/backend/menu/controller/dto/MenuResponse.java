@@ -2,6 +2,7 @@ package com.inssa.backend.menu.controller.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -10,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MenuResponse {
 
-    private List<String> items;
-    private String date;
-    private String dayOfTheWeek;
+    private String  startDate;
+    private String endDate;
+    private List<ItemsResponse> menus;
 }
