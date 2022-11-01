@@ -43,4 +43,8 @@ public class Member extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments = new ArrayList<>();
+
+    public boolean isEditable(Long memberId) {
+        return id.equals(memberId) || role.equals(Role.MANAGER);
+    }
 }
