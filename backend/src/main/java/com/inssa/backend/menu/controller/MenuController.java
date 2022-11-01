@@ -21,7 +21,7 @@ public class MenuController {
     }
 
     @GetMapping
-    public ResponseEntity<MenuResponse> getMenu(@RequestParam String date) {
-        return ResponseEntity.ok().body(menuService.getMenu(date));
+    public ResponseEntity<MenuResponse> getMenu() {
+        return ResponseEntity.ok().body(menuService.getMenu());
     }
 }

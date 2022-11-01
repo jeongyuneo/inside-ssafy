@@ -20,9 +20,10 @@ export const StyledInput = styled.input<PropTypes>`
     font-size: ${fontSize || DEFAULT_FONTSIZE}rem;
   `}
 
-  ${({ textColor }) => css`
-    color: ${textColor || DEFAULT_TEXTCOLOR};
-  `}
+  ${({ textColor }) =>
+    css`
+      color: ${textColor || DEFAULT_TEXTCOLOR};
+    `}
   
   background-color: ${({ backgroundColor }) => backgroundColor || '#D1EBFA'};
   border: none;

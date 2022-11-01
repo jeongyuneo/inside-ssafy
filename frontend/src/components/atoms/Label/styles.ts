@@ -9,13 +9,9 @@ export const StyledLabel = styled.label<PropTypes>`
   `}
 
   ${({ textColor }) =>
-    textColor
-      ? css`
-          color: ${textColor};
-        `
-      : css`
-          color: ${DEFAULT_TEXTCOLOR};
-        `}
+    css`
+      color: ${textColor || DEFAULT_TEXTCOLOR};
+    `}
 
   border: none;
 `;
