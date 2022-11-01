@@ -93,7 +93,7 @@ public class CommentControllerTest extends ApiDocument {
     @Test
     void delete_comment_success() throws Exception {
         // given
-        willDoNothing().given(commentService).deleteComment(anyLong());
+        willDoNothing().given(commentService).deleteComment(anyLong(), anyLong());
         // when
         ResultActions resultActions = 익명_게시판_댓글_삭제_요청(ID);
         // then
@@ -104,7 +104,7 @@ public class CommentControllerTest extends ApiDocument {
     @Test
     void delete_comment_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT)).given(commentService).deleteComment(anyLong());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT)).given(commentService).deleteComment(anyLong(), anyLong());
         // when
         ResultActions resultActions = 익명_게시판_댓글_삭제_요청(ID);
         // then
@@ -153,7 +153,8 @@ public class CommentControllerTest extends ApiDocument {
 
     private ResultActions 익명_게시판_댓글_삭제_요청(Long commentId) throws Exception {
         return mockMvc.perform(delete("/api/v1/comments/" + commentId)
-                .contextPath("/api/v1"));
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_댓글_삭제_성공(ResultActions resultActions) throws Exception {

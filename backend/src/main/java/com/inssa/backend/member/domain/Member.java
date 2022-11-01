@@ -52,4 +52,8 @@ public class Member extends BaseEntity {
             throw new NotEqualException(ErrorMessage.NOT_EQUAL_PASSWORD);
         }
     }
+
+    public boolean isEditable(Long memberId) {
+        return id.equals(memberId) || role.equals(Role.MANAGER);
+    }
 }
