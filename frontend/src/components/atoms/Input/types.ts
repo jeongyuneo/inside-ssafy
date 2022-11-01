@@ -8,8 +8,6 @@ export interface PropTypes {
   fontSize?: number;
   textColor?: string;
   backgroundColor?: string;
-  changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
   type?: string;
   id?: string;
   placeholder?: string;
@@ -17,4 +15,6 @@ export interface PropTypes {
   paddingLeft?: number;
   inputs?: AccountValueTypes;
   value?: string;
+  changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }

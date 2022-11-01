@@ -4,8 +4,9 @@ import InputLabel from '../../molecules/InputLabel';
 import { StyledInputLabel, StyledbuttonGroup } from './styles';
 import { PropTypes } from './types';
 
-const Join = ({ id }: PropTypes) => {
+const Join = () => {
   const input_names = ['userId', 'userPw', 'email', 'address', 'studentNum'];
+  const textTypes = ['text', 'password', 'text', 'text', 'text'];
   const [account, setAccount] = useState({
     userId: '',
     userPw: '',
@@ -14,29 +15,53 @@ const Join = ({ id }: PropTypes) => {
     studentNum: '',
   });
 
+  const [inputCss, setInputCss] = useState([
+    {
+      width: 10,
+      height: 2,
+      type: textTypes[0],
+      inputTextColor: 'black',
+    },
+    {
+      width: 10,
+      height: 2,
+      type: textTypes[1],
+      inputTextColor: 'black',
+    },
+    {
+      width: 10,
+      height: 2,
+      type: textTypes[2],
+      inputTextColor: 'black',
+    },
+    {
+      width: 10,
+      height: 2,
+      type: textTypes[3],
+      inputTextColor: 'black',
+    },
+    {
+      width: 10,
+      height: 2,
+      type: textTypes[4],
+      inputTextColor: 'black',
+    },
+  ]);
+
   const changeInfo = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name + ' , ' + e.target.value);
     setAccount(prev => {
       return {
         ...prev,
         [e.target.name]: e.target.value,
       };
     });
+    console.log(account);
   };
 
-  const [btnInfo, setBtnInfo] = useState([
-    {
-      text: '가입',
-      clickHandler: () => {
-        console.log('가입 버튼을 클릭');
-      },
-    },
-    {
-      text: '취소',
-      clickHandler: () => {
-        console.log('취소 버튼을 클릭');
-      },
-    },
-  ]);
+  const showAccount = () => {
+    console.log(account);
+  };
 
   const labelfont = 0.3;
   return (
@@ -45,6 +70,7 @@ const Join = ({ id }: PropTypes) => {
         id={input_names[0]}
         name={input_names[0]}
         inputs={account}
+        changeHandler={changeInfo}
         labelValue={'아이디'}
         labelFontSize={labelfont}
       />
@@ -82,9 +108,8 @@ const Join = ({ id }: PropTypes) => {
         labelFontSize={labelfont}
       />
       <StyledbuttonGroup>
-        {btnInfo.map((info, index) => {
-          return <Button key={info.text + index}>{info.text}</Button>;
-        })}
+        <Button clickHandler={showAccount}>가입</Button>
+        <Button clickHandler={showAccount}>취소</Button>
       </StyledbuttonGroup>
     </StyledInputLabel>
   );
