@@ -16,6 +16,8 @@ public enum ErrorMessage {
     NOT_FOUND_ROUTE_IMAGE("해당 노선 이미지를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE("해당 경로를 찾을 수 없습니다."),
 
+    NOT_EQUAL_PASSWORD("비밀번호가 일치하지 않습니다."),
+
     FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
     FAIL_TO_SEARCH_POST("익명 게시판 검색에 실패했습니다."),
