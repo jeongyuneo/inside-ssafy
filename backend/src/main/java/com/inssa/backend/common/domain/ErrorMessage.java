@@ -16,7 +16,7 @@ public enum ErrorMessage {
     NOT_FOUND_ROUTE_IMAGE("해당 노선 이미지를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE("해당 경로를 찾을 수 없습니다."),
 
-    NOT_ALLOWED_MEMBER("편집 권한이 없는 회원입니다."),
+    NOT_EDITABLE_MEMBER("편집 권한이 없는 회원입니다."),
 
     FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
