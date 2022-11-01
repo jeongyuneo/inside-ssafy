@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { PropTypes } from './types';
 
 export const StyledInputLabel = styled.div`
   display: flex;

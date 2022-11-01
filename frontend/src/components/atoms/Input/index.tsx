@@ -1,4 +1,3 @@
-import { mainModule } from 'process';
 import React from 'react';
 import { StyledInput } from './styles';
 import { PropTypes } from './types';
@@ -10,6 +9,9 @@ import { PropTypes } from './types';
  * changeHandler는 ChangeEvent<HTMLInputElement> 타입의 e값을 변수로 전달해준다.
  * value는 부모 컴포넌트에 값을 저장하고 현재 Input에 반영한다.
  *
+ * value에는 값을 입력하고자 하는 변수의 값을 집어넣는다
+ * value의 값은 name으로 표시한다.
+ *
  * @author jun
  */
 const Input = ({
@@ -18,7 +20,7 @@ const Input = ({
   fontSize,
   textColor,
   backgroundColor,
-  value,
+  inputs,
   type,
   name,
   id,
@@ -32,7 +34,7 @@ const Input = ({
       fontSize={fontSize}
       textColor={textColor}
       backgroundColor={backgroundColor}
-      value={value}
+      value={inputs?.[name]}
       type={type}
       name={name}
       id={id}
