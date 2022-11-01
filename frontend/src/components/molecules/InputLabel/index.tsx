@@ -28,6 +28,7 @@ const InputLabel = ({
       </StyledLabelWrap>
       <StyledInputWrap>
         <Input
+          id={id}
           fontSize={inputFontSize}
           textColor={inputTextColor}
           backgroundColor={inputBackgroundColor}
