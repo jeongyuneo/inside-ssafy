@@ -1,9 +1,6 @@
 package com.inssa.backend.common.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -31,7 +28,9 @@ public class BaseEntity {
     protected LocalDateTime lastModifiedDate;
 
     protected LocalDateTime deletedDate;
-    protected boolean isActive;
+
+    @Builder.Default
+    protected boolean isActive = true;
 
     public void delete() {
         isActive = false;
