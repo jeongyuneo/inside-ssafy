@@ -34,7 +34,7 @@ public class MenuService {
                 Menu.builder()
                         .date(menuRequest.getDate())
                         .dayOfTheWeek(menuRequest.getDayOfTheWeek())
-                        .item(String.join(", ", menuRequest.getItems()))
+                        .item(String.join(DELIMITER, menuRequest.getItems()))
                         .build()
         );
     }
