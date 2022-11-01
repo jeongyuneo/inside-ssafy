@@ -1,6 +1,6 @@
-import { InputsType } from './types';
+import { LoginInputsType } from './types';
 
-const validateInput = ({ email, password }: InputsType): boolean => {
+const validateInput = ({ email, password }: LoginInputsType): boolean => {
   const EMAIL_PATTERN =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 

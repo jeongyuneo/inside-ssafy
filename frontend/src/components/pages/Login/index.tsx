@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Image from '../../atoms/Image';
+import Text from '../../atoms/Text';
 import ButtonGroup from '../../molecules/ButtonGroup';
 import CheckboxLabel from '../../molecules/CheckboxLabel';
 import InputLabel from '../../molecules/InputLabel';
@@ -17,19 +18,26 @@ import validateInput from './validateInput';
 const Login = () => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
-    email: 'abc@ab.ck',
-    password: 'rkssdfsdf1@ ',
+    email: '',
+    password: '',
   });
+  const [isValidated, setIsValidated] = useState(true);
 
-  const result = useQuery(['login'], requestLogin);
+  // useQuery 말고 그냥 함수 호출로 바꾸고 함수 내에서 토큰 처리
+  const { data } = useQuery(['login', inputs], () => requestLogin(inputs));
 
   const clickLogin = () => {
     if (!validateInput(inputs)) {
-      console.log('falsy');
-
+      setIsValidated(false);
       return;
     }
-    console.log('true');
+
+    if (!data?.accessToken) {
+      setIsValidated(false);
+      return;
+    }
+
+    setIsValidated(true);
   };
 
   const clickJoin = () => {
@@ -47,6 +55,15 @@ const Login = () => {
     },
   ];
 
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputs(prev => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
   return (
     <StyledLogin>
       <LoginPageWrapper>
@@ -58,6 +75,8 @@ const Login = () => {
           placeholder="user@gmail.com"
           width={20}
           height={3}
+          inputs={inputs}
+          changeHandler={e => changeHandler(e)}
         />
         <InputLabel
           id="password"
@@ -66,10 +85,15 @@ const Login = () => {
           placeholder="8자 이상 20자 이하로 입력하세요"
           width={20}
           height={3}
+          inputs={inputs}
+          changeHandler={e => changeHandler(e)}
         />
         <CheckboxLabelWrapper>
           <CheckboxLabel text="로그인 유지" id="keepLogin" />
         </CheckboxLabelWrapper>
+        {!isValidated && (
+          <Text color="red">이메일, 비밀번호를 확인해주세요.</Text>
+        )}
         <ButtonGroup buttonInfos={buttonInfos} width={20} height={3} isColumn />
       </LoginPageWrapper>
     </StyledLogin>

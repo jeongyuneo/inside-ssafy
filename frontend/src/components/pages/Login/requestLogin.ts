@@ -1,17 +1,17 @@
 import axios from 'axios';
+import { LoginInputsType, SuccessLoginType } from './types';
 
-const requestLogin = async () => {
+const requestLogin = async ({ email, password }: LoginInputsType) => {
   try {
-    const result: any = await axios({
+    const { data }: { data: SuccessLoginType } = await axios({
       method: 'POST',
       url: '/api/v1/members/login',
       data: {
-        email: 'ssafy@ssafy.com',
-        password: 'ssafy',
+        email,
+        password,
       },
     });
-    console.log(result);
-    return result;
+    return data;
   } catch (e) {
     console.log(e);
   }
