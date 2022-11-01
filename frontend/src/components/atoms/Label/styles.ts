@@ -1,22 +1,17 @@
 import styled, { css } from 'styled-components';
 import { PropTypes } from './types';
 
-const DEFAULT_FONTSIZE = 0.8;
-const DEFAULT_TEXTCOLOR = 'black';
+const DEFAULT_FONTSIZE = 1;
+const DEFAULT_TEXTCOLOR = 'red';
 export const StyledLabel = styled.label<PropTypes>`
-  ${({ fontSize }) =>
-    fontSize
-      ? css`
-          font-size: ${fontSize}rem;
-        `
-      : css`
-          font-size: ${DEFAULT_FONTSIZE}rem;
-        `}
+  ${({ fontSize }) => css`
+    font-size: ${fontSize || DEFAULT_FONTSIZE}rem;
+  `}
 
   ${({ textColor }) =>
     textColor
       ? css`
-          color: ${textColor || DEFAULT_TEXTCOLOR};
+          color: ${textColor};
         `
       : css`
           color: ${DEFAULT_TEXTCOLOR};

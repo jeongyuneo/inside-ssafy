@@ -16,19 +16,14 @@ export const StyledInput = styled.input<PropTypes>`
       height: ${height}rem;
     `}
 
-  ${({ fontSize }) =>
-    fontSize
-      ? css`
-          font-size: ${fontSize}rem;
-        `
-      : css`
-          font-size: ${DEFAULT_FONTSIZE}rem;
-        `}
+  ${({ fontSize }) => css`
+    font-size: ${fontSize || DEFAULT_FONTSIZE}rem;
+  `}
 
   ${({ textColor }) =>
     textColor
       ? css`
-          color: ${textColor || DEFAULT_TEXTCOLOR};
+          color: ${textColor};
         `
       : css`
           color: ${DEFAULT_TEXTCOLOR};
