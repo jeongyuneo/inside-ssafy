@@ -31,7 +31,16 @@ public class PostService {
     }
 
     public List<PostsResponse> searchPost(String keyword) {
-        return null;
+        return postRepository.SearchByTitleOrContentAndIsActiveTrue(keyword)
+                .stream()
+                .map(post -> PostsResponse.builder()
+                        .postId(post.getId())
+                        .title(post.getTitle())
+                        .likeCount(post.getLikeCount())
+                        .commentCount(post.getCommentCount())
+                        .createdDate(post.getCreatedDate())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public PostResponse getPost(Long postId) {
