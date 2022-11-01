@@ -30,4 +30,8 @@ public class Comment extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ReComment> reComments = new ArrayList<>();
+
+    public void update(String content) {
+        this.content = content;
+    }
 }
