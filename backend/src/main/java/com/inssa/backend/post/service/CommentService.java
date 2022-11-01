@@ -52,11 +52,6 @@ public class CommentService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT));
     }
 
-    private Comment findComment(Long commentId) {
-        return commentRepository.findByIdAndIsActiveTrue(commentId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT));
-    }
-
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
