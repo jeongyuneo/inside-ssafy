@@ -6,7 +6,7 @@ export const StyledInputLabel = styled.div`
 `;
 
 export const StyledLabelWrap = styled.div`
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.1rem;
   margin-left: 0.2rem;
 `;
 

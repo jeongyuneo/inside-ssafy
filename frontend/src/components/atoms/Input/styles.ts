@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
 import { PropTypes } from './types';
 
+const default_fontSize = 0.8;
+const default_textColor = 'black';
 export const StyledInput = styled.input<PropTypes>`
   ${({ width }) =>
     width &&
@@ -15,12 +17,23 @@ export const StyledInput = styled.input<PropTypes>`
     `}
 
   ${({ fontSize }) =>
-    fontSize &&
-    css`
-      font-size: ${fontSize}rem;
-    `}
+    fontSize
+      ? css`
+          font-size: ${fontSize || default_fontSize}rem;
+        `
+      : css`
+          font-size: ${default_fontSize}rem;
+        `}
 
-  color: ${({ textColor }) => textColor || 'black'};
+  ${({ textColor }) =>
+    textColor
+      ? css`
+          color: ${textColor || default_textColor};
+        `
+      : css`
+          color: ${default_textColor};
+        `}
+  
   background-color: ${({ backgroundColor }) => backgroundColor || '#D1EBFA'};
   border: none;
   outline: none;
