@@ -49,7 +49,7 @@ public class MemberService {
     }
 
     private Member findMemberByEmail(String email) {
-        return memberRepository.findByEmail(email)
+        return memberRepository.findByEmailAndIsActiveTrue(email)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 }
