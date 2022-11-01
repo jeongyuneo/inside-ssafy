@@ -1,9 +1,9 @@
 package com.inssa.backend.post.service;
 
 import com.inssa.backend.post.controller.dto.PostRequest;
+import com.inssa.backend.post.domain.PostRepository;
 import com.inssa.backend.post.controller.dto.PostResponse;
 import com.inssa.backend.post.controller.dto.PostsResponse;
-import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +31,16 @@ public class PostService {
     }
 
     public List<PostsResponse> searchPost(String keyword) {
-        return null;
+        return postRepository.SearchByTitleOrContentAndIsActiveTrue(keyword)
+                .stream()
+                .map(post -> PostsResponse.builder()
+                        .postId(post.getId())
+                        .title(post.getTitle())
+                        .likeCount(post.getLikeCount())
+                        .commentCount(post.getCommentCount())
+                        .createdDate(post.getCreatedDate())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public PostResponse getPost(Long postId) {

@@ -9,9 +9,9 @@ import java.util.List;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MenuResponse {
+public class ItemsResponse {
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private List<ItemsResponse> menus;
+    private LocalDate date;
+    private String dayOfTheWeek;
+    private List<String> items;
 }

@@ -1,19 +1,20 @@
-import { ChangeEventHandler } from 'react';
+import { ChangeEvent, ChangeEventHandler } from 'react';
+import { AccountValueTypes } from '../../molecules/InputLabel/types';
 
 export interface PropTypes {
+  name: string;
   width?: number;
   height?: number;
   fontSize?: number;
   textColor?: string;
   backgroundColor?: string;
-  changeHandler?: (index: string, value: string) => void;
+  changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;
-  value?: string;
   type?: string;
-  name?: string;
   id?: string;
-  index?: string;
   placeholder?: string;
   borderRadius?: number;
   paddingLeft?: number;
+  inputs?: AccountValueTypes;
+  value?: string;
 }
