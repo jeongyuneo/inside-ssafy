@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Button from '../../atoms/Button';
 import InputLabel from '../../molecules/InputLabel';
 import { StyledInputLabel, StyledbuttonGroup } from './styles';
 import { PropTypes } from './types';
 
 const Join = ({ id }: PropTypes) => {
-  const index = ['id', 'password', 'email', 'address', 'studentNumber'];
+  const input_names = ['userId', 'userPw', 'email', 'address', 'studentNum'];
   const [account, setAccount] = useState({
-    id: '',
-    password: '',
+    userId: '',
+    userPw: '',
     email: '',
     address: '',
-    studentNumber: '',
+    studentNum: '',
   });
 
-  const changeInfo = (value: string, name: string) => {
-    console.log(name + ' , ' + value);
-    setAccount({ ...account, [name]: [value] });
+  const changeInfo = (e: ChangeEvent<HTMLInputElement>) => {
+    setAccount(prev => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
   };
 
   const [btnInfo, setBtnInfo] = useState([
@@ -37,31 +41,42 @@ const Join = ({ id }: PropTypes) => {
   const labelfont = 0.3;
   return (
     <StyledInputLabel>
-      <InputLabel id={'id'} labelValue={'아이디'} labelFontSize={labelfont} />
       <InputLabel
-        id={'password'}
-        index={'password'}
-        value={account['password']}
+        id={input_names[0]}
+        name={input_names[0]}
+        inputs={account}
+        labelValue={'아이디'}
+        labelFontSize={labelfont}
+      />
+      <InputLabel
+        id={input_names[1]}
+        name={input_names[1]}
+        inputs={account}
         changeHandler={changeInfo}
         type={'password'}
         labelValue={'패스워드'}
         labelFontSize={labelfont}
       />
       <InputLabel
-        id={'email'}
-        value={account.email}
+        id={input_names[2]}
+        name={input_names[2]}
+        inputs={account}
         changeHandler={changeInfo}
         labelValue={'이메일'}
         labelFontSize={labelfont}
       />
       <InputLabel
-        id={'address'}
+        id={input_names[3]}
+        name={input_names[3]}
+        inputs={account}
         changeHandler={changeInfo}
         labelValue={'주소'}
         labelFontSize={labelfont}
       />
       <InputLabel
-        id={'std_num'}
+        id={input_names[4]}
+        name={input_names[4]}
+        inputs={account}
         changeHandler={changeInfo}
         labelValue={'학번'}
         labelFontSize={labelfont}
