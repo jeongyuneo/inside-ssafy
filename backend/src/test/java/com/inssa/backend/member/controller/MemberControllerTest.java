@@ -4,6 +4,7 @@ import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
+import com.inssa.backend.common.exception.UnAuthorizedException;
 import com.inssa.backend.member.controller.dto.*;
 import com.inssa.backend.member.service.MemberService;
 import com.inssa.backend.post.controller.dto.PostsResponse;
@@ -31,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MemberControllerTest extends ApiDocument {
 
     private static final String EMAIL = "ssafy@ssafy.com";
+    private static final String EMAIL_PARAMETER_NAME = "email";
+    private static final String VALIDATION_TOKEN = "OGM61X";
     private static final String PASSWORD = "ssafy";
     private static final String NAME = "김싸피";
     private static final String STUDENT_NUMBER = "000000";
@@ -46,6 +49,7 @@ public class MemberControllerTest extends ApiDocument {
     @MockBean
     private MemberService memberService;
 
+    private ValidationRequest validationRequest;
     private MemberRequest memberRequest;
     private MemberResponse memberResponse;
     private PasswordUpdateRequest memberUpdateRequest;
@@ -59,6 +63,10 @@ public class MemberControllerTest extends ApiDocument {
                 .likeCount(LIKE_COUNT)
                 .commentCount(COMMENT_COUNT)
                 .createdDate(CREATED_DATE)
+                .build();
+        validationRequest = ValidationRequest.builder()
+                .email(EMAIL)
+                .validationToken(VALIDATION_TOKEN)
                 .build();
         memberRequest = MemberRequest.builder()
                 .email(EMAIL)
@@ -85,6 +93,50 @@ public class MemberControllerTest extends ApiDocument {
                 .accessToken(ACCESS_TOKEN)
                 .refreshToken(REFRESH_TOKEN)
                 .build();
+    }
+
+    @DisplayName("인증코드 전송 성공")
+    @Test
+    void send_validation_token_success() throws Exception {
+        // given
+        willDoNothing().given(memberService).sendValidationToken(anyString());
+        // when
+        ResultActions resultActions = 인증코드_전송_요청(EMAIL);
+        // then
+        인증코드_전송_성공(resultActions);
+    }
+
+    @DisplayName("인증코드 전송 실패")
+    @Test
+    void send_validation_token_fail() throws Exception {
+        // given
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN.getMessage())).given(memberService).sendValidationToken(anyString());
+        // when
+        ResultActions resultActions = 인증코드_전송_요청(EMAIL);
+        // then
+        인증코드_전송_실패(resultActions, new Message(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN));
+    }
+
+    @DisplayName("인증코드 유효성 검사 성공")
+    @Test
+    void validate_token_success() throws Exception {
+        // given
+        willDoNothing().given(memberService).validateToken(any(ValidationRequest.class));
+        // when
+        ResultActions resultActions = 인증코드_유효성_검사_요청(validationRequest);
+        // then
+        인증코드_유효성_검사_성공(resultActions);
+    }
+
+    @DisplayName("인증코드 유효성 검사 실패")
+    @Test
+    void validate_token_fail() throws Exception {
+        // given
+        willThrow(new UnAuthorizedException(ErrorMessage.NOT_EQUAL_VALIDATION_TOKEN)).given(memberService).validateToken(any(ValidationRequest.class));
+        // when
+        ResultActions resultActions = 인증코드_유효성_검사_요청(validationRequest);
+        // then
+        인증코드_유효성_검사_실패(resultActions, new Message(ErrorMessage.NOT_EQUAL_VALIDATION_TOKEN));
     }
 
     @DisplayName("회원가입 성공")
@@ -195,6 +247,47 @@ public class MemberControllerTest extends ApiDocument {
         ResultActions resultActions = 로그인_요청(loginRequest);
         // then
         로그인_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
+    }
+
+    private ResultActions 인증코드_전송_요청(String email) throws Exception {
+        return mockMvc.perform(
+                post("/api/v1/members/join/token/request")
+                        .contextPath("/api/v1")
+                        .param(EMAIL_PARAMETER_NAME, email)
+        );
+    }
+
+    private void 인증코드_전송_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("send-validation-token-success"));
+    }
+
+    private void 인증코드_전송_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("send-validation-token-fail"));
+    }
+
+    private ResultActions 인증코드_유효성_검사_요청(ValidationRequest validationRequest) throws Exception {
+        return mockMvc.perform(post("/api/v1/members/join/token/validation")
+                .contextPath("/api/v1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(validationRequest)));
+    }
+
+    private void 인증코드_유효성_검사_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("validate-token-success"));
+    }
+
+    private void 인증코드_유효성_검사_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isUnauthorized())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("validate-token-fail"));
     }
 
     private ResultActions 회원가입_요청(MemberRequest memberRequest) throws Exception {
