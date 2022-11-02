@@ -11,9 +11,12 @@ const BusInfoNavigator = ({ busNum, clickHandler }: Proptypes) => {
   return (
     <StyledBusInfoNavigator>
       <BusInfoNavigatorContainer>
-        <AiFillCaretLeft onClick={clickHandler} color="#D1EBFA" />
+        <AiFillCaretLeft onClick={() => clickHandler('left')} color="#D1EBFA" />
         <BusNumberContainer>{busNum}호차</BusNumberContainer>
-        <AiFillCaretRight onClick={clickHandler} color="#D1EBFA" />
+        <AiFillCaretRight
+          onClick={() => clickHandler('right')}
+          color="#D1EBFA"
+        />
       </BusInfoNavigatorContainer>
     </StyledBusInfoNavigator>
   );

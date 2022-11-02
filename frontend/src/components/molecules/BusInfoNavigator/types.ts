@@ -1,4 +1,4 @@
 export interface Proptypes {
   busNum: number;
-  clickHandler: () => void;
+  clickHandler: (direction: string) => void;
 }
