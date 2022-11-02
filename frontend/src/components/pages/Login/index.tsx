@@ -7,7 +7,13 @@ import ButtonGroup from '../../molecules/ButtonGroup';
 import CheckboxLabel from '../../molecules/CheckboxLabel';
 import InputLabel from '../../molecules/InputLabel';
 import requestLogin from './requestLogin';
-import { StyledLogin, LoginPageWrapper, CheckboxLabelWrapper } from './styles';
+import {
+  StyledLogin,
+  LoginPageWrapper,
+  CheckboxLabelWrapper,
+  LogoInputsWrapper,
+  CheckboxButtonsWrapper,
+} from './styles';
 import validateInput from './validateInput';
 
 /**
@@ -67,34 +73,48 @@ const Login = () => {
   return (
     <StyledLogin>
       <LoginPageWrapper>
-        <Image width={20} src="/images/iNSSA_logo.png" alt="logo" />
-        <InputLabel
-          id="email"
-          name="email"
-          labelValue="E-mail"
-          placeholder="user@gmail.com"
-          width={20}
-          height={3}
-          inputs={inputs}
-          changeHandler={e => changeHandler(e)}
-        />
-        <InputLabel
-          id="password"
-          name="password"
-          labelValue="Password"
-          placeholder="8자 이상 20자 이하로 입력하세요"
-          width={20}
-          height={3}
-          inputs={inputs}
-          changeHandler={e => changeHandler(e)}
-        />
-        <CheckboxLabelWrapper>
-          <CheckboxLabel text="로그인 유지" id="keepLogin" />
-        </CheckboxLabelWrapper>
-        {!isValidated && (
-          <Text color="red">이메일, 비밀번호를 확인해주세요.</Text>
-        )}
-        <ButtonGroup buttonInfos={buttonInfos} width={20} height={3} isColumn />
+        <LogoInputsWrapper>
+          <Image
+            width={20}
+            height={20}
+            src="/images/iNSSA_logo.png"
+            alt="logo"
+          />
+          <InputLabel
+            id="email"
+            name="email"
+            labelValue="E-mail"
+            placeholder="user@gmail.com"
+            width={20}
+            height={3}
+            inputs={inputs}
+            changeHandler={e => changeHandler(e)}
+          />
+          <InputLabel
+            id="password"
+            name="password"
+            labelValue="Password"
+            placeholder="8자 이상 20자 이하로 입력하세요"
+            width={20}
+            height={3}
+            inputs={inputs}
+            changeHandler={e => changeHandler(e)}
+          />
+        </LogoInputsWrapper>
+        <CheckboxButtonsWrapper>
+          <CheckboxLabelWrapper>
+            <CheckboxLabel text="로그인 유지" id="keepLogin" />
+          </CheckboxLabelWrapper>
+          {!isValidated && (
+            <Text color="red">이메일, 비밀번호를 확인해주세요.</Text>
+          )}
+          <ButtonGroup
+            buttonInfos={buttonInfos}
+            width={20}
+            height={3}
+            isColumn
+          />
+        </CheckboxButtonsWrapper>
       </LoginPageWrapper>
     </StyledLogin>
   );
