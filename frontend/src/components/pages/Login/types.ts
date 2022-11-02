@@ -8,3 +8,8 @@ export interface SuccessLoginType {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface SaveEmailType {
+  checked: boolean;
+  email: string;
+}
