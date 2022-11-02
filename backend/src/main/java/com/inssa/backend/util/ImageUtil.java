@@ -22,6 +22,8 @@ public class ImageUtil {
     private static final String IMAGE_JPG = "image/jpg";
     private static final String IMAGE_JPEG = "image/jpeg";
     private static final String IMAGE_PNG = "image/png";
+
+    private static final String IMAGE_GIF = "image/GIF";
     private static final String IMAGE_REQUEST = "/images";
     private static final String POST = "post";
 
@@ -54,6 +56,6 @@ public class ImageUtil {
     }
 
     private static boolean isWrongContentType(String contentType) {
-        return !(contentType.contains(IMAGE_JPG) || contentType.contains(IMAGE_JPEG) || contentType.contains(IMAGE_PNG));
+        return !(contentType.contains(IMAGE_JPG) || contentType.contains(IMAGE_JPEG) || contentType.contains(IMAGE_PNG) || contentType.contains(IMAGE_GIF));
     }
 }
