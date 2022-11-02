@@ -48,6 +48,10 @@ public class Post extends BaseEntity {
         commentCount++;
     }
 
+    public void addReComment() {
+        commentCount++;
+    }
+
     public void saveImages(List<MultipartFile> files) {
         IntStream.range(1, files.size() + 1)
                 .mapToObj(order -> Image.builder()
