@@ -39,7 +39,7 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/update/{postId}")
+    @PostMapping("/update/{postId}")
     public ResponseEntity<Void> updatePost(@RequestHeader("Authorization") String token, @PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
         postService.updatePost(4L, postId, postRequest, files);
         return ResponseEntity.ok().build();
