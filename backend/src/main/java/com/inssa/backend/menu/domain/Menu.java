@@ -21,13 +21,13 @@ import java.time.LocalDate;
 @Entity
 public class Menu extends BaseEntity {
 
-    @Column(nullable = false)
-    private String item;
-
     @NotNull
     @Column(name = "menu_date")
     private LocalDate date;
 
     @NotNull
     private String dayOfTheWeek;
+
+    @Column(nullable = false)
+    private String item;
 }
