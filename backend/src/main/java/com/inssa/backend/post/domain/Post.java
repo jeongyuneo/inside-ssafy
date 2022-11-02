@@ -36,7 +36,7 @@ public class Post extends BaseEntity {
     private Member member;
 
     @Builder.Default
-    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
 
     @Builder.Default
@@ -49,11 +49,25 @@ public class Post extends BaseEntity {
     }
 
     public void saveImages(List<MultipartFile> files) {
+        images.clear();
+        if (hasNotUpdateFiles(files)) {
+            return;
+        }
         IntStream.range(1, files.size() + 1)
                 .mapToObj(order -> Image.builder()
                         .url(ImageUtil.saveImage(files.get(order - 1)))
                         .order(order)
                         .post(this).build())
                 .forEach(image -> images.add(image));
+    }
+
+    public void update(String title, String content, List<MultipartFile> files) {
+        this.title = title;
+        this.content = content;
+        saveImages(files);
+    }
+
+    private static boolean hasNotUpdateFiles(List<MultipartFile> files) {
+        return files.size() == 1 && files.get(0).getContentType() == null;
     }
 }

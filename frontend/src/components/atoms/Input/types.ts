@@ -1,5 +1,6 @@
 import { ChangeEvent, ChangeEventHandler } from 'react';
 import { AccountValueTypes } from '../../molecules/InputLabel/types';
+import { LoginInputsType } from '../../pages/Login/types';
 
 export interface PropTypes {
   name: string;
@@ -13,7 +14,7 @@ export interface PropTypes {
   placeholder?: string;
   borderRadius?: number;
   paddingLeft?: number;
-  inputs?: AccountValueTypes;
+  inputs?: AccountValueTypes | LoginInputsType;
   value?: string;
   changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;

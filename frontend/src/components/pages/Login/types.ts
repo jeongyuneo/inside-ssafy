@@ -1,9 +1,7 @@
-export interface JoinInputsType {
+export interface LoginInputsType {
   [key: string]: string;
   email: string;
   password: string;
-  name: string;
-  student_number: string;
 }
 
 export interface SuccessLoginType {

@@ -6,4 +6,7 @@ export const ImageWrapper = styled.div<ImageWrapperPropTypes>`
   height: ${({ height }) => height || '100%'};
 `;
 
-export const StyledImage = styled.img``;
+export const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+`;
