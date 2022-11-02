@@ -6,8 +6,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class EmailAuthRequest {
+public class ValidationRequest {
 
     private String email;
-    private String authToken;
+    private String validationToken;
 }
