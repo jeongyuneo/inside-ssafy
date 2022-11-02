@@ -1,14 +1,18 @@
 package com.inssa.backend.post.domain;
 
 import com.inssa.backend.common.domain.BaseEntity;
+import com.inssa.backend.common.domain.Image;
 import com.inssa.backend.member.domain.Member;
+import com.inssa.backend.util.ImageUtil;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Getter
 @SuperBuilder
@@ -33,10 +37,23 @@ public class Post extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Image> images = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments = new ArrayList<>();
 
     public void addComment(Comment comment) {
         comments.add(comment);
         commentCount++;
+    }
+
+    public void saveImages(List<MultipartFile> files) {
+        IntStream.range(1, files.size() + 1)
+                .mapToObj(order -> Image.builder()
+                        .url(ImageUtil.saveImage(files.get(order - 1)))
+                        .order(order)
+                        .post(this).build())
+                .forEach(image -> images.add(image));
     }
 }
