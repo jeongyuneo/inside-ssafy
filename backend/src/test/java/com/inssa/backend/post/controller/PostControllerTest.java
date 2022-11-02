@@ -182,7 +182,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void create_post_success() throws Exception {
         // given
-        willDoNothing().given(postService).createPost(any(PostRequest.class), anyList());
+        willDoNothing().given(postService).createPost(anyLong(), any(PostRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_등록_요청(postRequest);
         // then
@@ -193,7 +193,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void create_post_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_POST.getMessage())).given(postService).createPost(any(PostRequest.class), anyList());
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_POST.getMessage())).given(postService).createPost(anyLong(), any(PostRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_등록_요청(postRequest);
         // then
@@ -204,7 +204,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void update_post_success() throws Exception {
         // given
-        willDoNothing().given(postService).updatePost(anyLong(), any(PostRequest.class), anyList());
+        willDoNothing().given(postService).updatePost(anyLong(), anyLong(), any(PostRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_수정_요청(ID);
         // then
@@ -215,7 +215,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void update_post_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).updatePost(anyLong(), any(PostRequest.class), anyList());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).updatePost(anyLong(), anyLong(), any(PostRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_수정_요청(ID);
         // then
@@ -351,6 +351,7 @@ public class PostControllerTest extends ApiDocument {
                 .file(postRequestPart)
                 .file(file)
                 .file(file)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                 .accept(MediaType.APPLICATION_JSON)
                 .contextPath("/api/v1"));
     }
@@ -373,6 +374,7 @@ public class PostControllerTest extends ApiDocument {
                 .file(postRequestPart)
                 .file(file)
                 .file(file)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                 .accept(MediaType.APPLICATION_JSON)
                 .contextPath("/api/v1"));
     }

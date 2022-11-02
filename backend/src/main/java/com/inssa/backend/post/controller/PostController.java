@@ -34,14 +34,14 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
-        postService.createPost(postRequest, files);
+    public ResponseEntity<Void> createPost(@RequestHeader("Authorization") String token, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+        postService.createPost(4L, postRequest, files);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/update/{postId}")
-    public ResponseEntity<Void> updatePost(@PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
-        postService.updatePost(postId, postRequest, files);
+    public ResponseEntity<Void> updatePost(@RequestHeader("Authorization") String token, @PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+        postService.updatePost(4L, postId, postRequest, files);
         return ResponseEntity.ok().build();
     }
 
