@@ -16,7 +16,7 @@ import static com.inssa.backend.common.domain.ErrorMessage.FAIL_TO_SAVE_FILE;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ImageUtil {
 
-    private static final String IMAGE_ROOT_PATH = "C:\\Inssa\\S07P31B304\\backend\\src\\main\\resources\\static\\image";
+    private static final String IMAGE_ROOT_PATH = "/home";
     private static final String POINT = ".";
     private static final String SEPARATOR = "/";
     private static final String IMAGE_JPG = "image/jpg";
