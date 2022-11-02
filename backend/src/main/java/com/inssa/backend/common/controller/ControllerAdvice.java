@@ -49,8 +49,8 @@ public class ControllerAdvice {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public Message FileSavaException(Exception exception) {
-        log.info("FileSavaException: {}", exception.getMessage(), exception);
+    public Message FileSaveException(Exception exception) {
+        log.info("FileSaveException: {}", exception.getMessage(), exception);
         return new Message(exception.getMessage());
     }
 }
