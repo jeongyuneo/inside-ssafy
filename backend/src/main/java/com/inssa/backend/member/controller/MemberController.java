@@ -13,6 +13,18 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @PostMapping("/join/token/request")
+    public ResponseEntity<Void> sendValidationToken(@RequestParam String email) {
+        memberService.sendValidationToken(email);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/join/token/validation")
+    public ResponseEntity<Void> validateToken(@RequestBody ValidationRequest validationRequest) {
+        memberService.validateToken(validationRequest);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping
     public ResponseEntity<Void> join(@RequestBody MemberRequest memberRequest) {
         memberService.join(memberRequest);
