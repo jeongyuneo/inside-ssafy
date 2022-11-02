@@ -15,7 +15,6 @@ public enum ErrorMessage {
     NOT_FOUND_BUS("해당 버스를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE_IMAGE("해당 노선 이미지를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE("해당 경로를 찾을 수 없습니다."),
-
     NOT_FOUND_AUTHORITY("해당 권한을 찾을 수 없습니다."),
 
     NOT_EQUAL_PASSWORD("비밀번호가 일치하지 않습니다."),
@@ -28,6 +27,9 @@ public enum ErrorMessage {
     FAIL_TO_CREATE_POST("익명 게시판 등록에 실패했습니다."),
     FAIL_TO_CREATE_COMMENT("익명 게시판 댓글 등록에 실패했습니다."),
     FAIL_TO_CREATE_MENU("식단 등록에 실패했습니다."),
+    FAIL_TO_SAVE_FILE("파일 저장에 실패했습니다."),
+
+    WRONG_CONTENT_TYPE("잘못된 파일 형식 입니다."),
 
     INTERNAL_SERVER_ERROR("서버 내부 에러가 발생했습니다.");
 
