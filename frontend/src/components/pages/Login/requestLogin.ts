@@ -11,9 +11,10 @@ const requestLogin = async ({ email, password }: LoginInputsType) => {
         password,
       },
     });
-    return data;
+    return true;
   } catch (e) {
     console.log(e);
+    return false;
   }
 };
 
