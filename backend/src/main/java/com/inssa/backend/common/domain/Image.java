@@ -1,15 +1,13 @@
 package com.inssa.backend.common.domain;
 
-import com.inssa.backend.common.domain.BaseEntity;
+import com.inssa.backend.post.domain.Post;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -25,4 +23,8 @@ public class Image extends BaseEntity {
 
     @Column(name = "image_order")
     private int order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 }
