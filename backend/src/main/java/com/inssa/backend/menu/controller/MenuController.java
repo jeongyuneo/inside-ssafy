@@ -1,6 +1,7 @@
 package com.inssa.backend.menu.controller;
 
 import com.inssa.backend.menu.controller.dto.MenuRequest;
+import com.inssa.backend.menu.controller.dto.MenuResponse;
 import com.inssa.backend.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,14 @@ public class MenuController {
 
     private final MenuService menuService;
 
-    @PostMapping("/users/{userId}")
-    public ResponseEntity<Void> createMenu(@PathVariable Long userId, @RequestBody MenuRequest menuRequest) {
-        menuService.createMenu(userId, menuRequest);
+    @PostMapping
+    public ResponseEntity<Void> createMenu(@RequestHeader("Authorization") String token, @RequestBody MenuRequest menuRequest) {
+        menuService.createMenu(3L, menuRequest);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<MenuResponse> getMenu() {
+        return ResponseEntity.ok().body(menuService.getMenu());
     }
 }

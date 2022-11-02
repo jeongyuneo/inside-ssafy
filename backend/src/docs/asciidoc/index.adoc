@@ -1,7 +1,7 @@
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
-= MountainDo Api Specification
+= Inside-SSAFY Api Specification
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -67,6 +67,67 @@ include::{snippets}/get-member-fail/http-request.adoc[]
 
 .response
 include::{snippets}/get-member-fail/http-response.adoc[]
+
+==== 비밀번호수정
+===== 성공
+.request
+include::{snippets}/update-password-success/http-request.adoc[]
+
+.response
+include::{snippets}/update-password-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/update-password-fail/http-request.adoc[]
+
+.response
+include::{snippets}/update-password-fail/http-response.adoc[]
+
+==== 회원삭제
+===== 성공
+.request
+include::{snippets}/delete-member-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-member-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-member-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-member-fail/http-response.adoc[]
+
+==== 로그인
+===== 성공
+.request
+include::{snippets}/login-success/http-request.adoc[]
+
+.response
+include::{snippets}/login-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/login-fail/http-request.adoc[]
+
+.response
+include::{snippets}/login-fail/http-response.adoc[]
+
+=== 메인페이지
+==== 메인페이지 조회
+===== 성공
+.request
+include::{snippets}/get-main-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-main-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-main-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-main-fail/http-response.adoc[]
 
 === 익명 게시판
 ==== 익명 게시판 목록 조회
@@ -159,6 +220,36 @@ include::{snippets}/delete-post-fail/http-request.adoc[]
 .response
 include::{snippets}/delete-post-fail/http-response.adoc[]
 
+==== 익명 게시판 좋아요 등록
+===== 성공
+.request
+include::{snippets}/create-post-like-success/http-request.adoc[]
+
+.response
+include::{snippets}/create-post-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/create-post-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/create-post-like-fail/http-response.adoc[]
+
+==== 익명 게시판 좋아요 삭제
+===== 성공
+.request
+include::{snippets}/delete-post-like-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-post-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-post-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-post-like-fail/http-response.adoc[]
+
 ==== 익명 게시판 댓글 등록
 ===== 성공
 .request
@@ -173,6 +264,81 @@ include::{snippets}/create-comment-fail/http-request.adoc[]
 
 .response
 include::{snippets}/create-comment-fail/http-response.adoc[]
+
+==== 익명 게시판 댓글 수정
+===== 성공
+.request
+include::{snippets}/update-comment-success/http-request.adoc[]
+
+.response
+include::{snippets}/update-comment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/update-comment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/update-comment-fail/http-response.adoc[]
+
+==== 익명 게시판 댓글 삭제
+===== 성공
+.request
+include::{snippets}/delete-comment-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-comment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-comment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-comment-fail/http-response.adoc[]
+
+==== 익명 게시판 대댓글 등록
+===== 성공
+.request
+include::{snippets}/create-recomment-success/http-request.adoc[]
+
+.response
+include::{snippets}/create-recomment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/create-recomment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/create-recomment-fail/http-response.adoc[]
+
+==== 익명 게시판 대댓글 수정
+===== 성공
+.request
+include::{snippets}/update-recomment-success/http-request.adoc[]
+
+.response
+include::{snippets}/update-recomment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/update-recomment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/update-recomment-fail/http-response.adoc[]
+
+==== 익명 게시판 대댓글 삭제
+===== 성공
+.request
+include::{snippets}/delete-recomment-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-recomment-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-recomment-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-recomment-fail/http-response.adoc[]
 
 === 식단
 ==== 식단 등록
@@ -189,3 +355,124 @@ include::{snippets}/create-menu-fail/http-request.adoc[]
 
 .response
 include::{snippets}/create-menu-fail/http-response.adoc[]
+
+==== 식단 조회
+===== 성공
+.request
+include::{snippets}/get-menu-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-menu-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-menu-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-menu-fail/http-response.adoc[]
+
+=== 버스
+==== 버스 조회
+===== 성공
+.request
+include::{snippets}/get-bus-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-bus-fail/http-response.adoc[]
+
+==== 버스 즐겨찾기 등록
+===== 성공
+.request
+include::{snippets}/create-bus-like-success/http-request.adoc[]
+
+.response
+include::{snippets}/create-bus-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/create-bus-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/create-bus-like-fail/http-response.adoc[]
+
+==== 버스 즐겨찾기 삭제
+===== 성공
+.request
+include::{snippets}/delete-bus-like-success/http-request.adoc[]
+
+.response
+include::{snippets}/delete-bus-like-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/delete-bus-like-fail/http-request.adoc[]
+
+.response
+include::{snippets}/delete-bus-like-fail/http-response.adoc[]
+
+==== 버스 즐겨찾기 목록 조회
+===== 성공
+.request
+include::{snippets}/get-bus-likes-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-bus-likes-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-bus-likes-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-bus-likes-fail/http-response.adoc[]
+
+==== 버스 노선 이미지 조회
+===== 성공
+.request
+include::{snippets}/get-route-image-success/http-request.adoc[]
+
+.response
+include::{snippets}/get-route-image-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/get-route-image-fail/http-request.adoc[]
+
+.response
+include::{snippets}/get-route-image-fail/http-response.adoc[]
+
+==== 버스 운행 시작
+===== 성공
+.request
+include::{snippets}/start-bus-success/http-request.adoc[]
+
+.response
+include::{snippets}/start-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/start-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/start-bus-fail/http-response.adoc[]
+
+==== 버스 위치 최신화
+===== 성공
+.request
+include::{snippets}/arrive-at-bus-stop-success/http-request.adoc[]
+
+.response
+include::{snippets}/arrive-at-bus-stop-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/arrive-at-bus-stop-fail/http-request.adoc[]
+
+.response
+include::{snippets}/arrive-at-bus-stop-fail/http-response.adoc[]

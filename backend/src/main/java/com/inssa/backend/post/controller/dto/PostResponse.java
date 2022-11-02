@@ -14,6 +14,8 @@ public class PostResponse {
     private String content;
     private int likeCount;
     private int commentCount;
+    private boolean hasPostLike;
+    private boolean isEditable;
     private List<FileResponse> files;
     private List<CommentResponse> commentResponses;
 }
