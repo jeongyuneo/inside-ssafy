@@ -22,8 +22,7 @@ public class ImageUtil {
     private static final String IMAGE_JPG = "image/jpg";
     private static final String IMAGE_JPEG = "image/jpeg";
     private static final String IMAGE_PNG = "image/png";
-
-    private static final String IMAGE_GIF = "image/GIF";
+    private static final String IMAGE_GIF = "image/gif";
     private static final String IMAGE_REQUEST = "/images";
     private static final String POST = "post";
 
