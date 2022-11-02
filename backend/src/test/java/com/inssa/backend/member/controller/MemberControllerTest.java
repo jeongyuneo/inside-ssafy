@@ -250,11 +250,9 @@ public class MemberControllerTest extends ApiDocument {
     }
 
     private ResultActions 인증코드_전송_요청(String email) throws Exception {
-        return mockMvc.perform(
-                post("/api/v1/members/join/token/request")
-                        .contextPath("/api/v1")
-                        .param(EMAIL_PARAMETER_NAME, email)
-        );
+        return mockMvc.perform(post("/api/v1/members/join/token/request")
+                .contextPath("/api/v1")
+                .param(EMAIL_PARAMETER_NAME, email));
     }
 
     private void 인증코드_전송_성공(ResultActions resultActions) throws Exception {
