@@ -110,8 +110,8 @@ public class ReCommentControllerTest extends ApiDocument {
         익명_게시판_대댓글_삭제_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_RECOMMENT));
     }
 
-    private ResultActions 익명_게시판_대댓글_등록_요청(Long reCommentId, CommentRequest commentRequest) throws Exception {
-        return mockMvc.perform(post("/api/v1/recomments/" + reCommentId)
+    private ResultActions 익명_게시판_대댓글_등록_요청(Long commentId, CommentRequest commentRequest) throws Exception {
+        return mockMvc.perform(post("/api/v1/recomments/" + commentId)
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
