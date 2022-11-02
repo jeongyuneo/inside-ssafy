@@ -65,8 +65,6 @@ public class PostService {
     }
 
     public void updatePost(Long memberId, Long postId, PostRequest postRequest, List<MultipartFile> files) {
-        System.out.println(files.get(0).getOriginalFilename());
-        System.out.println(files.get(0).getContentType());
         Post post = findPost(postId);
         checkEditable(findMember(memberId), post);
         post.update(postRequest.getTitle(), postRequest.getContent(), files);
