@@ -38,6 +38,36 @@ status code: 500
 
 == 기능
 === 회원관리
+==== 인증토큰 전송
+===== 성공
+.request
+include::{snippets}/send-validation-token-success/http-request.adoc[]
+
+.response
+include::{snippets}/send-validation-token-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/send-validation-token-fail/http-request.adoc[]
+
+.response
+include::{snippets}/send-validation-token-fail/http-response.adoc[]
+
+==== 인증토큰 유효성 검사
+===== 성공
+.request
+include::{snippets}/validate-token-success/http-request.adoc[]
+
+.response
+include::{snippets}/validate-token-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/validate-token-fail/http-request.adoc[]
+
+.response
+include::{snippets}/validate-token-fail/http-response.adoc[]
+
 ==== 회원가입
 ===== 성공
 .request
