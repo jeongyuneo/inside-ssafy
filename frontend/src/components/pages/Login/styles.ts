@@ -24,6 +24,7 @@ export const LogoInputsWrapper = styled.div`
 export const CheckboxButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
 `;
 

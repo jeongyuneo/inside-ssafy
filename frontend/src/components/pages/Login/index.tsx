@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Image from '../../atoms/Image';
@@ -6,6 +5,7 @@ import Text from '../../atoms/Text';
 import ButtonGroup from '../../molecules/ButtonGroup';
 import CheckboxLabel from '../../molecules/CheckboxLabel';
 import InputLabel from '../../molecules/InputLabel';
+import { getSavedEmail, saveEmail } from './saveEmail';
 import requestLogin from './requestLogin';
 import {
   StyledLogin,
@@ -22,32 +22,45 @@ import validateInput from './validateInput';
  * @author jojo
  */
 const Login = () => {
-  const navigate = useNavigate();
+  const [validated, setValidated] = useState(true);
+  const [checked, setChecked] = useState(!!getSavedEmail());
   const [inputs, setInputs] = useState({
-    email: '',
+    email: getSavedEmail(),
     password: '',
   });
-  const [isValidated, setIsValidated] = useState(true);
+  const navigate = useNavigate();
 
-  // useQuery 말고 그냥 함수 호출로 바꾸고 함수 내에서 토큰 처리
-  const { data } = useQuery(['login', inputs], () => requestLogin(inputs));
-
-  const clickLogin = () => {
+  const clickLogin = async () => {
     if (!validateInput(inputs)) {
-      setIsValidated(false);
+      setValidated(false);
       return;
     }
 
-    if (!data?.accessToken) {
-      setIsValidated(false);
-      return;
-    }
+    const isLoggedIn = await requestLogin(inputs);
 
-    setIsValidated(true);
+    if (isLoggedIn) {
+      setValidated(true);
+      saveEmail({ checked, email: inputs['email'] });
+      window.alert('로그인 성공!');
+      navigate('/');
+    }
   };
 
   const clickJoin = () => {
     navigate('/join');
+  };
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputs(prev => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
+
+  const toggleHandler = () => {
+    setChecked(prev => !prev);
   };
 
   const buttonInfos = [
@@ -60,15 +73,6 @@ const Login = () => {
       clickHandler: clickJoin,
     },
   ];
-
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputs(prev => {
-      return {
-        ...prev,
-        [e.target.name]: e.target.value,
-      };
-    });
-  };
 
   return (
     <StyledLogin>
@@ -83,8 +87,9 @@ const Login = () => {
           <InputLabel
             id="email"
             name="email"
-            labelValue="E-mail"
-            placeholder="user@gmail.com"
+            labelValue="이메일"
+            placeholder="E-mail"
+            type="email"
             width={20}
             height={3}
             inputs={inputs}
@@ -93,8 +98,9 @@ const Login = () => {
           <InputLabel
             id="password"
             name="password"
-            labelValue="Password"
-            placeholder="8자 이상 20자 이하로 입력하세요"
+            labelValue="비밀번호"
+            placeholder="Password"
+            type="password"
             width={20}
             height={3}
             inputs={inputs}
@@ -103,9 +109,14 @@ const Login = () => {
         </LogoInputsWrapper>
         <CheckboxButtonsWrapper>
           <CheckboxLabelWrapper>
-            <CheckboxLabel text="로그인 유지" id="keepLogin" />
+            <CheckboxLabel
+              text="이메일 저장"
+              id="saveEmail"
+              checked={checked}
+              toggleHandler={toggleHandler}
+            />
           </CheckboxLabelWrapper>
-          {!isValidated && (
+          {!validated && (
             <Text color="red">이메일, 비밀번호를 확인해주세요.</Text>
           )}
           <ButtonGroup
