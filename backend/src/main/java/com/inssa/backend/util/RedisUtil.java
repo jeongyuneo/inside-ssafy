@@ -1,5 +1,8 @@
 package com.inssa.backend.util;
 
+import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.NotEqualException;
+import com.inssa.backend.common.exception.UnAuthorizedException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +23,28 @@ public class RedisUtil {
 
     @PostConstruct
     private void initStatic() {
-        staticRedisTemplate= this.redisTemplate;
+        staticRedisTemplate = this.redisTemplate;
     }
 
-    public static String getData(String key) {
-        return staticRedisTemplate.opsForValue()
-                .get(key);
+    public static String getValidationToken(String email) {
+        return staticRedisTemplate.opsForValue().get(email);
     }
 
-    public static void setDataExpired(String key, String value, long duration) {
+    public static void setValidationTokenDuration(String email, String validationToken, long duration) {
         Duration expireDuration = Duration.ofSeconds(duration);
-        staticRedisTemplate.opsForValue()
-                .set(key, value, expireDuration);
+        staticRedisTemplate.opsForValue().set(email, validationToken, expireDuration);
     }
 
-    public static boolean validateData(String key, String value) {
-        if (getData(key).equals(value)) {
-            return true;
+    public static void validateToken(String email, String validationToken) {
+        validateExpiration(email);
+        if (!getValidationToken(email).equals(validationToken)) {
+            throw new NotEqualException(ErrorMessage.NOT_EQUAL_VALIDATION_TOKEN);
         }
-        return false;
+    }
+
+    private static void validateExpiration(String email) {
+        if (getValidationToken(email) == null) {
+            throw new UnAuthorizedException(ErrorMessage.EXPIRED_VALIDATION_TOKEN);
+        }
     }
 }
