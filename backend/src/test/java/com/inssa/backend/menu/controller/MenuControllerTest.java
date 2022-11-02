@@ -117,7 +117,7 @@ public class MenuControllerTest extends ApiDocument {
     }
 
     private ResultActions 식단_등록_요청(MenuRequest menuRequest) throws Exception {
-        return mockMvc.perform(post("/api/v1/menus/members")
+        return mockMvc.perform(post("/api/v1/menus")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
