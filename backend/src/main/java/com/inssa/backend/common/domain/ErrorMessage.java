@@ -20,6 +20,11 @@ public enum ErrorMessage {
 
     NOT_EDITABLE_MEMBER("편집 권한이 없는 회원입니다."),
 
+    WRONG_TOKEN("잘못된 토큰입니다."),
+    WRONG_TOKEN_TYPE("잘못된 토큰 타입입니다."),
+
+    EXPIRED_TOKEN("만료된 토큰입니다."),
+
     FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
     FAIL_TO_SEARCH_POST("익명 게시판 검색에 실패했습니다."),
