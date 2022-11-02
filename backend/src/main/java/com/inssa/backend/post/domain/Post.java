@@ -3,6 +3,7 @@ package com.inssa.backend.post.domain;
 import com.inssa.backend.common.domain.BaseEntity;
 import com.inssa.backend.common.domain.Image;
 import com.inssa.backend.member.domain.Member;
+import com.inssa.backend.util.ImageUtil;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,8 +13,6 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
-import static com.inssa.backend.util.ImageUtil.saveImage;
 
 @Getter
 @SuperBuilder
@@ -52,7 +51,7 @@ public class Post extends BaseEntity {
     public void saveImages(List<MultipartFile> files) {
         IntStream.range(1, files.size() + 1)
                 .mapToObj(order -> Image.builder()
-                        .url(saveImage(files.get(order - 1)))
+                        .url(ImageUtil.saveImage(files.get(order - 1)))
                         .order(order)
                         .post(this).build())
                 .forEach(image -> images.add(image));
