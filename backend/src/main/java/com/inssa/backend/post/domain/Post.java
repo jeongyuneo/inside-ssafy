@@ -51,7 +51,10 @@ public class Post extends BaseEntity {
 
     public void saveImages(List<MultipartFile> files) {
         IntStream.range(1, files.size() + 1)
-                .mapToObj(order -> Image.builder().url(saveImage(files.get(order - 1))).order(order).post(this).build())
+                .mapToObj(order -> Image.builder()
+                        .url(saveImage(files.get(order - 1)))
+                        .order(order)
+                        .post(this).build())
                 .forEach(image -> images.add(image));
     }
 }
