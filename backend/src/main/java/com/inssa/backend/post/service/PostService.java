@@ -1,9 +1,10 @@
 package com.inssa.backend.post.service;
 
 import com.inssa.backend.post.controller.dto.PostRequest;
-import com.inssa.backend.post.domain.PostRepository;
 import com.inssa.backend.post.controller.dto.PostResponse;
 import com.inssa.backend.post.controller.dto.PostsResponse;
+import com.inssa.backend.post.domain.Post;
+import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +49,12 @@ public class PostService {
     }
 
     public void createPost(PostRequest postRequest, List<MultipartFile> files) {
+        Post post = Post.builder()
+                .title(postRequest.getTitle())
+                .content(postRequest.getContent())
+                .build();
+        post.saveImages(files);
+        postRepository.save(post);
     }
 
     public void updatePost(long postId, PostRequest postRequest, List<MultipartFile> files) {
