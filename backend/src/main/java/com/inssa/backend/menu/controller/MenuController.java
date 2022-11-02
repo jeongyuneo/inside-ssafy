@@ -14,7 +14,7 @@ public class MenuController {
 
     private final MenuService menuService;
 
-    @PostMapping("/members")
+    @PostMapping
     public ResponseEntity<Void> createMenu(@RequestHeader("Authorization") String token, @RequestBody MenuRequest menuRequest) {
         menuService.createMenu(3L, menuRequest);
         return ResponseEntity.ok().build();
