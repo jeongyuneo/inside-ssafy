@@ -1,9 +1,9 @@
-export interface JoinInputsType {
+export interface AccountValueTypes {
   [key: string]: string;
+  userId: string;
+  userPw: string;
   email: string;
-  password: string;
-  name: string;
-  student_number: string;
+  studentNum: string;
 }
 
 export interface SuccessLoginType {

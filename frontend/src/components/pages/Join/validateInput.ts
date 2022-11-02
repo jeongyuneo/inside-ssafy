@@ -1,11 +1,11 @@
-import { JoinInputsType } from './types';
+import { AccountValueTypes } from './types';
 
 const validateInput = ({
   email,
   password,
   student_number,
   name,
-}: JoinInputsType): boolean => {
+}: AccountValueTypes): boolean => {
   const NAME_PATTERN = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 
   const STUDENT_NUMBER_PATTERN = /[0-9]/;

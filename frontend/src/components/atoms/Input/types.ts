@@ -1,5 +1,5 @@
 import { ChangeEvent, ChangeEventHandler } from 'react';
-import { AccountValueTypes } from '../../molecules/InputLabel/types';
+import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
 
 export interface PropTypes {
