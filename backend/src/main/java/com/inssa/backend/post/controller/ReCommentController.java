@@ -28,7 +28,7 @@ public class ReCommentController {
 
     @DeleteMapping("/{reCommentId}")
     public ResponseEntity<Void> deleteReComment(@RequestHeader("Authorization") String token, @PathVariable Long reCommentId) {
-        reCommentService.deleteReComment(1L, reCommentId);
+        reCommentService.deleteReComment(JwtUtil.getMemberId(token), reCommentId);
         return ResponseEntity.ok().build();
     }
 }
