@@ -71,7 +71,11 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public void deletePost(Long postId) {
+    public void deletePost(Long memberId, Long postId) {
+        Post post = findPost(postId);
+        checkEditable(findMember(memberId), post);
+        post.delete();
+        postRepository.save(post);
     }
 
     public void createPostLike(Long memberId, Long postId) {
