@@ -19,6 +19,6 @@ export const StyledButton = styled.TouchableOpacity`
 `;
 
 export const StyledText = styled.Text`
-  font-size: 110rem;
+  font-size: 110px;
   color: white;
 `;
