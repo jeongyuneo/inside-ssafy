@@ -1,14 +1,21 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../atoms/Button';
+import Text from '../../atoms/Text';
 import ButtonGroup from '../../molecules/ButtonGroup';
 import InputLabel from '../../molecules/InputLabel';
-import { requestEmailToken, validateEmailToken } from './requestEmail';
+import {
+  joinRequest,
+  requestEmailToken,
+  validateEmailToken,
+} from './requestEmail';
 import {
   StyledInputLabel,
   StyledbuttonGroup,
   StyledEmailWrap,
   ButtonWrap,
+  TextWrap,
+  JoinPageWrapper,
 } from './styles';
 import { checkEmail, emailValidation, validateInput } from './validateInput';
 
@@ -20,25 +27,25 @@ import { checkEmail, emailValidation, validateInput } from './validateInput';
 
 const Join = () => {
   const input_names = [
-    'userName',
-    'studentNum',
+    'name',
+    'studentNumber',
     'email',
     'validationToken',
-    'userPw',
+    'password',
     'password_again',
   ];
 
   const [validated, setValidated] = useState(true);
-  const [isClickEmail, setIsClickEmail] = useState(false);
+  const [isButtonSleep, setisButtonSleep] = useState(true);
   const [isCertificate, setIsCertificate] = useState(false);
-  const [buttonName, setbuttonName] = useState('인증');
+  const [buttonName, setbuttonName] = useState('타이머');
   const [account, setAccount] = useState({
-    userName: '',
-    studentNum: '',
+    name: '',
+    studentNumber: '',
     email: '',
     validationToken: '',
     email_again: '',
-    userPw: '',
+    password: '',
     password_again: '',
   });
 
@@ -47,7 +54,6 @@ const Join = () => {
   const time = useRef(0);
   const timer = useRef(
     setInterval(() => {
-      console.log('check');
       clearInterval(timer.current);
       return;
     }, 1000 * 60 * 24),
@@ -60,30 +66,25 @@ const Join = () => {
         [e.target.name]: e.target.value,
       };
     });
-    console.log(account);
   };
 
   const returnToken = () => {
-    console.log(time.current);
     if (time.current === 0) {
-      console.log('Interval을 종료합니다');
       initToken();
       clearInterval(timer.current);
       return;
     }
     time.current -= 1;
     setbuttonName(Math.floor(time.current / 60) + ':' + (time.current % 60));
-    console.log(new Date());
   };
 
   const initToken = () => {
-    console.log('?');
     if (isCertificate) {
       return;
     }
     alert('정보를 초기화합니다.');
-    setbuttonName('인증');
-    setIsClickEmail(false); // 이메일 클릭 초기화
+    setbuttonName('');
+    setisButtonSleep(false); // 이메일 클릭 초기화
   };
 
   // 인증을 보낸다.
@@ -94,14 +95,13 @@ const Join = () => {
     const getToken = await requestEmailToken(account);
 
     if (getToken) {
-      setIsClickEmail(true);
+      setisButtonSleep(false);
       setAccount(prev => {
         return {
           ...prev,
           email_again: prev.email,
         };
       });
-      console.log(Date.now);
       time.current = TOKEN_TIMER;
       timer.current = setInterval(returnToken, 1000);
       setbuttonName(Math.floor(time.current / 60) + ':' + (time.current % 60));
@@ -111,7 +111,7 @@ const Join = () => {
   };
 
   const getCertificate = () => {
-    if (!isClickEmail) {
+    if (isButtonSleep) {
       alert(
         '<Error> :: 이메일 인증이 전송되지 않은채로 인증시도가 되었습니다.',
       );
@@ -125,7 +125,10 @@ const Join = () => {
       return;
     }
     alert('인증 성공하였습니다.');
+    console.log('Interval 종료');
+    clearInterval(timer.current);
     setIsCertificate(true);
+    setisButtonSleep(true);
   };
 
   const clickJoin = () => {
@@ -133,15 +136,14 @@ const Join = () => {
       setValidated(false);
       return;
     }
-    const joinAccount = {
-      name: account.userName,
-      password: account.userPw,
-      email: account.email,
-      studentId: account.studentNum,
-    };
-    /*
-     * api연결
-     */
+
+    const isJoin = joinRequest(account);
+    if (!isJoin) {
+      alert('회원가입에 문제가 생겼습니다.');
+      return;
+    }
+    alert('회원가입 성공!');
+    //navigate(-1);
   };
 
   const backToTheLogin = () => {
@@ -173,102 +175,119 @@ const Join = () => {
 
   return (
     <StyledInputLabel>
-      <InputLabel
-        id={input_names[0]}
-        name={input_names[0]}
-        labelValue={'이름'}
-        inputs={account}
-        width={20}
-        height={3}
-        type={textTypes[0]}
-        placeholder={placeholder[0]}
-        labelFontSize={LABEL_FONT}
-        changeHandler={changeInfo}
-      />
-      <InputLabel
-        id={input_names[1]}
-        name={input_names[1]}
-        labelValue={'학번'}
-        inputs={account}
-        width={20}
-        height={3}
-        type={textTypes[1]}
-        placeholder={placeholder[1]}
-        labelFontSize={LABEL_FONT}
-        changeHandler={changeInfo}
-      />
-      <StyledEmailWrap>
+      <JoinPageWrapper>
         <InputLabel
-          id={input_names[2]}
-          name={input_names[2]}
-          labelValue={'이메일'}
+          id={input_names[0]}
+          name={input_names[0]}
+          labelValue={'이름'}
           inputs={account}
-          width={13}
+          width={20}
           height={3}
-          type={textTypes[2]}
-          placeholder={placeholder[2]}
-          readonly={isClickEmail}
+          type={textTypes[0]}
+          placeholder={placeholder[0]}
           labelFontSize={LABEL_FONT}
           changeHandler={changeInfo}
         />
-        <ButtonWrap>
-          <Button clickHandler={sendCertificate} width={6} height={3}>
-            인증보내기
-          </Button>
-        </ButtonWrap>
-      </StyledEmailWrap>
-      <StyledEmailWrap>
         <InputLabel
-          id={input_names[3]}
-          name={input_names[3]}
-          labelValue={'이메일 확인'}
+          id={input_names[1]}
+          name={input_names[1]}
+          labelValue={'학번'}
           inputs={account}
-          width={11}
+          width={20}
           height={3}
-          type={textTypes[3]}
-          placeholder={placeholder[3]}
-          disabled={isCertificate}
+          type={textTypes[1]}
+          placeholder={placeholder[1]}
           labelFontSize={LABEL_FONT}
           changeHandler={changeInfo}
         />
-        <ButtonWrap>
-          <Button clickHandler={getCertificate} width={8} height={3}>
-            {buttonName}
-          </Button>
-          {/* {isClickEmail ? (
+        <StyledEmailWrap>
+          <InputLabel
+            id={input_names[2]}
+            name={input_names[2]}
+            labelValue={'이메일'}
+            inputs={account}
+            width={13}
+            height={3}
+            type={textTypes[2]}
+            placeholder={placeholder[2]}
+            readonly={!isButtonSleep}
+            labelFontSize={LABEL_FONT}
+            changeHandler={changeInfo}
+          />
+          <ButtonWrap>
+            <Button clickHandler={sendCertificate} width={6} height={3}>
+              인증보내기
+            </Button>
+          </ButtonWrap>
+        </StyledEmailWrap>
+        <StyledEmailWrap>
+          <InputLabel
+            id={input_names[3]}
+            name={input_names[3]}
+            labelValue={'이메일 확인'}
+            inputs={account}
+            width={13}
+            height={3}
+            type={textTypes[3]}
+            placeholder={placeholder[3]}
+            disabled={isCertificate}
+            labelFontSize={LABEL_FONT}
+            changeHandler={changeInfo}
+          />
+          <TextWrap>
+            <Text size={1} color={'blue'}>
+              {buttonName}
+            </Text>
+          </TextWrap>
+          <ButtonWrap>
+            <Button
+              clickHandler={getCertificate}
+              disabled={isButtonSleep}
+              width={6}
+              height={3}
+            >
+              인증하기
+            </Button>
+            {/* {isButtonSleep ? (
             <Button clickHandler={getCertificate} width={8} height={3}>
               인증
             </Button>
           ) : null} */}
-        </ButtonWrap>
-      </StyledEmailWrap>
-      <InputLabel
-        id={input_names[4]}
-        name={input_names[4]}
-        labelValue={'패스워드'}
-        inputs={account}
-        width={20}
-        height={3}
-        placeholder={placeholder[4]}
-        type={textTypes[4]}
-        labelFontSize={LABEL_FONT}
-        changeHandler={changeInfo}
-      />
-      <InputLabel
-        id={input_names[5]}
-        name={input_names[5]}
-        labelValue={'패스워드 확인'}
-        inputs={account}
-        width={20}
-        height={3}
-        placeholder={placeholder[5]}
-        type={textTypes[5]}
-        labelFontSize={LABEL_FONT}
-        changeHandler={changeInfo}
-      />
-      <StyledbuttonGroup>
-        <ButtonGroup buttonInfos={buttonInfos} width={20} height={3} isColumn />
-      </StyledbuttonGroup>
+          </ButtonWrap>
+        </StyledEmailWrap>
+        <InputLabel
+          id={input_names[4]}
+          name={input_names[4]}
+          labelValue={'패스워드'}
+          inputs={account}
+          width={20}
+          height={3}
+          placeholder={placeholder[4]}
+          type={textTypes[4]}
+          labelFontSize={LABEL_FONT}
+          changeHandler={changeInfo}
+        />
+        <InputLabel
+          id={input_names[5]}
+          name={input_names[5]}
+          labelValue={'패스워드 확인'}
+          inputs={account}
+          width={20}
+          height={3}
+          placeholder={placeholder[5]}
+          type={textTypes[5]}
+          labelFontSize={LABEL_FONT}
+          changeHandler={changeInfo}
+        />
+        <StyledbuttonGroup>
+          <ButtonGroup
+            buttonInfos={buttonInfos}
+            width={20}
+            height={3}
+            isColumn
+          />
+        </StyledbuttonGroup>
+      </JoinPageWrapper>
     </StyledInputLabel>
   );
 };

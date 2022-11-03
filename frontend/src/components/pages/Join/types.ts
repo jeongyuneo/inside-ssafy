@@ -1,11 +1,11 @@
 export interface AccountValueTypes {
   [key: string]: string;
-  userName: string;
-  studentNum: string;
+  name: string;
+  studentNumber: string;
   email: string;
   validationToken: string;
   email_again: string;
-  userPw: string;
+  password: string;
   password_again: string;
 }
 
