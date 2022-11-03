@@ -171,7 +171,7 @@ public class BusControllerTest extends ApiDocument {
         // given
         willReturn(busLikeResponses).given(busService).getBusLikes(anyLong());
         // when
-        ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청(ID);
+        ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청();
         // then
         버스_즐겨찾기_목록_조회_성공(resultActions);
     }
@@ -182,7 +182,7 @@ public class BusControllerTest extends ApiDocument {
         // given
         willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getBusLikes(anyLong());
         // when
-        ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청(ID);
+        ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청();
         // then
         버스_즐겨찾기_목록_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
@@ -317,8 +317,8 @@ public class BusControllerTest extends ApiDocument {
                 .andDo(toDocument("delete-bus-like-fail"));
     }
 
-    private ResultActions 버스_즐겨찾기_목록_조회_요청(Long memberId) throws Exception {
-        return mockMvc.perform(get("/api/v1/buses/like/" + memberId)
+    private ResultActions 버스_즐겨찾기_목록_조회_요청() throws Exception {
+        return mockMvc.perform(get("/api/v1/buses/like")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                 .header(HttpHeaders.SET_COOKIE, COOKIE));
