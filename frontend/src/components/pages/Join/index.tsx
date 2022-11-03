@@ -124,6 +124,7 @@ const Join = () => {
     if (!isValidated) {
       return;
     }
+    alert('인증 성공하였습니다.');
     setIsCertificate(true);
   };
 
