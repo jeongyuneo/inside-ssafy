@@ -1,12 +1,15 @@
 export interface AccountValueTypes {
   [key: string]: string;
-  userId: string;
-  userPw: string;
-  email: string;
+  userName: string;
   studentNum: string;
+  email: string;
+  validationToken: string;
+  email_again: string;
+  userPw: string;
+  password_again: string;
 }
 
-export interface SuccessLoginType {
+export interface SuccessTokenType {
   accessToken: string;
   refreshToken: string;
 }

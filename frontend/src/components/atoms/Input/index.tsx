@@ -25,6 +25,8 @@ const Input = ({
   name,
   id,
   placeholder,
+  disabled,
+  readonly,
   changeHandler,
 }: PropTypes) => {
   return (
@@ -39,6 +41,8 @@ const Input = ({
       name={name}
       id={id}
       placeholder={placeholder}
+      disabled={disabled}
+      readonly={readonly}
       onChange={e => changeHandler?.(e)}
     />
   );

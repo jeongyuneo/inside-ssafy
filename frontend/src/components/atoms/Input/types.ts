@@ -12,6 +12,8 @@ export interface PropTypes {
   type?: string;
   id?: string;
   placeholder?: string;
+  disabled?: boolean;
+  readonly?: boolean;
   borderRadius?: number;
   paddingLeft?: number;
   inputs?: AccountValueTypes | LoginInputsType;
