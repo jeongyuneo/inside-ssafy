@@ -34,4 +34,9 @@ public class Comment extends BaseEntity {
     public void update(String content) {
         this.content = content;
     }
+
+    public void addReComment(ReComment reComment) {
+        reComments.add(reComment);
+        post.addReComment();
+    }
 }
