@@ -46,8 +46,8 @@ public class JwtUtil {
         return Long.parseLong(String.valueOf(getAllClaims(getActualToken(token)).get(ID)));
     }
 
-    public static String getMemberRole(String token) {
-        return String.valueOf(getAllClaims(getActualToken(token)).get(ROLE));
+    public static Role getMemberRole(String token) {
+        return Role.valueOf((String) getAllClaims(getActualToken(token)).get(ROLE));
     }
 
     public static boolean isExpired(String token) {
