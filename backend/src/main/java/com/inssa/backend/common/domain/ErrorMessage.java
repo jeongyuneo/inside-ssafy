@@ -23,6 +23,7 @@ public enum ErrorMessage {
 
     WRONG_TOKEN("잘못된 토큰입니다."),
     WRONG_TOKEN_TYPE("잘못된 토큰 타입입니다."),
+    WRONG_ACCESS("접근 권한이 없습니다."),
 
     EXPIRED_TOKEN("만료된 토큰입니다."),
 
