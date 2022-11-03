@@ -280,12 +280,6 @@ public class MemberControllerTest extends ApiDocument {
         로그아웃_성공(resultActions);
     }
 
-    private ResultActions 인증코드_전송_요청(String email) throws Exception {
-        return mockMvc.perform(post("/api/v1/members/join/token/request")
-                .contextPath("/api/v1")
-                .param(EMAIL_PARAMETER_NAME, email));
-    }
-
     @DisplayName("로그아웃 실패")
     @Test
     void logout_fail() throws Exception {
@@ -294,6 +288,12 @@ public class MemberControllerTest extends ApiDocument {
         ResultActions resultActions = 잘못된_로그아웃_요청();
         // then
         로그아웃_실패(resultActions, new Message(ErrorMessage.EXPIRED_TOKEN));
+    }
+
+    private ResultActions 인증코드_전송_요청(String email) throws Exception {
+        return mockMvc.perform(post("/api/v1/members/join/token/request")
+                .contextPath("/api/v1")
+                .param(EMAIL_PARAMETER_NAME, email));
     }
 
     private void 인증코드_전송_성공(ResultActions resultActions) throws Exception {
