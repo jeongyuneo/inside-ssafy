@@ -31,4 +31,10 @@ public class ReComment extends BaseEntity {
     public boolean isEditable(Long memberId) {
         return this.member.is(memberId);
     }
+
+    @Override
+    public void delete() {
+        super.delete();
+        comment.deleteReComment();
+    }
 }
