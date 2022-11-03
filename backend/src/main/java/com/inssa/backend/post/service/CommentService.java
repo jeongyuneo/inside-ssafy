@@ -40,6 +40,7 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    @Transactional
     public void deleteComment(Long memberId, Long commentId) {
         Comment comment = findComment(commentId);
         checkEditable(memberId, comment);
