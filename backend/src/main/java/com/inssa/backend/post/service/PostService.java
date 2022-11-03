@@ -1,8 +1,8 @@
 package com.inssa.backend.post.service;
 
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.ForbiddenException;
 import com.inssa.backend.common.exception.NotFoundException;
-import com.inssa.backend.common.exception.UnAuthorizedException;
 import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.post.controller.dto.PostRequest;
@@ -96,7 +96,7 @@ public class PostService {
 
     private void checkEditable(Member member, Post post) {
         if (!member.isEditable(post.getMember().getId())) {
-            throw new UnAuthorizedException(ErrorMessage.NOT_EDITABLE_MEMBER);
+            throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
     }
 }
