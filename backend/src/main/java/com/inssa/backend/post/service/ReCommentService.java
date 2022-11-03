@@ -35,7 +35,7 @@ public class ReCommentService {
 
     public void updateReComment(Long memberId, Long reCommentId, CommentRequest commentRequest) {
         ReComment reComment = findReComment(reCommentId);
-        checkEditable(findMember(memberId), reComment);
+        checkEditable(memberId, reComment);
         reComment.update(commentRequest.getContent());
         reCommentRepository.save(reComment);
     }
@@ -58,8 +58,8 @@ public class ReCommentService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT));
     }
 
-    private void checkEditable(Member member, ReComment reComment) {
-        if (!member.isEditable(reComment.getMember().getId())) {
+    private void checkEditable(Long memberId, ReComment reComment) {
+        if (!reComment.isEditable(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
     }
