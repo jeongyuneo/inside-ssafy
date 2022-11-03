@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JwtUtil {
@@ -33,9 +34,10 @@ public class JwtUtil {
         return createToken(claims, ACCESS_TOKEN_EXPIRE_TIME);
     }
 
-    public static String generateToken(String email) {
+    public static String generateToken(Map<String, String> member) {
         Claims claims = Jwts.claims();
-        claims.put("email", email);
+        claims.put(ID, member.get(ID));
+        claims.put(ROLE, member.get(ROLE));
         return createToken(claims, REFRESH_TOKEN_EXPIRE_TIME);
     }
 
