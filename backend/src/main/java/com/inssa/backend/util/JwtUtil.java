@@ -72,15 +72,11 @@ public class JwtUtil {
                 .compact();
     }
 
-    private static Claims getAllClaims(String token) {
-        try {
-            return Jwts.parser()
-                    .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (ExpiredJwtException e) {
-            throw new UnAuthorizedException(ErrorMessage.EXPIRED_TOKEN);
-        }
+    private static Claims getAllClaims(String token) throws ExpiredJwtException {
+        return Jwts.parser()
+                .setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private static String getActualToken(String token) {
