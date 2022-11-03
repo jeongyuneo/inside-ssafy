@@ -31,6 +31,10 @@ public class Comment extends BaseEntity {
     @OneToMany(mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ReComment> reComments = new ArrayList<>();
 
+    public boolean isEditable(Long memberId) {
+        return member.is(memberId);
+    }
+
     public void update(String content) {
         this.content = content;
     }
