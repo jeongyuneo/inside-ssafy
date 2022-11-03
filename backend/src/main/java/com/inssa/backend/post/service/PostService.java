@@ -95,7 +95,7 @@ public class PostService {
     }
 
     private void checkEditable(Long memberId, Post post) {
-        if (!post.isEditable(memberId)) {
+        if (!post.isEditableBy(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
     }
