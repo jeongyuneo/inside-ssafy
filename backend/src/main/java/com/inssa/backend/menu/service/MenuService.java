@@ -21,7 +21,7 @@ public class MenuService {
 
     private final MenuRepository menuRepository;
 
-    public void createMenu(Long userId, MenuRequest menuRequest) {
+    public void createMenu(MenuRequest menuRequest) {
     }
 
     public MenuResponse getMenu() {
