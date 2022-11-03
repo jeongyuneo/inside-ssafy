@@ -262,6 +262,16 @@ public class MemberControllerTest extends ApiDocument {
         로그인_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
+    @DisplayName("로그아웃 성공")
+    @Test
+    void logout_success() throws Exception {
+        // given
+        // when
+        ResultActions resultActions = 로그아웃_요청();
+        // then
+        로그아웃_성공(resultActions);
+    }
+
     private ResultActions 인증코드_전송_요청(String email) throws Exception {
         return mockMvc.perform(post("/api/v1/members/join/token/request")
                 .contextPath("/api/v1")
@@ -407,5 +417,19 @@ public class MemberControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("login-fail"));
+    }
+
+    private ResultActions 로그아웃_요청() throws Exception {
+        return mockMvc.perform(post("/api/v1/members/logout")
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(loginRequest)));
+    }
+
+    private void 로그아웃_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("logout-success"));
     }
 }
