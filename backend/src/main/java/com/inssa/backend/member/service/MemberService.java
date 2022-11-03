@@ -21,7 +21,7 @@ public class MemberService {
             "본 메일은 inside-SSAFY 사이트의 회원가입을 위한 이메일 인증입니다.\n아래의 [이메일 인증번호]를 입력하여 본인확인을 해주시기 바랍니다.";
     private static final String VALIDATION_EMAIL_TEXT_BODY = "\n\n인증번호: ";
     private static final String VALIDATION_EMAIL_TEXT_FOOTER = "\n\n감사합니다.\ninside-SSAFY 드림";
-    private static final Long VALIDATION_TOKEN_DURATION = 5 * 60 * 1L;
+    private static final Long VALIDATION_TOKEN_DURATION = 60 * 5L;
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
