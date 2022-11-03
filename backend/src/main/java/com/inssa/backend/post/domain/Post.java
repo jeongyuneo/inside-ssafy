@@ -79,7 +79,7 @@ public class Post extends BaseEntity {
         return files.size() == 1 && files.get(0).getContentType() == null;
     }
 
-    public boolean isEditable(Long memberId) {
+    public boolean isEditableBy(Long memberId) {
         return member.is(memberId);
     }
 }
