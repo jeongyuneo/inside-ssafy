@@ -1,8 +1,8 @@
 package com.inssa.backend.post.service;
 
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.ForbiddenException;
 import com.inssa.backend.common.exception.NotFoundException;
-import com.inssa.backend.common.exception.UnAuthorizedException;
 import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.post.controller.dto.PostRequest;
@@ -66,12 +66,16 @@ public class PostService {
 
     public void updatePost(Long memberId, Long postId, PostRequest postRequest, List<MultipartFile> files) {
         Post post = findPost(postId);
-        checkEditable(findMember(memberId), post);
+        checkEditable(memberId, post);
         post.update(postRequest.getTitle(), postRequest.getContent(), files);
         postRepository.save(post);
     }
 
-    public void deletePost(Long postId) {
+    public void deletePost(Long memberId, Long postId) {
+        Post post = findPost(postId);
+        checkEditable(memberId, post);
+        post.delete();
+        postRepository.save(post);
     }
 
     public void createPostLike(Long memberId, Long postId) {
@@ -90,9 +94,9 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
-    private void checkEditable(Member member, Post post) {
-        if (!member.isEditable(post.getMember().getId())) {
-            throw new UnAuthorizedException(ErrorMessage.NOT_EDITABLE_MEMBER);
+    private void checkEditable(Long memberId, Post post) {
+        if (!post.isEditable(memberId)) {
+            throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
     }
 }
