@@ -19,8 +19,9 @@ public class JwtUtil {
 
     private static final String JWT_HEADER = "Authorization";
     private static final String SECRET = "ssafy second semester third project - inssa";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 60 * 1000L;
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 60 * 60 * 24 * 14 * 1000L;
+    private static final long ACCESS_TOKEN_EXPIRATION_TIME = 60 * 60;
+    private static final long REFRESH_TOKEN_EXPIRATION_TIME = 60 * 60 * 24 * 14;
+    private static final long MILLISECOND_TO_SECOND = 1000L;
     private static final String AUTHORIZATION_TYPE = "Bearer";
     private static final String DELIMITER = " ";
     private static final int TOKEN = 1;
@@ -31,14 +32,14 @@ public class JwtUtil {
         Claims claims = Jwts.claims();
         claims.put(ID, memberId);
         claims.put(ROLE, role);
-        return createToken(claims, ACCESS_TOKEN_EXPIRE_TIME);
+        return createToken(claims, ACCESS_TOKEN_EXPIRATION_TIME * MILLISECOND_TO_SECOND);
     }
 
     public static String generateToken(Map<String, String> member) {
         Claims claims = Jwts.claims();
         claims.put(ID, member.get(ID));
         claims.put(ROLE, member.get(ROLE));
-        return createToken(claims, REFRESH_TOKEN_EXPIRE_TIME);
+        return createToken(claims, REFRESH_TOKEN_EXPIRATION_TIME * MILLISECOND_TO_SECOND);
     }
 
     public static Long getMemberId(String token) {
