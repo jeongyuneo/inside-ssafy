@@ -10,10 +10,16 @@ import { PropTypes } from './types';
  *
  * @author jojo
  */
-const CheckboxLabel = ({ text, id, isColumn }: PropTypes) => {
+const CheckboxLabel = ({
+  text,
+  id,
+  isColumn,
+  checked,
+  toggleHandler,
+}: PropTypes) => {
   return (
     <StyledCheckboxLabel isColumn={isColumn}>
-      <Checkbox id={id} />
+      <Checkbox id={id} checked={checked} toggleHandler={toggleHandler} />
       <Label htmlFor={id}>{text}</Label>
     </StyledCheckboxLabel>
   );
