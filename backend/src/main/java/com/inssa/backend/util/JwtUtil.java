@@ -41,8 +41,8 @@ public class JwtUtil {
         return createToken(claims, REFRESH_TOKEN_EXPIRE_TIME);
     }
 
-    public static int getMemberId(String token) {
-        return (int) getAllClaims(getActualToken(token)).get(ID);
+    public static Long getMemberId(String token) {
+        return Long.parseLong(String.valueOf(getAllClaims(getActualToken(token)).get(ID)));
     }
 
     private static String createToken(Claims claims, long expireTime) {
