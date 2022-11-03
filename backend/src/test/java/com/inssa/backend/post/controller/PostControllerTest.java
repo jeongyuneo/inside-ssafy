@@ -14,9 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -56,15 +54,6 @@ public class PostControllerTest extends ApiDocument {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
-    private static final String COOKIE = ResponseCookie.from("refreshToken", JwtUtil.generateToken(ID, Role.GENERAL))
-            .httpOnly(true)
-            .secure(true)
-            .sameSite("None")
-            .path("/")
-            .maxAge(60 * 60 * 24 * 14)
-            .domain("inside-ssafy.com")
-            .build()
-            .toString();
 
     @MockBean
     private PostService postService;
@@ -304,8 +293,7 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_목록_조회_성공(ResultActions resultActions) throws Exception {
@@ -326,7 +314,6 @@ public class PostControllerTest extends ApiDocument {
         return mockMvc.perform(get("/api/v1/posts/search")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .param("keyword", keyword));
     }
 
@@ -347,8 +334,7 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_상세_조회_요청(Long postId) throws Exception {
         return mockMvc.perform(get("/api/v1/posts/" + postId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_상세_조회_성공(ResultActions resultActions) throws Exception {
@@ -372,8 +358,7 @@ public class PostControllerTest extends ApiDocument {
                 .file(file)
                 .accept(MediaType.APPLICATION_JSON)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_등록_성공(ResultActions resultActions) throws Exception {
@@ -396,8 +381,7 @@ public class PostControllerTest extends ApiDocument {
                 .file(file)
                 .accept(MediaType.APPLICATION_JSON)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_수정_성공(ResultActions resultActions) throws Exception {
@@ -416,8 +400,7 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_삭제_요청(Long postId) throws Exception {
         return mockMvc.perform(delete("/api/v1/posts/" + postId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_삭제_성공(ResultActions resultActions) throws Exception {
@@ -436,8 +419,7 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_좋아요_등록_요청(Long postId) throws Exception {
         return mockMvc.perform(post("/api/v1/posts/like/" + postId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_좋아요_등록_성공(ResultActions resultActions) throws Exception {
@@ -456,8 +438,7 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_좋아요_삭제_요청(Long postId) throws Exception {
         return mockMvc.perform(delete("/api/v1/posts/like/" + postId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_좋아요_삭제_성공(ResultActions resultActions) throws Exception {

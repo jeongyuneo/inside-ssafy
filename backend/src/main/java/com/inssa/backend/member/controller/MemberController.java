@@ -63,4 +63,14 @@ public class MemberController {
                 .build();
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(memberService.login(loginRequest));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<TokenResponse> logout() {
+        ResponseCookie responseCookie = ResponseCookie.from("refreshToken", null)
+                .path("/")
+                .maxAge(0)
+                .domain("inside-ssafy.com")
+                .build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).build();
+    }
 }

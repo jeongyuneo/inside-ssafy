@@ -13,9 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -35,15 +33,6 @@ public class ReCommentControllerTest extends ApiDocument {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
-    private static final String COOKIE = ResponseCookie.from("refreshToken", JwtUtil.generateToken(ID, Role.GENERAL))
-            .httpOnly(true)
-            .secure(true)
-            .sameSite("None")
-            .path("/")
-            .maxAge(60 * 60 * 24 * 14)
-            .domain("inside-ssafy.com")
-            .build()
-            .toString();
 
     @MockBean
     private ReCommentService reCommentService;
@@ -127,7 +116,6 @@ public class ReCommentControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/recomments/" + commentId)
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(commentRequest)));
     }
@@ -149,7 +137,6 @@ public class ReCommentControllerTest extends ApiDocument {
         return mockMvc.perform(patch("/api/v1/recomments/" + reCommentId)
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(commentRequest)));
     }
@@ -170,8 +157,7 @@ public class ReCommentControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_대댓글_삭제_요청(Long reCommentId) throws Exception {
         return mockMvc.perform(delete("/api/v1/recomments/" + reCommentId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_대댓글_삭제_성공(ResultActions resultActions) throws Exception {

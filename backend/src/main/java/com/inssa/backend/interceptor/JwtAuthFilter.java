@@ -16,6 +16,7 @@ import java.util.Arrays;
 public class JwtAuthFilter implements HandlerInterceptor {
 
     private static final String AUTHORIZATION = "Authorization";
+    private static final String BEARER = "Bearer ";
     private static final String REFRESH_TOKEN = "refreshToken";
     private static final String JOIN_REQUEST = "/api/v1/members";
     private static final String LOGIN_REQUEST = "/api/v1/members/login";
@@ -45,7 +46,8 @@ public class JwtAuthFilter implements HandlerInterceptor {
                     .filter(cookieInfo -> cookieInfo.getName().equals(REFRESH_TOKEN))
                     .findFirst()
                     .orElseThrow(() -> new UnAuthorizedException(ErrorMessage.NOT_FOUND_TOKEN));
-            String refreshToken = cookie.getValue();
+            String refreshToken = BEARER + cookie.getValue();
+            JwtUtil.validateToken(refreshToken);
             throw new UnAuthorizedException(JwtUtil.generateToken(JwtUtil.getMemberId(refreshToken), JwtUtil.getMemberRole(refreshToken)));
         }
         return true;
