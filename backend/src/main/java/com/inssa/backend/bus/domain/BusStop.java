@@ -24,8 +24,5 @@ public class BusStop extends BaseEntity {
     private String name;
 
     @NotNull
-    private double latitude;
-
-    @NotNull
-    private double longitude;
+    private String address;
 }
