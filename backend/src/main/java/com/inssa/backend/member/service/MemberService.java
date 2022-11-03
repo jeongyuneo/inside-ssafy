@@ -11,9 +11,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RequiredArgsConstructor
 @Service
 public class MemberService {
+
+    private static final String ID = "id";
+    private static final String ROLE = "role";
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
@@ -46,6 +52,16 @@ public class MemberService {
         return TokenResponse.builder()
                 .accessToken(JwtUtil.generateToken(member.getId(), member.getRole()))
                 .build();
+    }
+
+    public Map<String, String> getMemberInfo(LoginRequest loginRequest) {
+        Member member = findMemberByEmail(loginRequest.getEmail());
+        return new HashMap<String, String>() {
+            {
+                put(ID, String.valueOf(member.getId()));
+                put(ROLE, member.getRole().toString());
+            }
+        };
     }
 
     private Member findMemberByEmail(String email) {
