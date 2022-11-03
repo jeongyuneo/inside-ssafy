@@ -5,10 +5,7 @@ export const requestEmailToken = async ({ email }: AccountValueTypes) => {
   try {
     const { data }: { data: SuccessTokenType } = await axios({
       method: 'POST',
-      url: '/api/v1/members/join/token/request',
-      data: {
-        email,
-      },
+      url: '/api/v1/members/join/token/request?email=' + email,
     });
     console.log(data);
     return true;
@@ -21,12 +18,14 @@ export const requestEmailToken = async ({ email }: AccountValueTypes) => {
 
 export const validateEmailToken = async ({
   validationToken,
+  email,
 }: AccountValueTypes) => {
   try {
     const { data }: { data: SuccessTokenType } = await axios({
       method: '',
       url: '/api/vi/members/join/token/validation',
       data: {
+        email,
         validationToken,
       },
     });
