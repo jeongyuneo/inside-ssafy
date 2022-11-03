@@ -39,6 +39,12 @@ public class Comment extends BaseEntity {
         this.content = content;
     }
 
+    @Override
+    public void delete() {
+        super.delete();
+        post.deleteComment();
+    }
+
     public void addReComment(ReComment reComment) {
         reComments.add(reComment);
         post.addReComment();
