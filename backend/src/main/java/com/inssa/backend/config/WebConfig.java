@@ -9,6 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    private static final String[] EXCLUDE_PATH_PATTERNS = {
+            "/docs/**",
+            "/images/**",
+            "/members/login",
+            "/members/join/**",
+            "/buses/start",
+            "/buses/arrive/**"
+    };
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
