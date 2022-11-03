@@ -46,7 +46,7 @@ public class JwtAuthFilter implements HandlerInterceptor {
                     .findFirst()
                     .orElseThrow(() -> new UnAuthorizedException(ErrorMessage.NOT_FOUND_TOKEN));
             String refreshToken = cookie.getValue();
-            JwtUtil.validateExpiration(refreshToken);
+            throw new UnAuthorizedException(JwtUtil.generateToken(JwtUtil.getMemberId(refreshToken), JwtUtil.getMemberRole(refreshToken)));
         }
         return true;
     }
