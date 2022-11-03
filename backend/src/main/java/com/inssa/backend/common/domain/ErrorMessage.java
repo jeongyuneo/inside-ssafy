@@ -15,6 +15,7 @@ public enum ErrorMessage {
     NOT_FOUND_BUS("해당 버스를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE_IMAGE("해당 노선 이미지를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE("해당 경로를 찾을 수 없습니다."),
+    NOT_FOUND_TOKEN("토큰을 찾을 수 없습니다."),
 
     NOT_EQUAL_PASSWORD("비밀번호가 일치하지 않습니다."),
 
