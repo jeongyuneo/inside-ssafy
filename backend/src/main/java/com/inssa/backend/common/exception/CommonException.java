@@ -7,4 +7,8 @@ public class CommonException extends RuntimeException {
     public CommonException(ErrorMessage message) {
         super(message.getMessage());
     }
+
+    public CommonException(String message) {
+        super(message);
+    }
 }
