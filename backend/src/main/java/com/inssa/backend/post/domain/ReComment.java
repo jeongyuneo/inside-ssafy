@@ -35,4 +35,10 @@ public class ReComment extends BaseEntity {
     public void update(String content) {
         this.content = content;
     }
+
+    @Override
+    public void delete() {
+        super.delete();
+        comment.deleteReComment();
+    }
 }

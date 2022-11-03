@@ -12,6 +12,7 @@ import com.inssa.backend.post.domain.ReComment;
 import com.inssa.backend.post.domain.ReCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +22,7 @@ public class ReCommentService {
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
 
+    @Transactional
     public void createReComment(Long memberId, Long commentId, CommentRequest commentRequest) {
         Comment comment = findComment(commentId);
         comment.addReComment(
@@ -40,7 +42,12 @@ public class ReCommentService {
         reCommentRepository.save(reComment);
     }
 
+    @Transactional
     public void deleteReComment(Long memberId, Long reCommentId) {
+        ReComment reComment = findReComment(reCommentId);
+        checkEditable(memberId, reComment);
+        reComment.delete();
+        reCommentRepository.save(reComment);
     }
 
     private ReComment findReComment(Long reCommentId) {
