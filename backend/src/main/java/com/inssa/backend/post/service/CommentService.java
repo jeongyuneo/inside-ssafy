@@ -64,7 +64,7 @@ public class CommentService {
     }
 
     private void checkEditable(Long memberId, Comment comment) {
-        if (!comment.isEditable(memberId)) {
+        if (!comment.isEditableBy(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
     }

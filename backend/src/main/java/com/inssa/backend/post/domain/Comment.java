@@ -37,7 +37,7 @@ public class Comment extends BaseEntity {
         post.deleteComment();
     }
 
-    public boolean isEditable(Long memberId) {
+    public boolean isEditableBy(Long memberId) {
         return member.is(memberId);
     }
 
