@@ -5,6 +5,8 @@ import com.inssa.backend.common.exception.ForbiddenException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
+import com.inssa.backend.member.domain.PostLike;
+import com.inssa.backend.member.domain.PostLikeRepository;
 import com.inssa.backend.post.controller.dto.PostRequest;
 import com.inssa.backend.post.controller.dto.PostResponse;
 import com.inssa.backend.post.controller.dto.PostsResponse;
@@ -12,6 +14,7 @@ import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,6 +26,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final PostLikeRepository postLikeRepository;
 
     public List<PostsResponse> getPosts() {
         return postRepository.findByIsActiveTrue()
@@ -78,7 +82,18 @@ public class PostService {
         postRepository.save(post);
     }
 
+    @Transactional
     public void createPostLike(Long memberId, Long postId) {
+        Member member = findMember(memberId);
+        Post post = findPost(postId);
+        if (isExistingPostLike(member, post)) {
+            throw new ForbiddenException(ErrorMessage.EXISTING_POST_LIKE);
+        }
+        post.like(PostLike.builder()
+                .member(member)
+                .post(post)
+                .build());
+        postRepository.save(post);
     }
 
     public void deletePostLike(Long memberId, Long postId) {
@@ -92,6 +107,10 @@ public class PostService {
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
+    }
+
+    private boolean isExistingPostLike(Member member, Post post) {
+        return postLikeRepository.findByMemberAndPostAndIsActiveTrue(member, post).isPresent();
     }
 
     private void checkEditable(Long memberId, Post post) {
