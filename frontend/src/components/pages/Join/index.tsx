@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { useCallback } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../atoms/Button';
 import ButtonGroup from '../../molecules/ButtonGroup';
@@ -38,8 +31,7 @@ const Join = () => {
   const [validated, setValidated] = useState(true);
   const [isClickEmail, setIsClickEmail] = useState(false);
   const [isCertificate, setIsCertificate] = useState(false);
-  // const [second, setSecond] = useState(0);
-
+  const [buttonName, setbuttonName] = useState('인증');
   const [account, setAccount] = useState({
     userName: '',
     studentNum: '',
@@ -52,19 +44,14 @@ const Join = () => {
 
   //const navigate = useNavigate();
 
-  // const time = useRef(300);
-  // const timer = useRef(null);
-
-  // const start = useCallback(() => {
-  //   if (timer.current != null) {
-  //     return;
-  //   }
-  //   timer.current = setInterval(() => {
-  //     time.current -= 1;
-  //     setSecond(time.current % 60);
-  //   });
-  // }, [time]);
-
+  const time = useRef(0);
+  const timer = useRef(
+    setInterval(() => {
+      console.log('check');
+      clearInterval(timer.current);
+      return;
+    }, 1000 * 60 * 24),
+  );
   // onChange Event함수 : Input으로 입력받은 값을 적용한다.
   const changeInfo = (e: ChangeEvent<HTMLInputElement>) => {
     setAccount(prev => {
@@ -74,6 +61,29 @@ const Join = () => {
       };
     });
     console.log(account);
+  };
+
+  const returnToken = () => {
+    console.log(time.current);
+    if (time.current === 0) {
+      console.log('Interval을 종료합니다');
+      initToken();
+      clearInterval(timer.current);
+      return;
+    }
+    time.current -= 1;
+    setbuttonName(Math.floor(time.current / 60) + ':' + (time.current % 60));
+    console.log(new Date());
+  };
+
+  const initToken = () => {
+    console.log('?');
+    if (isCertificate) {
+      return;
+    }
+    alert('정보를 초기화합니다.');
+    setbuttonName('인증');
+    setIsClickEmail(false); // 이메일 클릭 초기화
   };
 
   // 인증을 보낸다.
@@ -91,13 +101,16 @@ const Join = () => {
           email_again: prev.email,
         };
       });
+      console.log(Date.now);
+      time.current = TOKEN_TIMER;
+      timer.current = setInterval(returnToken, 1000);
+      setbuttonName(Math.floor(time.current / 60) + ':' + (time.current % 60));
     } else {
       alert('이메일 전송에 실패하였습니다');
     }
   };
 
   const getCertificate = () => {
-    console.log(account.email);
     if (!isClickEmail) {
       alert(
         '<Error> :: 이메일 인증이 전송되지 않은채로 인증시도가 되었습니다.',
@@ -135,6 +148,7 @@ const Join = () => {
   };
 
   const LABEL_FONT = 1;
+  const TOKEN_TIMER = 5 * 60;
   const textTypes = ['text', 'text', 'text', 'text', 'password', 'password'];
   const placeholder = [
     '이름을 입력하세요',
@@ -217,11 +231,14 @@ const Join = () => {
           changeHandler={changeInfo}
         />
         <ButtonWrap>
-          {isClickEmail ? (
+          <Button clickHandler={getCertificate} width={8} height={3}>
+            {buttonName}
+          </Button>
+          {/* {isClickEmail ? (
             <Button clickHandler={getCertificate} width={8} height={3}>
               인증
             </Button>
-          ) : null}
+          ) : null} */}
         </ButtonWrap>
       </StyledEmailWrap>
       <InputLabel
