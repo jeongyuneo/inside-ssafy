@@ -28,6 +28,10 @@ public class ReComment extends BaseEntity {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
+    public boolean isEditable(Long memberId) {
+        return member.is(memberId);
+    }
+
     public void update(String content) {
         this.content = content;
     }
