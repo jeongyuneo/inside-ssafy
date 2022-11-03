@@ -22,20 +22,20 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{memberId}")
-    public ResponseEntity<MemberResponse> getMember(@PathVariable Long memberId) {
-        return ResponseEntity.ok().body(memberService.getMember(memberId));
+    @GetMapping
+    public ResponseEntity<MemberResponse> getMember(@RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok().body(memberService.getMember(JwtUtil.getMemberId(token)));
     }
 
-    @PatchMapping("/{memberId}")
-    public ResponseEntity<Void> updatePassword(@PathVariable Long memberId, @RequestBody PasswordUpdateRequest memberUpdateRequest) {
-        memberService.updatePassword(memberId, memberUpdateRequest);
+    @PatchMapping
+    public ResponseEntity<Void> updatePassword(@RequestHeader("Authorization") String token, @RequestBody PasswordUpdateRequest memberUpdateRequest) {
+        memberService.updatePassword(JwtUtil.getMemberId(token), memberUpdateRequest);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{memberId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long memberId) {
-        memberService.deleteMember(memberId);
+    @DeleteMapping
+    public ResponseEntity<Void> deleteMember(@RequestHeader("Authorization") String token) {
+        memberService.deleteMember(JwtUtil.getMemberId(token));
         return ResponseEntity.ok().build();
     }
 
