@@ -45,6 +45,15 @@ public class JwtUtil {
         return Long.parseLong(String.valueOf(getAllClaims(getActualToken(token)).get(ID)));
     }
 
+    public static boolean isExpired(String token) {
+        try {
+            getAllClaims(getActualToken(token));
+        } catch (ExpiredJwtException accessTokenException) {
+            return true;
+        }
+        return false;
+    }
+
     private static String createToken(Claims claims, long expireTime) {
         return Jwts.builder()
                 .setSubject(JWT_HEADER)
