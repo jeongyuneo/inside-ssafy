@@ -4,17 +4,21 @@ import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
+import com.inssa.backend.member.domain.Role;
 import com.inssa.backend.menu.controller.dto.ItemsResponse;
 import com.inssa.backend.menu.controller.dto.MenuRequest;
 import com.inssa.backend.menu.controller.dto.MenuResponse;
 import com.inssa.backend.menu.service.MenuService;
+import com.inssa.backend.util.JwtUtil;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseCookie;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDate;
@@ -24,7 +28,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -41,6 +44,18 @@ public class MenuControllerTest extends ApiDocument {
     private static final String DAY_OF_THE_WEEK = "목";
     private static final LocalDate START_DATE = LocalDate.parse("2022-10-31");
     private static final LocalDate END_DATE = LocalDate.parse("2022-11-04");
+    private static final String AUTHORIZATION = "Authorization";
+    private static final String BEARER = "Bearer ";
+    private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.MANAGER);
+    private static final String COOKIE = ResponseCookie.from("refreshToken", JwtUtil.generateToken(ID, Role.GENERAL))
+            .httpOnly(true)
+            .secure(true)
+            .sameSite("None")
+            .path("/")
+            .maxAge(60 * 60 * 24 * 14)
+            .domain("inside-ssafy.com")
+            .build()
+            .toString();
 
     @MockBean
     private MenuService menuService;
@@ -73,9 +88,9 @@ public class MenuControllerTest extends ApiDocument {
     @Test
     void create_menu_success() throws Exception {
         // given
-        willDoNothing().given(menuService).createMenu(anyLong(), any(MenuRequest.class));
+        willDoNothing().given(menuService).createMenu(any(MenuRequest.class));
         // when
-        ResultActions resultActions = 식단_등록_요청(ID, menuRequest);
+        ResultActions resultActions = 식단_등록_요청(menuRequest);
         // then
         식단_등록_성공(resultActions);
     }
@@ -84,9 +99,9 @@ public class MenuControllerTest extends ApiDocument {
     @Test
     void create_menu_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_MENU.getMessage())).given(menuService).createMenu(anyLong(), any(MenuRequest.class));
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_CREATE_MENU.getMessage())).given(menuService).createMenu(any(MenuRequest.class));
         // when
-        ResultActions resultActions = 식단_등록_요청(ID, menuRequest);
+        ResultActions resultActions = 식단_등록_요청(menuRequest);
         // then
         식단_등록_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CREATE_MENU));
     }
@@ -113,9 +128,11 @@ public class MenuControllerTest extends ApiDocument {
         식단_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MENU));
     }
 
-    private ResultActions 식단_등록_요청(Long userId, MenuRequest menuRequest) throws Exception {
-        return mockMvc.perform(post("/api/v1/menus/users/" + userId)
+    private ResultActions 식단_등록_요청(MenuRequest menuRequest) throws Exception {
+        return mockMvc.perform(post("/api/v1/menus")
                 .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(menuRequest)));
     }
@@ -135,7 +152,9 @@ public class MenuControllerTest extends ApiDocument {
 
     private ResultActions 식단_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/menus")
-                .contextPath("/api/v1"));
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .header(HttpHeaders.SET_COOKIE, COOKIE));
     }
 
     private void 식단_조회_성공(ResultActions resultActions) throws Exception {
