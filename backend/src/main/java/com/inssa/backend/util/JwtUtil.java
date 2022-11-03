@@ -24,11 +24,12 @@ public class JwtUtil {
     private static final String DELIMITER = " ";
     private static final int TOKEN = 1;
     private static final String ID = "id";
+    private static final String ROLE = "role";
 
     public static String generateToken(Long memberId, Role role) {
         Claims claims = Jwts.claims();
-        claims.put("id", memberId);
-        claims.put("role", role);
+        claims.put(ID, memberId);
+        claims.put(ROLE, role);
         return createToken(claims, ACCESS_TOKEN_EXPIRE_TIME);
     }
 
