@@ -66,7 +66,7 @@ public class ReCommentService {
     }
 
     private void checkEditable(Long memberId, ReComment reComment) {
-        if (!reComment.isEditable(memberId)) {
+        if (!reComment.isEditableBy(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
     }
