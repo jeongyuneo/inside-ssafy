@@ -41,7 +41,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
-        ResponseCookie responseCookie = ResponseCookie.from("refreshToken", JwtUtil.generateToken(loginRequest.getEmail()))
+        ResponseCookie responseCookie = ResponseCookie.from("refreshToken", JwtUtil.generateToken(memberService.getMemberInfo(loginRequest)))
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("None")
