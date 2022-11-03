@@ -26,7 +26,6 @@ public class JwtAuthFilter implements HandlerInterceptor {
         String accessToken = request.getHeader(AUTHORIZATION);
         String uri = request.getRequestURI();
         String method = request.getMethod();
-        System.out.println(method + ", " + uri);
         if (JOIN_REQUEST.equals(uri) && HttpMethod.POST.matches(method)
                 || LOGIN_REQUEST.equals(uri) && HttpMethod.POST.matches(method)) {
             return true;
