@@ -32,7 +32,7 @@ public class JwtAuthFilter implements HandlerInterceptor {
         }
 
         if (MENU_REQUEST.equals(uri) && HttpMethod.POST.matches(method)
-                && !JwtUtil.getMemberRole(accessToken).equals(Role.MANAGER.name())) {
+                && !JwtUtil.getMemberRole(accessToken).equals(Role.MANAGER)) {
             throw new ForbiddenException(ErrorMessage.WRONG_ACCESS);
         }
 
