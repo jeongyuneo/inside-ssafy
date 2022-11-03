@@ -52,6 +52,10 @@ public class Post extends BaseEntity {
         commentCount++;
     }
 
+    public void deleteComment() {
+        commentCount--;
+    }
+
     public void saveImages(List<MultipartFile> files) {
         images.clear();
         if (hasNotUpdateFiles(files)) {
