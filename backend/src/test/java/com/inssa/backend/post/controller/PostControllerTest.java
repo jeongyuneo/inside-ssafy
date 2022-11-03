@@ -396,7 +396,6 @@ public class PostControllerTest extends ApiDocument {
         return mockMvc.perform(delete("/api/v1/posts/" + postId)
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
-
     }
 
     private void 익명_게시판_삭제_성공(ResultActions resultActions) throws Exception {
