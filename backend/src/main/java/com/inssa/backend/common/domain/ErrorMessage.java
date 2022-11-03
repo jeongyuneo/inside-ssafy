@@ -17,10 +17,12 @@ public enum ErrorMessage {
     NOT_FOUND_ROUTE("해당 경로를 찾을 수 없습니다."),
     NOT_FOUND_AUTHORITY("해당 권한을 찾을 수 없습니다."),
 
+    NOT_EQUAL_VALIDATION_TOKEN("인증코드가 일치하지 않습니다."),
     NOT_EQUAL_PASSWORD("비밀번호가 일치하지 않습니다."),
 
     NOT_EDITABLE_MEMBER("편집 권한이 없는 회원입니다."),
 
+    FAIL_TO_SEND_VALIDATION_TOKEN("인증코드 전송에 실패했습니다."),
     FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
     FAIL_TO_SEARCH_POST("익명 게시판 검색에 실패했습니다."),
@@ -30,6 +32,8 @@ public enum ErrorMessage {
     FAIL_TO_SAVE_FILE("파일 저장에 실패했습니다."),
 
     WRONG_CONTENT_TYPE("잘못된 파일 형식 입니다."),
+
+    EXPIRED_VALIDATION_TOKEN("인증코드가 만료되었습니다."),
 
     INTERNAL_SERVER_ERROR("서버 내부 에러가 발생했습니다.");
 

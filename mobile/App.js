@@ -1,9 +1,11 @@
+import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Main from "./src/pages/Main/index";
 import Driving from "./src/pages/Driving/index";
 
 const Stack = createStackNavigator();
+const navigationRef = React.createRef();
 
 /**
  * 초기 페이지를 Main으로 지정합니다.
@@ -15,7 +17,7 @@ const Stack = createStackNavigator();
  */
 const App = () => {
   return (
-    <NavigationContainer initialRouteName="Main">
+    <NavigationContainer initialRouteName="Main" ref={navigationRef}>
       <Stack.Navigator>
         <Stack.Screen
           name="Main"

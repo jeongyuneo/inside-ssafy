@@ -7,6 +7,11 @@ import {
 } from './styles';
 import { Proptypes } from './types';
 
+/**
+ * busNum과 clickHandler를 받아 1호차 ~ N호차까지 동적으로 렌더링
+ *
+ * @author jojo
+ */
 const BusInfoNavigator = ({ busNum, clickHandler }: Proptypes) => {
   return (
     <StyledBusInfoNavigator>

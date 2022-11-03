@@ -53,8 +53,8 @@ public class Member extends BaseEntity {
         }
     }
 
-    public boolean isEditable(Long memberId) {
-        return id.equals(memberId) || role.equals(Role.MANAGER);
+    public boolean is(Long memberId) {
+        return id.equals(memberId);
     }
 
     public boolean isManager() {

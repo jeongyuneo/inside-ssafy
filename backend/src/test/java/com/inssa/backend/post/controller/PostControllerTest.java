@@ -226,7 +226,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void delete_post_success() throws Exception {
         // given
-        willDoNothing().given(postService).deletePost(anyLong());
+        willDoNothing().given(postService).deletePost(anyLong(), anyLong());
         // when
         ResultActions resultActions = 익명_게시판_삭제_요청(ID);
         // then
@@ -237,7 +237,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void delete_post_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).deletePost(anyLong());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).deletePost(anyLong(), anyLong());
         // when
         ResultActions resultActions = 익명_게시판_삭제_요청(ID);
         // then
@@ -394,7 +394,8 @@ public class PostControllerTest extends ApiDocument {
 
     private ResultActions 익명_게시판_삭제_요청(Long postId) throws Exception {
         return mockMvc.perform(delete("/api/v1/posts/" + postId)
-                .contextPath("/api/v1"));
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_삭제_성공(ResultActions resultActions) throws Exception {

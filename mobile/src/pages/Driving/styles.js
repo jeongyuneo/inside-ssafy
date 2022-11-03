@@ -8,19 +8,19 @@ export const StyledDriving = styled.View`
 `;
 
 export const MainText = styled.Text`
-  font-size: 80%;
-  margin-bottom: 40%;
+  font-size: 80px;
+  margin-bottom: 30%;
 `;
 
 export const TitleText = styled.Text`
-  font-size: 50%;
+  font-size: 50px;
   color: white;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
   width: 200px;
   height: 200px;
-  border-radius: 100%;
+  border-radius: 100px;
   background-color: red;
   color: white;
   align-items: center;
