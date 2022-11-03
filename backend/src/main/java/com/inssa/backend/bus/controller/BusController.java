@@ -36,7 +36,7 @@ public class BusController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/like/{memberId}")
+    @GetMapping("/like")
     public ResponseEntity<List<BusLikeResponse>> getBusLikes(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok().body(busService.getBusLikes(JwtUtil.getMemberId(token)));
     }
