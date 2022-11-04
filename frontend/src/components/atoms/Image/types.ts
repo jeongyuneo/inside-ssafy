@@ -1,6 +1,7 @@
 export interface ImageWrapperPropTypes {
-  width: number;
-  height?: number;
+  width: string;
+  height?: string;
+  clickHandler?: () => void;
 }
 
 export interface ImagePropTypes {

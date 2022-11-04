@@ -1,9 +1,5 @@
 package com.inssa.backend.menu.service;
 
-import com.inssa.backend.common.domain.ErrorMessage;
-import com.inssa.backend.common.exception.NotFoundException;
-import com.inssa.backend.common.exception.UnAuthorizedException;
-import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.menu.controller.dto.ItemsResponse;
 import com.inssa.backend.menu.controller.dto.MenuRequest;
@@ -28,8 +24,7 @@ public class MenuService {
     private final MenuRepository menuRepository;
     private final MemberRepository memberRepository;
 
-    public void createMenu(Long memberId, MenuRequest menuRequest) {
-        checkManager(findMember(memberId));
+    public void createMenu(MenuRequest menuRequest) {
         menuRepository.save(
                 Menu.builder()
                         .date(menuRequest.getDate())
@@ -53,16 +48,5 @@ public class MenuService {
                 .endDate(itemsResponses.get(FRIDAY).getDate())
                 .menus(itemsResponses)
                 .build();
-    }
-
-    private Member findMember(Long memberId) {
-        return memberRepository.findByIdAndIsActiveTrue(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
-    private void checkManager(Member member) {
-        if (!member.isManager()) {
-            throw new UnAuthorizedException(ErrorMessage.NOT_FOUND_AUTHORITY);
-        }
     }
 }

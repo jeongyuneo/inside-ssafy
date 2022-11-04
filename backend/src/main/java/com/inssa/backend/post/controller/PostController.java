@@ -4,6 +4,7 @@ import com.inssa.backend.post.controller.dto.PostRequest;
 import com.inssa.backend.post.controller.dto.PostResponse;
 import com.inssa.backend.post.controller.dto.PostsResponse;
 import com.inssa.backend.post.service.PostService;
+import com.inssa.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,37 +30,37 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostResponse> getPost(@PathVariable Long postId) {
-        return ResponseEntity.ok().body(postService.getPost(postId));
+    public ResponseEntity<PostResponse> getPost(@RequestHeader("Authorization") String token, @PathVariable Long postId) {
+        return ResponseEntity.ok().body(postService.getPost(JwtUtil.getMemberId(token), postId));
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
-        postService.createPost(postRequest, files);
+    public ResponseEntity<Void> createPost(@RequestHeader("Authorization") String token, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+        postService.createPost(JwtUtil.getMemberId(token), postRequest, files);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/update/{postId}")
-    public ResponseEntity<Void> updatePost(@PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
-        postService.updatePost(postId, postRequest, files);
+    public ResponseEntity<Void> updatePost(@RequestHeader("Authorization") String token, @PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+        postService.updatePost(JwtUtil.getMemberId(token), postId, postRequest, files);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
+    public ResponseEntity<Void> deletePost(@RequestHeader("Authorization") String token, @PathVariable Long postId) {
+        postService.deletePost(JwtUtil.getMemberId(token), postId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/like/{postId}")
     public ResponseEntity<Void> createPostLike(@RequestHeader("Authorization") String token, @PathVariable Long postId) {
-        postService.createPostLike(1L, postId);
+        postService.createPostLike(JwtUtil.getMemberId(token), postId);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/like/{postId}")
     public ResponseEntity<Void> deletePostLike(@RequestHeader("Authorization") String token, @PathVariable Long postId) {
-        postService.deletePostLike(1L, postId);
+        postService.deletePostLike(JwtUtil.getMemberId(token), postId);
         return ResponseEntity.ok().build();
     }
 }

@@ -8,8 +8,16 @@ import { PropTypes } from './types';
  *
  * @author jojo
  */
-const Checkbox = ({ id, size }: PropTypes) => {
-  return <StyledCheckbox id={id} size={size} type="checkbox" />;
+const Checkbox = ({ id, size, checked, toggleHandler }: PropTypes) => {
+  return (
+    <StyledCheckbox
+      id={id}
+      size={size}
+      type="checkbox"
+      checked={checked}
+      onChange={toggleHandler}
+    />
+  );
 };
 
 export default Checkbox;

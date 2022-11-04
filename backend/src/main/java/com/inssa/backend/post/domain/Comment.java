@@ -31,7 +31,26 @@ public class Comment extends BaseEntity {
     @OneToMany(mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ReComment> reComments = new ArrayList<>();
 
+    @Override
+    public void delete() {
+        super.delete();
+        post.deleteComment();
+    }
+
+    public boolean isEditableBy(Long memberId) {
+        return member.is(memberId);
+    }
+
     public void update(String content) {
         this.content = content;
+    }
+
+    public void addReComment(ReComment reComment) {
+        reComments.add(reComment);
+        post.addReComment();
+    }
+
+    public void deleteReComment() {
+        post.deleteComment();
     }
 }

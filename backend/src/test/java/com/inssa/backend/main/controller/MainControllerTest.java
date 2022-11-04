@@ -7,7 +7,9 @@ import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.common.service.MainService;
+import com.inssa.backend.member.domain.Role;
 import com.inssa.backend.post.controller.dto.PostsResponse;
+import com.inssa.backend.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +38,10 @@ public class MainControllerTest extends ApiDocument {
     private static final int COMMENT_COUNT = 3;
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(", ")).collect(Collectors.toList());
+    private static final Long ID = 1L;
+    private static final String AUTHORIZATION = "Authorization";
+    private static final String BEARER = "Bearer ";
+    private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
 
     @MockBean
     private MainService mainService;
@@ -82,7 +88,8 @@ public class MainControllerTest extends ApiDocument {
 
     private ResultActions 메인페이지_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1")
-                .contextPath("/api/v1"));
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 메인페이지_조회_성공(ResultActions resultActions) throws Exception {
