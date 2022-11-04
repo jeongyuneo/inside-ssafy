@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
-    boolean existsByPostAndMemberAndActiveIsTrue(Post post, Member member);
+    boolean existsByPostAndMemberAndIsActiveTrue(Post post, Member member);
 }
