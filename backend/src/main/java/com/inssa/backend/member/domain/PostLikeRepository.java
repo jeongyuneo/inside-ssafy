@@ -8,5 +8,8 @@ import java.util.Optional;
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
     boolean existsByMemberAndPostAndIsActiveTrue(Member member, Post post);
+
+    boolean existsByMemberAndPostAndIsActiveFalse(Member member, Post post);
+
     Optional<PostLike> findByMemberAndPostAndIsActiveFalse(Member member, Post post);
 }
