@@ -25,4 +25,8 @@ public class BusLike extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_id")
     private Bus bus;
+
+    public void activateBusLike() {
+        isActive = true;
+    }
 }
