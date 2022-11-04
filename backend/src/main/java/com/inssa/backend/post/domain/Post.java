@@ -43,7 +43,7 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments = new ArrayList<>();
 
-    public void deletelike() {
+    public void deleteLike() {
         likeCount--;
     }
 
