@@ -26,7 +26,7 @@ public class BusLike extends BaseEntity {
     @JoinColumn(name = "bus_id")
     private Bus bus;
 
-    public void activateBusLike() {
+    public void create() {
         isActive = true;
     }
 }
