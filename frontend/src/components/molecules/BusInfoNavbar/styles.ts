@@ -9,5 +9,12 @@ export const StyledBusInfoNavbar = styled.div`
 export const BusInfoNavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 30%;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 2rem;
 `;
