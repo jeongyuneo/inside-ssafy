@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public class BusService {
 
+    private static final String SITE_URL = "https://inside-ssafy.com";
+
     private final BusRepository busRepository;
 
     public BusResponse getBus(int number) {
@@ -35,7 +37,7 @@ public class BusService {
 
     public RouteImageResponse getRouteImage(int number) {
         return RouteImageResponse.builder()
-                .url(findBus(number).getImage().getUrl())
+                .url(SITE_URL + findBus(number).getImage().getUrl())
                 .build();
     }
 
