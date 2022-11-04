@@ -9,6 +9,11 @@ import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.member.domain.PostLike;
 import com.inssa.backend.member.domain.PostLikeRepository;
 import com.inssa.backend.post.controller.dto.*;
+import com.inssa.backend.member.domain.PostLike;
+import com.inssa.backend.member.domain.PostLikeRepository;
+import com.inssa.backend.post.controller.dto.PostRequest;
+import com.inssa.backend.post.controller.dto.PostResponse;
+import com.inssa.backend.post.controller.dto.PostsResponse;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -134,7 +139,12 @@ public class PostService {
         postRepository.save(post);
     }
 
+    @Transactional
     public void deletePostLike(Long memberId, Long postId) {
+        PostLike postLike = postLikeRepository.findByMemberAndPostAndIsActiveTrue(findMember(memberId), findPost(postId))
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
+        postLike.delete();
+        postLikeRepository.save(postLike);
     }
 
     private Post findPost(Long postId) {

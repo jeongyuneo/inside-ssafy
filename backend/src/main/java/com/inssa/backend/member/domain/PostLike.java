@@ -26,6 +26,12 @@ public class PostLike extends BaseEntity {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @Override
+    public void delete() {
+        super.delete();
+        post.deleteLike();
+    }
+
     public void activatePostLike() {
         isActive = true;
         post.addLike();
