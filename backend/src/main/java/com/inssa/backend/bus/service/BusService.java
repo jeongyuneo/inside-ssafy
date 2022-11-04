@@ -41,7 +41,7 @@ public class BusService {
     }
 
     public List<RouteResponse> startBus(int number) {
-        return routeRepository.findByBusOrderByOrderAsc(findBus(number))
+        return routeRepository.findByBusOrderByOrderAsc(findBusByNumber(number))
                 .stream()
                 .map(route -> RouteResponse.builder()
                         .routeId(route.getId())
@@ -54,7 +54,7 @@ public class BusService {
     public void arriveAt(Long routeId) {
     }
 
-    private Bus findBus(int number) {
+    private Bus findBusByNumber(int number) {
         return busRepository.findByNumberAndIsActiveTrue(number)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
     }
