@@ -52,12 +52,13 @@ public class BusService {
             return;
         }
 
-        busLikeRepository.save(
+        member.addBusLike(
                 BusLike.builder()
                         .member(member)
                         .bus(bus)
                         .build()
         );
+        memberRepository.save(member);
     }
 
     public void deleteBusLike(Long memberId, int number) {
