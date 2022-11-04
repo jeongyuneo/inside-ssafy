@@ -18,9 +18,13 @@ const BusInfoNavbar = ({
     <StyledBusInfoNavbar>
       <BusInfoNavbarContainer>
         {liked ? (
-          <AiFillStar color="yellow" size="24" onClick={toggleLikeHandler} />
+          <AiFillStar color="#EBB517" size="24" onClick={toggleLikeHandler} />
         ) : (
-          <AiOutlineStar color="yellow" size="24" onClick={toggleLikeHandler} />
+          <AiOutlineStar
+            color="#EBB517"
+            size="24"
+            onClick={toggleLikeHandler}
+          />
         )}
         <Button isText clickHandler={toggleBusInfoModalHandler}>
           이미지로 노선 보기
