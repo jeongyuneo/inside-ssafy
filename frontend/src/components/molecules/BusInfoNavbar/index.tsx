@@ -9,7 +9,11 @@ import { PropTypes } from './types';
  *
  * @author jojo
  */
-const BusInfoNavbar = ({ liked, toggleLikeHandler }: PropTypes) => {
+const BusInfoNavbar = ({
+  liked,
+  toggleLikeHandler,
+  toggleBusInfoModalHandler,
+}: PropTypes) => {
   return (
     <StyledBusInfoNavbar>
       <BusInfoNavbarContainer>
@@ -18,7 +22,9 @@ const BusInfoNavbar = ({ liked, toggleLikeHandler }: PropTypes) => {
         ) : (
           <AiOutlineStar color="yellow" size="24" onClick={toggleLikeHandler} />
         )}
-        <Button isText>이미지로 노선 보기</Button>
+        <Button isText clickHandler={toggleBusInfoModalHandler}>
+          이미지로 노선 보기
+        </Button>
       </BusInfoNavbarContainer>
     </StyledBusInfoNavbar>
   );
