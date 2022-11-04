@@ -5,4 +5,5 @@ export const StyledBusInfo = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  position: relative;
 `;

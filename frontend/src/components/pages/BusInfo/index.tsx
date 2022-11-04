@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import BusInfoImageModal from '../../organisms/BusInfoBody/BusInfoImageModal';
 import BusInfoNavbar from '../../molecules/BusInfoNavbar';
 import BusInfoNavigator from '../../molecules/BusInfoNavigator';
 import BusLine from '../../molecules/BusLine';
@@ -29,12 +30,12 @@ const BusInfo = () => {
       : setBusNum(prev => prev + 1);
   };
 
-  const clickBusInfoModalHandler = () => {
-    setOpenedBusInfoModal(prev => !prev);
-  };
-
   const clickRefreshHandler = () => {
     console.log('refresh');
+  };
+
+  const toggleBusInfoModalHandler = () => {
+    setOpenedBusInfoModal(prev => !prev);
   };
 
   const toggleLikeHandler = () => {
@@ -54,19 +55,28 @@ const BusInfo = () => {
     '현충원역',
   ];
 
+  const busInfoImage =
+    'https://cdn.pixabay.com/photo/2019/10/05/19/40/pumpkins-4528653_960_720.jpg';
+
   return (
     <StyledBusInfo>
       <BusInfoNavigator busNum={busNum} clickHandler={clickBusNumHandler} />
       <BusInfoNavbar
         liked={liked}
         toggleLikeHandler={toggleLikeHandler}
-        clickBusInfoModalHandler={clickBusInfoModalHandler}
+        toggleBusInfoModalHandler={toggleBusInfoModalHandler}
       />
       <BusInfoBody
         currentStop={currentStop}
         busStops={busStops}
         clickRefreshHandler={clickRefreshHandler}
       />
+      {openedBusInfoModal && (
+        <BusInfoImageModal
+          busInfoImage={busInfoImage}
+          toggleBusInfoModalHandler={toggleBusInfoModalHandler}
+        />
+      )}
     </StyledBusInfo>
   );
 };

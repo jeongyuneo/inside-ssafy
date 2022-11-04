@@ -1,6 +1,6 @@
 export interface ImageWrapperPropTypes {
-  width: number;
-  height?: number;
+  width: string;
+  height?: string;
 }
 
 export interface ImagePropTypes {
