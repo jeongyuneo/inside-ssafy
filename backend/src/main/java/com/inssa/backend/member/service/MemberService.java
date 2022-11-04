@@ -63,6 +63,9 @@ public class MemberService {
     }
 
     public void deleteMember(Long memberId) {
+        Member member = findMember(memberId);
+        member.delete();
+        memberRepository.save(member);
     }
 
     public TokenResponse login(LoginRequest loginRequest) {
@@ -81,6 +84,11 @@ public class MemberService {
                 put(ROLE, member.getRole().toString());
             }
         };
+    }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findByIdAndIsActiveTrue(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
     private Member findMemberByEmail(String email) {
