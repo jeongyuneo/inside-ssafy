@@ -42,6 +42,7 @@ public enum ErrorMessage {
     FAIL_TO_SAVE_FILE("파일 저장에 실패했습니다."),
 
     EXISTING_POST_LIKE("이미 좋아요한 게시물입니다."),
+    EXISTING_BUS_LIKE("이미 즐겨차기에 추가된 버스입니다."),
 
     INTERNAL_SERVER_ERROR("서버 내부 에러가 발생했습니다.");
 
