@@ -4,12 +4,21 @@ import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.controller.dto.BusResponse;
 import com.inssa.backend.bus.controller.dto.RouteImageResponse;
 import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.domain.Route;
+import com.inssa.backend.bus.domain.RouteRepository;
+import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class BusService {
+
+    private final RouteRepository routeRepository;
 
     public BusResponse getBus(int number) {
         return null;
@@ -33,6 +42,15 @@ public class BusService {
         return null;
     }
 
+    @Transactional
     public void arriveAt(Long routeId) {
+        Route route = findRoute(routeId);
+        route.update();
+        routeRepository.save(route);
+    }
+
+    private Route findRoute(Long routeId) {
+        return routeRepository.findByIdAndIsActiveTrue(routeId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE));
     }
 }
