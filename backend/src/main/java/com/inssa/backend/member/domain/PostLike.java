@@ -25,4 +25,10 @@ public class PostLike extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @Override
+    public void delete() {
+        super.delete();
+        post.dislike();
+    }
 }
