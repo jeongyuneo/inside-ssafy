@@ -60,4 +60,8 @@ public class Member extends BaseEntity {
     public boolean is(Long memberId) {
         return id.equals(memberId);
     }
+
+    public void addBusLike(BusLike busLike) {
+        busLikes.add(busLike);
+    }
 }
