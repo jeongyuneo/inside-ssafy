@@ -51,7 +51,8 @@ export const joinRequest = async ({
   try {
     const { status, data }: { status: number; data: failtoJoin } = await axios({
       method: 'POST',
-      url: '/api/v1/members',
+      // url: '/api/v1/members',
+      url: 'asdfasdfj;aegj;weiosjf',
       data: {
         email,
         password,
