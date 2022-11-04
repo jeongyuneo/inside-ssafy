@@ -60,6 +60,14 @@ public class MemberService {
     }
 
     public void updatePassword(Long memberId, PasswordUpdateRequest memberUpdateRequest) {
+        Member member = findMember(memberId);
+        member.validatePassword(passwordEncoder, memberUpdateRequest.getPassword());
+        member.updatePassword(passwordEncoder.encode(memberUpdateRequest.getNewPassword()));
+    }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findByIdAndIsActiveTrue(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
     public void deleteMember(Long memberId) {
