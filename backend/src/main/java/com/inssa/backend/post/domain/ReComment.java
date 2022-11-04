@@ -27,4 +27,8 @@ public class ReComment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private Comment comment;
+
+    public boolean isEditableBy(Long memberId) {
+        return member.is(memberId);
+    }
 }
