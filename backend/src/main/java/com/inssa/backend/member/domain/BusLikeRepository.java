@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BusLikeRepository extends JpaRepository<BusLike, Long> {
 
     boolean existsByMemberAndBusAndIsActiveTrue(Member member, Bus bus);
+
+    boolean existsByMemberAndBusAndIsActiveFalse(Member member, Bus bus);
 }
