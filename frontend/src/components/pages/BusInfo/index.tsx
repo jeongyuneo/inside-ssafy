@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import BusInfoImageModal from '../../organisms/BusInfoImageModal';
-import BusInfoNavbar from '../../molecules/BusInfoNavbar';
-import BusInfoNavigator from '../../molecules/BusInfoNavigator';
 import BusInfoBody from '../../organisms/BusInfoBody';
 import { StyledBusInfo } from './styles';
-import Navbar from '../../molecules/Navbar';
 import { useNavigate } from 'react-router-dom';
 import BusInfoHeader from '../../organisms/BusInfoHeader';
 
@@ -75,13 +72,6 @@ const BusInfo = () => {
         toggleLikeHandler={toggleLikeHandler}
         toggleBusInfoModalHandler={toggleBusInfoModalHandler}
       />
-      {/* <Navbar clickLogoHandler={clickLogoHandler} />
-      <BusInfoNavigator busNum={busNum} clickHandler={clickBusNumHandler} />
-      <BusInfoNavbar
-        liked={liked}
-        toggleLikeHandler={toggleLikeHandler}
-        toggleBusInfoModalHandler={toggleBusInfoModalHandler}
-      /> */}
       <BusInfoBody
         currentStop={currentStop}
         busStops={busStops}
