@@ -6,6 +6,7 @@ import BusInfoBody from '../../organisms/BusInfoBody';
 import { StyledBusInfo } from './styles';
 import Navbar from '../../molecules/Navbar';
 import { useNavigate } from 'react-router-dom';
+import BusInfoHeader from '../../organisms/BusInfoHeader';
 
 /**
  * 해당 페이지의 liked 유무를 받아와서 liked 상태를 변경해 렌더링
@@ -66,13 +67,21 @@ const BusInfo = () => {
 
   return (
     <StyledBusInfo>
-      <Navbar clickLogoHandler={clickLogoHandler} />
+      <BusInfoHeader
+        clickLogoHandler={clickLogoHandler}
+        clickBusNumHandler={clickBusNumHandler}
+        busNum={busNum}
+        liked={liked}
+        toggleLikeHandler={toggleLikeHandler}
+        toggleBusInfoModalHandler={toggleBusInfoModalHandler}
+      />
+      {/* <Navbar clickLogoHandler={clickLogoHandler} />
       <BusInfoNavigator busNum={busNum} clickHandler={clickBusNumHandler} />
       <BusInfoNavbar
         liked={liked}
         toggleLikeHandler={toggleLikeHandler}
         toggleBusInfoModalHandler={toggleBusInfoModalHandler}
-      />
+      /> */}
       <BusInfoBody
         currentStop={currentStop}
         busStops={busStops}
