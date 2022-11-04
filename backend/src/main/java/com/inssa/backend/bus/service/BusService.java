@@ -47,7 +47,7 @@ public class BusService {
         if (busLikeRepository.existsByMemberAndBusAndIsActiveFalse(member, bus)) {
             BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveFalse(member, bus)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
-            busLike.activateBusLike();
+            busLike.create();
             busLikeRepository.save(busLike);
             return;
         }
