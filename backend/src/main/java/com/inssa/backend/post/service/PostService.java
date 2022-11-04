@@ -5,9 +5,8 @@ import com.inssa.backend.common.exception.ForbiddenException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
-import com.inssa.backend.post.controller.dto.PostRequest;
-import com.inssa.backend.post.controller.dto.PostResponse;
-import com.inssa.backend.post.controller.dto.PostsResponse;
+import com.inssa.backend.member.domain.PostLikeRepository;
+import com.inssa.backend.post.controller.dto.*;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final PostLikeRepository postLikeRepository;
 
     public List<PostsResponse> getPosts() {
         return postRepository.findByIsActiveTrue()
@@ -50,8 +50,38 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public PostResponse getPost(Long postId) {
-        return null;
+    public PostResponse getPost(Long memberId, Long postId) {
+        Post post = findPost(postId);
+        return PostResponse.builder()
+                .title(post.getTitle())
+                .content(post.getContent())
+                .likeCount(post.getLikeCount())
+                .commentCount(post.getCommentCount())
+                .hasPostLike(postLikeRepository.existsByPostAndMemberAndActiveIsTrue(post, findMember(memberId)))
+                .isEditable(post.isEditableBy(memberId))
+                .files(post.getImages()
+                        .stream()
+                        .map(image -> FileResponse.builder()
+                                .url(image.getUrl())
+                                .build())
+                        .collect(Collectors.toList()))
+                .commentResponses(post.getComments()
+                        .stream()
+                        .map(comment -> CommentResponse.builder()
+                                .content(comment.getContent())
+                                .createdDate(comment.getCreatedDate())
+                                .isEditable(comment.isEditableBy(memberId))
+                                .reCommentResponses(comment.getReComments()
+                                        .stream()
+                                        .map(reComment -> ReCommentResponse.builder()
+                                                .content(reComment.getContent())
+                                                .createdDate(reComment.getCreatedDate())
+                                                .isEditable(reComment.isEditableBy(memberId))
+                                                .build())
+                                        .collect(Collectors.toList()))
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     public void createPost(Long memberId, PostRequest postRequest, List<MultipartFile> files) {
