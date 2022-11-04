@@ -57,7 +57,7 @@ public class PostService {
                 .content(post.getContent())
                 .likeCount(post.getLikeCount())
                 .commentCount(post.getCommentCount())
-                .hasPostLike(postLikeRepository.existsByPostAndMember(post, findMember(memberId)))
+                .hasPostLike(postLikeRepository.existsByPostAndMemberAndActiveIsTrue(post, findMember(memberId)))
                 .isEditable(post.isEditableBy(memberId))
                 .files(post.getImages()
                         .stream()
