@@ -49,7 +49,7 @@ public class BusService {
     }
 
     private Bus findBus(int number) {
-        return busRepository.findByNumber(number)
+        return busRepository.findByNumberAndIsActiveTrue(number)
                 .orElseThrow(() -> new BadRequestException(ErrorMessage.NOT_FOUND_BUS));
     }
 }
