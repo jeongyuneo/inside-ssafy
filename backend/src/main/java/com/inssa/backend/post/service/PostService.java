@@ -86,7 +86,7 @@ public class PostService {
     public void createPostLike(Long memberId, Long postId) {
         Member member = findMember(memberId);
         Post post = findPost(postId);
-        if (isExistingPostLike(member, post)) {
+        if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
             throw new ForbiddenException(ErrorMessage.EXISTING_POST_LIKE);
         }
         post.like(PostLike.builder()
@@ -107,10 +107,6 @@ public class PostService {
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
-    private boolean isExistingPostLike(Member member, Post post) {
-        return postLikeRepository.findByMemberAndPostAndIsActiveTrue(member, post).isPresent();
     }
 
     private void checkEditable(Long memberId, Post post) {
