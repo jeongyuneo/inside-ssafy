@@ -4,12 +4,20 @@ import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.controller.dto.BusResponse;
 import com.inssa.backend.bus.controller.dto.RouteImageResponse;
 import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.domain.Bus;
+import com.inssa.backend.bus.domain.BusRepository;
+import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.BadRequestException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class BusService {
+
+    private final BusRepository busRepository;
 
     public BusResponse getBus(int number) {
         return null;
@@ -26,7 +34,9 @@ public class BusService {
     }
 
     public RouteImageResponse getRouteImage(int number) {
-        return null;
+        return RouteImageResponse.builder()
+                .url(findBus(number).getImage().getUrl())
+                .build();
     }
 
     public List<RouteResponse> startBus(int number) {
@@ -34,5 +44,10 @@ public class BusService {
     }
 
     public void arriveAt(Long routeId) {
+    }
+
+    private Bus findBus(int number) {
+        return busRepository.findByNumber(number)
+                .orElseThrow(() -> new BadRequestException(ErrorMessage.NOT_FOUND_BUS));
     }
 }
