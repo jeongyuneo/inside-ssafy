@@ -9,7 +9,12 @@ import com.inssa.backend.bus.domain.BusRepository;
 import com.inssa.backend.bus.domain.Route;
 import com.inssa.backend.bus.domain.RouteRepository;
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.NotFoundException;
+import com.inssa.backend.member.domain.BusLike;
+import com.inssa.backend.member.domain.BusLikeRepository;
+import com.inssa.backend.member.domain.Member;
+import com.inssa.backend.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +30,34 @@ public class BusService {
 
     private final BusRepository busRepository;
     private final RouteRepository routeRepository;
+    private final BusLikeRepository busLikeRepository;
+    private final MemberRepository memberRepository;
 
     public BusResponse getBus(int number) {
         return null;
     }
 
     public void createBusLike(Long memberId, int number) {
+        Member member = findMember(memberId);
+        Bus bus = findBusByNumber(number);
+        if (busLikeRepository.existsByMemberAndBusAndIsActiveTrue(member, bus)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_BUS_LIKE);
+        }
+
+        if (busLikeRepository.existsByMemberAndBusAndIsActiveFalse(member, bus)) {
+            BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveFalse(member, bus)
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+            busLike.activateBusLike();
+            busLikeRepository.save(busLike);
+            return;
+        }
+
+        busLikeRepository.save(
+                BusLike.builder()
+                        .member(member)
+                        .bus(bus)
+                        .build()
+        );
     }
 
     public void deleteBusLike(Long memberId, int number) {
@@ -62,6 +89,11 @@ public class BusService {
         Route route = findRoute(routeId);
         route.update();
         routeRepository.save(route);
+    }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findByIdAndIsActiveTrue(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
     private Route findRoute(Long routeId) {
