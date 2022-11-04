@@ -13,4 +13,10 @@ export const StyledText = styled.div<PropTypes>`
     css`
       font-size: ${size}rem;
     `}
+
+  ${({ bold }) =>
+    bold &&
+    css`
+      font-weight: bold;
+    `}
 `;
