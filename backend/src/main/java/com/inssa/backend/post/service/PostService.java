@@ -1,6 +1,7 @@
 package com.inssa.backend.post.service;
 
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.ForbiddenException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.domain.Member;
@@ -89,11 +90,18 @@ public class PostService {
         if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
             throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
         }
-        post.like(PostLike.builder()
-                .member(member)
-                .post(post)
-                .build());
-        postRepository.save(post);
+        if (postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post).isPresent()) {
+            PostLike postLike = postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post)
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
+            postLike.addLike();
+            postLikeRepository.save(postLike);
+        } else {
+            post.addLike(PostLike.builder()
+                    .member(member)
+                    .post(post)
+                    .build());
+            postRepository.save(post);
+        }
     }
 
     public void deletePostLike(Long memberId, Long postId) {
