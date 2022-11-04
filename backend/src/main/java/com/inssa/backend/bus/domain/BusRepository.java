@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface BusRepository extends JpaRepository<Bus, Long> {
 
-    Optional<Bus> findByNumber(int number);
+    Optional<Bus> findByNumberAndIsActiveTrue(int number);
 }
