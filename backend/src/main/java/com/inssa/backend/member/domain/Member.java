@@ -56,8 +56,4 @@ public class Member extends BaseEntity {
     public boolean is(Long memberId) {
         return id.equals(memberId);
     }
-
-    public boolean isManager() {
-        return role.equals(Role.MANAGER);
-    }
 }
