@@ -4,12 +4,23 @@ import com.inssa.backend.bus.controller.dto.BusLikeResponse;
 import com.inssa.backend.bus.controller.dto.BusResponse;
 import com.inssa.backend.bus.controller.dto.RouteImageResponse;
 import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.domain.Bus;
+import com.inssa.backend.bus.domain.BusRepository;
+import com.inssa.backend.bus.domain.RouteRepository;
+import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class BusService {
+
+    private final BusRepository busRepository;
+    private final RouteRepository routeRepository;
 
     public BusResponse getBus(int number) {
         return null;
@@ -30,9 +41,21 @@ public class BusService {
     }
 
     public List<RouteResponse> startBus(int number) {
-        return null;
+        return routeRepository.findByBusOrderByOrderAsc(findBus(number))
+                .stream()
+                .map(route -> RouteResponse.builder()
+                        .routeId(route.getId())
+                        .name(route.getBusStop().getName())
+                        .address(route.getBusStop().getAddress())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public void arriveAt(Long routeId) {
+    }
+
+    private Bus findBus(int number) {
+        return busRepository.findByNumberAndIsActiveTrue(number)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
     }
 }
