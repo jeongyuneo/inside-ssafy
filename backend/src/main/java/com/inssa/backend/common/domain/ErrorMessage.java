@@ -9,6 +9,7 @@ public enum ErrorMessage {
 
     NOT_FOUND_MEMBER("해당 회원을 찾을 수 없습니다."),
     NOT_FOUND_POST("해당 게시글을 찾을 수 없습니다."),
+    NOT_FOUND_POST_LIKE("해당 게시글은 좋아요한 게시글이 아닙니다."),
     NOT_FOUND_COMMENT("해당 댓글을 찾을 수 없습니다."),
     NOT_FOUND_RECOMMENT("해당 대댓글을 찾을 수 없습니다."),
     NOT_FOUND_MENU("해당 식단을 찾을 수 없습니다."),
