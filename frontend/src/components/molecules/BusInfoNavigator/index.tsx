@@ -1,5 +1,6 @@
 import React from 'react';
-import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import Text from '../../atoms/Text';
 import {
   BusInfoNavigatorContainer,
   BusNumberContainer,
@@ -13,15 +14,17 @@ import { Proptypes } from './types';
  * @author jojo
  */
 const BusInfoNavigator = ({ busNum, clickHandler }: Proptypes) => {
+  const busNumText = busNum + '호차';
   return (
     <StyledBusInfoNavigator>
       <BusInfoNavigatorContainer>
-        <AiFillCaretLeft onClick={() => clickHandler('left')} color="#D1EBFA" />
-        <BusNumberContainer>{busNum}호차</BusNumberContainer>
-        <AiFillCaretRight
-          onClick={() => clickHandler('right')}
-          color="#D1EBFA"
-        />
+        <FaChevronLeft size={30} onClick={() => clickHandler('left')} />
+        <BusNumberContainer>
+          <Text size={2.5} bold>
+            {busNumText}
+          </Text>
+        </BusNumberContainer>
+        <FaChevronRight size={30} onClick={() => clickHandler('right')} />
       </BusInfoNavigatorContainer>
     </StyledBusInfoNavigator>
   );
