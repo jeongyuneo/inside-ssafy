@@ -53,6 +53,10 @@ public class Post extends BaseEntity {
         likeCount++;
     }
 
+    public void activatePostLike() {
+        likeCount++;
+    }
+
     public void addComment(Comment comment) {
         comments.add(comment);
         commentCount++;
