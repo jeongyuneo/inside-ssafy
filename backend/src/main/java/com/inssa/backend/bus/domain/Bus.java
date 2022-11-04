@@ -27,4 +27,8 @@ public class Bus extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "bus", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Route> routes = new ArrayList<>();
+
+    public void arriveAt(BusStop busStop) {
+        lastVisitedBusStop = busStop;
+    }
 }
