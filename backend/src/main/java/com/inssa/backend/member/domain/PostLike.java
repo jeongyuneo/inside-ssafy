@@ -29,6 +29,6 @@ public class PostLike extends BaseEntity {
     @Override
     public void delete() {
         super.delete();
-        post.dislike();
+        post.deletelike();
     }
 }
