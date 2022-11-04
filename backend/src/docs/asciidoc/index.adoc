@@ -143,6 +143,21 @@ include::{snippets}/login-fail/http-request.adoc[]
 .response
 include::{snippets}/login-fail/http-response.adoc[]
 
+==== 로그아웃
+===== 성공
+.request
+include::{snippets}/logout-success/http-request.adoc[]
+
+.response
+include::{snippets}/logout-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/logout-fail/http-request.adoc[]
+
+.response
+include::{snippets}/logout-fail/http-response.adoc[]
+
 === 메인페이지
 ==== 메인페이지 조회
 ===== 성공

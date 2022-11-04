@@ -59,6 +59,14 @@ public class JwtUtil {
         return false;
     }
 
+    public static void validateToken(String token) {
+        try {
+            getAllClaims(getActualToken(token));
+        } catch (ExpiredJwtException exception) {
+            throw new UnAuthorizedException(ErrorMessage.EXPIRED_TOKEN);
+        }
+    }
+
     private static String createToken(Claims claims, long expireTime) {
         return Jwts.builder()
                 .setSubject(JWT_HEADER)

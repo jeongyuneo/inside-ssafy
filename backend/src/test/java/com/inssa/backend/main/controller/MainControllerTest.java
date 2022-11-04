@@ -15,8 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
@@ -44,15 +42,6 @@ public class MainControllerTest extends ApiDocument {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
-    private static final String COOKIE = ResponseCookie.from("refreshToken", JwtUtil.generateToken(ID, Role.GENERAL))
-            .httpOnly(true)
-            .secure(true)
-            .sameSite("None")
-            .path("/")
-            .maxAge(60 * 60 * 24 * 14)
-            .domain("inside-ssafy.com")
-            .build()
-            .toString();
 
     @MockBean
     private MainService mainService;
@@ -100,8 +89,7 @@ public class MainControllerTest extends ApiDocument {
     private ResultActions 메인페이지_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 메인페이지_조회_성공(ResultActions resultActions) throws Exception {
