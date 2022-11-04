@@ -29,8 +29,8 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostResponse> getPost(@PathVariable Long postId) {
-        return ResponseEntity.ok().body(postService.getPost(postId));
+    public ResponseEntity<PostResponse> getPost(@RequestHeader("Authorization") String token, @PathVariable Long postId) {
+        return ResponseEntity.ok().body(postService.getPost(4L, postId));
     }
 
     @PostMapping
