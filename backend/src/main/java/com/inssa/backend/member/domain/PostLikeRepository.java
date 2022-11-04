@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
-    Optional<PostLike> findByMemberAndPostAndIsActiveTrue(Member member, Post post);
+    boolean existsByMemberAndPostAndIsActiveTrue(Member member, Post post);
 }
