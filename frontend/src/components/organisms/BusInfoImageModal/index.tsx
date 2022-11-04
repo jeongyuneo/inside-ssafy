@@ -1,7 +1,7 @@
 import React from 'react';
 import { ModalBackground, StyledBusInfoImageModal } from './styles';
 import { IoMdClose } from 'react-icons/io';
-import Image from '../../../atoms/Image';
+import Image from '../../atoms/Image';
 import { PropTypes } from './types';
 
 /**
