@@ -14,6 +14,7 @@ public enum ErrorMessage {
     NOT_FOUND_RECOMMENT("해당 대댓글을 찾을 수 없습니다."),
     NOT_FOUND_MENU("해당 식단을 찾을 수 없습니다."),
     NOT_FOUND_BUS("해당 버스를 찾을 수 없습니다."),
+    NOT_FOUND_BUS_LIKE("해당 버스 즐겨찾기를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE_IMAGE("해당 노선 이미지를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE("해당 경로를 찾을 수 없습니다."),
     NOT_FOUND_AUTHORITY("해당 권한을 찾을 수 없습니다."),
