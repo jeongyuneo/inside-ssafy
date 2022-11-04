@@ -28,17 +28,17 @@ public class ReComment extends BaseEntity {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
+    @Override
+    public void delete() {
+        super.delete();
+        comment.deleteReComment();
+    }
+
     public boolean isEditableBy(Long memberId) {
         return member.is(memberId);
     }
 
     public void update(String content) {
         this.content = content;
-    }
-
-    @Override
-    public void delete() {
-        super.delete();
-        comment.deleteReComment();
     }
 }

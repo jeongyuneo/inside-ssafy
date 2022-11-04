@@ -1,6 +1,7 @@
 package com.inssa.backend.bus.domain;
 
 import com.inssa.backend.common.domain.BaseEntity;
+import com.inssa.backend.common.domain.Image;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -21,10 +22,18 @@ public class Bus extends BaseEntity {
     private int number;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
+    private Image image;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "last_visited_bus_stop_id")
     private BusStop lastVisitedBusStop;
 
     @Builder.Default
     @OneToMany(mappedBy = "bus", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Route> routes = new ArrayList<>();
+
+    public void arriveAt(BusStop busStop) {
+        lastVisitedBusStop = busStop;
+    }
 }
