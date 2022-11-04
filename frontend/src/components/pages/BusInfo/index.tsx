@@ -5,6 +5,8 @@ import BusInfoNavigator from '../../molecules/BusInfoNavigator';
 import BusLine from '../../molecules/BusLine';
 import BusInfoBody from '../../organisms/BusInfoBody';
 import { StyledBusInfo } from './styles';
+import Navbar from '../../molecules/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * 해당 페이지의 liked 유무를 받아와서 liked 상태를 변경해 렌더링
@@ -16,6 +18,7 @@ const BusInfo = () => {
   const [currentStop, setCurrentStop] = useState(4);
   const [liked, setLiked] = useState(false);
   const [openedBusInfoModal, setOpenedBusInfoModal] = useState(false);
+  const navigate = useNavigate();
 
   const clickBusNumHandler = (direction: string) => {
     if (
@@ -32,6 +35,10 @@ const BusInfo = () => {
 
   const clickRefreshHandler = () => {
     console.log('refresh');
+  };
+
+  const clickLogoHandler = () => {
+    navigate('/');
   };
 
   const toggleBusInfoModalHandler = () => {
@@ -60,6 +67,7 @@ const BusInfo = () => {
 
   return (
     <StyledBusInfo>
+      <Navbar clickLogoHandler={clickLogoHandler} />
       <BusInfoNavigator busNum={busNum} clickHandler={clickBusNumHandler} />
       <BusInfoNavbar
         liked={liked}
