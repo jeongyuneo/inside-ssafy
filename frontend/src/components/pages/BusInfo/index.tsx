@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import BusInfoImageModal from '../../organisms/BusInfoBody/BusInfoImageModal';
+import BusInfoImageModal from '../../organisms/BusInfoImageModal';
 import BusInfoNavbar from '../../molecules/BusInfoNavbar';
 import BusInfoNavigator from '../../molecules/BusInfoNavigator';
-import BusLine from '../../molecules/BusLine';
 import BusInfoBody from '../../organisms/BusInfoBody';
 import { StyledBusInfo } from './styles';
 import Navbar from '../../molecules/Navbar';
