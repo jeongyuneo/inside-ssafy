@@ -79,8 +79,8 @@ const Login = () => {
       <LoginPageWrapper>
         <LogoInputsWrapper>
           <Image
-            width={20}
-            height={20}
+            width="20rem"
+            height="20rem"
             src="/images/iNSSA_logo.png"
             alt="logo"
           />

@@ -1,5 +1,4 @@
 export interface PropTypes {
-  liked: boolean;
-  toggleLikeHandler: () => void;
+  busInfoImage: string;
   toggleBusInfoModalHandler: () => void;
 }

@@ -16,11 +16,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.test.web.servlet.ResultActions;
 
+import javax.servlet.http.Cookie;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -50,15 +49,8 @@ public class MemberControllerTest extends ApiDocument {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
-    private static final String COOKIE = ResponseCookie.from("refreshToken", JwtUtil.generateToken(ID, Role.GENERAL))
-            .httpOnly(true)
-            .secure(true)
-            .sameSite("None")
-            .path("/")
-            .maxAge(60 * 60 * 24 * 14)
-            .domain("inside-ssafy.com")
-            .build()
-            .toString();
+    private static final String EXPIRED_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwicm9sZSI6IkdFTkVSQUwiLCJpYXQiOjE2Njc0NzU1ODcsImV4cCI6MTY2NzQ3OTE4N30.Dv47oX_5CqSIs_i6LRyndLfge-MXnrB2ny9z57w-M1g";
+    private static final Cookie COOKIE = new Cookie("refreshToken", EXPIRED_ACCESS_TOKEN);
 
     @MockBean
     private MemberService memberService;
@@ -72,6 +64,11 @@ public class MemberControllerTest extends ApiDocument {
 
     @BeforeEach
     void setUp() {
+        COOKIE.setHttpOnly(true);
+        COOKIE.setSecure(true);
+        COOKIE.setPath("/");
+        COOKIE.setMaxAge(0);
+        COOKIE.setDomain("inside-ssafy.com");
         PostsResponse postsResponse = PostsResponse.builder()
                 .title(TITLE)
                 .likeCount(LIKE_COUNT)
@@ -262,6 +259,26 @@ public class MemberControllerTest extends ApiDocument {
         로그인_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
+    @DisplayName("로그아웃 성공")
+    @Test
+    void logout_success() throws Exception {
+        // given
+        // when
+        ResultActions resultActions = 로그아웃_요청();
+        // then
+        로그아웃_성공(resultActions);
+    }
+
+    @DisplayName("로그아웃 실패")
+    @Test
+    void logout_fail() throws Exception {
+        // given
+        // when
+        ResultActions resultActions = 잘못된_로그아웃_요청();
+        // then
+        로그아웃_실패(resultActions, new Message(ErrorMessage.EXPIRED_TOKEN));
+    }
+
     private ResultActions 인증코드_전송_요청(String email) throws Exception {
         return mockMvc.perform(post("/api/v1/members/join/token/request")
                 .contextPath("/api/v1")
@@ -306,7 +323,6 @@ public class MemberControllerTest extends ApiDocument {
                 .contextPath("/api/v1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .content(toJson(memberRequest)));
     }
 
@@ -326,8 +342,7 @@ public class MemberControllerTest extends ApiDocument {
     private ResultActions 회원조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/members")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 회원조회_성공(ResultActions resultActions) throws Exception {
@@ -348,7 +363,6 @@ public class MemberControllerTest extends ApiDocument {
         return mockMvc.perform(patch("/api/v1/members")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(memberUpdateRequest)));
     }
@@ -369,8 +383,7 @@ public class MemberControllerTest extends ApiDocument {
     private ResultActions 회원탈퇴_요청() throws Exception {
         return mockMvc.perform(delete("/api/v1/members")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 회원탈퇴_성공(ResultActions resultActions) throws Exception {
@@ -390,7 +403,6 @@ public class MemberControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/members/login")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(loginRequest)));
     }
@@ -407,5 +419,33 @@ public class MemberControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("login-fail"));
+    }
+
+    private ResultActions 로그아웃_요청() throws Exception {
+        return mockMvc.perform(post("/api/v1/members/logout")
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(loginRequest)));
+    }
+
+    private void 로그아웃_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("logout-success"));
+    }
+
+    private ResultActions 잘못된_로그아웃_요청() throws Exception {
+        return mockMvc.perform(post("/api/v1/members/logout")
+                .contextPath("/api/v1")
+                .cookie(COOKIE)
+                .header(AUTHORIZATION, BEARER + EXPIRED_ACCESS_TOKEN));
+    }
+
+    private void 로그아웃_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isUnauthorized())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("logout-fail"));
     }
 }

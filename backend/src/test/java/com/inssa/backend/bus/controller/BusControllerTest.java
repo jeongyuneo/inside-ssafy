@@ -16,8 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
@@ -50,15 +48,6 @@ public class BusControllerTest extends ApiDocument {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
-    private static final String COOKIE = ResponseCookie.from("refreshToken", JwtUtil.generateToken(ID, Role.GENERAL))
-            .httpOnly(true)
-            .secure(true)
-            .sameSite("None")
-            .path("/")
-            .maxAge(60 * 60 * 24 * 14)
-            .domain("inside-ssafy.com")
-            .build()
-            .toString();
 
     @MockBean
     private BusService busService;
@@ -257,7 +246,6 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(get("/api/v1/buses")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
@@ -279,7 +267,6 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/buses/like")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
@@ -300,7 +287,6 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(delete("/api/v1/buses/like")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
@@ -320,8 +306,7 @@ public class BusControllerTest extends ApiDocument {
     private ResultActions 버스_즐겨찾기_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/buses/like")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 버스_즐겨찾기_목록_조회_성공(ResultActions resultActions) throws Exception {
@@ -342,7 +327,6 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(get("/api/v1/buses/route/image")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .header(HttpHeaders.SET_COOKIE, COOKIE)
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
