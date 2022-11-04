@@ -87,7 +87,7 @@ public class PostService {
         Member member = findMember(memberId);
         Post post = findPost(postId);
         if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
-            throw new ForbiddenException(ErrorMessage.EXISTING_POST_LIKE);
+            throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
         }
         post.like(PostLike.builder()
                 .member(member)
