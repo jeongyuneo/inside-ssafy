@@ -1,15 +1,16 @@
-import axios from 'axios';
-import { AccountValueTypes, SuccessTokenType } from './types';
+import axios, { AxiosResponse } from 'axios';
+import { AccountValueTypes, failtoJoin } from './types';
 
 export const requestEmailToken = async ({ email }: AccountValueTypes) => {
   try {
-    const { data }: { data: SuccessTokenType } = await axios({
+    const { status }: { status: number } = await axios({
       method: 'POST',
       url: '/api/v1/members/join/token/request?email=' + email,
     });
-    console.log('=== data ===');
-    console.log(data);
-    return true;
+    if (status === 200) {
+      return true;
+    }
+    return false;
   } catch (e) {
     console.log('error');
     console.log(e);
@@ -22,17 +23,18 @@ export const validateEmailToken = async ({
   email,
 }: AccountValueTypes) => {
   try {
-    const { data }: { data: SuccessTokenType } = await axios({
-      method: '',
-      url: '/api/vi/members/join/token/validation',
+    const { status }: { status: number } = await axios({
+      method: 'POST',
+      url: '/api/v1/members/join/token/validation',
       data: {
         email,
         validationToken,
       },
     });
-    console.log('=== data ===');
-    console.log(data);
-    return true;
+    if (status === 200) {
+      return true;
+    }
+    return false;
   } catch (e) {
     console.log('error!');
     console.log(e);
@@ -47,19 +49,22 @@ export const joinRequest = async ({
   studentNumber,
 }: AccountValueTypes) => {
   try {
-    const { data }: { data: SuccessTokenType } = await axios({
-      method: '',
-      url: '/api/vi/members/join/token/validation',
+    const { status, data }: { status: number; data: failtoJoin } = await axios({
+      method: 'POST',
+      url: '/api/v1/members',
       data: {
         email,
-        name,
         password,
+        name,
         studentNumber,
       },
     });
-    console.log('=== data ===');
-    console.log(data);
-    return true;
+    console.log(status);
+    console.log(data.message);
+    if (status === 200) {
+      return true;
+    }
+    return false;
   } catch (e) {
     console.log('error!');
     console.log(e);

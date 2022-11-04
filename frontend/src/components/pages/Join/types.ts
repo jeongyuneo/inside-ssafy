@@ -9,7 +9,6 @@ export interface AccountValueTypes {
   password_again: string;
 }
 
-export interface SuccessTokenType {
-  accessToken: string;
-  refreshToken: string;
+export interface failtoJoin {
+  message: string;
 }

@@ -1,3 +1,4 @@
+import { isDisabled } from '@testing-library/user-event/dist/utils';
 import styled, { css } from 'styled-components';
 import { PropTypes } from './types';
 
@@ -24,7 +25,8 @@ export const StyledInput = styled.input<PropTypes>`
     color: ${textColor || DEFAULT_TEXTCOLOR};
   `}
   
-  background-color: ${({ backgroundColor }) => backgroundColor || '#D1EBFA'};
+  background-color: ${({ backgroundColor, disabled }) =>
+    disabled ? '#C0DAE9' : backgroundColor || '#D1EBFA'};
   border: none;
   outline: none;
   padding-left: 0.5rem;

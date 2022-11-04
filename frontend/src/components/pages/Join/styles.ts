@@ -11,6 +11,14 @@ export const JoinPageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80%;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+`;
+
+export const InputLabelWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 1rem;
 `;
 
@@ -35,4 +43,8 @@ export const TextWrap = styled.div`
   position: absolute;
   left: 50%;
   margin-top: 2.3rem;
+`;
+
+export const BlankDiv = styled.div`
+  height: 3rem;
 `;

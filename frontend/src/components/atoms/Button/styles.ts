@@ -20,7 +20,7 @@ export const StyledButton = styled.button<PropTypes>`
       font-size: ${fontSize}rem;
     `}
 
-  ${({ isText, textColor, backgroundColor }) =>
+  ${({ isText, textColor, backgroundColor, disabled }) =>
     isText
       ? css`
           color: black;
@@ -29,6 +29,7 @@ export const StyledButton = styled.button<PropTypes>`
       : css`
           color: ${textColor || 'white'};
           background-color: ${backgroundColor || '#01A7EB'};
+          filter: ${disabled ? 'brightness(80%)' : ''};
 
           &:hover {
             filter: brightness(80%);
