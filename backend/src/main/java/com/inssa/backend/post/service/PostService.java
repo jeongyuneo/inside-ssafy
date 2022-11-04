@@ -1,16 +1,19 @@
 package com.inssa.backend.post.service;
 
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.ForbiddenException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
+import com.inssa.backend.member.domain.PostLike;
 import com.inssa.backend.member.domain.PostLikeRepository;
 import com.inssa.backend.post.controller.dto.*;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -108,7 +111,27 @@ public class PostService {
         postRepository.save(post);
     }
 
+    @Transactional
     public void createPostLike(Long memberId, Long postId) {
+        Member member = findMember(memberId);
+        Post post = findPost(postId);
+        if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
+        }
+
+        if (postLikeRepository.existsByMemberAndPostAndIsActiveFalse(member, post)) {
+            PostLike postLike = postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post)
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
+            postLike.activatePostLike();
+            postLikeRepository.save(postLike);
+            return;
+        }
+
+        post.addLike(PostLike.builder()
+                .member(member)
+                .post(post)
+                .build());
+        postRepository.save(post);
     }
 
     public void deletePostLike(Long memberId, Long postId) {

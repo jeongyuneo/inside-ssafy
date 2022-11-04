@@ -42,11 +42,20 @@ public class Post extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Comment> comments = new ArrayList<>();
+    private List<PostLike> postLikes = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<PostLike> postLikes = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
+
+    public void addLike(PostLike postLike) {
+        postLikes.add(postLike);
+        likeCount++;
+    }
+
+    public void addLike() {
+        likeCount++;
+    }
 
     public void addComment(Comment comment) {
         comments.add(comment);
