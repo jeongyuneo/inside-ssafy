@@ -25,4 +25,9 @@ public class PostLike extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public void addLike() {
+        isActive = true;
+        post.activatePostLike();
+    }
 }
