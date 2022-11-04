@@ -160,7 +160,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void get_post_success() throws Exception {
         // given
-        willReturn(postResponse).given(postService).getPost(anyLong());
+        willReturn(postResponse).given(postService).getPost(anyLong(), anyLong());
         // when
         ResultActions resultActions = 익명_게시판_상세_조회_요청(ID);
         // then
@@ -171,7 +171,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void get_post_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).getPost(anyLong());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).getPost(anyLong(), anyLong());
         // when
         ResultActions resultActions = 익명_게시판_상세_조회_요청(ID);
         // then
@@ -329,7 +329,8 @@ public class PostControllerTest extends ApiDocument {
 
     private ResultActions 익명_게시판_상세_조회_요청(Long postId) throws Exception {
         return mockMvc.perform(get("/api/v1/posts/" + postId)
-                .contextPath("/api/v1"));
+                .contextPath("/api/v1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
     }
 
     private void 익명_게시판_상세_조회_성공(ResultActions resultActions) throws Exception {
