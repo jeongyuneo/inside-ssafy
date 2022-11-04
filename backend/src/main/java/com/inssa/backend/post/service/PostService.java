@@ -90,6 +90,7 @@ public class PostService {
         if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
             throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
         }
+
         if (postLikeRepository.existsByMemberAndPostAndIsActiveFalse(member, post)) {
             PostLike postLike = postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
@@ -97,6 +98,7 @@ public class PostService {
             postLikeRepository.save(postLike);
             return;
         }
+
         post.addLike(PostLike.builder()
                 .member(member)
                 .post(post)
