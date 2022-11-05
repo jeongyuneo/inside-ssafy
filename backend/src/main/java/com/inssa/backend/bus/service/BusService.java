@@ -10,6 +10,10 @@ import com.inssa.backend.bus.domain.Route;
 import com.inssa.backend.bus.domain.RouteRepository;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.exception.NotFoundException;
+import com.inssa.backend.member.domain.BusLike;
+import com.inssa.backend.member.domain.BusLikeRepository;
+import com.inssa.backend.member.domain.Member;
+import com.inssa.backend.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +29,8 @@ public class BusService {
 
     private final BusRepository busRepository;
     private final RouteRepository routeRepository;
+    private final BusLikeRepository busLikeRepository;
+    private final MemberRepository memberRepository;
 
     public BusResponse getBus(int number) {
         return null;
@@ -34,6 +40,10 @@ public class BusService {
     }
 
     public void deleteBusLike(Long memberId, int number) {
+        BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveTrue(findMember(memberId), findBusByNumber(number))
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+        busLike.delete();
+        busLikeRepository.save(busLike);
     }
 
     public List<BusLikeResponse> getBusLikes(Long memberId) {
@@ -62,6 +72,11 @@ public class BusService {
         Route route = findRoute(routeId);
         route.update();
         routeRepository.save(route);
+    }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findByIdAndIsActiveTrue(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
     private Route findRoute(Long routeId) {
