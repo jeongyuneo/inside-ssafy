@@ -82,7 +82,9 @@ public class MemberService {
     }
 
     public void deleteMember(Long memberId) {
-
+        Member member = findMember(memberId);
+        member.delete();
+        memberRepository.save(member);
     }
 
     public TokenResponse login(LoginRequest loginRequest) {
