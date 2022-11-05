@@ -76,9 +76,13 @@ public class MemberService {
     }
 
     public void updatePassword(Long memberId, PasswordUpdateRequest memberUpdateRequest) {
+        Member member = findMember(memberId);
+        member.validatePassword(passwordEncoder, memberUpdateRequest.getPassword());
+        member.updatePassword(passwordEncoder.encode(memberUpdateRequest.getNewPassword()));
     }
 
     public void deleteMember(Long memberId) {
+
     }
 
     public TokenResponse login(LoginRequest loginRequest) {
