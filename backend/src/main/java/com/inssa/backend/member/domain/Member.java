@@ -60,4 +60,8 @@ public class Member extends BaseEntity {
     public boolean isManager() {
         return role.equals(Role.MANAGER);
     }
+
+    public void updatePassword(String password) {
+        this.password = password;
+    }
 }
