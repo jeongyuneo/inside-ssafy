@@ -36,11 +36,11 @@ public class BusService {
 
     public BusResponse getBus(int number) {
         Bus bus = findBusByNumber(number);
-        BusStop lastVisitedBusStop = bus.getLastVisitedBusStop();
-        if (bus.getLastVisitedBusStop() == null) {
+        Route lastVisited = bus.getLastVisited();
+        if (bus.getLastVisited() == null) {
             return getBusResponse(bus, NO_VISITED_BUS_STOP, number == TOTAL_BUS_NUMBER);
         }
-        return getBusResponse(bus, lastVisitedBusStop.getName(), number == TOTAL_BUS_NUMBER);
+        return getBusResponse(bus, lastVisited.getBusStop().getName(), number == TOTAL_BUS_NUMBER);
     }
 
     public void createBusLike(Long memberId, int number) {
