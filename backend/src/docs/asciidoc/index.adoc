@@ -38,6 +38,15 @@ status code: 500
 
 == 기능
 === 회원관리
+
+==== 이메일 중복 확인
+===== 성공
+.request
+include::{snippets}/check-email-success/http-request.adoc[]
+
+.response
+include::{snippets}/check-email-success/http-response.adoc[]
+
 ==== 인증토큰 전송
 ===== 성공
 .request
