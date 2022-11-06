@@ -3,7 +3,6 @@ package com.inssa.backend.member.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
-import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.common.exception.UnAuthorizedException;
 import com.inssa.backend.member.controller.dto.*;
@@ -125,11 +124,11 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void check_email_fail() throws Exception {
         // given
-        willThrow(new DuplicationException(ErrorMessage.EXISTING_EMAIL)).given(memberService).checkEmail(any(EmailRequest.class));
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_CHECK_EMAIL.getMessage())).given(memberService).checkEmail(any(EmailRequest.class));
         // when
         ResultActions resultActions = 이메일_중복_확인_요청(emailRequest);
         // then
-        이메일_중복_확인_실패(resultActions, new Message(ErrorMessage.EXISTING_EMAIL));
+        이메일_중복_확인_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CHECK_EMAIL));
     }
 
     @DisplayName("인증코드 전송 성공")
@@ -320,7 +319,7 @@ public class MemberControllerTest extends ApiDocument {
     }
 
     private void 이메일_중복_확인_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isBadRequest())
+        resultActions.andExpect(status().isInternalServerError())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("check-email-fail"));
