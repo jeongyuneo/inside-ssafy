@@ -3,6 +3,11 @@ import { GrRefresh } from 'react-icons/gr';
 import { StyledRefreshButton } from './styles';
 import { PropTypes } from './types';
 
+/**
+ * 원 모양의 새로고침 버튼 컴포넌트
+ *
+ * @author jojo
+ */
 const RefreshButton = ({
   wrapperSize,
   buttonSize,
