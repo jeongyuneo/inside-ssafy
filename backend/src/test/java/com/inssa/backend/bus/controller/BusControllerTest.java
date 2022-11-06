@@ -42,8 +42,7 @@ public class BusControllerTest extends ApiDocument {
     private static final String NEXT_BUS_STOP = "한밭대";
     private static final String URL = "https://j7b304.p.ssafy.io/api/image/1";
     private static final String NAME = "삼성화재유성연수원";
-    private static final double LATITUDE = 36.355327727196915;
-    private static final double LONGITUDE = 127.29848167977559;
+    private static final String ADDRESS = "대전광역시 유성구 덕명동 124";
     private static final Long ID = 1L;
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
@@ -67,8 +66,7 @@ public class BusControllerTest extends ApiDocument {
         RouteResponse routeResponse = RouteResponse.builder()
                 .routeId(ID)
                 .name(NAME)
-                .latitude(LATITUDE)
-                .longitude(LONGITUDE)
+                .address(ADDRESS)
                 .build();
         busResponse = BusResponse.builder()
                 .isLast(IS_LAST)

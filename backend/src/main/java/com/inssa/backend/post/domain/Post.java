@@ -3,6 +3,7 @@ package com.inssa.backend.post.domain;
 import com.inssa.backend.common.domain.BaseEntity;
 import com.inssa.backend.common.domain.Image;
 import com.inssa.backend.member.domain.Member;
+import com.inssa.backend.member.domain.PostLike;
 import com.inssa.backend.util.ImageUtil;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -41,7 +42,24 @@ public class Post extends BaseEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<PostLike> postLikes = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments = new ArrayList<>();
+
+    public void addLike(PostLike postLike) {
+        postLikes.add(postLike);
+        likeCount++;
+    }
+
+    public void addLike() {
+        likeCount++;
+    }
+
+    public void deleteLike() {
+        likeCount--;
+    }
 
     public void addComment(Comment comment) {
         comments.add(comment);

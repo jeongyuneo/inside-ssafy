@@ -27,4 +27,8 @@ public class Route extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_stop_id")
     private BusStop busStop;
+
+    public void update() {
+        bus.arriveAt(busStop);
+    }
 }
