@@ -27,13 +27,13 @@ public class Bus extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "last_visited_bus_stop_id")
-    private BusStop lastVisitedBusStop;
+    private Route lastVisited;
 
     @Builder.Default
     @OneToMany(mappedBy = "bus", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Route> routes = new ArrayList<>();
 
-    public void arriveAt(BusStop busStop) {
-        lastVisitedBusStop = busStop;
+    public void arriveAt(Route route) {
+        lastVisited = route;
     }
 }
