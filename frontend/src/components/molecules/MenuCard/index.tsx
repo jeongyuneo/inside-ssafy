@@ -10,18 +10,10 @@ import {
 import { PropTypes } from './types';
 
 /**
- * Text 컴포넌트의 나열
- * 요일이나 제목은 title,
- * 메뉴는 menus,
- * 바나나와 요구르트 등 후식으로 나오는 메뉴는 sub_menus에 표시한다.
- *
- * fontSize 와 backgroundColor는 조절이 가능하다.
- *
+ * Text 컴포넌트를 나열해 식단을 표시
  * width 가 100%이기 때문에 사용시 Wrap과 padding을 사용해 조절할 것
- *
  * @author jun
  */
-
 const MenuCard = ({
   title,
   menus,
