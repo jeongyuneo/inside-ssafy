@@ -6,6 +6,7 @@ import com.inssa.backend.bus.controller.dto.RouteImageResponse;
 import com.inssa.backend.bus.controller.dto.RouteResponse;
 import com.inssa.backend.bus.domain.*;
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.BadRequestException;
 import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.domain.BusLike;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,7 +75,28 @@ public class BusService {
     }
 
     public List<BusLikeResponse> getBusLikes(Long memberId) {
-        return null;
+        return findMember(memberId).getBusLikes()
+                .stream()
+                .sorted(Comparator.comparing(current -> current.getBus().getNumber()))
+                .map(busLike -> {
+                    Bus bus = busLike.getBus();
+                    Route lastVisited = bus.getLastVisited();
+                    if (lastVisited == null) {
+                        throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_BUS);
+                    }
+                    String lastVisitedBusStop = lastVisited.getBusStop().getName();
+                    List<Route> routes = bus.getRoutes();
+                    Route route = routes.stream()
+                            .filter(current -> current.getBusStop().getName().equals(lastVisitedBusStop))
+                            .findFirst()
+                            .orElseThrow(() -> new BadRequestException(ErrorMessage.NOT_FOUND_ROUTE));
+                    return BusLikeResponse.builder()
+                            .number(bus.getNumber())
+                            .previousBusStop(lastVisitedBusStop)
+                            .nextBusStop(routes.get(route.getOrder()).getBusStop().getName())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 
     public RouteImageResponse getRouteImage(int number) {
