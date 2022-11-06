@@ -9,7 +9,8 @@ export const validateInput = ({
   password_again,
 }: AccountValueTypes): boolean => {
   console.log(name + ' , ' + studentNumber + ' , ' + password);
-  const NAME_PATTERN = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  //const NAME_PATTERN = /[ㄱ-ㅎ]|[ㅏ-ㅣ]|[가-힣]/;
+  const ASCII_PATTERN = /[ -~]/;
 
   const STUDENT_NUMBER_PATTERN = /[0-9]/;
 
@@ -17,7 +18,7 @@ export const validateInput = ({
 
   const PASSWORD_AVOID_PATTERN = /['\'"\\']/;
 
-  if (!NAME_PATTERN.test(name)) {
+  if (ASCII_PATTERN.test(name)) {
     alert('이름은 한글만 허용됩니다.');
     return false;
   }
@@ -28,7 +29,7 @@ export const validateInput = ({
   }
 
   if (email !== email_again) {
-    alert('인증받은 이메일과 현재 입력된 이메일이 일치하지 않습니다');
+    alert('이메일 인증이 필요합니다.');
     return false;
   }
 
