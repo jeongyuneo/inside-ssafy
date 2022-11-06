@@ -11,5 +11,7 @@ public interface BusLikeRepository extends JpaRepository<BusLike, Long> {
 
     boolean existsByMemberAndBusAndIsActiveFalse(Member member, Bus bus);
 
+    Optional<BusLike> findByMemberAndBusAndIsActiveTrue(Member member, Bus bus);
+
     Optional<BusLike> findByMemberAndBusAndIsActiveFalse(Member member, Bus bus);
 }

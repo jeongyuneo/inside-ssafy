@@ -66,6 +66,10 @@ public class BusService {
     }
 
     public void deleteBusLike(Long memberId, int number) {
+        BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveTrue(findMember(memberId), findBusByNumber(number))
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+        busLike.delete();
+        busLikeRepository.save(busLike);
     }
 
     public List<BusLikeResponse> getBusLikes(Long memberId) {
