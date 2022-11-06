@@ -1,8 +1,8 @@
 import React from 'react';
 import BusLine from '../../molecules/BusLine';
-import { RefreshButton, StyledBusInfoBody } from './styles';
-import { GrRefresh } from 'react-icons/gr';
+import { RefreshButtonWrapper, StyledBusInfoBody } from './styles';
 import { PropTypes } from './types';
+import RefreshButton from '../../atoms/RefreshButton';
 
 /**
  * BusLine과 새로고침 버튼을 렌더링
@@ -13,9 +13,13 @@ const BusInfoBody = ({ clickRefreshHandler, ...rest }: PropTypes) => {
   return (
     <StyledBusInfoBody>
       <BusLine {...rest} />
-      <RefreshButton>
-        <GrRefresh size={20} onClick={clickRefreshHandler} />
-      </RefreshButton>
+      <RefreshButtonWrapper>
+        <RefreshButton
+          wrapperSize={2}
+          buttonSize={20}
+          clickRefreshHandler={clickRefreshHandler}
+        />
+      </RefreshButtonWrapper>
     </StyledBusInfoBody>
   );
 };
