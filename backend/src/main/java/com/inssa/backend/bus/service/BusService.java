@@ -82,9 +82,7 @@ public class BusService {
                 .map(busLike -> {
                     Bus bus = busLike.getBus();
                     Route lastVisited = bus.getLastVisited();
-                    if (lastVisited == null) {
-                        throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_BUS);
-                    }
+                    validateBusAvailability(lastVisited);
                     String lastVisitedBusStop = lastVisited.getBusStop().getName();
                     List<Route> routes = bus.getRoutes();
                     Route route = routes.stream()
@@ -149,5 +147,11 @@ public class BusService {
     private Bus findBusByNumber(int number) {
         return busRepository.findByNumberAndIsActiveTrue(number)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
+    }
+
+    private void validateBusAvailability(Route lastVisited) {
+        if (lastVisited == null) {
+            throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_BUS);
+        }
     }
 }
