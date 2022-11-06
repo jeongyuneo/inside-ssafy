@@ -1,6 +1,7 @@
 package com.inssa.backend.member.service;
 
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.controller.dto.*;
 import com.inssa.backend.member.domain.Member;
@@ -31,6 +32,12 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+
+    public void checkEmail(EmailRequest emailRequest) {
+        if (memberRepository.existsByEmail(emailRequest.getEmail())) {
+            throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
+        }
+    }
 
     public void sendValidationToken(String email) {
         String validationToken = MailUtil.createValidationToken();
