@@ -14,7 +14,7 @@ const Main = ({ navigation }) => {
 
   const getBusLine = async (busNumber) => {
     try {
-      let res = await fetch(
+      const res = await fetch(
         `https://inside-ssafy.com/api/v1/buses/start?number=${busNumber}`,
         {
           method: "GET",
@@ -23,8 +23,7 @@ const Main = ({ navigation }) => {
             "Content-Type": "application/json",
           },
         }
-      );
-      res = await res.json();
+      ).then((res) => res.json());
       return res;
     } catch (e) {
       console.error(e);
