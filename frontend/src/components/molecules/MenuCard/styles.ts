@@ -5,7 +5,7 @@ export const StyledMenuCard = styled.div<PropTypes>`
   background-color: ${({ backgroundColor }) => backgroundColor || 'white'};
   display: flex;
   flex-direction: column;
-  text-align-last: center;
+  align-items: center;
   width: 100%;
   border-radius: 1rem;
   border: 1px solid black;
@@ -14,20 +14,20 @@ export const StyledMenuCard = styled.div<PropTypes>`
 `;
 
 export const StyledTitle = styled.div`
-  gap: 0.2rem;
   display: flex;
-  flex-direction: column;
 `;
 
 export const StyledMenu = styled.div`
-  gap: 0.2rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
 `;
 export const StyledSubMenu = styled.div`
-  gap: 0.2rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
 `;
 
 export const StyledHr = styled.hr`
