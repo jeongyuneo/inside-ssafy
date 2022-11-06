@@ -29,7 +29,7 @@ export const StyledButton = styled.button<PropTypes>`
       : css`
           color: ${textColor || 'white'};
           background-color: ${backgroundColor || '#01A7EB'};
-          filter: ${disabled ? 'brightness(80%)' : ''};
+          ${disabled && 'filter: brightness(80%)'};
 
           &:hover {
             filter: brightness(80%);

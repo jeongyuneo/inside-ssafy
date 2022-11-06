@@ -22,24 +22,24 @@ export const InputLabelWrapper = styled.div`
   gap: 1rem;
 `;
 
-export const StyledbuttonGroup = styled.div`
+export const StyledButtonGroup = styled.div`
   margin-top: 1rem;
   gap: 0.5rem;
   display: flex;
   flex-direction: column;
 `;
 
-export const StyledEmailWrap = styled.div`
+export const StyledEmailWrapper = styled.div`
   gap: 1rem;
   display: flex;
   flex-direction: row;
 `;
 
-export const ButtonWrap = styled.div`
+export const ButtonWrapper = styled.div`
   margin-top: 1.4rem;
 `;
 
-export const TextWrap = styled.div`
+export const TextWrapper = styled.div`
   position: absolute;
   left: 50%;
   margin-top: 2.3rem;

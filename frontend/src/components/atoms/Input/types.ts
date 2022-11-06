@@ -13,7 +13,6 @@ export interface PropTypes {
   id?: string;
   placeholder?: string;
   disabled?: boolean;
-  readonly?: boolean;
   borderRadius?: number;
   paddingLeft?: number;
   inputs?: AccountValueTypes | LoginInputsType;

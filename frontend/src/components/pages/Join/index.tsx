@@ -11,10 +11,10 @@ import {
 } from './requestEmail';
 import {
   StyledInputLabel,
-  StyledbuttonGroup,
-  StyledEmailWrap,
-  ButtonWrap,
-  TextWrap,
+  StyledButtonGroup,
+  StyledEmailWrapper,
+  ButtonWrapper,
+  TextWrapper,
   JoinPageWrapper,
   InputLabelWrapper,
   BlankDiv,
@@ -212,7 +212,7 @@ const Join = () => {
             labelFontSize={LABEL_FONT}
             changeHandler={changeInfo}
           />
-          <StyledEmailWrap>
+          <StyledEmailWrapper>
             <InputLabel
               id={inputNames[2]}
               name={inputNames[2]}
@@ -222,17 +222,16 @@ const Join = () => {
               height={3}
               type={textTypes[2]}
               placeholder={placeholder[2]}
-              readonly={!isButtonSleep}
               labelFontSize={LABEL_FONT}
               changeHandler={changeInfo}
             />
-            <ButtonWrap>
+            <ButtonWrapper>
               <Button clickHandler={sendCertificate} width={6} height={3}>
                 {buttonName}
               </Button>
-            </ButtonWrap>
-          </StyledEmailWrap>
-          <StyledEmailWrap>
+            </ButtonWrapper>
+          </StyledEmailWrapper>
+          <StyledEmailWrapper>
             <InputLabel
               id={inputNames[3]}
               name={inputNames[3]}
@@ -246,12 +245,12 @@ const Join = () => {
               labelFontSize={LABEL_FONT}
               changeHandler={changeInfo}
             />
-            <TextWrap>
+            <TextWrapper>
               <Text size={1} color={'blue'}>
                 {timerName}
               </Text>
-            </TextWrap>
-            <ButtonWrap>
+            </TextWrapper>
+            <ButtonWrapper>
               <Button
                 clickHandler={getCertificate}
                 disabled={isButtonSleep}
@@ -260,8 +259,8 @@ const Join = () => {
               >
                 인증하기
               </Button>
-            </ButtonWrap>
-          </StyledEmailWrap>
+            </ButtonWrapper>
+          </StyledEmailWrapper>
           <InputLabel
             id={inputNames[4]}
             name={inputNames[4]}
@@ -287,14 +286,14 @@ const Join = () => {
             changeHandler={changeInfo}
           />
         </InputLabelWrapper>
-        <StyledbuttonGroup>
+        <StyledButtonGroup>
           <ButtonGroup
             buttonInfos={buttonInfos}
             width={20}
             height={3}
             isColumn
           />
-        </StyledbuttonGroup>
+        </StyledButtonGroup>
         <BlankDiv></BlankDiv>
       </JoinPageWrapper>
     </StyledInputLabel>
