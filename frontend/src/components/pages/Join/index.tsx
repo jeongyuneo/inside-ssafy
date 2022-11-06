@@ -48,7 +48,6 @@ const Join = () => {
     'passwordAgain',
   ];
 
-  const [validated, setValidated] = useState(true);
   const [isInterval, setIsInterval] = useState(false);
   const [isButtonSleep, setisButtonSleep] = useState(true);
   const [isCertificate, setIsCertificate] = useState(false);
@@ -159,7 +158,6 @@ const Join = () => {
 
   const clickJoin = async () => {
     if (!validateInput(account, isCertificate)) {
-      setValidated(false);
       return;
     }
     const isJoin = await joinRequest(account);
