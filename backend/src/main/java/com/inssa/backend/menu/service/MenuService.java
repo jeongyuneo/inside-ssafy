@@ -1,6 +1,5 @@
 package com.inssa.backend.menu.service;
 
-import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.menu.controller.dto.ItemsResponse;
 import com.inssa.backend.menu.controller.dto.MenuRequest;
 import com.inssa.backend.menu.controller.dto.MenuResponse;
@@ -22,7 +21,6 @@ public class MenuService {
     private static final String DELIMITER = ", ";
 
     private final MenuRepository menuRepository;
-    private final MemberRepository memberRepository;
 
     public void createMenu(MenuRequest menuRequest) {
         menuRepository.save(
