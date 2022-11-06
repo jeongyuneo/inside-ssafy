@@ -43,6 +43,7 @@ public class BusService {
         return getBusResponse(bus, lastVisited.getBusStop().getName(), number == TOTAL_BUS_NUMBER);
     }
 
+    @Transactional
     public void createBusLike(Long memberId, int number) {
         Member member = findMember(memberId);
         Bus bus = findBusByNumber(number);
