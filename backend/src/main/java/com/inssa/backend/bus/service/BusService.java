@@ -83,16 +83,10 @@ public class BusService {
                     Bus bus = busLike.getBus();
                     Route lastVisited = bus.getLastVisited();
                     validateBusAvailability(lastVisited);
-                    String lastVisitedBusStop = lastVisited.getBusStop().getName();
-                    List<Route> routes = bus.getRoutes();
-                    Route route = routes.stream()
-                            .filter(current -> current.getBusStop().getName().equals(lastVisitedBusStop))
-                            .findFirst()
-                            .orElseThrow(() -> new BadRequestException(ErrorMessage.NOT_FOUND_ROUTE));
                     return BusLikeResponse.builder()
                             .number(bus.getNumber())
-                            .previousBusStop(lastVisitedBusStop)
-                            .nextBusStop(routes.get(route.getOrder()).getBusStop().getName())
+                            .previousBusStop(lastVisited.getBusStop().getName())
+                            .nextBusStop(bus.getRoutes().get(lastVisited.getOrder()).getBusStop().getName())
                             .build();
                 })
                 .collect(Collectors.toList());
