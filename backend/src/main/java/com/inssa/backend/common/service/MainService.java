@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class MainService {
 
     private static final String DELIMITER = ", ";
+    private static final int HOT_POST_STANDARD = 10;
 
     private final MenuRepository menuRepository;
     private final PostRepository postRepository;
@@ -26,7 +27,7 @@ public class MainService {
                         .getItem()
                         .split(DELIMITER))
                         .collect(Collectors.toList()))
-                .hotPosts(postRepository.findTop10ByIsActiveTrueOrderByLikeCountDescCreatedDateDesc()
+                .hotPosts(postRepository.findTop5ByIsActiveTrueAndLikeCountGreaterThanEqualOrderByCreatedDateDesc(HOT_POST_STANDARD)
                         .stream()
                         .map(post -> PostsResponse.builder()
                                 .postId(post.getId())
