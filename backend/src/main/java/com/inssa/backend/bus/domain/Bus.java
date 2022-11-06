@@ -26,7 +26,7 @@ public class Bus extends BaseEntity {
     private Image image;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "last_visited_bus_stop_id")
+    @JoinColumn(name = "last_visited_route_id")
     private Route lastVisited;
 
     @Builder.Default
