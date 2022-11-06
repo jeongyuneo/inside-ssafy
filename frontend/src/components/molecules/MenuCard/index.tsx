@@ -18,7 +18,7 @@ import { PropTypes } from './types';
 const MenuCard = ({
   title,
   menus,
-  sub_menus,
+  subMenus,
   width,
   height,
   backgroundColor,
@@ -28,7 +28,7 @@ const MenuCard = ({
     <StyledMenuCard
       title={title}
       menus={menus}
-      sub_menus={sub_menus}
+      subMenus={subMenus}
       width={width}
       height={height}
       backgroundColor={backgroundColor}
@@ -40,31 +40,24 @@ const MenuCard = ({
       </StyledTitle>
       <StyledHr />
       <StyledMenu>
-        {menus.length == 0 ? (
+        {!menus.length ? (
           <Text bold={true}>미운영</Text>
         ) : (
-          menus.map(menu => {
-            return (
-              <Text size={fontSize ? fontSize : 0.8} key={menu}>
-                {menu}
-              </Text>
-            );
-          })
+          menus.map(menu => (
+            <Text size={fontSize ? fontSize : 0.8} key={menu}>
+              {menu}
+            </Text>
+          ))
         )}
       </StyledMenu>
       <StyledHr />
       <StyledSubMenu>
-        {sub_menus.length == 0 ? (
-          <Text> </Text>
-        ) : (
-          sub_menus.map(sub_menu => {
-            return (
-              <Text size={fontSize ? fontSize : 0.8} key={sub_menu}>
-                {sub_menu}
-              </Text>
-            );
-          })
-        )}
+        {subMenus.length &&
+          subMenus.map(subMenu => (
+            <Text size={fontSize ? fontSize : 0.8} key={subMenu}>
+              {subMenu}
+            </Text>
+          ))}
       </StyledSubMenu>
     </StyledMenuCard>
   );

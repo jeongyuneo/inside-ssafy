@@ -2,28 +2,38 @@ import styled, { css } from 'styled-components';
 import { PropTypes } from './types';
 
 export const StyledMenuCard = styled.div<PropTypes>`
+  background-color: ${({ backgroundColor }) => backgroundColor || 'white'};
+  display: flex;
+  flex-direction: column;
+  text-align-last: center;
   width: 100%;
   border-radius: 1rem;
-  text-align: center;
   border: 1px solid black;
-  background-color: ${({ backgroundColor }) => backgroundColor || 'white'};
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 `;
 
 export const StyledTitle = styled.div`
-  font-size: 1rem;
+  gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const StyledMenu = styled.div`
-  line-height: 1.2rem;
+  gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
 `;
 export const StyledSubMenu = styled.div`
-  line-height: 1.2rem;
+  gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const StyledHr = styled.hr`
-  margin: 0.5rem;
-  margin-bottom: 0;
-  box-shadow: 0;
+  margin-top: 0.2rem;
+  margin-bottom: 0.3rem;
+  width: 95%;
   border-bottom: 0;
   border-left: 0;
   border-right: 0;
