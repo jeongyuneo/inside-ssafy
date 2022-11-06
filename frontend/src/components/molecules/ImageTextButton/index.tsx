@@ -10,19 +10,13 @@ import { PropTypes } from './types';
  * @author jini
  */
 const ImageTextButton = ({
-  src,
-  alt,
   children,
   clickImageHandler,
+  ...rest
 }: PropTypes) => {
   return (
     <StyledImageTextButton>
-      <Image
-        src={src}
-        alt={alt}
-        width="4rem"
-        clickHandler={clickImageHandler}
-      />
+      <Image {...rest} width="4rem" clickHandler={clickImageHandler} />
       <Text size={0.8}>{children}</Text>
     </StyledImageTextButton>
   );

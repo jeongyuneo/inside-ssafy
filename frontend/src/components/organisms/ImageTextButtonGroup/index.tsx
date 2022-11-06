@@ -47,16 +47,18 @@ const ImageTextButtonGroup = () => {
 
   return (
     <StyledImageTextButtonGroup>
-      {imageInfos.map(img => (
-        <ImageTextButton
-          key={img.src}
-          src={img.src}
-          alt={img.alt}
-          clickImageHandler={img.clickHandler}
-        >
-          {img.text}
-        </ImageTextButton>
-      ))}
+      {imageInfos.map(({ src, alt, clickHandler, text }) => {
+        return (
+          <ImageTextButton
+            key={src}
+            src={src}
+            alt={alt}
+            clickImageHandler={clickHandler}
+          >
+            {text}
+          </ImageTextButton>
+        );
+      })}
     </StyledImageTextButtonGroup>
   );
 };
