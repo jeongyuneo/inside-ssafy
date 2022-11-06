@@ -1,22 +1,26 @@
 import { AccountValueTypes } from './types';
 
-export const validateInput = ({
-  name,
-  studentNumber,
-  email,
-  email_again,
-  password,
-  password_again,
-}: AccountValueTypes): boolean => {
-  console.log(name + ' , ' + studentNumber + ' , ' + password);
-  //const NAME_PATTERN = /[ㄱ-ㅎ]|[ㅏ-ㅣ]|[가-힣]/;
+export const validateInput = (
+  {
+    name,
+    studentNumber,
+    email,
+    emailAgain,
+    password,
+    passwordAgain,
+  }: AccountValueTypes,
+  validationkey: boolean,
+): boolean => {
   const ASCII_PATTERN = /[ -~]/;
-
+  const NAME_LENGTH = /^.{2,7}$/;
   const STUDENT_NUMBER_PATTERN = /[0-9]/;
-
   const PASSWORD_PATTERN = /\S{8,20}/;
-
   const PASSWORD_AVOID_PATTERN = /['\'"\\']/;
+
+  if (!NAME_LENGTH.test(name)) {
+    alert('올바른 이름을 입력해주세요.');
+    return false;
+  }
 
   if (ASCII_PATTERN.test(name)) {
     alert('이름은 한글만 허용됩니다.');
@@ -28,8 +32,13 @@ export const validateInput = ({
     return false;
   }
 
-  if (email !== email_again) {
+  if (!validationkey) {
     alert('이메일 인증이 필요합니다.');
+    return false;
+  }
+
+  if (email !== emailAgain) {
+    alert('인증받은 이메일과 현재 이메일이 다릅니다.');
     return false;
   }
 
@@ -42,7 +51,7 @@ export const validateInput = ({
     return false;
   }
 
-  if (password_again !== password) {
+  if (passwordAgain !== password) {
     alert('비밀번호와 비밀번호 확인이 일치하지 않습니다');
     return false;
   }
@@ -51,9 +60,9 @@ export const validateInput = ({
 
 export const checkEmail = ({
   email,
-  email_again,
+  emailAgain,
 }: AccountValueTypes): boolean => {
-  if (email !== email_again) {
+  if (email !== emailAgain) {
     alert('인증받은 이메일과 현재 입력된 이메일이 일치하지 않습니다');
     return false;
   }
@@ -63,7 +72,6 @@ export const checkEmail = ({
 export const emailValidation = ({ email }: AccountValueTypes): boolean => {
   const EMAIL_PATTERN =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
   if (!EMAIL_PATTERN.test(email.trim())) {
     alert('이메일 형식에 맞게 입력해주세요');
     return false;

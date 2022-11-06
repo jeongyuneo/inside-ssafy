@@ -4,9 +4,9 @@ export interface AccountValueTypes {
   studentNumber: string;
   email: string;
   validationToken: string;
-  email_again: string;
+  emailAgain: string;
   password: string;
-  password_again: string;
+  passwordAgain: string;
 }
 
 export interface failtoJoin {

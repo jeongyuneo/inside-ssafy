@@ -39,13 +39,13 @@ const Join = () => {
     '8자 이상 20자 이하로 입력하세요',
     '',
   ];
-  const input_names = [
+  const inputNames = [
     'name',
     'studentNumber',
     'email',
     'validationToken',
     'password',
-    'password_again',
+    'passwordAgain',
   ];
 
   const [validated, setValidated] = useState(true);
@@ -59,12 +59,12 @@ const Join = () => {
     studentNumber: '',
     email: '',
     validationToken: '',
-    email_again: '',
+    emailAgain: '',
     password: '',
-    password_again: '',
+    passwordAgain: '',
   });
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const time = useRef(0);
   const timer = useRef(
@@ -74,7 +74,7 @@ const Join = () => {
       return;
     }, 1000 * 60 * 24),
   );
-  // onChange Event함수 : Input으로 입력받은 값을 적용한다.
+
   const changeInfo = (e: ChangeEvent<HTMLInputElement>) => {
     setAccount(prev => {
       return {
@@ -122,12 +122,7 @@ const Join = () => {
         return {
           ...prev,
           validationToken: '',
-        };
-      });
-      setAccount(prev => {
-        return {
-          ...prev,
-          email_again: prev.email,
+          emailAgain: prev.email,
         };
       });
       time.current = Date.now();
@@ -138,8 +133,6 @@ const Join = () => {
         setIsInterval(true);
       }
       setTimerName(Math.floor(timesub / 60) + ':' + (timesub % 60));
-    } else {
-      alert('이메일 전송에 실패하였습니다');
     }
   };
 
@@ -156,10 +149,8 @@ const Join = () => {
     }
     const isValidated = await validateEmailToken(account);
     if (!isValidated) {
-      alert('인증 실패');
       return;
     }
-    alert('인증 성공하였습니다.');
     setIsInterval(false);
     clearInterval(timer.current);
     setIsCertificate(true);
@@ -167,22 +158,19 @@ const Join = () => {
   };
 
   const clickJoin = async () => {
-    if (!validateInput(account)) {
+    if (!validateInput(account, isCertificate)) {
       setValidated(false);
       return;
     }
-
     const isJoin = await joinRequest(account);
     if (!isJoin) {
-      alert('회원가입에 문제가 생겼습니다.');
       return;
     }
-    alert('회원가입 성공!');
-    //navigate(-1);
+    navigate(-1);
   };
 
   const backToTheLogin = () => {
-    //navigate(-1);
+    navigate(-1);
   };
 
   const buttonInfos = [
@@ -201,8 +189,8 @@ const Join = () => {
       <JoinPageWrapper>
         <InputLabelWrapper>
           <InputLabel
-            id={input_names[0]}
-            name={input_names[0]}
+            id={inputNames[0]}
+            name={inputNames[0]}
             labelValue={'이름'}
             inputs={account}
             width={20}
@@ -213,8 +201,8 @@ const Join = () => {
             changeHandler={changeInfo}
           />
           <InputLabel
-            id={input_names[1]}
-            name={input_names[1]}
+            id={inputNames[1]}
+            name={inputNames[1]}
             labelValue={'학번'}
             inputs={account}
             width={20}
@@ -226,8 +214,8 @@ const Join = () => {
           />
           <StyledEmailWrap>
             <InputLabel
-              id={input_names[2]}
-              name={input_names[2]}
+              id={inputNames[2]}
+              name={inputNames[2]}
               labelValue={'이메일'}
               inputs={account}
               width={13}
@@ -246,8 +234,8 @@ const Join = () => {
           </StyledEmailWrap>
           <StyledEmailWrap>
             <InputLabel
-              id={input_names[3]}
-              name={input_names[3]}
+              id={inputNames[3]}
+              name={inputNames[3]}
               labelValue={'이메일 인증'}
               inputs={account}
               width={13}
@@ -272,16 +260,11 @@ const Join = () => {
               >
                 인증하기
               </Button>
-              {/* {isButtonSleep ? (
-            <Button clickHandler={getCertificate} width={8} height={3}>
-              인증
-            </Button>
-          ) : null} */}
             </ButtonWrap>
           </StyledEmailWrap>
           <InputLabel
-            id={input_names[4]}
-            name={input_names[4]}
+            id={inputNames[4]}
+            name={inputNames[4]}
             labelValue={'패스워드'}
             inputs={account}
             width={20}
@@ -292,8 +275,8 @@ const Join = () => {
             changeHandler={changeInfo}
           />
           <InputLabel
-            id={input_names[5]}
-            name={input_names[5]}
+            id={inputNames[5]}
+            name={inputNames[5]}
             labelValue={'패스워드 확인'}
             inputs={account}
             width={20}
