@@ -35,12 +35,6 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
-    public void checkEmail(EmailRequest emailRequest) {
-        if (memberRepository.existsByEmail(emailRequest.getEmail())) {
-            throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
-        }
-    }
-
     public void sendValidationToken(String email) {
         String validationToken = MailUtil.createValidationToken();
         RedisUtil.setValidationTokenDuration(email, validationToken, VALIDATION_TOKEN_DURATION);
