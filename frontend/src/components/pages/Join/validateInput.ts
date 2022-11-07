@@ -63,7 +63,7 @@ export const validateEmail = ({
   email,
 }: AccountValueTypes): ValidResponseData => {
   const returnData = {
-    status: false,
+    status: true,
     message: '',
   };
   const EMAIL_PATTERN =
@@ -71,7 +71,9 @@ export const validateEmail = ({
   if (!EMAIL_PATTERN.test(email.trim())) {
     returnData.message = '이메일 형식에 맞게 입력해주세요';
     returnData.status = false;
+    console.log('이메일 유효성검사 실패');
     return returnData;
   }
+  console.log('이메일 유효성검사 완료');
   return returnData;
 };
