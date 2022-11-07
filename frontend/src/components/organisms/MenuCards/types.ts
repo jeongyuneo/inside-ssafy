@@ -1,9 +1,14 @@
 export interface PropTypes {
-  items: menuTypes[];
+  menus: menuTypes[];
+  width?: number;
+  height?: number;
+  backgroundColor?: string;
+  cardColor?: string;
 }
 
 export interface menuTypes {
-  title: string;
-  menus: string[];
+  date: string;
+  dayOfTheWeek: string;
+  items: string[];
   subMenus: string[];
 }
