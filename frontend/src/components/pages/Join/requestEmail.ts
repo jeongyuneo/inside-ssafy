@@ -2,25 +2,28 @@ import axios from 'axios';
 import { AccountValueTypes, FailToJoin } from './types';
 
 export const requestEmailToken = async ({ email }: AccountValueTypes) => {
+  const returnData = {
+    status: false,
+    message: '인증에 문제가 발생하였습니다',
+  };
   try {
     const { status }: { status: number } = await axios({
       method: 'POST',
       url: '/api/v1/members/join/token/request?email=' + email,
     });
     if (status === 200) {
-      alert('인증번호가 전송되었습니다');
-      return true;
+      returnData.message = '인증번호가 전송되었습니다.';
+      returnData.status = true;
+      return returnData;
     } else if (status === 400) {
-      alert('이미 가입된 메일입니다.');
-      return false;
+      returnData.message = '이미 가입된 메일입니다.';
+      return returnData;
     }
-    alert('인증과정에 문제가 발생하였습니다');
-    return false;
+    return returnData;
   } catch (e) {
     console.log('error');
     console.log(e);
-    alert('인증번호 전송에 문제가 생겼습니다');
-    return false;
+    return returnData;
   }
 };
 
@@ -28,6 +31,10 @@ export const validateEmailToken = async ({
   validationToken,
   email,
 }: AccountValueTypes) => {
+  const returnData = {
+    status: false,
+    message: '인증에 문제가 발생하였습니다',
+  };
   try {
     const { status }: { status: number } = await axios({
       method: 'POST',
@@ -38,16 +45,15 @@ export const validateEmailToken = async ({
       },
     });
     if (status === 200) {
-      alert('인증 성공하였습니다.');
-      return true;
+      returnData.message = '인증 성공하였습니다.';
+      returnData.status = true;
+      return returnData;
     }
-    alert('인증 과정에 문제가 발생하였습니다.');
-    return false;
+    return returnData;
   } catch (e) {
-    alert('인증이 실패하였습니다.');
     console.log('error!');
     console.log(e);
-    return false;
+    return returnData;
   }
 };
 
@@ -69,11 +75,8 @@ export const joinRequest = async ({
       },
     });
     if (status === 200) {
-      alert('회원가입 성공!');
       return true;
     }
-    alert('회원가입에 문제가 생겼습니다.');
-    console.log(data.message);
     return false;
   } catch (e) {
     console.log('error!');

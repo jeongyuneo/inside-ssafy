@@ -26,6 +26,7 @@ import {
   JoinPageWrapper,
   InputLabelWrapper,
   TextNavigateWrapper,
+  ValidateEmailWrapper,
 } from './styles';
 import { checkEmail, validateEmail, validateInput } from './validateInput';
 
@@ -46,6 +47,14 @@ const Join = () => {
   const [joinMessage, setJoinMessage] = useState({
     color: 'green',
     message: '',
+  });
+  const [emailMessage, setEmailMessage] = useState({
+    message: '',
+    color: 'green',
+  });
+  const [certificateMessage, setCertificateMessage] = useState({
+    message: '',
+    color: 'green',
   });
   const [account, setAccount] = useState({
     name: '',
@@ -101,7 +110,14 @@ const Join = () => {
     }
     const getToken = await requestEmailToken(account);
 
-    if (getToken) {
+    if (getToken.status) {
+      setEmailMessage(prev => {
+        return {
+          ...prev,
+          message: getToken.message,
+          color: 'green',
+        };
+      });
       setIsCertificateButtonDisabled(false);
       setIsEmailCertificated(false);
       setSendCertificateButtonName('인증 재전송');
@@ -120,6 +136,14 @@ const Join = () => {
         setIsInterval(true);
       }
       setTimerName(Math.floor(timesub / 60) + ':' + (timesub % 60));
+    } else {
+      setEmailMessage(prev => {
+        return {
+          ...prev,
+          message: getToken.message,
+          color: 'red',
+        };
+      });
     }
   };
 
@@ -128,9 +152,23 @@ const Join = () => {
       return;
     }
     const isValidated = await validateEmailToken(account);
-    if (!isValidated) {
+    if (!isValidated.status) {
+      setCertificateMessage(prev => {
+        return {
+          ...prev,
+          color: 'red',
+          message: isValidated.message,
+        };
+      });
       return;
     }
+    setCertificateMessage(prev => {
+      return {
+        ...prev,
+        color: 'green',
+        message: isValidated.message,
+      };
+    });
     setIsInterval(false);
     clearInterval(timer.current);
     setIsEmailCertificated(true);
@@ -179,62 +217,76 @@ const Join = () => {
             switch (index) {
               case 2:
                 return (
-                  <StyledEmailWrapper key={inputName}>
-                    <InputLabel
-                      id={inputName}
-                      name={inputName}
-                      labelValue={labelName[index]}
-                      inputs={account}
-                      width={13}
-                      height={3}
-                      type={textTypes[index]}
-                      placeholder={placeholder[index]}
-                      labelFontSize={LABEL_FONT}
-                      changeHandler={changeInfo}
-                    />
-                    <ButtonWrapper>
-                      <Button
-                        clickHandler={sendCertificateMessage}
-                        width={6}
+                  <ValidateEmailWrapper>
+                    <StyledEmailWrapper key={inputName}>
+                      <InputLabel
+                        id={inputName}
+                        name={inputName}
+                        labelValue={labelName[index]}
+                        inputs={account}
+                        width={13}
                         height={3}
-                      >
-                        {sendCertificateButtonName}
-                      </Button>
-                    </ButtonWrapper>
-                  </StyledEmailWrapper>
+                        type={textTypes[index]}
+                        placeholder={placeholder[index]}
+                        labelFontSize={LABEL_FONT}
+                        changeHandler={changeInfo}
+                      />
+                      <ButtonWrapper>
+                        <Button
+                          clickHandler={sendCertificateMessage}
+                          width={6}
+                          height={3}
+                        >
+                          {sendCertificateButtonName}
+                        </Button>
+                      </ButtonWrapper>
+                    </StyledEmailWrapper>
+                    <TextNavigateWrapper>
+                      <Text color={emailMessage.color} size={0.5}>
+                        {emailMessage.message}
+                      </Text>
+                    </TextNavigateWrapper>
+                  </ValidateEmailWrapper>
                 );
               case 3:
                 return (
-                  <StyledEmailWrapper key={inputName}>
-                    <InputLabel
-                      id={inputName}
-                      name={inputName}
-                      labelValue={labelName[index]}
-                      inputs={account}
-                      width={13}
-                      height={3}
-                      type={textTypes[index]}
-                      placeholder={placeholder[index]}
-                      disabled={isEmailCertificated}
-                      labelFontSize={LABEL_FONT}
-                      changeHandler={changeInfo}
-                    />
-                    <TextWrapper>
-                      <Text size={1} color={'blue'}>
-                        {timerName}
-                      </Text>
-                    </TextWrapper>
-                    <ButtonWrapper>
-                      <Button
-                        clickHandler={getCertificate}
-                        disabled={isCertificateButtonDisabled}
-                        width={6}
+                  <ValidateEmailWrapper>
+                    <StyledEmailWrapper key={inputName}>
+                      <InputLabel
+                        id={inputName}
+                        name={inputName}
+                        labelValue={labelName[index]}
+                        inputs={account}
+                        width={13}
                         height={3}
-                      >
-                        인증하기
-                      </Button>
-                    </ButtonWrapper>
-                  </StyledEmailWrapper>
+                        type={textTypes[index]}
+                        placeholder={placeholder[index]}
+                        disabled={isEmailCertificated}
+                        labelFontSize={LABEL_FONT}
+                        changeHandler={changeInfo}
+                      />
+                      <TextWrapper>
+                        <Text size={1} color={'blue'}>
+                          {timerName}
+                        </Text>
+                      </TextWrapper>
+                      <ButtonWrapper>
+                        <Button
+                          clickHandler={getCertificate}
+                          disabled={isCertificateButtonDisabled}
+                          width={6}
+                          height={3}
+                        >
+                          인증하기
+                        </Button>
+                      </ButtonWrapper>
+                    </StyledEmailWrapper>
+                    <TextNavigateWrapper>
+                      <Text color={certificateMessage.color} size={0.5}>
+                        {certificateMessage.message}
+                      </Text>
+                    </TextNavigateWrapper>
+                  </ValidateEmailWrapper>
                 );
               default:
                 return (

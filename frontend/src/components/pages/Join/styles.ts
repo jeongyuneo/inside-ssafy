@@ -44,3 +44,8 @@ export const TextWrapper = styled.div`
 `;
 
 export const TextNavigateWrapper = styled.div``;
+
+export const ValidateEmailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
