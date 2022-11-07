@@ -9,7 +9,10 @@ export const requestEmailToken = async ({ email }: AccountValueTypes) => {
   try {
     const { status }: { status: number } = await axios({
       method: 'POST',
-      url: '/api/v1/members/join/token/request?email=' + email,
+      url: '/api/v1/members/join/token/request',
+      data: {
+        email,
+      },
     });
     if (status === 200) {
       returnData.message = '인증번호가 전송되었습니다.';
