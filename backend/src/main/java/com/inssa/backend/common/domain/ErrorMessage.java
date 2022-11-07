@@ -32,7 +32,6 @@ public enum ErrorMessage {
     EXPIRED_TOKEN("만료된 토큰입니다."),
     EXPIRED_VALIDATION_TOKEN("인증코드가 만료되었습니다."),
 
-    FAIL_TO_SEND_VALIDATION_TOKEN("인증코드 전송에 실패했습니다."),
     FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
     FAIL_TO_SEARCH_POST("익명 게시판 검색에 실패했습니다."),
