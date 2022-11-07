@@ -25,7 +25,7 @@ const FavoriteBusBody = ({ previousBusStop, nextBusStop }: PropTypes) => {
       <Image width="6rem" src="/images/favorite_bus.png" alt="bus" />
       <CurrentBusLocation>
         <EachLocation>
-          <BsCheckCircleFill color="blue" />
+          <BsCheckCircleFill color="#1E90FF" />
           <TextWrapper>
             <Text bold size={1.2}>
               {previousBusStop}
@@ -37,7 +37,7 @@ const FavoriteBusBody = ({ previousBusStop, nextBusStop }: PropTypes) => {
         </EachLocation>
         <EachLocation>
           <BsCircleFill color="gray" />
-          <Text>{nextBusStop}</Text>
+          <Text size={0.9}>{nextBusStop}</Text>
         </EachLocation>
       </CurrentBusLocation>
     </StyledFavoriteBusBody>

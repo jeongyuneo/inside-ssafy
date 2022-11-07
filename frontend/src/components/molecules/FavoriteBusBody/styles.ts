@@ -14,7 +14,7 @@ export const CurrentBusLocation = styled.div`
   height: 6.5rem;
   border: 1px solid black;
   border-radius: 1rem;
-  padding: 0.5rem 0 0.5rem 1rem;
+  padding: 0.5rem 1rem;
   gap: 0.5rem;
   overflow-y: auto;
 `;
