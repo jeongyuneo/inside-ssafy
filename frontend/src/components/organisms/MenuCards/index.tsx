@@ -10,20 +10,9 @@ import { PropTypes } from './types';
  * @author jun
  */
 
-const MenuCards = ({
-  menus,
-  width,
-  height,
-  backgroundColor,
-  cardColor,
-}: PropTypes) => {
+const MenuCards = ({ menus, ...menuRest }: PropTypes) => {
   return (
-    <StyledMenuCards
-      menus={menus}
-      width={width}
-      height={height}
-      backgroundColor={backgroundColor}
-    >
+    <StyledMenuCards menus={menus} {...menuRest}>
       <MenuCardsWrapper>
         {menus.map(item => (
           <MenuCardWrapper key={item.date}>
@@ -33,7 +22,7 @@ const MenuCards = ({
               menus={item.items}
               subMenus={['숭늉']}
               key={item.date}
-              backgroundColor={cardColor}
+              {...menuRest}
             />
           </MenuCardWrapper>
         ))}

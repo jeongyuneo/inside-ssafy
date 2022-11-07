@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import { PropTypes } from './types';
 
 export const StyledMenuCards = styled.div<PropTypes>`
+  width: ${({ width }) => width || 22}rem;
+  height: ${({ height }) => height || 80}vh;
+  background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
   display: flex;
   flex-direction: column;
   justify-contents: center;
   align-items: center;
-  width: ${({ width }) => width || 22}rem;
-  height: ${({ height }) => height || 80}vh;
-  background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
   padding-top: 1rem;
   padding-bottom: 1rem;
   overflow: auto;
