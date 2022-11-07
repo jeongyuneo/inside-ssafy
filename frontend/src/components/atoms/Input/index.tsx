@@ -25,6 +25,7 @@ const Input = ({
   name,
   id,
   placeholder,
+  disabled,
   changeHandler,
 }: PropTypes) => {
   return (
@@ -39,6 +40,7 @@ const Input = ({
       name={name}
       id={id}
       placeholder={placeholder}
+      disabled={disabled}
       onChange={e => changeHandler?.(e)}
     />
   );

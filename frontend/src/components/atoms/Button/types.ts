@@ -7,6 +7,7 @@ export interface ButtonPropTypes {
   textColor?: string;
   backgroundColor?: string;
   isText?: boolean;
+  disabled?: boolean;
   clickHandler?: MouseEventHandler<HTMLButtonElement>;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
