@@ -16,12 +16,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/join/email/check")
-    public ResponseEntity<Void> checkEmail(@RequestBody EmailRequest emailRequest) {
-        memberService.checkEmail(emailRequest);
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/join/token/request")
     public ResponseEntity<Void> sendValidationToken(@RequestParam String email) {
         memberService.sendValidationToken(email);
