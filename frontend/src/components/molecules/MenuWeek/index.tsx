@@ -13,7 +13,7 @@ const MenuWeek = ({ startDate, endDate }: PropTypes) => {
     <StyledMenuWeek>
       <TextWrapper>
         <Text size={1.6}> 이번주 식단</Text>
-        <Text size={1}>{startDate + '~' + endDate}</Text>
+        <Text size={1}>{`${startDate} ~ ${endDate}`}</Text>
       </TextWrapper>
     </StyledMenuWeek>
   );
