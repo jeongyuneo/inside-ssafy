@@ -23,6 +23,7 @@ public enum ErrorMessage {
     NOT_EQUAL_PASSWORD("비밀번호가 일치하지 않습니다."),
 
     NOT_EDITABLE_MEMBER("편집 권한이 없는 회원입니다."),
+    NOT_AVAILABLE_BUS("버스 운행시간이 아닙니다."),
 
     WRONG_TOKEN("잘못된 토큰입니다."),
     WRONG_TOKEN_TYPE("잘못된 토큰 타입입니다."),
