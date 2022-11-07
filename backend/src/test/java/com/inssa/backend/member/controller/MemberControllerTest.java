@@ -3,6 +3,7 @@ package com.inssa.backend.member.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
+import com.inssa.backend.common.exception.BadRequestException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.common.exception.UnAuthorizedException;
 import com.inssa.backend.member.controller.dto.*;
@@ -124,11 +125,11 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void send_validation_token_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN.getMessage())).given(memberService).sendValidationToken(any(EmailRequest.class));
+        willThrow(new BadRequestException(ErrorMessage.EXISTING_EMAIL)).given(memberService).sendValidationToken(any(EmailRequest.class));
         // when
         ResultActions resultActions = 인증코드_전송_요청(emailRequest);
         // then
-        인증코드_전송_실패(resultActions, new Message(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN));
+        인증코드_전송_실패(resultActions, new Message(ErrorMessage.EXISTING_EMAIL));
     }
 
     @DisplayName("인증코드 유효성 검사 성공")
@@ -297,7 +298,7 @@ public class MemberControllerTest extends ApiDocument {
     }
 
     private void 인증코드_전송_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isInternalServerError())
+        resultActions.andExpect(status().isBadRequest())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("send-validation-token-fail"));
