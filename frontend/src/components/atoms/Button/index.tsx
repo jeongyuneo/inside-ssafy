@@ -18,6 +18,7 @@ const Button = ({
   textColor,
   backgroundColor,
   isText,
+  disabled,
   clickHandler,
 }: PropTypes) => {
   return (
@@ -28,6 +29,7 @@ const Button = ({
       textColor={textColor}
       backgroundColor={backgroundColor}
       isText={isText}
+      disabled={disabled}
       onClick={clickHandler}
     >
       {children}
