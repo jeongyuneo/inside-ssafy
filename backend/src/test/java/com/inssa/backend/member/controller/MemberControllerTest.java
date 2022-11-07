@@ -3,6 +3,7 @@ package com.inssa.backend.member.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
+import com.inssa.backend.common.exception.BadRequestException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.common.exception.UnAuthorizedException;
 import com.inssa.backend.member.controller.dto.*;
@@ -109,35 +110,13 @@ public class MemberControllerTest extends ApiDocument {
                 .build();
     }
 
-    @DisplayName("이메일 중복 확인 성공")
-    @Test
-    void check_email_success() throws Exception {
-        // given
-        willDoNothing().given(memberService).checkEmail(any(EmailRequest.class));
-        // when
-        ResultActions resultActions = 이메일_중복_확인_요청(emailRequest);
-        // then
-        이메일_중복_확인_성공(resultActions);
-    }
-
-    @DisplayName("이메일 중복 확인 실패")
-    @Test
-    void check_email_fail() throws Exception {
-        // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_CHECK_EMAIL.getMessage())).given(memberService).checkEmail(any(EmailRequest.class));
-        // when
-        ResultActions resultActions = 이메일_중복_확인_요청(emailRequest);
-        // then
-        이메일_중복_확인_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CHECK_EMAIL));
-    }
-
     @DisplayName("인증코드 전송 성공")
     @Test
     void send_validation_token_success() throws Exception {
         // given
-        willDoNothing().given(memberService).sendValidationToken(anyString());
+        willDoNothing().given(memberService).sendValidationToken(any(EmailRequest.class));
         // when
-        ResultActions resultActions = 인증코드_전송_요청(EMAIL);
+        ResultActions resultActions = 인증코드_전송_요청(emailRequest);
         // then
         인증코드_전송_성공(resultActions);
     }
@@ -146,11 +125,11 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void send_validation_token_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN.getMessage())).given(memberService).sendValidationToken(anyString());
+        willThrow(new BadRequestException(ErrorMessage.EXISTING_EMAIL)).given(memberService).sendValidationToken(any(EmailRequest.class));
         // when
-        ResultActions resultActions = 인증코드_전송_요청(EMAIL);
+        ResultActions resultActions = 인증코드_전송_요청(emailRequest);
         // then
-        인증코드_전송_실패(resultActions, new Message(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN));
+        인증코드_전송_실패(resultActions, new Message(ErrorMessage.EXISTING_EMAIL));
     }
 
     @DisplayName("인증코드 유효성 검사 성공")
@@ -305,30 +284,11 @@ public class MemberControllerTest extends ApiDocument {
         로그아웃_실패(resultActions, new Message(ErrorMessage.EXPIRED_TOKEN));
     }
 
-    private ResultActions 이메일_중복_확인_요청(EmailRequest emailRequest) throws Exception {
-        return mockMvc.perform(post("/api/v1/members/join/email/check")
+    private ResultActions 인증코드_전송_요청(EmailRequest emailRequest) throws Exception {
+        return mockMvc.perform(post("/api/v1/members/join/token/request")
                 .contextPath("/api/v1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(emailRequest)));
-    }
-
-    private void 이메일_중복_확인_성공(ResultActions resultActions) throws Exception {
-        resultActions.andExpect(status().isOk())
-                .andDo(print())
-                .andDo(toDocument("check-email-success"));
-    }
-
-    private void 이메일_중복_확인_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isInternalServerError())
-                .andExpect(content().json(toJson(message)))
-                .andDo(print())
-                .andDo(toDocument("check-email-fail"));
-    }
-
-    private ResultActions 인증코드_전송_요청(String email) throws Exception {
-        return mockMvc.perform(post("/api/v1/members/join/token/request")
-                .contextPath("/api/v1")
-                .param(EMAIL_PARAMETER_NAME, email));
     }
 
     private void 인증코드_전송_성공(ResultActions resultActions) throws Exception {
@@ -338,7 +298,7 @@ public class MemberControllerTest extends ApiDocument {
     }
 
     private void 인증코드_전송_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isInternalServerError())
+        resultActions.andExpect(status().isBadRequest())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("send-validation-token-fail"));
