@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import { AccountValueTypes, failtoJoin } from './types';
+import axios from 'axios';
+import { AccountValueTypes, FailToJoin } from './types';
 
 export const requestEmailToken = async ({ email }: AccountValueTypes) => {
   try {
@@ -58,7 +58,7 @@ export const joinRequest = async ({
   studentNumber,
 }: AccountValueTypes) => {
   try {
-    const { status, data }: { status: number; data: failtoJoin } = await axios({
+    const { status, data }: { status: number; data: FailToJoin } = await axios({
       method: 'POST',
       url: '/api/v1/members',
       data: {

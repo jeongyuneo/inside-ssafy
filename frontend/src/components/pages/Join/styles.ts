@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
-export const StyledInputLabel = styled.div`
+export const StyledJoin = styled.div`
   display: flex;
   justify-content: center;
-  height: 80vh;
+  align-items: center;
+  height: 100vh;
 `;
 
 export const JoinPageWrapper = styled.div`
@@ -11,8 +12,7 @@ export const JoinPageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 80%;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  gap: 1rem;
 `;
 
 export const InputLabelWrapper = styled.div`
@@ -23,7 +23,6 @@ export const InputLabelWrapper = styled.div`
 `;
 
 export const StyledButtonGroup = styled.div`
-  margin-top: 1rem;
   gap: 0.5rem;
   display: flex;
   flex-direction: column;
@@ -36,15 +35,12 @@ export const StyledEmailWrapper = styled.div`
 `;
 
 export const ButtonWrapper = styled.div`
-  margin-top: 1.4rem;
+  padding-top: 1.4rem;
 `;
 
 export const TextWrapper = styled.div`
   position: absolute;
   left: 50%;
-  margin-top: 2.3rem;
 `;
 
-export const BlankDiv = styled.div`
-  height: 3rem;
-`;
+export const TextNavigateWrapper = styled.div``;

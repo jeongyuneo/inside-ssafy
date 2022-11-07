@@ -1,4 +1,3 @@
-import { isDisabled } from '@testing-library/user-event/dist/utils';
 import styled, { css } from 'styled-components';
 import { PropTypes } from './types';
 

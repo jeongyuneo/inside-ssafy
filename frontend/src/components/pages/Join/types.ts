@@ -9,6 +9,11 @@ export interface AccountValueTypes {
   passwordAgain: string;
 }
 
-export interface failtoJoin {
+export interface FailToJoin {
+  message: string;
+}
+
+export interface JoinReturnData {
+  status: boolean;
   message: string;
 }
