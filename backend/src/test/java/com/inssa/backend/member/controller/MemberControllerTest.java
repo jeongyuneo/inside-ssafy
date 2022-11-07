@@ -113,9 +113,9 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void send_validation_token_success() throws Exception {
         // given
-        willDoNothing().given(memberService).sendValidationToken(anyString());
+        willDoNothing().given(memberService).sendValidationToken(any(EmailRequest.class));
         // when
-        ResultActions resultActions = 인증코드_전송_요청(EMAIL);
+        ResultActions resultActions = 인증코드_전송_요청(emailRequest);
         // then
         인증코드_전송_성공(resultActions);
     }
@@ -124,9 +124,9 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void send_validation_token_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN.getMessage())).given(memberService).sendValidationToken(anyString());
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN.getMessage())).given(memberService).sendValidationToken(any(EmailRequest.class));
         // when
-        ResultActions resultActions = 인증코드_전송_요청(EMAIL);
+        ResultActions resultActions = 인증코드_전송_요청(emailRequest);
         // then
         인증코드_전송_실패(resultActions, new Message(ErrorMessage.FAIL_TO_SEND_VALIDATION_TOKEN));
     }
@@ -283,10 +283,11 @@ public class MemberControllerTest extends ApiDocument {
         로그아웃_실패(resultActions, new Message(ErrorMessage.EXPIRED_TOKEN));
     }
 
-    private ResultActions 인증코드_전송_요청(String email) throws Exception {
+    private ResultActions 인증코드_전송_요청(EmailRequest emailRequest) throws Exception {
         return mockMvc.perform(post("/api/v1/members/join/token/request")
                 .contextPath("/api/v1")
-                .param(EMAIL_PARAMETER_NAME, email));
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(emailRequest)));
     }
 
     private void 인증코드_전송_성공(ResultActions resultActions) throws Exception {
