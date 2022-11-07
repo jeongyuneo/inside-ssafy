@@ -1,5 +1,9 @@
 import React from 'react';
-import { BusInfoNavbarContainer, StyledBusInfoNavbar } from './styles';
+import {
+  BusInfoNavbarContainer,
+  ButtonWrapper,
+  StyledBusInfoNavbar,
+} from './styles';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import Button from '../../atoms/Button';
 import { PropTypes } from './types';
@@ -17,17 +21,21 @@ const BusInfoNavbar = ({
   return (
     <StyledBusInfoNavbar>
       <BusInfoNavbarContainer>
-        {liked ? (
-          <AiFillStar color="#EBB517" size="24" onClick={toggleLikeHandler} />
-        ) : (
-          <AiOutlineStar
-            color="#EBB517"
-            size="24"
-            onClick={toggleLikeHandler}
-          />
-        )}
-        <Button isText clickHandler={toggleBusInfoModalHandler}>
-          이미지로 노선 보기
+        <ButtonWrapper>
+          <Button isText clickHandler={toggleBusInfoModalHandler}>
+            노선보기
+          </Button>
+        </ButtonWrapper>
+        <Button isText onClick={toggleLikeHandler}>
+          {liked ? (
+            <AiFillStar color="#EBB517" size="30" onClick={toggleLikeHandler} />
+          ) : (
+            <AiOutlineStar
+              color="#EBB517"
+              size="30"
+              onClick={toggleLikeHandler}
+            />
+          )}
         </Button>
       </BusInfoNavbarContainer>
     </StyledBusInfoNavbar>

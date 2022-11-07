@@ -21,7 +21,7 @@ const Driving = ({ navigation, route }) => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
-    console.log(route.params.busInfo);
+    console.log(route.params.busLine);
 
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();

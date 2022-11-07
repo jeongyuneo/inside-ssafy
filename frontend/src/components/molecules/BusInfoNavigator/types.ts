@@ -1,4 +1,4 @@
-export interface Proptypes {
+export interface PropTypes {
   busNum: number;
-  clickHandler: (direction: string) => void;
+  clickBusNumHandler: (direction: string) => void;
 }
