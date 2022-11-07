@@ -91,7 +91,7 @@ public class JwtUtil {
 
     private static void validateAuthorization(String token) {
         if (!token.startsWith(AUTHORIZATION_TYPE + DELIMITER)) {
-            throw new UnAuthorizedException(ErrorMessage.WRONG_TOKEN);
+            throw new UnAuthorizedException(ErrorMessage.WRONG_TOKEN_TYPE);
         }
     }
 }

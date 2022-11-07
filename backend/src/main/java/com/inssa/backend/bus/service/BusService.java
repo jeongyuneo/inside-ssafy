@@ -6,6 +6,7 @@ import com.inssa.backend.bus.controller.dto.RouteImageResponse;
 import com.inssa.backend.bus.controller.dto.RouteResponse;
 import com.inssa.backend.bus.domain.*;
 import com.inssa.backend.common.domain.ErrorMessage;
+import com.inssa.backend.common.exception.BadRequestException;
 import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.domain.BusLike;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,13 +36,14 @@ public class BusService {
 
     public BusResponse getBus(int number) {
         Bus bus = findBusByNumber(number);
-        BusStop lastVisitedBusStop = bus.getLastVisitedBusStop();
-        if (bus.getLastVisitedBusStop() == null) {
+        Route lastVisited = bus.getLastVisited();
+        if (bus.getLastVisited() == null) {
             return getBusResponse(bus, NO_VISITED_BUS_STOP, number == TOTAL_BUS_NUMBER);
         }
-        return getBusResponse(bus, lastVisitedBusStop.getName(), number == TOTAL_BUS_NUMBER);
+        return getBusResponse(bus, lastVisited.getBusStop().getName(), number == TOTAL_BUS_NUMBER);
     }
 
+    @Transactional
     public void createBusLike(Long memberId, int number) {
         Member member = findMember(memberId);
         Bus bus = findBusByNumber(number);
@@ -73,7 +76,20 @@ public class BusService {
     }
 
     public List<BusLikeResponse> getBusLikes(Long memberId) {
-        return null;
+        return findMember(memberId).getBusLikes()
+                .stream()
+                .sorted(Comparator.comparing(current -> current.getBus().getNumber()))
+                .map(busLike -> {
+                    Bus bus = busLike.getBus();
+                    Route lastVisited = bus.getLastVisited();
+                    validateBusAvailability(lastVisited);
+                    return BusLikeResponse.builder()
+                            .number(bus.getNumber())
+                            .previousBusStop(lastVisited.getBusStop().getName())
+                            .nextBusStop(bus.getRoutes().get(lastVisited.getOrder()).getBusStop().getName())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 
     public RouteImageResponse getRouteImage(int number) {
@@ -125,5 +141,11 @@ public class BusService {
     private Bus findBusByNumber(int number) {
         return busRepository.findByNumberAndIsActiveTrue(number)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
+    }
+
+    private void validateBusAvailability(Route lastVisited) {
+        if (lastVisited == null) {
+            throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_BUS);
+        }
     }
 }
