@@ -13,7 +13,7 @@ export interface FailToJoin {
   message: string;
 }
 
-export interface JoinReturnData {
+export interface ValidResponseData {
   status: boolean;
   message: string;
 }

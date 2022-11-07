@@ -105,7 +105,15 @@ const Join = () => {
 
   // 인증을 보낸다.
   const sendCertificateMessage = async () => {
-    if (!validateEmail(account)) {
+    const isValidated = validateEmail(account);
+    if (!isValidated.status) {
+      setEmailMessage(prev => {
+        return {
+          ...prev,
+          message: isValidated.message,
+          color: 'red',
+        };
+      });
       return;
     }
     const getToken = await requestEmailToken(account);

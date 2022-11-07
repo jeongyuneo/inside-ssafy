@@ -1,4 +1,4 @@
-import { AccountValueTypes, JoinReturnData } from './types';
+import { AccountValueTypes, ValidResponseData } from './types';
 
 export const validateInput = (
   {
@@ -10,7 +10,7 @@ export const validateInput = (
     passwordAgain,
   }: AccountValueTypes,
   validationkey: boolean,
-): JoinReturnData => {
+): ValidResponseData => {
   const ASCII_PATTERN = /[ -~]/;
   const NAME_LENGTH = /^.{2,7}$/;
   const STUDENT_NUMBER_PATTERN = /[0-9]/;
@@ -59,12 +59,19 @@ export const checkEmail = ({
   return true;
 };
 
-export const validateEmail = ({ email }: AccountValueTypes): boolean => {
+export const validateEmail = ({
+  email,
+}: AccountValueTypes): ValidResponseData => {
+  const returnData = {
+    status: false,
+    message: '',
+  };
   const EMAIL_PATTERN =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
   if (!EMAIL_PATTERN.test(email.trim())) {
-    alert('이메일 형식에 맞게 입력해주세요');
-    return false;
+    returnData.message = '이메일 형식에 맞게 입력해주세요';
+    returnData.status = false;
+    return returnData;
   }
-  return true;
+  return returnData;
 };
