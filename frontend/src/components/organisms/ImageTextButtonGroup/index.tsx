@@ -26,7 +26,7 @@ const ImageTextButtonGroup = () => {
       text: '에듀싸피',
     },
     {
-      src: './images/bus.png',
+      src: './images/tayo_bus.png',
       alt: 'bus',
       clickHandler: () => movePage('myPage'),
       text: '셔틀 정보',
