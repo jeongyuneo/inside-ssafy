@@ -109,28 +109,6 @@ public class MemberControllerTest extends ApiDocument {
                 .build();
     }
 
-    @DisplayName("이메일 중복 확인 성공")
-    @Test
-    void check_email_success() throws Exception {
-        // given
-        willDoNothing().given(memberService).checkEmail(any(EmailRequest.class));
-        // when
-        ResultActions resultActions = 이메일_중복_확인_요청(emailRequest);
-        // then
-        이메일_중복_확인_성공(resultActions);
-    }
-
-    @DisplayName("이메일 중복 확인 실패")
-    @Test
-    void check_email_fail() throws Exception {
-        // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_CHECK_EMAIL.getMessage())).given(memberService).checkEmail(any(EmailRequest.class));
-        // when
-        ResultActions resultActions = 이메일_중복_확인_요청(emailRequest);
-        // then
-        이메일_중복_확인_실패(resultActions, new Message(ErrorMessage.FAIL_TO_CHECK_EMAIL));
-    }
-
     @DisplayName("인증코드 전송 성공")
     @Test
     void send_validation_token_success() throws Exception {
@@ -303,26 +281,6 @@ public class MemberControllerTest extends ApiDocument {
         ResultActions resultActions = 잘못된_로그아웃_요청();
         // then
         로그아웃_실패(resultActions, new Message(ErrorMessage.EXPIRED_TOKEN));
-    }
-
-    private ResultActions 이메일_중복_확인_요청(EmailRequest emailRequest) throws Exception {
-        return mockMvc.perform(post("/api/v1/members/join/email/check")
-                .contextPath("/api/v1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(emailRequest)));
-    }
-
-    private void 이메일_중복_확인_성공(ResultActions resultActions) throws Exception {
-        resultActions.andExpect(status().isOk())
-                .andDo(print())
-                .andDo(toDocument("check-email-success"));
-    }
-
-    private void 이메일_중복_확인_실패(ResultActions resultActions, Message message) throws Exception {
-        resultActions.andExpect(status().isInternalServerError())
-                .andExpect(content().json(toJson(message)))
-                .andDo(print())
-                .andDo(toDocument("check-email-fail"));
     }
 
     private ResultActions 인증코드_전송_요청(String email) throws Exception {
