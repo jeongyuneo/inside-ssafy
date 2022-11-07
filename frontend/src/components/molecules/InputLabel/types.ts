@@ -1,14 +1,6 @@
 import { ChangeEvent } from 'react';
+import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
-
-export interface AccountValueTypes {
-  [key: string]: string;
-  userId: string;
-  userPw: string;
-  email: string;
-  address: string;
-  studentNum: string;
-}
 
 export interface PropTypes {
   id: string;
@@ -19,6 +11,7 @@ export interface PropTypes {
   height?: number;
   type?: string;
   placeholder?: string;
+  disabled?: boolean;
   inputFontSize?: number;
   inputTextColor?: string;
   inputBackgroundColor?: string;

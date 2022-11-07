@@ -29,6 +29,6 @@ public class Route extends BaseEntity {
     private BusStop busStop;
 
     public void update() {
-        bus.arriveAt(busStop);
+        bus.arriveAt(this);
     }
 }

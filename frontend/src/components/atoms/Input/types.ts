@@ -1,5 +1,5 @@
 import { ChangeEvent, ChangeEventHandler } from 'react';
-import { AccountValueTypes } from '../../molecules/InputLabel/types';
+import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
 
 export interface PropTypes {
@@ -9,13 +9,14 @@ export interface PropTypes {
   fontSize?: number;
   textColor?: string;
   backgroundColor?: string;
-  changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
   type?: string;
   id?: string;
   placeholder?: string;
+  disabled?: boolean;
   borderRadius?: number;
   paddingLeft?: number;
   inputs?: AccountValueTypes | LoginInputsType;
   value?: string;
+  changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
