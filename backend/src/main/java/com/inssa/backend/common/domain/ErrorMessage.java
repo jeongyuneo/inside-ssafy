@@ -17,7 +17,6 @@ public enum ErrorMessage {
     NOT_FOUND_BUS_LIKE("해당 버스 즐겨찾기를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE_IMAGE("해당 노선 이미지를 찾을 수 없습니다."),
     NOT_FOUND_ROUTE("해당 경로를 찾을 수 없습니다."),
-    NOT_FOUND_AUTHORITY("해당 권한을 찾을 수 없습니다."),
     NOT_FOUND_TOKEN("토큰을 찾을 수 없습니다."),
 
     NOT_EQUAL_VALIDATION_TOKEN("인증코드가 일치하지 않습니다."),
@@ -33,6 +32,7 @@ public enum ErrorMessage {
     EXPIRED_TOKEN("만료된 토큰입니다."),
     EXPIRED_VALIDATION_TOKEN("인증코드가 만료되었습니다."),
 
+    FAIL_TO_CHECK_EMAIL("이메일 중복 확인에 실패했습니다."),
     FAIL_TO_SEND_VALIDATION_TOKEN("인증코드 전송에 실패했습니다."),
     FAIL_TO_JOIN("회원 가입에 실패했습니다."),
     FAIL_TO_GET_POSTS("익명 게시판 목록 조회에 실패했습니다."),
@@ -42,6 +42,7 @@ public enum ErrorMessage {
     FAIL_TO_CREATE_MENU("식단 등록에 실패했습니다."),
     FAIL_TO_SAVE_FILE("파일 저장에 실패했습니다."),
 
+    EXISTING_EMAIL("이미 가입된 이메일입니다."),
     EXISTING_POST_LIKE("이미 좋아요한 게시물입니다."),
     EXISTING_BUS_LIKE("이미 즐겨차기에 추가된 버스입니다."),
 
