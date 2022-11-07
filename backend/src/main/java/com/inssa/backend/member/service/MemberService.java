@@ -37,9 +37,7 @@ public class MemberService {
 
     public void sendValidationToken(EmailRequest emailRequest) {
         String email = emailRequest.getEmail();
-        if (memberRepository.existsByEmail(email)) {
-            throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
-        }
+        checkEmail(email);
         String validationToken = MailUtil.createValidationToken();
         RedisUtil.setValidationTokenDuration(email, validationToken, VALIDATION_TOKEN_DURATION);
         MailUtil.sendEmail(email, VALIDATION_EMAIL_SUBJECT,
@@ -118,5 +116,11 @@ public class MemberService {
     private Member findMemberByEmail(String email) {
         return memberRepository.findByEmailAndIsActiveTrue(email)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
+    }
+
+    private void checkEmail(String email) {
+        if (memberRepository.existsByEmail(email)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
+        }
     }
 }
