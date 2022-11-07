@@ -4,7 +4,7 @@ import Text from '../../atoms/Text';
 import {
   CurrentBusLocation,
   EachLocation,
-  StyledBusInfoBody,
+  StyledFavoriteBusBody,
   TextWrapper,
 } from './styles';
 import { PropTypes } from './types';
@@ -21,7 +21,7 @@ import {
  */
 const FavoriteBusBody = ({ previousBusStop, nextBusStop }: PropTypes) => {
   return (
-    <StyledBusInfoBody>
+    <StyledFavoriteBusBody>
       <Image width="6rem" src="/images/favorite_bus.png" alt="bus" />
       <CurrentBusLocation>
         <EachLocation>
@@ -40,7 +40,7 @@ const FavoriteBusBody = ({ previousBusStop, nextBusStop }: PropTypes) => {
           <Text>{nextBusStop}</Text>
         </EachLocation>
       </CurrentBusLocation>
-    </StyledBusInfoBody>
+    </StyledFavoriteBusBody>
   );
 };
 

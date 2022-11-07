@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledBusInfoBody = styled.div`
+export const StyledFavoriteBusBody = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
