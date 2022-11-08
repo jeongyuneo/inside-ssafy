@@ -6,7 +6,6 @@ export interface LoginInputsType {
 
 export interface SuccessLoginType {
   accessToken: string;
-  refreshToken: string;
 }
 
 export interface SaveEmailType {
