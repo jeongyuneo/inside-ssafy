@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -38,6 +39,7 @@ public class MenuControllerTest extends ApiDocument {
 
     private static final Long ID = 1L;
     private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(", ")).collect(Collectors.toList());
+    private static final List<String> SUB_ITEMS = Collections.singletonList("샐러드/숭늉");
     private static final LocalDate DATE = LocalDate.parse("2022-10-27");
     private static final String DAY_OF_THE_WEEK = "목";
     private static final LocalDate START_DATE = LocalDate.parse("2022-10-31");
@@ -65,6 +67,7 @@ public class MenuControllerTest extends ApiDocument {
                 .date(DATE)
                 .dayOfTheWeek(DAY_OF_THE_WEEK)
                 .items(ITEMS)
+                .subItems(SUB_ITEMS)
                 .build();
         menuResponse = MenuResponse.builder()
                 .startDate(START_DATE)
