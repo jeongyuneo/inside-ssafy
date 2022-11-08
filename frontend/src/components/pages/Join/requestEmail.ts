@@ -42,7 +42,7 @@ export const validateEmailToken = async ({
 }: AccountValueTypes) => {
   const returnData = {
     status: false,
-    message: '인증에 문제가 발생하였습니다?',
+    message: '인증에 문제가 발생하였습니다',
   };
   try {
     const { status }: { status: number } = await axios({
