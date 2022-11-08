@@ -16,13 +16,13 @@ const LikeComment = ({ likeCount, commentCount }: PropTypes) => {
       <TextWrapper>
         <FaRegThumbsUp color="#D55555" size={15} />
         <Text color="#D55555" size={0.9}>
-          {likeCount}
+          {likeCount.toString()}
         </Text>
       </TextWrapper>
       <TextWrapper>
         <FaRegCommentDots color="#5B9CCE" size={15} />
         <Text color="#5B9CCE" size={0.9}>
-          {commentCount}
+          {commentCount.toString()}
         </Text>
       </TextWrapper>
     </StyledLikeComment>
