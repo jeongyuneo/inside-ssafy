@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
@@ -54,6 +55,10 @@ public class PostControllerTest extends ApiDocument {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
+    private static final String PAGE_PARAMETER_NAME = "page";
+    private static final int PAGE = 1;
+    private static final String SIZE_PARAMETER_NAME = "size";
+    private static final int SIZE = 5;
 
     @MockBean
     private PostService postService;
@@ -93,7 +98,7 @@ public class PostControllerTest extends ApiDocument {
                         .reCommentResponses(reCommentResponses)
                         .build())
                 .collect(Collectors.toList());
-        postsResponses = IntStream.range(0, 2)
+        postsResponses = IntStream.range(PAGE * SIZE, (PAGE + 1) * SIZE)
                 .mapToObj(n -> postsResponse)
                 .collect(Collectors.toList());
         postResponse = PostResponse.builder()
@@ -118,7 +123,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void get_posts_success() throws Exception {
         // given
-        willReturn(postsResponses).given(postService).getPosts();
+        willReturn(postsResponses).given(postService).getPosts(any(Pageable.class));
         // when
         ResultActions resultActions = 익명_게시판_목록_조회_요청();
         // then
@@ -129,7 +134,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void get_posts_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_GET_POSTS.getMessage())).given(postService).getPosts();
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_GET_POSTS.getMessage())).given(postService).getPosts(any(Pageable.class));
         // when
         ResultActions resultActions = 익명_게시판_목록_조회_요청();
         // then
@@ -293,7 +298,9 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_목록_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .param(PAGE_PARAMETER_NAME, String.valueOf(PAGE))
+                .param(SIZE_PARAMETER_NAME, String.valueOf(SIZE)));
     }
 
     private void 익명_게시판_목록_조회_성공(ResultActions resultActions) throws Exception {
