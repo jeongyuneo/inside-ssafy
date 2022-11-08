@@ -10,13 +10,13 @@ import { PostSummaryTypes } from './types';
  *
  * @author jini
  */
-const PostSummary = ({ title, date, ...rest }: PostSummaryTypes) => {
+const PostSummary = ({ title, createdDate, ...rest }: PostSummaryTypes) => {
   return (
     <StyledPostSummary>
       <Text size={1}>{title}</Text>
       <IconTextWrapper>
         <LikeComment {...rest}></LikeComment>
-        <Text size={0.7}>{date}</Text>
+        <Text size={0.7}>{createdDate}</Text>
       </IconTextWrapper>
     </StyledPostSummary>
   );
