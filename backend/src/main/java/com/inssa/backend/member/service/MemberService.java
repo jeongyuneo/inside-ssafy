@@ -108,6 +108,12 @@ public class MemberService {
         };
     }
 
+    private void checkEmail(String email) {
+        if (memberRepository.existsByEmail(email)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
+        }
+    }
+
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
@@ -116,11 +122,5 @@ public class MemberService {
     private Member findMemberByEmail(String email) {
         return memberRepository.findByEmailAndIsActiveTrue(email)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
-    private void checkEmail(String email) {
-        if (memberRepository.existsByEmail(email)) {
-            throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
-        }
     }
 }
