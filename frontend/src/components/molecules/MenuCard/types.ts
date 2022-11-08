@@ -1,7 +1,7 @@
 export interface MenuCardTypes {
-  title: string;
-  menus: string[];
-  subMenus: string[];
+  dayOfTheWeek: string;
+  items: string[];
+  subItems: string[];
   backgroundColor?: string;
   width?: number;
   height?: number;

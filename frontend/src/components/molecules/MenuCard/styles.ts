@@ -38,3 +38,5 @@ export const StyledHr = styled.hr`
   border-left: 0;
   border-right: 0;
 `;
+
+export const StyledBr = styled.br``;
