@@ -42,7 +42,9 @@ const Login = () => {
       setValidated(true);
       saveEmail({ checked, email: inputs['email'] });
       window.alert('로그인 성공!');
-      navigate('/');
+      navigate('/businfo');
+    } else {
+      setValidated(false);
     }
   };
 

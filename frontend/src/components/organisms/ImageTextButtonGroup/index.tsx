@@ -28,7 +28,7 @@ const ImageTextButtonGroup = () => {
     {
       src: './images/tayo_bus.png',
       alt: 'bus',
-      clickHandler: () => movePage('myPage'),
+      clickHandler: () => movePage('businfo'),
       text: '셔틀 정보',
     },
     {
