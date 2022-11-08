@@ -59,12 +59,10 @@ public class BusService {
             return;
         }
 
-        member.addBusLike(
-                BusLike.builder()
-                        .member(member)
-                        .bus(bus)
-                        .build()
-        );
+        member.addBusLike(BusLike.builder()
+                .member(member)
+                .bus(bus)
+                .build());
         memberRepository.save(member);
     }
 
