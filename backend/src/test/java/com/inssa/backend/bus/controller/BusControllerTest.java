@@ -36,6 +36,8 @@ public class BusControllerTest extends ApiDocument {
     private static final int NUMBER = 1;
     private static final String NUMBER_PARAMETER_NAME = "number";
     private static final boolean IS_LAST = true;
+    private static final boolean HAS_BUS_LIKE = true;
+    private static final int BUS_STOP_INDEX = 1;
     private static final String BUS_STOP_NAME = "삼성화재연수원";
     private static final int BUS_NUMBER = 1;
     private static final String PREVIOUS_BUS_STOP = "수통골";
@@ -70,7 +72,8 @@ public class BusControllerTest extends ApiDocument {
                 .build();
         busResponse = BusResponse.builder()
                 .isLast(IS_LAST)
-                .lastVisitedBusStop(BUS_STOP_NAME)
+                .hasBusLike(HAS_BUS_LIKE)
+                .lastVisitedBusStop(BUS_STOP_INDEX)
                 .busStops(IntStream.range(0, 2)
                         .mapToObj(n -> BUS_STOP_NAME)
                         .collect(Collectors.toList()))
@@ -90,7 +93,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void get_bus_success() throws Exception {
         // given
-        willReturn(busResponse).given(busService).getBus(anyInt());
+        willReturn(busResponse).given(busService).getBus(anyLong(), anyInt());
         // when
         ResultActions resultActions = 버스_조회_요청(NUMBER);
         // then
@@ -101,7 +104,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void get_bus_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getBus(anyInt());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getBus(anyLong(), anyInt());
         // when
         ResultActions resultActions = 버스_조회_요청(NUMBER);
         // then
