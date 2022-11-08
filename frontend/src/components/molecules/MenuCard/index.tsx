@@ -1,6 +1,7 @@
 import React from 'react';
 import Text from '../../atoms/Text';
 import {
+  StyledBr,
   StyledHr,
   StyledMenu,
   StyledMenuCard,
@@ -16,34 +17,30 @@ import { MenuCardTypes } from './types';
  * @author jun
  */
 const MenuCard = ({
-  title,
-  menus,
-  subMenus,
-  width,
-  height,
-  backgroundColor,
+  items,
+  subItems,
   fontSize,
+  dayOfTheWeek,
+  ...menuCardRest
 }: MenuCardTypes) => {
   return (
     <StyledMenuCard
-      title={title}
-      menus={menus}
-      subMenus={subMenus}
-      width={width}
-      height={height}
-      backgroundColor={backgroundColor}
+      dayOfTheWeek={dayOfTheWeek}
+      items={items}
+      subItems={subItems}
+      {...menuCardRest}
     >
       <StyledTitle>
         <Text size={fontSize ? fontSize + 0.2 : 1} bold={true}>
-          {title}
+          {dayOfTheWeek}
         </Text>
       </StyledTitle>
       <StyledHr />
       <StyledMenu>
-        {!menus.length ? (
+        {!items.length ? (
           <Text bold={true}>미운영</Text>
         ) : (
-          menus.map(menu => (
+          items.map(menu => (
             <Text size={fontSize ? fontSize : 0.8} key={menu}>
               {menu}
             </Text>
@@ -52,12 +49,15 @@ const MenuCard = ({
       </StyledMenu>
       <StyledHr />
       <StyledSubMenu>
-        {subMenus.length &&
-          subMenus.map(subMenu => (
-            <Text size={fontSize ? fontSize : 0.8} key={subMenu}>
-              {subMenu}
+        {!subItems.length ? (
+          <StyledBr />
+        ) : (
+          subItems.map(subItem => (
+            <Text size={fontSize ? fontSize : 0.8} key={subItem}>
+              {subItem}
             </Text>
-          ))}
+          ))
+        )}
       </StyledSubMenu>
     </StyledMenuCard>
   );
