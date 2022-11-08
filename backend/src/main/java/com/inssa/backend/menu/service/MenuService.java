@@ -28,6 +28,7 @@ public class MenuService {
                         .date(menuRequest.getDate())
                         .dayOfTheWeek(menuRequest.getDayOfTheWeek())
                         .item(String.join(DELIMITER, menuRequest.getItems()))
+                        .subItem(String.join(DELIMITER, menuRequest.getSubItems()))
                         .build()
         );
     }
