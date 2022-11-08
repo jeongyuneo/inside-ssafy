@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { AccountValueTypes, FailToJoin } from './types';
 
 export const requestEmailToken = async ({ email }: AccountValueTypes) => {
@@ -7,6 +7,7 @@ export const requestEmailToken = async ({ email }: AccountValueTypes) => {
     status: false,
     message: '인증에 문제가 발생하였습니다',
   };
+
   try {
     const { status }: { status: number } = await axios({
       method: 'POST',
@@ -20,14 +21,17 @@ export const requestEmailToken = async ({ email }: AccountValueTypes) => {
       returnData.message = '인증번호가 전송되었습니다.';
       returnData.status = true;
       return returnData;
-    } else if (status === 400) {
-      returnData.message = '이미 가입된 메일입니다.';
-      return returnData;
     }
     return returnData;
   } catch (e) {
-    console.log('error');
-    console.log(e);
+    if (e instanceof AxiosError) {
+      const status = e.response?.status;
+      switch (status) {
+        case 400:
+          returnData.message = '이미 가입된 아이디입니다.';
+          break;
+      }
+    }
     return returnData;
   }
 };
@@ -38,7 +42,7 @@ export const validateEmailToken = async ({
 }: AccountValueTypes) => {
   const returnData = {
     status: false,
-    message: '인증에 문제가 발생하였습니다',
+    message: '인증에 문제가 발생하였습니다?',
   };
   try {
     const { status }: { status: number } = await axios({
@@ -56,7 +60,6 @@ export const validateEmailToken = async ({
     }
     return returnData;
   } catch (e) {
-    console.log('error!');
     console.log(e);
     return returnData;
   }
@@ -80,6 +83,7 @@ export const joinRequest = async ({
       },
     });
     if (status === 200) {
+      alert('인증 성공하였습니다.');
       return true;
     }
     return false;
