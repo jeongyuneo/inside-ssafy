@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import BusInfoImageModal from '../../organisms/BusInfoImageModal';
 import BusInfoBody from '../../organisms/BusInfoBody';
-import { StyledBusInfo } from './styles';
-import { useNavigate } from 'react-router-dom';
 import BusInfoHeader from '../../organisms/BusInfoHeader';
-import { useQuery } from '@tanstack/react-query';
-import getBusInfo from './getBusInfo';
 import { BusInfoImageType, BusInfoType } from './types';
+import { StyledBusInfo } from './styles';
+import getBusInfo from './getBusInfo';
 import getBusInfoImage from './getBusInfoImage';
-import axios from 'axios';
 
 /**
  * 해당 페이지의 liked 유무를 받아와서 liked 상태를 변경해 렌더링
@@ -61,8 +60,6 @@ const BusInfo = () => {
   };
 
   useEffect(() => {
-    console.log(axios.defaults);
-
     console.log(busInfo);
 
     busInfo && setCurrentStop(busInfo.lastVisitedBusStop);
