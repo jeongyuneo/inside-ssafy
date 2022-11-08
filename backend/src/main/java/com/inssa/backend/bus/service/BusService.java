@@ -67,8 +67,7 @@ public class BusService {
     }
 
     public void deleteBusLike(Long memberId, int number) {
-        BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveTrue(findMember(memberId), findBusByNumber(number))
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+        BusLike busLike = findBusLikeByMemberAndBus(memberId, number);
         busLike.delete();
         busLikeRepository.save(busLike);
     }
@@ -139,6 +138,11 @@ public class BusService {
     private Bus findBusByNumber(int number) {
         return busRepository.findByNumberAndIsActiveTrue(number)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
+    }
+
+    private BusLike findBusLikeByMemberAndBus(Long memberId, int number) {
+        return busLikeRepository.findByMemberAndBusAndIsActiveTrue(findMember(memberId), findBusByNumber(number))
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
     }
 
     private void validateBusAvailability(Route lastVisited) {
