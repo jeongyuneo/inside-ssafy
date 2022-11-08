@@ -14,4 +14,5 @@ public class MenuRequest {
     private LocalDate date;
     private String dayOfTheWeek;
     private List<String> items;
+    private List<String> subItems;
 }
