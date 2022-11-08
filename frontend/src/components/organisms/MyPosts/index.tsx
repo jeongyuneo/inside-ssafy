@@ -1,7 +1,7 @@
 import React from 'react';
 import Text from '../../atoms/Text';
 import PostSummary from '../../molecules/PostSummary';
-import { StyledMyPosts, PostSummaryWrapper } from './styles';
+import { StyledMyPosts, PostSummaryWrapper, TextWrapper } from './styles';
 import { PostsTypes } from './types';
 
 /**
@@ -13,7 +13,9 @@ import { PostsTypes } from './types';
 const MyPosts = ({ postsInfo }: PostsTypes) => {
   return (
     <StyledMyPosts>
-      <Text size={1.4}>내가 작성한 글</Text>
+      <TextWrapper>
+        <Text size={1.4}>내가 작성한 글</Text>
+      </TextWrapper>
       <PostSummaryWrapper>
         {postsInfo.map(({ postId, ...rest }) => (
           <PostSummary key={postId} {...rest} />

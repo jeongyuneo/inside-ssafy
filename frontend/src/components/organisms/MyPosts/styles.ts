@@ -12,7 +12,11 @@ export const PostSummaryWrapper = styled.div`
   flex-direction: column;
   background: #d1ebfa;
   height: 25rem;
-  border-radius: 10%;
+  border-radius: 1rem;
   padding: 2rem;
   gap: 1rem;
+`;
+
+export const TextWrapper = styled.div`
+  padding-left: 1rem;
 `;
