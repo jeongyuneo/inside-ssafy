@@ -1,6 +1,6 @@
 import { MenuCardTypes } from '../../molecules/MenuCard/types';
 
-export interface PropTypes {
+export interface MenuCardsTypes {
   menus: MenuCardTypes[];
   width?: number;
   height?: number;

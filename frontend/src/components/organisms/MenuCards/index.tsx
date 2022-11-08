@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuCard from '../../molecules/MenuCard';
 import { MenuCardsWrapper, MenuCardWrapper, StyledMenuCards } from './styles';
-import { PropTypes } from './types';
+import { MenuCardsTypes } from './types';
 
 /**
  * 식단표 정보를 출력
@@ -10,7 +10,7 @@ import { PropTypes } from './types';
  * @author jun
  */
 
-const MenuCards = ({ menus, cardColor, ...menuRest }: PropTypes) => {
+const MenuCards = ({ menus, cardColor, ...menuRest }: MenuCardsTypes) => {
   return (
     <StyledMenuCards menus={menus} {...menuRest}>
       <MenuCardsWrapper>
