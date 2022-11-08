@@ -14,14 +14,14 @@ const MenuCards = ({ menus, ...menuRest }: PropTypes) => {
   return (
     <StyledMenuCards menus={menus} {...menuRest}>
       <MenuCardsWrapper>
-        {menus.map(item => (
-          <MenuCardWrapper key={item.date}>
+        {menus.map(({ dayOfTheWeek, items, date }) => (
+          <MenuCardWrapper key={date}>
             <MenuCard
               // 머지하여 menuCard와 합친 뒤 수정할 예정
-              title={item.dayOfTheWeek}
-              menus={item.items}
+              title={dayOfTheWeek}
+              menus={items}
               subMenus={['숭늉']}
-              key={item.date}
+              key={date}
               {...menuRest}
             />
           </MenuCardWrapper>
