@@ -30,4 +30,7 @@ public class Menu extends BaseEntity {
 
     @Column(nullable = false)
     private String item;
+
+    @Column(nullable = false)
+    private String subItem;
 }
