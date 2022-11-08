@@ -7,6 +7,7 @@ import Join from './components/pages/Join';
 import Login from './components/pages/Login';
 import MyPage from './components/pages/MyPage';
 import Main from './components/pages/Main';
+import Menu from './components/pages/Menu';
 
 function App() {
   const queryClient = new QueryClient();
@@ -20,6 +21,7 @@ function App() {
           <Route path="/join" element={<Join />} />
           <Route path="/businfo" element={<BusInfo />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/menu" element={<Menu />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
