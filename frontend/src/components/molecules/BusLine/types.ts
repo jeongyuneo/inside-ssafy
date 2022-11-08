@@ -1,4 +1,4 @@
 export interface PropTypes {
   currentStop: number;
-  busStops: string[];
+  busStops?: string[];
 }
