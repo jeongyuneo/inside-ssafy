@@ -28,6 +28,7 @@ public class MenuService {
                         .date(menuRequest.getDate())
                         .dayOfTheWeek(menuRequest.getDayOfTheWeek())
                         .item(String.join(DELIMITER, menuRequest.getItems()))
+                        .subItem(String.join(DELIMITER, menuRequest.getSubItems()))
                         .build()
         );
     }
@@ -39,6 +40,7 @@ public class MenuService {
                         .date(menu.getDate())
                         .dayOfTheWeek(menu.getDayOfTheWeek())
                         .items(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()))
+                        .subItems(Arrays.stream(menu.getSubItem().split(DELIMITER)).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
         return MenuResponse.builder()
