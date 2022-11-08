@@ -10,22 +10,24 @@ import { PropTypes } from './types';
  * @author jun
  */
 
-const MenuCards = ({ menus, ...menuRest }: PropTypes) => {
+const MenuCards = ({ menus, cardColor, ...menuRest }: PropTypes) => {
   return (
     <StyledMenuCards menus={menus} {...menuRest}>
       <MenuCardsWrapper>
-        {menus.map(({ dayOfTheWeek, items, date }) => (
-          <MenuCardWrapper key={date}>
-            <MenuCard
-              // 머지하여 menuCard와 합친 뒤 수정할 예정
-              title={dayOfTheWeek}
-              menus={items}
-              subMenus={['숭늉']}
-              key={date}
-              {...menuRest}
-            />
-          </MenuCardWrapper>
-        ))}
+        {menus.map(
+          ({ dayOfTheWeek, subItems, items, backgroundColor, ...menuRest }) => (
+            <MenuCardWrapper key={dayOfTheWeek}>
+              <MenuCard
+                dayOfTheWeek={dayOfTheWeek}
+                items={items}
+                subItems={subItems}
+                key={dayOfTheWeek}
+                backgroundColor={cardColor}
+                {...menuRest}
+              />
+            </MenuCardWrapper>
+          ),
+        )}
       </MenuCardsWrapper>
     </StyledMenuCards>
   );
