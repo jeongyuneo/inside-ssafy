@@ -12,9 +12,9 @@ export const placeholder = [
   '이름을 입력하세요',
   '학번을 입력하세요',
   'user@gmail.com',
-  '',
+  '이메일 인증번호를 입력하세요',
   '8자 이상 20자 이하로 입력하세요',
-  '',
+  '비밀번호를 다시 입력하세요',
 ];
 export const inputNames = [
   'name',
@@ -29,7 +29,7 @@ export const labelName = [
   '이름',
   '학번',
   '이메일',
-  '이메일 인증',
+  '이메일 인증번호',
   '비밀번호',
   '비밀번호 확인',
 ];
