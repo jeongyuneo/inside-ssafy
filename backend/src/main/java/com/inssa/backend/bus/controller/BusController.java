@@ -20,8 +20,8 @@ public class BusController {
     private final BusService busService;
 
     @GetMapping
-    public ResponseEntity<BusResponse> getBus(@RequestParam int number) {
-        return ResponseEntity.ok().body(busService.getBus(number));
+    public ResponseEntity<BusResponse> getBus(@RequestHeader("Authorization") String token, @RequestParam int number) {
+        return ResponseEntity.ok().body(busService.getBus(JwtUtil.getMemberId(token), number));
     }
 
     @PostMapping("/like")

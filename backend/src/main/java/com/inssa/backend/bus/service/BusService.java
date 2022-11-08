@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 public class BusService {
 
     private static final String SITE_URL = "https://inside-ssafy.com";
-    private static final String NO_VISITED_BUS_STOP = "none";
     private static final int TOTAL_BUS_NUMBER = 6;
 
     private final BusRepository busRepository;
@@ -34,13 +33,18 @@ public class BusService {
     private final BusLikeRepository busLikeRepository;
     private final MemberRepository memberRepository;
 
-    public BusResponse getBus(int number) {
+    public BusResponse getBus(Long memberId, int number) {
         Bus bus = findBusByNumber(number);
-        Route lastVisited = bus.getLastVisited();
-        if (bus.getLastVisited() == null) {
-            return getBusResponse(bus, NO_VISITED_BUS_STOP, number == TOTAL_BUS_NUMBER);
-        }
-        return getBusResponse(bus, lastVisited.getBusStop().getName(), number == TOTAL_BUS_NUMBER);
+        return BusResponse.builder()
+                .isLast(number == TOTAL_BUS_NUMBER)
+                .hasBusLike(busLikeRepository.existsByMemberAndBusAndIsActiveTrue(findMember(memberId), bus))
+                .lastVisitedBusStop(bus.getRoutes().indexOf(bus.getLastVisited()))
+                .busStops(bus.getRoutes()
+                        .stream()
+                        .map(Route::getBusStop)
+                        .map(BusStop::getName)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     @Transactional
@@ -119,18 +123,6 @@ public class BusService {
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
-    private BusResponse getBusResponse(Bus bus, String lastVisitedBusStop, boolean isLast) {
-        return BusResponse.builder()
-                .lastVisitedBusStop(lastVisitedBusStop)
-                .busStops(bus.getRoutes()
-                        .stream()
-                        .map(Route::getBusStop)
-                        .map(BusStop::getName)
-                        .collect(Collectors.toList()))
-                .isLast(isLast)
-                .build();
     }
 
     private Route findRoute(Long routeId) {
