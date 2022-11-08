@@ -61,6 +61,7 @@ public class MenuControllerTest extends ApiDocument {
                         .date(DATE)
                         .dayOfTheWeek(DAY_OF_THE_WEEK)
                         .items(ITEMS)
+                        .subItems(SUB_ITEMS)
                         .build())
                 .collect(Collectors.toList());
         menuRequest = MenuRequest.builder()
