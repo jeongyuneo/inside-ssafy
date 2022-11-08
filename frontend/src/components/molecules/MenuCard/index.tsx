@@ -7,7 +7,7 @@ import {
   StyledSubMenu,
   StyledTitle,
 } from './styles';
-import { PropTypes } from './types';
+import { MenuCardTypes } from './types';
 
 /**
  * Text 컴포넌트를 나열해 식단을 표시
@@ -23,7 +23,7 @@ const MenuCard = ({
   height,
   backgroundColor,
   fontSize,
-}: PropTypes) => {
+}: MenuCardTypes) => {
   return (
     <StyledMenuCard
       title={title}

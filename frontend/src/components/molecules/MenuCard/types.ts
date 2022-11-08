@@ -1,4 +1,4 @@
-export interface PropTypes {
+export interface MenuCardTypes {
   title: string;
   menus: string[];
   subMenus: string[];
