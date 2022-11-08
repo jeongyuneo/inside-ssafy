@@ -9,14 +9,10 @@ import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.member.domain.PostLike;
 import com.inssa.backend.member.domain.PostLikeRepository;
 import com.inssa.backend.post.controller.dto.*;
-import com.inssa.backend.member.domain.PostLike;
-import com.inssa.backend.member.domain.PostLikeRepository;
-import com.inssa.backend.post.controller.dto.PostRequest;
-import com.inssa.backend.post.controller.dto.PostResponse;
-import com.inssa.backend.post.controller.dto.PostsResponse;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,8 +28,8 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final PostLikeRepository postLikeRepository;
 
-    public List<PostsResponse> getPosts() {
-        return postRepository.findByIsActiveTrue()
+    public List<PostsResponse> getPosts(Pageable pageable) {
+        return postRepository.findByIsActiveTrue(pageable)
                 .stream()
                 .map(post -> PostsResponse.builder()
                         .postId(post.getId())

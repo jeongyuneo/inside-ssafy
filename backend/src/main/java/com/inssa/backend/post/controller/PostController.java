@@ -6,6 +6,7 @@ import com.inssa.backend.post.controller.dto.PostsResponse;
 import com.inssa.backend.post.service.PostService;
 import com.inssa.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,8 +21,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<List<PostsResponse>> getPosts() {
-        return ResponseEntity.ok().body(postService.getPosts());
+    public ResponseEntity<List<PostsResponse>> getPosts(Pageable pageable) {
+        return ResponseEntity.ok().body(postService.getPosts(pageable));
     }
 
     @GetMapping("/search")
