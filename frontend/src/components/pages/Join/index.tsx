@@ -91,7 +91,10 @@ const Join = () => {
     }
     const timesub =
       TOKEN_TIMER - Math.floor((Date.now() - time.current) / 1000);
-    setTimerName(Math.floor(timesub / 60) + ':' + (timesub % 60));
+    setTimerName(`
+      ${Math.floor(timesub / 60)}
+        :
+        ${timesub % 60 < 10 ? '0' + (timesub % 60) : timesub % 60}`);
   };
 
   const initToken = () => {
@@ -144,7 +147,10 @@ const Join = () => {
         timer.current = setInterval(checkCertificateTimer, 1000);
         setIsInterval(true);
       }
-      setTimerName(Math.floor(timesub / 60) + ':' + (timesub % 60));
+      setTimerName(`
+      ${Math.floor(timesub / 60)}
+        :
+        ${timesub % 60 < 10 ? '0' + (timesub % 60) : timesub % 60}`);
     } else {
       setEmailMessage(prev => {
         return {
@@ -153,6 +159,10 @@ const Join = () => {
           color: 'red',
         };
       });
+      initToken();
+      time.current = 0;
+      setIsInterval(false);
+      clearInterval(timer.current);
     }
   };
 
@@ -226,8 +236,8 @@ const Join = () => {
             switch (index) {
               case 2:
                 return (
-                  <ValidateEmailWrapper>
-                    <StyledEmailWrapper key={inputName}>
+                  <ValidateEmailWrapper key={inputName}>
+                    <StyledEmailWrapper>
                       <InputLabel
                         id={inputName}
                         name={inputName}
@@ -259,8 +269,8 @@ const Join = () => {
                 );
               case 3:
                 return (
-                  <ValidateEmailWrapper>
-                    <StyledEmailWrapper key={inputName}>
+                  <ValidateEmailWrapper key={inputName}>
+                    <StyledEmailWrapper>
                       <InputLabel
                         id={inputName}
                         name={inputName}
