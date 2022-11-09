@@ -529,3 +529,10 @@ include::{snippets}/end-bus-success/http-request.adoc[]
 
 .response
 include::{snippets}/end-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/end-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/end-bus-fail/http-response.adoc[]
