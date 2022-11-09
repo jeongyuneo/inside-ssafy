@@ -19,9 +19,7 @@ export const requestMenu = async () => {
       method: 'GET',
       url: '/api/v1/menus',
     });
-    returnData.startDate = data.startDate;
-    returnData.endDate = data.endDate;
-    return returnData;
+    return data;
   } catch (e) {
     console.log(e);
     return returnData;
