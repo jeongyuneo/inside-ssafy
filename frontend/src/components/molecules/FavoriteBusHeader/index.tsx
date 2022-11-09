@@ -1,7 +1,7 @@
 import React from 'react';
 import RefreshButton from '../../atoms/RefreshButton';
 import Text from '../../atoms/Text';
-import { ButtonsWrapper, StyledBusInfoHeader } from './styles';
+import { ButtonsWrapper, StyledFavoriteBusHeader } from './styles';
 import { PropTypes } from './types';
 import { BsPlusLg } from 'react-icons/bs';
 
@@ -16,17 +16,17 @@ const FavoriteBusHeader = ({
   clickPlusHandler,
 }: PropTypes) => {
   return (
-    <StyledBusInfoHeader>
-      <Text size={1.5}>{busNum + '호차'}</Text>
+    <StyledFavoriteBusHeader>
+      <Text size={1.2}>{`${busNum}호차`}</Text>
       <ButtonsWrapper>
         <RefreshButton
-          wrapperSize={2}
-          buttonSize={20}
+          wrapperSize={1.5}
+          buttonSize={16}
           clickRefreshHandler={clickRefreshHandler}
         />
         <BsPlusLg onClick={clickPlusHandler} />
       </ButtonsWrapper>
-    </StyledBusInfoHeader>
+    </StyledFavoriteBusHeader>
   );
 };
 
