@@ -54,7 +54,7 @@ const MenuCard = ({
         ) : (
           subItems.map(subItem =>
             !subItem.length ? (
-              <StyledBr />
+              <StyledBr key={subItem} />
             ) : (
               <Text size={fontSize ? fontSize : 0.8} key={subItem}>
                 {subItem}
