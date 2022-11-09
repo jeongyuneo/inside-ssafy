@@ -1,16 +1,10 @@
 import axios from 'axios';
+import { menus } from './testdata';
 import { MenuTypes } from './types';
 
 export const requestMenu = async () => {
   const returnData: MenuTypes = {
-    menus: [
-      {
-        date: '',
-        dayOfTheWeek: '?',
-        items: [],
-        subItems: [],
-      },
-    ],
+    menus: menus,
     startDate: '????-??-??',
     endDate: '????-??-??',
   };
