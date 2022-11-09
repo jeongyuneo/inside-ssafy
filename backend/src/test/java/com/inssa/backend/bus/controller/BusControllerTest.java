@@ -201,7 +201,7 @@ public class BusControllerTest extends ApiDocument {
 
     @DisplayName("버스 운행 시작 성공")
     @Test
-    void start_bus_service_success() throws Exception {
+    void start_bus_success() throws Exception {
         // given
         willReturn(routeResponses).given(busService).startBus(anyInt());
         // when
@@ -212,7 +212,7 @@ public class BusControllerTest extends ApiDocument {
 
     @DisplayName("버스 운행 시작 실패")
     @Test
-    void start_bus_service_fail() throws Exception {
+    void start_bus_fail() throws Exception {
         // given
         willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).startBus(anyInt());
         // when
