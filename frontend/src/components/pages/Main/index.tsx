@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import clickBusNumHandler from '../../../utils/clickBusNumHandler';
 import FavoriteBusCarosel from '../../organisms/FavoriteBusCarosel';
 import ImageTextButtonGroup from '../../organisms/ImageTextButtonGroup';
+import { getImageInfos } from './getImageInfos';
 
 const Main = () => {
   const [busNum, setBusNum] = useState(1);
+  const navigate = useNavigate();
 
   const clickRefreshHandler = () => {
     console.log('refresh');
@@ -20,7 +23,7 @@ const Main = () => {
 
   return (
     <>
-      <ImageTextButtonGroup />
+      <ImageTextButtonGroup imageTextInfos={getImageInfos(navigate)} />
       <FavoriteBusCarosel
         busNum={busNum}
         previousBusStop="충대 정문"
