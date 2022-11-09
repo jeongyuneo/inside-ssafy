@@ -1,9 +1,6 @@
 package com.inssa.backend.bus.controller;
 
-import com.inssa.backend.bus.controller.dto.BusLikeResponse;
-import com.inssa.backend.bus.controller.dto.BusResponse;
-import com.inssa.backend.bus.controller.dto.RouteImageResponse;
-import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.controller.dto.*;
 import com.inssa.backend.bus.service.BusService;
 import com.inssa.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -58,8 +55,8 @@ public class BusController {
     }
 
     @PatchMapping("/end")
-    public ResponseEntity<Void> endBus(@RequestParam int number) {
-        busService.endBus(number);
+    public ResponseEntity<Void> endBus(@RequestBody BusRequest busRequest) {
+        busService.endBus(busRequest);
         return ResponseEntity.ok().build();
     }
 }
