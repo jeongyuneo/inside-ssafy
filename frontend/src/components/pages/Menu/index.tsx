@@ -23,7 +23,10 @@ const Menu = () => {
     getMenuOfTheWeek();
   }, []);
 
-  const menuOfTheWeek = useQuery<MenuTypes>([''], () => requestMenu());
+  const { data: menuOfTheWeek } = useQuery<MenuTypes>(
+    ['requestMenuOfWeek'],
+    () => requestMenu(),
+  );
 
   return (
     <StyledMenu>
@@ -34,7 +37,7 @@ const Menu = () => {
         ></MenuWeek>
       </MenuWeekWrapper>
       <MenuCardsWrapper>
-        <MenuCards menus={menuOfWeek.menus}></MenuCards>
+        <MenuCards menus={menuOfTheWeek.menus}></MenuCards>
       </MenuCardsWrapper>
     </StyledMenu>
   );
