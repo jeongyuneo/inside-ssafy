@@ -1,24 +1,27 @@
 import axios from 'axios';
-import { MenuCardsTypes } from '../../organisms/MenuCards/types';
+import { MenuTypes } from './types';
 
 export const requestMenu = async () => {
-  console.log('request');
-  const errorData: MenuCardsTypes = {
-    menus: [],
+  const returnData: MenuTypes = {
+    menus: [
+      {
+        date: '',
+        dayOfTheWeek: '?',
+        items: [],
+        subItems: [],
+      },
+    ],
+    startDate: '????-??-??',
+    endDate: '????-??-??',
   };
   try {
-    const { status, data }: { status: number; data: MenuCardsTypes } =
-      await axios({
-        method: 'GET',
-        url: '/api/v1/menus',
-      });
-    console.log(status);
-    if (status === 200) {
-      return data;
-    }
-    return errorData;
+    const { data }: { data: MenuTypes } = await axios({
+      method: 'GET',
+      url: '/api/v1/menus',
+    });
+    return data;
   } catch (e) {
     console.log(e);
-    return errorData;
+    return returnData;
   }
 };

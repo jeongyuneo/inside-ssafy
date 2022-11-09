@@ -3,18 +3,17 @@ import styled from 'styled-components';
 export const StyledMenu = styled.div`
   display: flex;
   flex-direction: column;
-  justify-contents: center;
-  align-items: center;
-  gap: 2rem;
-  height: 100vh;
+  justify-content: center;
+  height: 90vh;
+  gap: 1rem;
 `;
 
 export const MenuWeekWrapper = styled.div`
   display: flex;
-  justify-contents: center;
+  justify-content: center;
 `;
 
 export const MenuCardsWrapper = styled.div`
   display: flex;
-  justify-contents: center;
+  justify-content: center;
 `;

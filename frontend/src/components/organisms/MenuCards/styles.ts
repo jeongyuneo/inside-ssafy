@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import { MenuCardsTypes } from './types';
+import { PropsTypes } from './types';
 
-export const StyledMenuCards = styled.div<MenuCardsTypes>`
-  width: ${({ width }) => width || 22}rem;
-  height: ${({ height }) => height || 80}vh;
+export const StyledMenuCards = styled.div<PropsTypes>`
+  width: 24rem;
+  height: 70vh;
   background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
   display: flex;
   flex-direction: column;
   justify-contents: center;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   padding-bottom: 1rem;
   overflow: auto;
   &::-webkit-scrollbar {
