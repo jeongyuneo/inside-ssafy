@@ -9,6 +9,8 @@ import { StyledBusInfo } from './styles';
 import getBusInfo from './getBusInfo';
 import getBusInfoImage from './getBusInfoImage';
 import clickBusNumHandler from '../../../utils/clickBusNumHandler';
+import postBusLike from './postBusLike';
+import deleteBusLike from './deleteBusLike';
 
 /**
  * 해당 페이지의 liked 유무를 받아와서 liked 상태를 변경해 렌더링
@@ -47,13 +49,15 @@ const BusInfo = () => {
     setOpenedBusInfoModal(prev => !prev);
   };
 
-  const toggleLikeHandler = () => {
-    setLiked(prev => !prev);
+  const toggleLikeHandler = async () => {
+    const isSuccessful: boolean = await (liked
+      ? deleteBusLike(busNum)
+      : postBusLike(busNum));
+
+    isSuccessful && setLiked(prev => !prev);
   };
 
   useEffect(() => {
-    console.log(busInfo);
-
     busInfo && setCurrentStop(busInfo.lastVisitedBusStop);
     busInfo && setLiked(busInfo.hasBusLike);
   }, [busInfo]);
