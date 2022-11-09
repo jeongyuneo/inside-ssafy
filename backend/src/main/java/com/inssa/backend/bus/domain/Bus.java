@@ -36,4 +36,8 @@ public class Bus extends BaseEntity {
     public void arriveAt(Route route) {
         lastVisited = route;
     }
+
+    public void end() {
+        lastVisited = null;
+    }
 }

@@ -1,10 +1,7 @@
 package com.inssa.backend.bus.controller;
 
 import com.inssa.backend.ApiDocument;
-import com.inssa.backend.bus.controller.dto.BusLikeResponse;
-import com.inssa.backend.bus.controller.dto.BusResponse;
-import com.inssa.backend.bus.controller.dto.RouteImageResponse;
-import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.controller.dto.*;
 import com.inssa.backend.bus.service.BusService;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
@@ -16,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
@@ -57,6 +55,7 @@ public class BusControllerTest extends ApiDocument {
     private List<BusLikeResponse> busLikeResponses;
     private RouteImageResponse routeImageResponse;
     private List<RouteResponse> routeResponses;
+    private BusRequest busRequest;
 
     @BeforeEach
     void setUp() {
@@ -87,6 +86,9 @@ public class BusControllerTest extends ApiDocument {
         routeResponses = IntStream.range(0, 2)
                 .mapToObj(n -> routeResponse)
                 .collect(Collectors.toList());
+        busRequest = BusRequest.builder()
+                .number(NUMBER)
+                .build();
     }
 
     @DisplayName("버스 조회 성공")
@@ -201,7 +203,7 @@ public class BusControllerTest extends ApiDocument {
 
     @DisplayName("버스 운행 시작 성공")
     @Test
-    void start_bus_service_success() throws Exception {
+    void start_bus_success() throws Exception {
         // given
         willReturn(routeResponses).given(busService).startBus(anyInt());
         // when
@@ -212,7 +214,7 @@ public class BusControllerTest extends ApiDocument {
 
     @DisplayName("버스 운행 시작 실패")
     @Test
-    void start_bus_service_fail() throws Exception {
+    void start_bus_fail() throws Exception {
         // given
         willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).startBus(anyInt());
         // when
@@ -241,6 +243,28 @@ public class BusControllerTest extends ApiDocument {
         ResultActions resultActions = 버스_위치_최신화_요청(ID);
         // then
         버스_위치_최신화_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_ROUTE));
+    }
+
+    @DisplayName("버스 운행 종료 성공")
+    @Test
+    void end_bus_success() throws Exception {
+        // given
+        willDoNothing().given(busService).endBus(any(BusRequest.class));
+        // when
+        ResultActions resultActions = 버스_운행_종료_요청(busRequest);
+        // then
+        버스_운행_종료_성공(resultActions);
+    }
+
+    @DisplayName("버스 운행 종료 실패")
+    @Test
+    void end_bus_fail() throws Exception {
+        // given
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).endBus(any(BusRequest.class));
+        // when
+        ResultActions resultActions = 버스_운행_종료_요청(busRequest);
+        // then
+        버스_운행_종료_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
 
     private ResultActions 버스_조회_요청(int number) throws Exception {
@@ -381,5 +405,25 @@ public class BusControllerTest extends ApiDocument {
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
                 .andDo(toDocument("arrive-at-bus-stop-fail"));
+    }
+
+    private ResultActions 버스_운행_종료_요청(BusRequest busRequest) throws Exception {
+        return mockMvc.perform(patch("/api/v1/buses/end")
+                .contextPath("/api/v1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(busRequest)));
+    }
+
+    private void 버스_운행_종료_성공(ResultActions resultActions) throws Exception {
+        resultActions.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(toDocument("end-bus-success"));
+    }
+
+    private void 버스_운행_종료_실패(ResultActions resultActions, Message message) throws Exception {
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().json(toJson(message)))
+                .andDo(print())
+                .andDo(toDocument("end-bus-fail"));
     }
 }
