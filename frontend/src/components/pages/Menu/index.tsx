@@ -7,12 +7,12 @@ import { menus } from './testdata';
 import { MenuTypes } from './types';
 
 const Menu = () => {
-  const default_state: MenuTypes = {
+  const defaultState: MenuTypes = {
     menus: menus,
     startDate: '0000-00-00',
     endDate: '0000-00-00',
   };
-  const [menuOfTheWeek, setMenuOfTheWeek] = useState(default_state);
+  const [menuOfTheWeek, setMenuOfTheWeek] = useState(defaultState);
   const getMenuOfTheWeek = async () => {
     const data = await requestMenu();
     setMenuOfTheWeek(data);
