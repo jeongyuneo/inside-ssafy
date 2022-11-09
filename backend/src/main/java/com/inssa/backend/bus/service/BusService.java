@@ -1,9 +1,6 @@
 package com.inssa.backend.bus.service;
 
-import com.inssa.backend.bus.controller.dto.BusLikeResponse;
-import com.inssa.backend.bus.controller.dto.BusResponse;
-import com.inssa.backend.bus.controller.dto.RouteImageResponse;
-import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.controller.dto.*;
 import com.inssa.backend.bus.domain.*;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.exception.BadRequestException;
@@ -120,8 +117,8 @@ public class BusService {
         routeRepository.save(route);
     }
 
-    public void endBus(int number) {
-        Bus bus = findBusByNumber(number);
+    public void endBus(BusRequest busRequest) {
+        Bus bus = findBusByNumber(busRequest.getNumber());
         bus.end();
         busRepository.save(bus);
     }
