@@ -8,6 +8,7 @@ import { BusInfoImageType, BusInfoType } from './types';
 import { StyledBusInfo } from './styles';
 import getBusInfo from './getBusInfo';
 import getBusInfoImage from './getBusInfoImage';
+import clickBusNumHandler from '../../../utils/clickBusNumHandler';
 
 /**
  * 해당 페이지의 liked 유무를 받아와서 liked 상태를 변경해 렌더링
@@ -30,17 +31,8 @@ const BusInfo = () => {
     () => getBusInfoImage({ busNum }),
   );
 
-  const clickBusNumHandler = (direction: string) => {
-    if (
-      (busNum === 1 && direction === 'left') ||
-      (busNum === 6 && direction === 'right')
-    ) {
-      return;
-    }
-
-    direction === 'left'
-      ? setBusNum(prev => prev - 1)
-      : setBusNum(prev => prev + 1);
+  const clickBusNumHandlerWrapper = (direction: string) => {
+    clickBusNumHandler({ direction, busNum, setBusNum });
   };
 
   const clickRefreshHandler = () => {
@@ -70,7 +62,7 @@ const BusInfo = () => {
     <StyledBusInfo>
       <BusInfoHeader
         clickLogoHandler={clickLogoHandler}
-        clickBusNumHandler={clickBusNumHandler}
+        clickBusNumHandler={clickBusNumHandlerWrapper}
         busNum={busNum}
         liked={liked}
         toggleLikeHandler={toggleLikeHandler}
