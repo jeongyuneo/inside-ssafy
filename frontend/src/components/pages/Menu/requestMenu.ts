@@ -6,7 +6,7 @@ export const requestMenu = async () => {
     menus: [
       {
         date: '',
-        dayOfWeek: '?',
+        dayOfTheWeek: '?',
         items: [],
         subItems: [],
       },
@@ -18,9 +18,7 @@ export const requestMenu = async () => {
     const { data }: { data: MenuTypes } = await axios({
       method: 'GET',
       url: '/api/v1/menus',
-      data: {},
     });
-    returnData.menus = data.menus;
     returnData.startDate = data.startDate;
     returnData.endDate = data.endDate;
     return returnData;

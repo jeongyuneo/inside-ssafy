@@ -20,19 +20,19 @@ const MenuCard = ({
   items,
   subItems,
   fontSize,
-  dayOfWeek,
+  dayOfTheWeek,
   ...menuCardRest
 }: MenuCardTypes) => {
   return (
     <StyledMenuCard
-      dayOfWeek={dayOfWeek}
+      dayOfTheWeek={dayOfTheWeek}
       items={items}
       subItems={subItems}
       {...menuCardRest}
     >
       <StyledTitle>
         <Text size={fontSize ? fontSize + 0.2 : 1} bold={true}>
-          {dayOfWeek}
+          {dayOfTheWeek}
         </Text>
       </StyledTitle>
       <StyledHr />
