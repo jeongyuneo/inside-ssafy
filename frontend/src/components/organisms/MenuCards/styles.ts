@@ -3,7 +3,7 @@ import { PropsTypes } from './types';
 
 export const StyledMenuCards = styled.div<PropsTypes>`
   width: 24rem;
-  height: 80vh;
+  height: 70vh;
   background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
   display: flex;
   flex-direction: column;

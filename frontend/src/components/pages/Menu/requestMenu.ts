@@ -15,18 +15,14 @@ export const requestMenu = async () => {
     endDate: '????-??-??',
   };
   try {
-    const { status, data }: { status: number; data: MenuTypes } = await axios({
+    const { data }: { data: MenuTypes } = await axios({
       method: 'GET',
       url: '/api/v1/menus',
       data: {},
     });
-    console.log(status);
-    if (status === 200) {
-      returnData.menus = data.menus;
-      returnData.startDate = data.startDate;
-      returnData.endDate = data.endDate;
-      return returnData;
-    }
+    returnData.menus = data.menus;
+    returnData.startDate = data.startDate;
+    returnData.endDate = data.endDate;
     return returnData;
   } catch (e) {
     console.log(e);
