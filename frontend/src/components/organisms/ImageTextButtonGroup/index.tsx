@@ -13,14 +13,9 @@ const ImageTextButtonGroup = ({
 }: ImageTextButtonGroupTypes) => {
   return (
     <StyledImageTextButtonGroup>
-      {imageTextInfos.map(({ src, alt, clickImageHandler, children }) => {
+      {imageTextInfos.map(({ src, children, ...rest }) => {
         return (
-          <ImageTextButton
-            key={src}
-            src={src}
-            alt={alt}
-            clickImageHandler={clickImageHandler}
-          >
+          <ImageTextButton key={src} src={src} {...rest}>
             {children}
           </ImageTextButton>
         );
