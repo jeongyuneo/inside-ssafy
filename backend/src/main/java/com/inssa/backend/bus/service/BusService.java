@@ -120,6 +120,12 @@ public class BusService {
         routeRepository.save(route);
     }
 
+    public void endBus(int number) {
+        Bus bus = findBusByNumber(number);
+        bus.end();
+        busRepository.save(bus);
+    }
+
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
