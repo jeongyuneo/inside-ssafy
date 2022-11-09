@@ -57,7 +57,7 @@ public class BusController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/end")
+    @PatchMapping("/end")
     public ResponseEntity<Void> endBus(@RequestParam int number) {
         busService.endBus(number);
         return ResponseEntity.ok().build();
