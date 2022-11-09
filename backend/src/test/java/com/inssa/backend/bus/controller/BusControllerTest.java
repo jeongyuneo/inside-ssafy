@@ -406,7 +406,7 @@ public class BusControllerTest extends ApiDocument {
     }
 
     private ResultActions 버스_운행_종료_요청(int number) throws Exception {
-        return mockMvc.perform(put("/api/v1/buses/end")
+        return mockMvc.perform(patch("/api/v1/buses/end")
                 .contextPath("/api/v1")
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
