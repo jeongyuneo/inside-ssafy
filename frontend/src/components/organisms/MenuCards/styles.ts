@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { MenuCardsTypes } from './types';
+import { PropsTypes } from './types';
 
-export const StyledMenuCards = styled.div<MenuCardsTypes>`
-  width: ${({ width }) => width || 22}rem;
-  height: ${({ height }) => height || 80}vh;
+export const StyledMenuCards = styled.div<PropsTypes>`
+  width: 24rem;
+  height: 80vh;
   background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
   display: flex;
   flex-direction: column;

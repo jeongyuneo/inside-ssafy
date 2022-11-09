@@ -1,7 +1,7 @@
 export const menus = [
   {
     date: '2022-11-07',
-    dayOfTheWeek: '월요일',
+    dayOfWeek: '월요일',
     items: [
       '돈목살마늘볶음',
       '혼합잡곡밥',
@@ -14,7 +14,7 @@ export const menus = [
   },
   {
     date: '2022-11-08',
-    dayOfTheWeek: '화요일',
+    dayOfWeek: '화요일',
     items: [
       '나주곰탕',
       '혼합잡곡밥',
@@ -27,7 +27,7 @@ export const menus = [
   },
   {
     date: '2022-11-09',
-    dayOfTheWeek: '수요일',
+    dayOfWeek: '수요일',
     items: [
       '하이라이스',
       '유부장국',
@@ -40,7 +40,7 @@ export const menus = [
   },
   {
     date: '2022-11-10',
-    dayOfTheWeek: '목요일',
+    dayOfWeek: '목요일',
     items: [
       '돈육고추장볶음',
       '혼합잡곡밥',
@@ -53,7 +53,7 @@ export const menus = [
   },
   {
     date: '2022-11-11',
-    dayOfTheWeek: '금요일',
+    dayOfWeek: '금요일',
     items: [
       '김치볶음밥 * 계란후라이',
       '미역국',

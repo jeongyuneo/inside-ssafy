@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuCard from '../../molecules/MenuCard';
 import { MenuCardsWrapper, MenuCardWrapper, StyledMenuCards } from './styles';
-import { MenuCardsTypes } from './types';
+import { PropsTypes } from './types';
 
 /**
  * 식단표 정보를 출력
@@ -10,17 +10,17 @@ import { MenuCardsTypes } from './types';
  * @author jun
  */
 
-const MenuCards = ({ menus, cardColor, ...menuRest }: MenuCardsTypes) => {
+const MenuCards = ({ menus, cardColor, ...menuRest }: PropsTypes) => {
   return (
     <StyledMenuCards menus={menus} {...menuRest}>
       <MenuCardsWrapper>
-        {menus.map(({ dayOfTheWeek, subItems, items, ...menuRest }) => (
-          <MenuCardWrapper key={dayOfTheWeek}>
+        {menus.map(({ dayOfWeek, subItems, items, ...menuRest }) => (
+          <MenuCardWrapper key={dayOfWeek}>
             <MenuCard
-              dayOfTheWeek={dayOfTheWeek}
+              dayOfWeek={dayOfWeek}
               items={items}
               subItems={subItems}
-              key={dayOfTheWeek}
+              key={dayOfWeek}
               backgroundColor={cardColor}
               {...menuRest}
             />

@@ -31,7 +31,7 @@ const Menu = () => {
         ></MenuWeek>
       </MenuWeekWrapper>
       <MenuCardsWrapper>
-        <MenuCards menus={menuOfTheWeek.menus} width={24}></MenuCards>
+        <MenuCards menus={menuOfTheWeek.menus}></MenuCards>
       </MenuCardsWrapper>
     </StyledMenu>
   );

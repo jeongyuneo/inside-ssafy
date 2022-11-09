@@ -1,5 +1,5 @@
 export interface MenuCardTypes {
-  dayOfTheWeek: string;
+  dayOfWeek: string;
   items: string[];
   subItems: string[];
   backgroundColor?: string;
