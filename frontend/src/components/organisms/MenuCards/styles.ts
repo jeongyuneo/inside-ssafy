@@ -9,7 +9,7 @@ export const StyledMenuCards = styled.div<MenuCardsTypes>`
   flex-direction: column;
   justify-contents: center;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   padding-bottom: 1rem;
   overflow: auto;
   &::-webkit-scrollbar {
