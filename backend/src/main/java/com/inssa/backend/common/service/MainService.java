@@ -65,10 +65,14 @@ public class MainService {
 
     private Menu findMenuOfToday() {
         LocalDate today = LocalDate.now();
+        validateWeekday(today);
+        return menuRepository.findByDateEqualsAndIsActiveTrue(today)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
+    }
+    
+    private void validateWeekday(LocalDate today) {
         if (today.getDayOfWeek().equals(DayOfWeek.SATURDAY) || today.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
             throw new BadRequestException(ErrorMessage.NOT_WEEKDAY);
         }
-        return menuRepository.findByDateEqualsAndIsActiveTrue(today)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
     }
 }
