@@ -11,9 +11,13 @@ export const StyledMenuCards = styled.div<PropsTypes>`
   align-items: center;
   padding-top: 0.5rem;
   padding-bottom: 1rem;
+  border-radius: 1rem;
   overflow: auto;
   &::-webkit-scrollbar {
     background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    width: 1rem;
   }
   ::-webkit-scrollbar-thumb {
     width: 10px;
