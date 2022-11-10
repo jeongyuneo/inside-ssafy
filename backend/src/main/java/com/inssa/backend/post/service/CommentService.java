@@ -48,6 +48,11 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    private Post findPost(Long postId) {
+        return postRepository.findByIdAndIsActiveTrue(postId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST));
+    }
+
     private Comment findComment(Long commentId) {
         return commentRepository.findByIdAndIsActiveTrue(commentId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT));
@@ -56,11 +61,6 @@ public class CommentService {
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
-    private Post findPost(Long postId) {
-        return postRepository.findByIdAndIsActiveTrue(postId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST));
     }
 
     private void checkEditable(Long memberId, Comment comment) {
