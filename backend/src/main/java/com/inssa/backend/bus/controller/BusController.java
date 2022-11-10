@@ -40,10 +40,10 @@ public class BusController {
     }
 
     @GetMapping("/like")
-    public ResponseEntity<List<BusLikeResponse>> getBusLikes(@RequestHeader("Authorization") String token) {
-        List<BusLikeResponse> busLikeResponses = busService.getBusLikes(JwtUtil.getMemberId(token));
+    public ResponseEntity<BusLikeResponse> getBusLike(@RequestParam int number) {
+        BusLikeResponse busLikeResponse = busService.getBusLike(number);
         log.info("버스 즐겨찾기 목록 조회 성공");
-        return ResponseEntity.ok().body(busLikeResponses);
+        return ResponseEntity.ok().body(busLikeResponse);
     }
 
     @GetMapping("/route/image")
