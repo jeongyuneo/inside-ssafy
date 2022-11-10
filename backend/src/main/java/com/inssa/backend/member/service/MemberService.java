@@ -31,7 +31,7 @@ public class MemberService {
 
     public void sendValidationToken(EmailRequest emailRequest) {
         String email = emailRequest.getEmail();
-        checkEmail(email);
+        validateEmailDuplication(email);
         MailUtil.sendValidationToken(email);
     }
 
@@ -97,7 +97,7 @@ public class MemberService {
         };
     }
 
-    private void checkEmail(String email) {
+    private void validateEmailDuplication(String email) {
         if (memberRepository.existsByEmail(email)) {
             throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
         }
