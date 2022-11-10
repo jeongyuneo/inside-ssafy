@@ -1,9 +1,6 @@
 package com.inssa.backend.bus.service;
 
-import com.inssa.backend.bus.controller.dto.BusLikeResponse;
-import com.inssa.backend.bus.controller.dto.BusResponse;
-import com.inssa.backend.bus.controller.dto.RouteImageResponse;
-import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.controller.dto.*;
 import com.inssa.backend.bus.domain.*;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.exception.BadRequestException;
@@ -44,9 +41,9 @@ public class BusService {
     }
 
     @Transactional
-    public void createBusLike(Long memberId, int number) {
+    public void createBusLike(Long memberId, BusRequest busRequest) {
         Member member = findMember(memberId);
-        Bus bus = findBusByNumber(number);
+        Bus bus = findBusByNumber(busRequest.getNumber());
         validateBusLikeDuplication(member, bus);
         if (busLikeRepository.existsByMemberAndBusAndIsActiveFalse(member, bus)) {
             BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveFalse(member, bus)
