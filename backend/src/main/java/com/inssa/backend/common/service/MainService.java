@@ -58,11 +58,6 @@ public class MainService {
                 .build();
     }
 
-    private Member findMember(Long memberId) {
-        return memberRepository.findByIdAndIsActiveTrue(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
     private Menu findMenuOfToday() {
         LocalDate today = LocalDate.now();
         validateWeekday(today);
@@ -74,5 +69,10 @@ public class MainService {
         if (today.getDayOfWeek().equals(DayOfWeek.SATURDAY) || today.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
             throw new BadRequestException(ErrorMessage.NOT_WEEKDAY);
         }
+    }
+
+    private Member findMember(Long memberId) {
+        return memberRepository.findByIdAndIsActiveTrue(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 }
