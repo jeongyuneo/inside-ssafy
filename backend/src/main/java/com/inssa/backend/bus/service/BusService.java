@@ -110,9 +110,9 @@ public class BusService {
         routeRepository.save(route);
     }
 
-    private Member findMember(Long memberId) {
-        return memberRepository.findByIdAndIsActiveTrue(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
+    private Bus findBusByNumber(int number) {
+        return busRepository.findByNumberAndIsActiveTrue(number)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
     }
 
     private BusResponse getBusResponse(Bus bus, String lastVisitedBusStop, boolean isLast) {
@@ -127,9 +127,9 @@ public class BusService {
                 .build();
     }
 
-    private Route findRoute(Long routeId) {
-        return routeRepository.findByIdAndIsActiveTrue(routeId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE));
+    private Member findMember(Long memberId) {
+        return memberRepository.findByIdAndIsActiveTrue(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
     private void validateBusLikeDuplication(Member member, Bus bus) {
@@ -147,5 +147,10 @@ public class BusService {
         if (lastVisited == null) {
             throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_BUS);
         }
+    }
+
+    private Route findRoute(Long routeId) {
+        return routeRepository.findByIdAndIsActiveTrue(routeId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE));
     }
 }
