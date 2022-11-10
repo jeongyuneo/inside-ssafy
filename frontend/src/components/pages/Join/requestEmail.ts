@@ -70,6 +70,7 @@ export const joinRequest = async ({
   password,
   email,
   studentNumber,
+  campus,
 }: AccountValueTypes) => {
   try {
     const { status }: { status: number; data: FailToJoin } = await axios({
@@ -80,6 +81,7 @@ export const joinRequest = async ({
         password,
         name,
         studentNumber,
+        campus,
       },
     });
     if (status === 200) {

@@ -7,7 +7,7 @@ import Text from '../../atoms/Text';
 import ButtonGroup from '../../molecules/ButtonGroup';
 import InputLabel from '../../molecules/InputLabel';
 import {
-  campusName,
+  campus,
   inputNames,
   labelName,
   LABEL_FONT,
@@ -68,7 +68,7 @@ const Join = () => {
     emailAgain: '',
     password: '',
     passwordAgain: '',
-    campusName: '',
+    campus: '',
   });
 
   const navigate = useNavigate();
@@ -269,8 +269,8 @@ const Join = () => {
                       <SelectFormWrapper>
                         <SelectForm
                           labelName="캠퍼스"
-                          inputs={campusName}
-                          id={'campusName'}
+                          inputs={campus}
+                          id={'campus'}
                           value={account}
                           changeHandler={selectInfo}
                         ></SelectForm>

@@ -34,4 +34,4 @@ export const labelName = [
   '비밀번호 확인',
 ];
 
-export const campusName = ['서울', '대전', '광주', '부울경', '구미'];
+export const campus = ['서울', '대전', '광주', '부울경', '구미'];

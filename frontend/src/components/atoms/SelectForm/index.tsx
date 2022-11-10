@@ -5,6 +5,8 @@ import { PropTypes } from './types';
 
 /**
  * string 배열을 받아 선택하는 selectForm
+ * labelName을 이용해 어떤것을 넣을지 표시 가능 (value에 적용되지는 않음)
+ * width 나 height 등의 속성을 통해 css를 지정 가능하다
  *
  * @author jun
  */
@@ -16,6 +18,7 @@ const SelectForm = ({
   width,
   height,
   labelName,
+  backgroundColor,
   changeHandler,
 }: PropTypes) => {
   return (
@@ -27,7 +30,11 @@ const SelectForm = ({
       <FormControl fullWidth>
         <InputLabel id={id}>{labelName}</InputLabel>
         <Select
-          sx={{ borderRadius: '1rem', height: `${height || 3}rem` }}
+          sx={{
+            borderRadius: '1rem',
+            height: `${height || 3}rem`,
+            backgroundColor: `${backgroundColor}`,
+          }}
           autoWidth
           id={id}
           name={id}
