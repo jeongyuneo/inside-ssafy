@@ -35,7 +35,7 @@ public class ReCommentService {
 
     public void updateReComment(Long memberId, Long reCommentId, CommentRequest commentRequest) {
         ReComment reComment = findReComment(reCommentId);
-        checkEditable(memberId, reComment);
+        validateEditable(memberId, reComment);
         reComment.update(commentRequest.getContent());
         reCommentRepository.save(reComment);
     }
@@ -43,7 +43,7 @@ public class ReCommentService {
     @Transactional
     public void deleteReComment(Long memberId, Long reCommentId) {
         ReComment reComment = findReComment(reCommentId);
-        checkEditable(memberId, reComment);
+        validateEditable(memberId, reComment);
         reComment.delete();
         reCommentRepository.save(reComment);
     }
@@ -63,7 +63,7 @@ public class ReCommentService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_RECOMMENT));
     }
 
-    private void checkEditable(Long memberId, ReComment reComment) {
+    private void validateEditable(Long memberId, ReComment reComment) {
         if (!reComment.isEditableBy(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
