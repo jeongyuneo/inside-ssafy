@@ -25,13 +25,11 @@ public class ReCommentService {
     @Transactional
     public void createReComment(Long memberId, Long commentId, CommentRequest commentRequest) {
         Comment comment = findComment(commentId);
-        comment.addReComment(
-                ReComment.builder()
+        comment.addReComment(ReComment.builder()
                         .content(commentRequest.getContent())
                         .member(findMember(memberId))
                         .comment(comment)
-                        .build()
-        );
+                        .build());
         commentRepository.save(comment);
     }
 
