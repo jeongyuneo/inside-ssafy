@@ -22,8 +22,7 @@ public class MailUtil {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            '!', '@', '#', '$', '%', '^', '&', '*'
+            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     };
     private static final String VALIDATION_EMAIL_SUBJECT = "[inside-SSAFY] 인증번호 발송";
     private static final String VALIDATION_EMAIL_TEXT_HEADER =
