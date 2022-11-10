@@ -54,6 +54,7 @@ public class MemberService {
                         .email(memberRequest.getEmail())
                         .password(passwordEncoder.encode(memberRequest.getPassword()))
                         .name(memberRequest.getName())
+                        .campus(memberRequest.getCampus())
                         .studentNumber(memberRequest.getStudentNumber())
                         .role(Role.GENERAL)
                         .build()
