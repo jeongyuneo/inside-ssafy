@@ -7,16 +7,22 @@ import { NavigateFunction } from 'react-router-dom';
  *
  * @author jojo
  */
-const navigator = (navigate: NavigateFunction) => {
+
+interface ParamType {
+  state: {
+    busNum: number;
+  };
+}
+const navigator = (navigate: NavigateFunction, param?: ParamType) => {
   return {
     main: () => {
-      navigate('/');
+      navigate('/', param);
     },
     busInfo: () => {
-      navigate('/businfo');
+      navigate('/businfo', param);
     },
     mypage: () => {
-      navigate('mypage');
+      navigate('mypage', param);
     },
   };
 };

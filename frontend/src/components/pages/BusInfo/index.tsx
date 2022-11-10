@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import BusInfoImageModal from '../../organisms/BusInfoImageModal';
 import BusInfoBody from '../../organisms/BusInfoBody';
@@ -17,11 +17,14 @@ import navigator from '../../../utils/navigator';
  * @author jojo
  */
 const BusInfo = () => {
-  const [busNum, setBusNum] = useState(1);
+  const navigate = useNavigate();
+  const location = useLocation();
+  // param으로 넘어온 busNum이 있으면 그 값, 아니면 1
+  const initialBusNum = location.state?.busNum || 1;
+  const [busNum, setBusNum] = useState(initialBusNum);
   const [currentStop, setCurrentStop] = useState(-1);
   const [liked, setLiked] = useState(false);
   const [openedBusInfoModal, setOpenedBusInfoModal] = useState(false);
-  const navigate = useNavigate();
 
   const { data: busInfo } = useQuery<BusInfoType>(['busInfo', busNum], () =>
     getBusInfo({ busNum }),
