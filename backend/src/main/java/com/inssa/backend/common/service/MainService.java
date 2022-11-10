@@ -1,9 +1,9 @@
 package com.inssa.backend.common.service;
 
 import com.inssa.backend.common.controller.dto.MainResponse;
-import com.inssa.backend.common.domain.BaseEntity;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.exception.NotFoundException;
+import com.inssa.backend.member.domain.BusLike;
 import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.menu.domain.MenuRepository;
@@ -32,7 +32,7 @@ public class MainService {
         return MainResponse.builder()
                 .busLikes(findMember(memberId).getBusLikes()
                         .stream()
-                        .filter(BaseEntity::isActive)
+                        .filter(BusLike::isActive)
                         .sorted(Comparator.comparing(current -> current.getBus().getNumber()))
                         .map(busLikes -> busLikes.getBus().getNumber())
                         .collect(Collectors.toList()))
