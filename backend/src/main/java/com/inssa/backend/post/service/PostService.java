@@ -116,10 +116,7 @@ public class PostService {
     public void createPostLike(Long memberId, Long postId) {
         Member member = findMember(memberId);
         Post post = findPost(postId);
-        if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
-            throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
-        }
-
+        validatePostLikeDuplication(member, post);
         if (postLikeRepository.existsByMemberAndPostAndIsActiveFalse(member, post)) {
             PostLike postLike = getPostLikeByMemberAndPost(member, post);
             postLike.activatePostLike();
@@ -154,6 +151,12 @@ public class PostService {
     private void validateEditable(Long memberId, Post post) {
         if (!post.isEditableBy(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
+        }
+    }
+
+    private void validatePostLikeDuplication(Member member, Post post) {
+        if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
         }
     }
 
