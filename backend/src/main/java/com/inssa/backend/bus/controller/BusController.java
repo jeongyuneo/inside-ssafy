@@ -34,8 +34,8 @@ public class BusController {
     }
 
     @GetMapping("/like")
-    public ResponseEntity<List<BusLikeResponse>> getBusLikes(@RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok().body(busService.getBusLikes(JwtUtil.getMemberId(token)));
+    public ResponseEntity<BusLikeResponse> getBusLike(@RequestParam int number) {
+        return ResponseEntity.ok().body(busService.getBusLike(number));
     }
 
     @GetMapping("/route/image")
