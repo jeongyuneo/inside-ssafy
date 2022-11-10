@@ -3,6 +3,4 @@ import { MenuWeekTypes } from '../../molecules/MenuWeek/types';
 
 export interface MenuTypes extends MenuWeekTypes {
   menus: MenuCardTypes[];
-  startDate: string;
-  endDate: string;
 }
