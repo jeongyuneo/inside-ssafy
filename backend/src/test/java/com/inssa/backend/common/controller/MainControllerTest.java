@@ -1,4 +1,4 @@
-package com.inssa.backend.main.controller;
+package com.inssa.backend.common.controller;
 
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.controller.MainController;
