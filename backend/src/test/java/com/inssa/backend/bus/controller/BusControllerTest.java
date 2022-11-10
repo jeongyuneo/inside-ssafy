@@ -53,17 +53,12 @@ public class BusControllerTest extends ApiDocument {
 
     private BusRequest busRequest;
     private BusResponse busResponse;
-    private List<BusLikeResponse> busLikeResponses;
+    private BusLikeResponse busLikeResponse;
     private RouteImageResponse routeImageResponse;
     private List<RouteResponse> routeResponses;
 
     @BeforeEach
     void setUp() {
-        BusLikeResponse bulLikeResponse = BusLikeResponse.builder()
-                .number(BUS_NUMBER)
-                .previousBusStop(PREVIOUS_BUS_STOP)
-                .nextBusStop(NEXT_BUS_STOP)
-                .build();
         RouteResponse routeResponse = RouteResponse.builder()
                 .routeId(ID)
                 .name(NAME)
@@ -80,9 +75,10 @@ public class BusControllerTest extends ApiDocument {
                         .mapToObj(n -> BUS_STOP_NAME)
                         .collect(Collectors.toList()))
                 .build();
-        busLikeResponses = IntStream.range(0, 2)
-                .mapToObj(n -> bulLikeResponse)
-                .collect(Collectors.toList());
+        busLikeResponse = BusLikeResponse.builder()
+                .previousBusStop(PREVIOUS_BUS_STOP)
+                .nextBusStop(NEXT_BUS_STOP)
+                .build();
         routeImageResponse = RouteImageResponse.builder()
                 .url(URL)
                 .build();
@@ -157,26 +153,26 @@ public class BusControllerTest extends ApiDocument {
         버스_즐겨찾기_삭제_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
 
-    @DisplayName("버스 즐겨찾기 목록 조회 성공")
+    @DisplayName("버스 즐겨찾기 조회 성공")
     @Test
     void get_like_bus_success() throws Exception {
         // given
-        willReturn(busLikeResponses).given(busService).getBusLikes(anyLong());
+        willReturn(busLikeResponse).given(busService).getBusLike(anyInt());
         // when
-        ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청();
+        ResultActions resultActions = 버스_즐겨찾기_조회_요청(BUS_NUMBER);
         // then
-        버스_즐겨찾기_목록_조회_성공(resultActions);
+        버스_즐겨찾기_조회_성공(resultActions);
     }
 
-    @DisplayName("버스 즐겨찾기 목록 조회 실패")
+    @DisplayName("버스 즐겨찾기 조회 실패")
     @Test
     void get_like_bus_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getBusLikes(anyLong());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).getBusLike(anyInt());
         // when
-        ResultActions resultActions = 버스_즐겨찾기_목록_조회_요청();
+        ResultActions resultActions = 버스_즐겨찾기_조회_요청(BUS_NUMBER);
         // then
-        버스_즐겨찾기_목록_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
+        버스_즐겨찾기_조회_실패(resultActions, new Message(ErrorMessage.NOT_FOUND_BUS));
     }
 
     @DisplayName("버스 노선 이미지 조회 성공")
@@ -329,24 +325,25 @@ public class BusControllerTest extends ApiDocument {
                 .andDo(toDocument("delete-bus-like-fail"));
     }
 
-    private ResultActions 버스_즐겨찾기_목록_조회_요청() throws Exception {
+    private ResultActions 버스_즐겨찾기_조회_요청(int number) throws Exception {
         return mockMvc.perform(get("/api/v1/buses/like")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
-    private void 버스_즐겨찾기_목록_조회_성공(ResultActions resultActions) throws Exception {
+    private void 버스_즐겨찾기_조회_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(busLikeResponses)))
+                .andExpect(content().json(toJson(busLikeResponse)))
                 .andDo(print())
-                .andDo(toDocument("get-bus-likes-success"));
+                .andDo(toDocument("get-bus-like-success"));
     }
 
-    private void 버스_즐겨찾기_목록_조회_실패(ResultActions resultActions, Message message) throws Exception {
+    private void 버스_즐겨찾기_조회_실패(ResultActions resultActions, Message message) throws Exception {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().json(toJson(message)))
                 .andDo(print())
-                .andDo(toDocument("get-bus-likes-fail"));
+                .andDo(toDocument("get-bus-like-fail"));
     }
 
     private ResultActions 버스_노선_이미지_조회_요청(int number) throws Exception {
