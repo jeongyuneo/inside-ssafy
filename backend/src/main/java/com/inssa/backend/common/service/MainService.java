@@ -66,7 +66,8 @@ public class MainService {
     }
     
     private void validateWeekday(LocalDate today) {
-        if (today.getDayOfWeek().equals(DayOfWeek.SATURDAY) || today.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        if (dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
             throw new BadRequestException(ErrorMessage.NOT_WEEKDAY);
         }
     }
