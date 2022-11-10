@@ -33,6 +33,9 @@ public class Member extends BaseEntity {
     private String name;
 
     @NotNull
+    private String campus;
+
+    @NotNull
     private String studentNumber;
 
     @NotNull

@@ -52,6 +52,7 @@ public class MemberControllerTest extends ApiDocument {
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
     private static final String EXPIRED_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwicm9sZSI6IkdFTkVSQUwiLCJpYXQiOjE2Njc0NzU1ODcsImV4cCI6MTY2NzQ3OTE4N30.Dv47oX_5CqSIs_i6LRyndLfge-MXnrB2ny9z57w-M1g";
     private static final Cookie COOKIE = new Cookie("refreshToken", EXPIRED_ACCESS_TOKEN);
+    private static final String CAMPUS = "대전";
 
     @MockBean
     private MemberService memberService;
@@ -88,6 +89,7 @@ public class MemberControllerTest extends ApiDocument {
                 .email(EMAIL)
                 .password(PASSWORD)
                 .name(NAME)
+                .campus(CAMPUS)
                 .studentNumber(STUDENT_NUMBER)
                 .build();
         memberResponse = MemberResponse.builder()
