@@ -52,11 +52,15 @@ const MenuCard = ({
         {!subItems.length ? (
           <StyledBr />
         ) : (
-          subItems.map(subItem => (
-            <Text size={fontSize ? fontSize : 0.8} key={subItem}>
-              {subItem}
-            </Text>
-          ))
+          subItems.map(subItem =>
+            !subItem.length ? (
+              <StyledBr key={subItem} />
+            ) : (
+              <Text size={fontSize ? fontSize : 0.8} key={subItem}>
+                {subItem}
+              </Text>
+            ),
+          )
         )}
       </StyledSubMenu>
     </StyledMenuCard>

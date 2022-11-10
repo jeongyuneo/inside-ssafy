@@ -72,7 +72,7 @@ export const joinRequest = async ({
   studentNumber,
 }: AccountValueTypes) => {
   try {
-    const { status, data }: { status: number; data: FailToJoin } = await axios({
+    const { status }: { status: number; data: FailToJoin } = await axios({
       method: 'POST',
       url: '/api/v1/members',
       data: {
