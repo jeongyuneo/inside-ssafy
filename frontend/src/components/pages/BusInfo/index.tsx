@@ -9,6 +9,7 @@ import { StyledBusInfo } from './styles';
 import getBusInfo from './getBusInfo';
 import getBusInfoImage from './getBusInfoImage';
 import clickBusNumHandler from '../../../utils/clickBusNumHandler';
+import navigator from '../../../utils/navigator';
 
 /**
  * 해당 페이지의 liked 유무를 받아와서 liked 상태를 변경해 렌더링
@@ -39,10 +40,6 @@ const BusInfo = () => {
     console.log('refresh');
   };
 
-  const clickLogoHandler = () => {
-    navigate('/');
-  };
-
   const toggleBusInfoModalHandler = () => {
     setOpenedBusInfoModal(prev => !prev);
   };
@@ -61,7 +58,8 @@ const BusInfo = () => {
   return (
     <StyledBusInfo>
       <BusInfoHeader
-        clickLogoHandler={clickLogoHandler}
+        clickLogoHandler={navigator(navigate).main}
+        clickMypageHandler={navigator(navigate).mypage}
         clickBusNumHandler={clickBusNumHandlerWrapper}
         busNum={busNum}
         liked={liked}
