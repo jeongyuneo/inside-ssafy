@@ -40,15 +40,13 @@ public class MemberService {
     }
 
     public void join(MemberRequest memberRequest) {
-        memberRepository.save(
-                Member.builder()
+        memberRepository.save(Member.builder()
                         .email(memberRequest.getEmail())
                         .password(passwordEncoder.encode(memberRequest.getPassword()))
                         .name(memberRequest.getName())
                         .studentNumber(memberRequest.getStudentNumber())
                         .role(Role.GENERAL)
-                        .build()
-        );
+                        .build());
     }
 
     public MemberResponse getMember(Long memberId) {
