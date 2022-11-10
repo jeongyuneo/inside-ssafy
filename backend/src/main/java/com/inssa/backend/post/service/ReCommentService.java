@@ -48,9 +48,9 @@ public class ReCommentService {
         reCommentRepository.save(reComment);
     }
 
-    private ReComment findReComment(Long reCommentId) {
-        return reCommentRepository.findByIdAndIsActiveTrue(reCommentId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_RECOMMENT));
+    private Comment findComment(Long commentId) {
+        return commentRepository.findByIdAndIsActiveTrue(commentId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT));
     }
 
     private Member findMember(Long memberId) {
@@ -58,9 +58,9 @@ public class ReCommentService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
-    private Comment findComment(Long commentId) {
-        return commentRepository.findByIdAndIsActiveTrue(commentId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_COMMENT));
+    private ReComment findReComment(Long reCommentId) {
+        return reCommentRepository.findByIdAndIsActiveTrue(reCommentId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_RECOMMENT));
     }
 
     private void checkEditable(Long memberId, ReComment reComment) {
