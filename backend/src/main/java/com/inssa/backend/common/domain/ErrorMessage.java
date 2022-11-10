@@ -22,7 +22,7 @@ public enum ErrorMessage {
     NOT_EQUAL_VALIDATION_TOKEN("인증코드가 일치하지 않습니다."),
     NOT_EQUAL_PASSWORD("비밀번호가 일치하지 않습니다."),
 
-    NOT_WEEKDAY("주말엔 식사가 제공되지 않습니다."),
+    NOT_WEEKDAY("주말에는 식사가 제공되지 않습니다."),
 
     NOT_EDITABLE_MEMBER("편집 권한이 없는 회원입니다."),
 
