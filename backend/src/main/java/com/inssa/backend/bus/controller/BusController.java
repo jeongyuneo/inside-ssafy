@@ -1,9 +1,6 @@
 package com.inssa.backend.bus.controller;
 
-import com.inssa.backend.bus.controller.dto.BusLikeResponse;
-import com.inssa.backend.bus.controller.dto.BusResponse;
-import com.inssa.backend.bus.controller.dto.RouteImageResponse;
-import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.controller.dto.*;
 import com.inssa.backend.bus.service.BusService;
 import com.inssa.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +22,8 @@ public class BusController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<Void> createBusLike(@RequestHeader("Authorization") String token, @RequestParam int number) {
-        busService.createBusLike(JwtUtil.getMemberId(token), number);
+    public ResponseEntity<Void> createBusLike(@RequestHeader("Authorization") String token, @RequestBody BusRequest busRequest) {
+        busService.createBusLike(JwtUtil.getMemberId(token), busRequest);
         return ResponseEntity.ok().build();
     }
 
