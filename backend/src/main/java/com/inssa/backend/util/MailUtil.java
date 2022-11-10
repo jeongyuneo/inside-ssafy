@@ -23,7 +23,7 @@ public class MailUtil {
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     };
     private static final int VALIDATION_TOKEN_LENGTH = 6;
-    private static final Long VALIDATION_TOKEN_DURATION = 60 * 5L;
+    private static final long VALIDATION_TOKEN_DURATION = 60 * 5L;
     private static final String ADMIN_EMAIL = "inside_ssafy@naver.com";
     private static final String VALIDATION_EMAIL_SUBJECT = "[inside-SSAFY] 인증번호 발송";
     private static final String VALIDATION_EMAIL_TEXT_HEADER =
