@@ -3,6 +3,7 @@ package com.inssa.backend.common.controller;
 import com.inssa.backend.ApiDocument;
 import com.inssa.backend.common.controller.MainController;
 import com.inssa.backend.common.controller.dto.MainResponse;
+import com.inssa.backend.common.controller.dto.MenuResponse;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.domain.Message;
 import com.inssa.backend.common.exception.NotFoundException;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -37,7 +39,10 @@ public class MainControllerTest extends ApiDocument {
     private static final int LIKE_COUNT = 5;
     private static final int COMMENT_COUNT = 3;
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
-    private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(", ")).collect(Collectors.toList());
+    private static final List<Integer> BUS_LIKES = Arrays.asList(1, 2);
+    private static final String DELIMITER = ", ";
+    private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(DELIMITER)).collect(Collectors.toList());
+    private static final List<String> SUB_ITEMS = Arrays.stream("숭늉".split(DELIMITER)).collect(Collectors.toList());
     private static final Long ID = 1L;
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
@@ -50,14 +55,20 @@ public class MainControllerTest extends ApiDocument {
 
     @BeforeEach
     void setUp() {
+        MenuResponse menuResponse = MenuResponse.builder()
+                .items(ITEMS)
+                .subItems(SUB_ITEMS)
+                .build();
         PostsResponse postsResponse = PostsResponse.builder()
+                .postId(ID)
                 .title(TITLE)
                 .likeCount(LIKE_COUNT)
                 .commentCount(COMMENT_COUNT)
                 .createdDate(CREATED_DATE)
                 .build();
         mainResponse = MainResponse.builder()
-                .menus(ITEMS)
+                .busLikes(BUS_LIKES)
+                .menu(menuResponse)
                 .hotPosts(IntStream.range(0, 2)
                         .mapToObj(n -> postsResponse)
                         .collect(Collectors.toList()))
@@ -68,7 +79,7 @@ public class MainControllerTest extends ApiDocument {
     @Test
     void get_main_success() throws Exception {
         // given
-        willReturn(mainResponse).given(mainService).getMain();
+        willReturn(mainResponse).given(mainService).getMain(anyLong());
         // when
         ResultActions resultActions = 메인페이지_조회_요청();
         // then
@@ -79,7 +90,7 @@ public class MainControllerTest extends ApiDocument {
     @Test
     void get_main_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(mainService).getMain();
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(mainService).getMain(anyLong());
         // when
         ResultActions resultActions = 메인페이지_조회_요청();
         // then
