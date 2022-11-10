@@ -2,18 +2,6 @@ import axios from 'axios';
 import { MenuTypes } from './types';
 
 export const requestMenu = async () => {
-  const returnData: MenuTypes = {
-    menus: [
-      {
-        date: '',
-        dayOfTheWeek: '?',
-        items: [],
-        subItems: [],
-      },
-    ],
-    startDate: '????-??-??',
-    endDate: '????-??-??',
-  };
   try {
     const { data }: { data: MenuTypes } = await axios({
       method: 'GET',
@@ -22,6 +10,6 @@ export const requestMenu = async () => {
     return data;
   } catch (e) {
     console.log(e);
-    return returnData;
+    throw e;
   }
 };

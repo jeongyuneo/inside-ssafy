@@ -14,7 +14,7 @@ const MenuCards = ({ menus, cardColor, ...menuRest }: PropsTypes) => {
   return (
     <StyledMenuCards menus={menus} {...menuRest}>
       <MenuCardsWrapper>
-        {menus.map(({ dayOfTheWeek, subItems, items, ...menuRest }) => (
+        {menus?.map(({ dayOfTheWeek, subItems, items, ...menuRest }) => (
           <MenuCardWrapper key={dayOfTheWeek}>
             <MenuCard
               dayOfTheWeek={dayOfTheWeek}
