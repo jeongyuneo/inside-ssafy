@@ -35,7 +35,7 @@ public class CommentService {
 
     public void updateComment(Long memberId, Long commentId, CommentRequest commentRequest) {
         Comment comment = findComment(commentId);
-        checkEditable(memberId, comment);
+        validateEditable(memberId, comment);
         comment.update(commentRequest.getContent());
         commentRepository.save(comment);
     }
@@ -43,9 +43,14 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long memberId, Long commentId) {
         Comment comment = findComment(commentId);
-        checkEditable(memberId, comment);
+        validateEditable(memberId, comment);
         comment.delete();
         commentRepository.save(comment);
+    }
+
+    private Post findPost(Long postId) {
+        return postRepository.findByIdAndIsActiveTrue(postId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST));
     }
 
     private Comment findComment(Long commentId) {
@@ -58,12 +63,7 @@ public class CommentService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
-    private Post findPost(Long postId) {
-        return postRepository.findByIdAndIsActiveTrue(postId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST));
-    }
-
-    private void checkEditable(Long memberId, Comment comment) {
+    private void validateEditable(Long memberId, Comment comment) {
         if (!comment.isEditableBy(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }

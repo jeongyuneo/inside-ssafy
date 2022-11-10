@@ -45,13 +45,10 @@ public class BusService {
     }
 
     @Transactional
-    public void createBusLike(Long memberId, int number) {
+    public void createBusLike(Long memberId, BusRequest busRequest) {
         Member member = findMember(memberId);
-        Bus bus = findBusByNumber(number);
-        if (busLikeRepository.existsByMemberAndBusAndIsActiveTrue(member, bus)) {
-            throw new DuplicationException(ErrorMessage.EXISTING_BUS_LIKE);
-        }
-
+        Bus bus = findBusByNumber(busRequest.getNumber());
+        validateBusLikeDuplication(member, bus);
         if (busLikeRepository.existsByMemberAndBusAndIsActiveFalse(member, bus)) {
             BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveFalse(member, bus)
                     .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
@@ -60,18 +57,15 @@ public class BusService {
             return;
         }
 
-        member.addBusLike(
-                BusLike.builder()
-                        .member(member)
-                        .bus(bus)
-                        .build()
-        );
+        member.addBusLike(BusLike.builder()
+                .member(member)
+                .bus(bus)
+                .build());
         memberRepository.save(member);
     }
 
     public void deleteBusLike(Long memberId, int number) {
-        BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveTrue(findMember(memberId), findBusByNumber(number))
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+        BusLike busLike = findBusLikeByMemberAndBus(memberId, number);
         busLike.delete();
         busLikeRepository.save(busLike);
     }
@@ -123,24 +117,35 @@ public class BusService {
         busRepository.save(bus);
     }
 
+    private Bus findBusByNumber(int number) {
+        return busRepository.findByNumberAndIsActiveTrue(number)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
+    }
+
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
-    private Route findRoute(Long routeId) {
-        return routeRepository.findByIdAndIsActiveTrue(routeId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE));
+    private void validateBusLikeDuplication(Member member, Bus bus) {
+        if (busLikeRepository.existsByMemberAndBusAndIsActiveTrue(member, bus)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_BUS_LIKE);
+        }
     }
 
-    private Bus findBusByNumber(int number) {
-        return busRepository.findByNumberAndIsActiveTrue(number)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
+    private BusLike findBusLikeByMemberAndBus(Long memberId, int number) {
+        return busLikeRepository.findByMemberAndBusAndIsActiveTrue(findMember(memberId), findBusByNumber(number))
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
     }
 
     private void validateBusAvailability(Route lastVisited) {
         if (lastVisited == null) {
             throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_BUS);
         }
+    }
+
+    private Route findRoute(Long routeId) {
+        return routeRepository.findByIdAndIsActiveTrue(routeId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE));
     }
 }

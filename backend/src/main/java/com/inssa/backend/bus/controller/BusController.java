@@ -22,8 +22,8 @@ public class BusController {
     }
 
     @PostMapping("/like")
-    public ResponseEntity<Void> createBusLike(@RequestHeader("Authorization") String token, @RequestParam int number) {
-        busService.createBusLike(JwtUtil.getMemberId(token), number);
+    public ResponseEntity<Void> createBusLike(@RequestHeader("Authorization") String token, @RequestBody BusRequest busRequest) {
+        busService.createBusLike(JwtUtil.getMemberId(token), busRequest);
         return ResponseEntity.ok().build();
     }
 

@@ -51,11 +51,11 @@ public class BusControllerTest extends ApiDocument {
     @MockBean
     private BusService busService;
 
+    private BusRequest busRequest;
     private BusResponse busResponse;
     private List<BusLikeResponse> busLikeResponses;
     private RouteImageResponse routeImageResponse;
     private List<RouteResponse> routeResponses;
-    private BusRequest busRequest;
 
     @BeforeEach
     void setUp() {
@@ -68,6 +68,9 @@ public class BusControllerTest extends ApiDocument {
                 .routeId(ID)
                 .name(NAME)
                 .address(ADDRESS)
+                .build();
+        busRequest = BusRequest.builder()
+                .number(NUMBER)
                 .build();
         busResponse = BusResponse.builder()
                 .isLast(IS_LAST)
@@ -86,9 +89,6 @@ public class BusControllerTest extends ApiDocument {
         routeResponses = IntStream.range(0, 2)
                 .mapToObj(n -> routeResponse)
                 .collect(Collectors.toList());
-        busRequest = BusRequest.builder()
-                .number(NUMBER)
-                .build();
     }
 
     @DisplayName("버스 조회 성공")
@@ -117,7 +117,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void create_bus_like_success() throws Exception {
         // given
-        willDoNothing().given(busService).createBusLike(anyLong(), anyInt());
+        willDoNothing().given(busService).createBusLike(anyLong(), any(BusRequest.class));
         // when
         ResultActions resultActions = 버스_즐겨찾기_등록_요청(NUMBER);
         // then
@@ -128,7 +128,7 @@ public class BusControllerTest extends ApiDocument {
     @Test
     void create_bus_like_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).createBusLike(anyLong(), anyInt());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_BUS)).given(busService).createBusLike(anyLong(), any(BusRequest.class));
         // when
         ResultActions resultActions = 버스_즐겨찾기_등록_요청(NUMBER);
         // then
@@ -292,7 +292,8 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/buses/like")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(busRequest)));
     }
 
     private void 버스_즐겨찾기_등록_성공(ResultActions resultActions) throws Exception {
