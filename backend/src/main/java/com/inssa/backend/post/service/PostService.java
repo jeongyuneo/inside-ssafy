@@ -100,14 +100,14 @@ public class PostService {
 
     public void updatePost(Long memberId, Long postId, PostRequest postRequest, List<MultipartFile> files) {
         Post post = findPost(postId);
-        checkEditable(memberId, post);
+        validateEditable(memberId, post);
         post.update(postRequest.getTitle(), postRequest.getContent(), files);
         postRepository.save(post);
     }
 
     public void deletePost(Long memberId, Long postId) {
         Post post = findPost(postId);
-        checkEditable(memberId, post);
+        validateEditable(memberId, post);
         post.delete();
         postRepository.save(post);
     }
@@ -151,7 +151,7 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
-    private void checkEditable(Long memberId, Post post) {
+    private void validateEditable(Long memberId, Post post) {
         if (!post.isEditableBy(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
