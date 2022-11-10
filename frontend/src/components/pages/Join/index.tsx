@@ -1,10 +1,13 @@
+import { SelectChangeEvent } from '@mui/material';
 import React, { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../atoms/Button';
+import SelectForm from '../../atoms/SelectForm';
 import Text from '../../atoms/Text';
 import ButtonGroup from '../../molecules/ButtonGroup';
 import InputLabel from '../../molecules/InputLabel';
 import {
+  campusName,
   inputNames,
   labelName,
   LABEL_FONT,
@@ -27,6 +30,7 @@ import {
   InputLabelWrapper,
   TextNavigateWrapper,
   ValidateEmailWrapper,
+  SelectFormWrapper,
 } from './styles';
 import { checkEmail, validateEmail, validateInput } from './validateInput';
 
@@ -64,6 +68,7 @@ const Join = () => {
     emailAgain: '',
     password: '',
     passwordAgain: '',
+    campusName: '',
   });
 
   const navigate = useNavigate();
@@ -78,6 +83,17 @@ const Join = () => {
         [e.target.name]: e.target.value,
       };
     });
+  };
+
+  const selectInfo = (e: SelectChangeEvent<string>) => {
+    console.log(e.target.name + ' , ' + e.target.value);
+    setAccount(prev => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+    console.log(account);
   };
 
   const checkCertificateTimer = () => {
@@ -234,6 +250,34 @@ const Join = () => {
         <InputLabelWrapper>
           {inputNames.map((inputName, index) => {
             switch (index) {
+              case 1:
+                return (
+                  <ValidateEmailWrapper key={inputName}>
+                    <StyledEmailWrapper>
+                      <InputLabel
+                        id={inputName}
+                        name={inputName}
+                        labelValue={labelName[index]}
+                        inputs={account}
+                        width={13}
+                        height={3}
+                        type={textTypes[index]}
+                        placeholder={placeholder[index]}
+                        labelFontSize={LABEL_FONT}
+                        changeHandler={changeInfo}
+                      />
+                      <SelectFormWrapper>
+                        <SelectForm
+                          labelName="캠퍼스"
+                          inputs={campusName}
+                          id={'campusName'}
+                          value={account}
+                          changeHandler={selectInfo}
+                        ></SelectForm>
+                      </SelectFormWrapper>
+                    </StyledEmailWrapper>
+                  </ValidateEmailWrapper>
+                );
               case 2:
                 return (
                   <ValidateEmailWrapper key={inputName}>

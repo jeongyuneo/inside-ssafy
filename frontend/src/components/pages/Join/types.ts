@@ -7,6 +7,7 @@ export interface AccountValueTypes {
   emailAgain: string;
   password: string;
   passwordAgain: string;
+  campusName: string;
 }
 
 export interface FailToJoin {
