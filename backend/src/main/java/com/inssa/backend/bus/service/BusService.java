@@ -70,21 +70,18 @@ public class BusService {
         busLikeRepository.save(busLike);
     }
 
-    public List<BusLikeResponse> getBusLikes(Long memberId) {
-        return findMember(memberId).getBusLikes()
-                .stream()
-                .sorted(Comparator.comparing(current -> current.getBus().getNumber()))
-                .map(busLike -> {
-                    Bus bus = busLike.getBus();
-                    Route lastVisited = bus.getLastVisited();
-                    validateBusAvailability(lastVisited);
-                    return BusLikeResponse.builder()
-                            .number(bus.getNumber())
-                            .previousBusStop(lastVisited.getBusStop().getName())
-                            .nextBusStop(bus.getRoutes().get(lastVisited.getOrder()).getBusStop().getName())
-                            .build();
-                })
-                .collect(Collectors.toList());
+    public BusLikeResponse getBusLike(int number) {
+        Bus bus = findBusByNumber(number);
+        Route lastVisited = bus.getLastVisited();
+        validateBusAvailability(lastVisited);
+        return BusLikeResponse.builder()
+                .previousBusStop(lastVisited.getBusStop().getName())
+                .nextBusStop(bus.getRoutes()
+                        .stream()
+                        .sorted(Comparator.comparing(Route::getOrder))
+                        .collect(Collectors.toList())
+                        .get(lastVisited.getOrder()).getBusStop().getName())
+                .build();
     }
 
     public RouteImageResponse getRouteImage(int number) {
