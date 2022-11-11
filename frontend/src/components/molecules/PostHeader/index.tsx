@@ -1,11 +1,19 @@
 import React from 'react';
-import { StyledPostHeader } from './styled';
+import Button from '../../atoms/Button';
+import Text from '../../atoms/Text';
+import { ButtonWrapper, PostHeadWrapper, StyledPostHeader } from './styled';
+import { PostHeaderTypes } from './types';
 
-const PostHeader = () => {
+const PostHeader = ({ title, date }: PostHeaderTypes) => {
   return (
     <StyledPostHeader>
-      <Button>뒤로가기</Button>
-      <Text>{title}</Text>
+      <ButtonWrapper>
+        <Button>뒤로가기</Button>
+      </ButtonWrapper>
+      <PostHeadWrapper>
+        <Text>{title}</Text>
+        <Text>{date}</Text>
+      </PostHeadWrapper>
     </StyledPostHeader>
   );
 };

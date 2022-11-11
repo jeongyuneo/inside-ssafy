@@ -1,1 +1,4 @@
-export interface PostHeaderTypes {}
+export interface PostHeaderTypes {
+  title: string;
+  date: string;
+}
