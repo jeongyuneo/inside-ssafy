@@ -37,7 +37,7 @@ const MenuCard = ({
       </StyledTitle>
       <StyledHr />
       <StyledMenu>
-        {!items.length ? (
+        {!items ? (
           <Text bold={true}>미운영</Text>
         ) : (
           items.map(menu => (
@@ -49,7 +49,7 @@ const MenuCard = ({
       </StyledMenu>
       <StyledHr />
       <StyledSubMenu>
-        {!subItems.length ? (
+        {!subItems?.length ? (
           <StyledBr />
         ) : (
           subItems.map(subItem => (

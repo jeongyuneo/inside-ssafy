@@ -10,7 +10,7 @@ import { NavigateFunction } from 'react-router-dom';
 
 interface ParamType {
   state: {
-    busNum: number;
+    busNum?: number;
   };
 }
 const navigator = (navigate: NavigateFunction, param?: ParamType) => {
