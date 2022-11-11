@@ -27,7 +27,7 @@ export const validateInput = (
     returnData.message = '이름은 한글만 허용됩니다.';
   } else if (!STUDENT_NUMBER_PATTERN.test(studentNumber)) {
     returnData.message = '학번은 숫자만 입력 가능합니다';
-  } else if (campus.length == 0) {
+  } else if (campus.length === 0) {
     returnData.message = '캠퍼스를 선택해주세요';
   } else if (!validationkey) {
     returnData.message = '이메일 인증이 필요합니다.';

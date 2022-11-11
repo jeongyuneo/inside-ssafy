@@ -9,14 +9,7 @@ export interface PropTypes {
   value?: AccountValueTypes;
   width?: number;
   height?: number;
-  fontSize?: number;
-  textColor?: string;
   backgroundColor?: string;
-  type?: string;
-  placeholder?: string;
-  disabled?: boolean;
-  borderRadius?: number;
-  paddingLeft?: number;
   changeHandler?: (e: SelectChangeEvent<string>) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
