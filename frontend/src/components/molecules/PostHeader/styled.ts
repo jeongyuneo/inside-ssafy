@@ -1,9 +1,16 @@
+import { css } from '@emotion/react';
 import styled from 'styled-components';
+import { PropTypes } from './types';
 
-export const StyledPostHeader = styled.div`
-  width: 22rem;
+export const StyledPostHeader = styled.div<PropTypes>`
+  ${({ width }) => {
+    css`
+      width: ${width || 22}rem;
+    `;
+  }}
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -12,15 +19,17 @@ export const ButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
+export const PostWrapper = styled.div``;
+
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 `;
 
 export const DateWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
+  padding-right: 0.5rem;
 `;

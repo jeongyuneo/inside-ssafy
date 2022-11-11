@@ -4,31 +4,37 @@ import Text from '../../atoms/Text';
 import {
   ButtonWrapper,
   DateWrapper,
+  PostWrapper,
   StyledPostHeader,
   TextWrapper,
 } from './styled';
-import { PostHeaderTypes } from './types';
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-/>;
-const PostHeader = ({ title, date, author, myName }: PostHeaderTypes) => {
+import { PropTypes } from './types';
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+
+const PostHeader = ({ title, createTime, myPost, width }: PropTypes) => {
   return (
-    <StyledPostHeader>
+    <StyledPostHeader
+      title={title}
+      createTime={createTime}
+      myPost={myPost}
+      width={width}
+    >
       <ButtonWrapper>
-        <Button>뒤로가기</Button>
-        {author === myName && (
-          <Button>
-            <span className="material-symbols-outlined">more_vert</span>
+        <Button isText>뒤로가기</Button>
+        {myPost && (
+          <Button isText>
+            <DensityMediumIcon />
           </Button>
         )}
       </ButtonWrapper>
-      <TextWrapper>
-        <Text>{title}</Text>
-      </TextWrapper>
-      <DateWrapper>
-        <Text>{date}</Text>
-      </DateWrapper>
+      <PostWrapper>
+        <TextWrapper>
+          <Text size={1.4}>{title}</Text>
+        </TextWrapper>
+        <DateWrapper>
+          <Text size={0.8}>{createTime}</Text>
+        </DateWrapper>
+      </PostWrapper>
     </StyledPostHeader>
   );
 };

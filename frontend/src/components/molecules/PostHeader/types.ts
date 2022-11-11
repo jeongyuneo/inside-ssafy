@@ -1,6 +1,6 @@
-export interface PostHeaderTypes {
+export interface PropTypes {
   title: string;
-  date: string;
-  author: string;
-  myName: string;
+  createTime: string;
+  myPost: boolean;
+  width?: number;
 }
