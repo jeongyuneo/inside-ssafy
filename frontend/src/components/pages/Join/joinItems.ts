@@ -1,6 +1,6 @@
-export const LABEL_FONT = 1;
+export const LABEL_FONT_SIZE = 1;
 export const TOKEN_TIMER = 60 * 5; // 초 * 분
-export const textTypes = [
+export const TEXT_TYPES = [
   'text',
   'text',
   'text',
@@ -8,7 +8,7 @@ export const textTypes = [
   'password',
   'password',
 ];
-export const placeholder = [
+export const PLACEHOLDER = [
   '이름을 입력하세요',
   '학번을 입력하세요',
   'user@gmail.com',
@@ -16,7 +16,7 @@ export const placeholder = [
   '8자 이상 20자 이하로 입력하세요',
   '비밀번호를 다시 입력하세요',
 ];
-export const inputNames = [
+export const INPUT_NAMES = [
   'name',
   'studentNumber',
   'email',
@@ -25,7 +25,7 @@ export const inputNames = [
   'passwordAgain',
 ];
 
-export const labelName = [
+export const LABEL_NAMES = [
   '이름',
   '학번',
   '이메일',
@@ -33,3 +33,5 @@ export const labelName = [
   '비밀번호',
   '비밀번호 확인',
 ];
+
+export const CAMPUS = ['서울', '대전', '광주', '부울경', '구미'];
