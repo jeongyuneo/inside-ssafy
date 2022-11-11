@@ -7,12 +7,12 @@ import Text from '../../atoms/Text';
 import ButtonGroup from '../../molecules/ButtonGroup';
 import InputLabel from '../../molecules/InputLabel';
 import {
-  campus,
-  inputNames,
-  labelName,
-  LABEL_FONT,
-  placeholder,
-  textTypes,
+  CAMPUS,
+  INPUT_NAMES,
+  LABEL_NAMES,
+  LABEL_FONT_SIZE,
+  PLACEHOLDER,
+  TEXT_TYPES,
   TOKEN_TIMER,
 } from './joinItems';
 import {
@@ -86,14 +86,12 @@ const Join = () => {
   };
 
   const selectInfo = (e: SelectChangeEvent<string>) => {
-    console.log(e.target.name + ' , ' + e.target.value);
     setAccount(prev => {
       return {
         ...prev,
         [e.target.name]: e.target.value,
       };
     });
-    console.log(account);
   };
 
   const checkCertificateTimer = () => {
@@ -125,7 +123,6 @@ const Join = () => {
   // 인증을 보낸다.
   const sendCertificateMessage = async () => {
     const isValidated = validateEmail(account);
-    console.log(isValidated.status);
     if (!isValidated.status) {
       setEmailMessage(prev => {
         return {
@@ -137,7 +134,6 @@ const Join = () => {
       return;
     }
     const getToken = await requestEmailToken(account);
-    console.log(getToken);
     if (getToken.status) {
       setEmailMessage(prev => {
         return {
@@ -248,7 +244,7 @@ const Join = () => {
     <StyledJoin>
       <JoinPageWrapper>
         <InputLabelWrapper>
-          {inputNames.map((inputName, index) => {
+          {INPUT_NAMES.map((inputName, index) => {
             switch (index) {
               case 1:
                 return (
@@ -257,19 +253,19 @@ const Join = () => {
                       <InputLabel
                         id={inputName}
                         name={inputName}
-                        labelValue={labelName[index]}
+                        labelValue={LABEL_NAMES[index]}
                         inputs={account}
                         width={13}
                         height={3}
-                        type={textTypes[index]}
-                        placeholder={placeholder[index]}
-                        labelFontSize={LABEL_FONT}
+                        type={TEXT_TYPES[index]}
+                        placeholder={PLACEHOLDER[index]}
+                        labelFontSize={LABEL_FONT_SIZE}
                         changeHandler={changeInfo}
                       />
                       <SelectFormWrapper>
                         <SelectForm
                           labelName="캠퍼스"
-                          inputs={campus}
+                          inputs={CAMPUS}
                           id={'campus'}
                           value={account}
                           changeHandler={selectInfo}
@@ -285,13 +281,13 @@ const Join = () => {
                       <InputLabel
                         id={inputName}
                         name={inputName}
-                        labelValue={labelName[index]}
+                        labelValue={LABEL_NAMES[index]}
                         inputs={account}
                         width={13}
                         height={3}
-                        type={textTypes[index]}
-                        placeholder={placeholder[index]}
-                        labelFontSize={LABEL_FONT}
+                        type={TEXT_TYPES[index]}
+                        placeholder={PLACEHOLDER[index]}
+                        labelFontSize={LABEL_FONT_SIZE}
                         changeHandler={changeInfo}
                       />
                       <ButtonWrapper>
@@ -318,14 +314,14 @@ const Join = () => {
                       <InputLabel
                         id={inputName}
                         name={inputName}
-                        labelValue={labelName[index]}
+                        labelValue={LABEL_NAMES[index]}
                         inputs={account}
                         width={13}
                         height={3}
-                        type={textTypes[index]}
-                        placeholder={placeholder[index]}
+                        type={TEXT_TYPES[index]}
+                        placeholder={PLACEHOLDER[index]}
                         disabled={isEmailCertificated}
-                        labelFontSize={LABEL_FONT}
+                        labelFontSize={LABEL_FONT_SIZE}
                         changeHandler={changeInfo}
                       />
                       <TextWrapper>
@@ -357,13 +353,13 @@ const Join = () => {
                     key={inputName}
                     id={inputName}
                     name={inputName}
-                    labelValue={labelName[index]}
+                    labelValue={LABEL_NAMES[index]}
                     inputs={account}
                     width={20}
                     height={3}
-                    type={textTypes[index]}
-                    placeholder={placeholder[index]}
-                    labelFontSize={LABEL_FONT}
+                    type={TEXT_TYPES[index]}
+                    placeholder={PLACEHOLDER[index]}
+                    labelFontSize={LABEL_FONT_SIZE}
                     changeHandler={changeInfo}
                   />
                 );
