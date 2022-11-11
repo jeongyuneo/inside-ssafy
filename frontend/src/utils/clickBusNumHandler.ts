@@ -2,21 +2,30 @@ import { Dispatch, SetStateAction } from 'react';
 
 interface PropTypes {
   direction: string;
-  busNum: number;
-  setBusNum: Dispatch<SetStateAction<number>>;
+  allBusNums?: number[];
+  busIdx: number;
+  setBusIdx: Dispatch<SetStateAction<number>>;
 }
 
-const clickBusNumHandler = ({ direction, busNum, setBusNum }: PropTypes) => {
+const clickBusNumHandler = ({
+  direction,
+  allBusNums = [1, 2, 3, 4, 5, 6],
+  busIdx,
+  setBusIdx,
+}: PropTypes) => {
+  const firstIdx = 0;
+  const lastIdx = allBusNums.length - 1;
+
   if (
-    (busNum === 1 && direction === 'left') ||
-    (busNum === 6 && direction === 'right')
+    (busIdx === firstIdx && direction === 'left') ||
+    (busIdx === lastIdx && direction === 'right')
   ) {
     return;
   }
 
   direction === 'left'
-    ? setBusNum(prev => prev - 1)
-    : setBusNum(prev => prev + 1);
+    ? setBusIdx(prev => prev - 1)
+    : setBusIdx(prev => prev + 1);
 };
 
 export default clickBusNumHandler;
