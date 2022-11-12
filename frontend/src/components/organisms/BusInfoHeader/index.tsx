@@ -14,13 +14,17 @@ const BusInfoHeader = ({
   busNum,
   liked,
   clickLogoHandler,
+  clickMypageHandler,
   clickBusNumHandler,
   toggleLikeHandler,
   toggleBusInfoModalHandler,
 }: PropTypes) => {
   return (
     <StyledBusInfoHeader>
-      <Navbar clickLogoHandler={clickLogoHandler} />
+      <Navbar
+        clickLogoHandler={clickLogoHandler}
+        clickMypageHandler={clickMypageHandler}
+      />
       <BusInfoNavigator
         busNum={busNum}
         clickBusNumHandler={clickBusNumHandler}
