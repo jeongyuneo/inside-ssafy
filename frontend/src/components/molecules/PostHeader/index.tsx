@@ -1,11 +1,40 @@
 import React from 'react';
-import { StyledPostHeader } from './styled';
+import Button from '../../atoms/Button';
+import Text from '../../atoms/Text';
+import {
+  ButtonWrapper,
+  DateWrapper,
+  PostWrapper,
+  StyledPostHeader,
+  TextWrapper,
+} from './styled';
+import { PropTypes } from './types';
+import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 
-const PostHeader = () => {
+const PostHeader = ({ title, createTime, myPost, width }: PropTypes) => {
   return (
-    <StyledPostHeader>
-      <Button>뒤로가기</Button>
-      <Text>{title}</Text>
+    <StyledPostHeader
+      title={title}
+      createTime={createTime}
+      myPost={myPost}
+      width={width}
+    >
+      <ButtonWrapper>
+        <Button isText>뒤로가기</Button>
+        {myPost && (
+          <Button isText>
+            <DensityMediumIcon />
+          </Button>
+        )}
+      </ButtonWrapper>
+      <PostWrapper>
+        <TextWrapper>
+          <Text size={1.4}>{title}</Text>
+        </TextWrapper>
+        <DateWrapper>
+          <Text size={0.8}>{createTime}</Text>
+        </DateWrapper>
+      </PostWrapper>
     </StyledPostHeader>
   );
 };
