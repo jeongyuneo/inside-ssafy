@@ -7,5 +7,6 @@ export interface PostTypes {
 }
 
 export interface PostsTypes {
-  postsInfo: Array<PostTypes>;
+  postsInfo?: Array<PostTypes>;
+  isContent?: boolean;
 }

@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { PostsTypes } from './types';
 
 export const StyledMyPosts = styled.div`
   display: flex;
@@ -17,6 +18,12 @@ export const PostSummaryWrapper = styled.div`
   gap: 1rem;
 `;
 
-export const TextWrapper = styled.div`
+export const TextWrapper = styled.div<PostsTypes>`
+  ${({ isContent }) =>
+    isContent &&
+    css`
+      justify-content: center;
+    `}
+  display: flex;
   padding-left: 1rem;
 `;
