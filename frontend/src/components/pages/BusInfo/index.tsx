@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BusInfoImageModal from '../../organisms/BusInfoImageModal';
 import BusInfoBody from '../../organisms/BusInfoBody';
 import BusInfoHeader from '../../organisms/BusInfoHeader';
@@ -29,6 +29,7 @@ const BusInfo = () => {
     ALL_BUS_NUMS,
     busNum: location.state?.busNum,
   });
+  const queryClient = useQueryClient();
 
   // ALL_BUS_NUMS 배열에서 인덱스에 맞는 버스 번호를 찾도록 busIdx를 상태로 관리
   const [busIdx, setBusIdx] = useState(initialBusIdx);
@@ -50,7 +51,7 @@ const BusInfo = () => {
   };
 
   const clickRefreshHandler = () => {
-    console.log('refresh');
+    queryClient.invalidateQueries(['busInfo', busIdx]);
   };
 
   const toggleBusInfoModalHandler = () => {
@@ -59,8 +60,8 @@ const BusInfo = () => {
 
   const toggleLikeHandler = async () => {
     const isSuccessful: boolean = await (liked
-      ? deleteBusLike(busNum)
-      : postBusLike(busNum));
+      ? deleteBusLike(ALL_BUS_NUMS[busIdx])
+      : postBusLike(ALL_BUS_NUMS[busIdx]));
 
     isSuccessful && setLiked(prev => !prev);
   };
