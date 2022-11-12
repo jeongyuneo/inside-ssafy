@@ -24,10 +24,6 @@ const MyPage = () => {
     navigate('/');
   };
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
   return (
     <StyledMyPage>
       <Navbar clickLogoHandler={clickLogoHandler} />
