@@ -9,6 +9,8 @@ import { StyledBusInfo } from './styles';
 import getBusInfo from './getBusInfo';
 import getBusInfoImage from './getBusInfoImage';
 import clickBusNumHandler from '../../../utils/clickBusNumHandler';
+import postBusLike from './postBusLike';
+import deleteBusLike from './deleteBusLike';
 import navigator from '../../../utils/navigator';
 import calculateInitialBusIdx from './calculateInitialBusIdx';
 
@@ -55,8 +57,12 @@ const BusInfo = () => {
     setOpenedBusInfoModal(prev => !prev);
   };
 
-  const toggleLikeHandler = () => {
-    setLiked(prev => !prev);
+  const toggleLikeHandler = async () => {
+    const isSuccessful: boolean = await (liked
+      ? deleteBusLike(busNum)
+      : postBusLike(busNum));
+
+    isSuccessful && setLiked(prev => !prev);
   };
 
   useEffect(() => {

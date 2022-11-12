@@ -1,19 +1,23 @@
 import styled from 'styled-components';
-import { PropTypes } from './types';
+import { PropsTypes } from './types';
 
-export const StyledMenuCards = styled.div<PropTypes>`
-  width: ${({ width }) => width || 22}rem;
-  height: ${({ height }) => height || 80}vh;
+export const StyledMenuCards = styled.div<PropsTypes>`
+  width: 24rem;
+  height: 70vh;
   background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
   display: flex;
   flex-direction: column;
   justify-contents: center;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   padding-bottom: 1rem;
+  border-radius: 1rem;
   overflow: auto;
   &::-webkit-scrollbar {
     background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    width: 1rem;
   }
   ::-webkit-scrollbar-thumb {
     width: 10px;

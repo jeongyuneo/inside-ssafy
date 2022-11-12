@@ -100,14 +100,14 @@ public class PostService {
 
     public void updatePost(Long memberId, Long postId, PostRequest postRequest, List<MultipartFile> files) {
         Post post = findPost(postId);
-        checkEditable(memberId, post);
+        validateEditable(memberId, post);
         post.update(postRequest.getTitle(), postRequest.getContent(), files);
         postRepository.save(post);
     }
 
     public void deletePost(Long memberId, Long postId) {
         Post post = findPost(postId);
-        checkEditable(memberId, post);
+        validateEditable(memberId, post);
         post.delete();
         postRepository.save(post);
     }
@@ -116,13 +116,9 @@ public class PostService {
     public void createPostLike(Long memberId, Long postId) {
         Member member = findMember(memberId);
         Post post = findPost(postId);
-        if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
-            throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
-        }
-
+        validatePostLikeDuplication(member, post);
         if (postLikeRepository.existsByMemberAndPostAndIsActiveFalse(member, post)) {
-            PostLike postLike = postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post)
-                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
+            PostLike postLike = getPostLikeByMemberAndPost(member, post);
             postLike.activatePostLike();
             postLikeRepository.save(postLike);
             return;
@@ -137,8 +133,7 @@ public class PostService {
 
     @Transactional
     public void deletePostLike(Long memberId, Long postId) {
-        PostLike postLike = postLikeRepository.findByMemberAndPostAndIsActiveTrue(findMember(memberId), findPost(postId))
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
+        PostLike postLike = getPostLikeByMemberAndPost(findMember(memberId), findPost(postId));
         postLike.delete();
         postLikeRepository.save(postLike);
     }
@@ -153,9 +148,20 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 
-    private void checkEditable(Long memberId, Post post) {
+    private void validateEditable(Long memberId, Post post) {
         if (!post.isEditableBy(memberId)) {
             throw new ForbiddenException(ErrorMessage.NOT_EDITABLE_MEMBER);
         }
+    }
+
+    private void validatePostLikeDuplication(Member member, Post post) {
+        if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
+        }
+    }
+
+    private PostLike getPostLikeByMemberAndPost(Member member, Post post) {
+        return postLikeRepository.findByMemberAndPostAndIsActiveTrue(member, post)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
     }
 }

@@ -37,17 +37,17 @@ public class Comment extends BaseEntity {
         post.deleteComment();
     }
 
+    public void addReComment(ReComment reComment) {
+        reComments.add(reComment);
+        post.addReComment();
+    }
+
     public boolean isEditableBy(Long memberId) {
         return member.is(memberId);
     }
 
     public void update(String content) {
         this.content = content;
-    }
-
-    public void addReComment(ReComment reComment) {
-        reComments.add(reComment);
-        post.addReComment();
     }
 
     public void deleteReComment() {

@@ -1,14 +1,14 @@
 import React from 'react';
 import Text from '../../atoms/Text';
 import { StyledMenuWeek, TextWrapper } from './styles';
-import { PropTypes } from './types';
+import { MenuWeekTypes } from './types';
 
 /**
  * MenuWeek 컴포넌트
  *
  * @author jun
  */
-const MenuWeek = ({ startDate, endDate }: PropTypes) => {
+const MenuWeek = ({ startDate, endDate }: MenuWeekTypes) => {
   return (
     <StyledMenuWeek>
       <TextWrapper>
