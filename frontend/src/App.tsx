@@ -9,6 +9,7 @@ import MyPage from './components/pages/MyPage';
 import Main from './components/pages/Main';
 import Spinner from './utils/Spinner';
 import { ErrorBoundary } from './utils/ErrorBoundary';
+import Menu from './components/pages/Menu';
 
 function App() {
   const queryClient = new QueryClient({
@@ -32,6 +33,7 @@ function App() {
               <Route path="/join" element={<Join />} />
               <Route path="/businfo" element={<BusInfo />} />
               <Route path="/mypage" element={<MyPage />} />
+              <Route path="/menu" element={<Menu />} />
             </Routes>
           </BrowserRouter>
         </QueryClientProvider>
