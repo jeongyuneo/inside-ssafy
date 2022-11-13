@@ -10,9 +10,18 @@ import { PostSummaryTypes } from './types';
  *
  * @author jini
  */
-const PostSummary = ({ title, createdDate, ...rest }: PostSummaryTypes) => {
+const PostSummary = ({
+  postId,
+  title,
+  createdDate,
+  ...rest
+}: PostSummaryTypes) => {
+  const clickPostHandler = (postId: number) => {
+    console.log(postId);
+  };
+
   return (
-    <StyledPostSummary>
+    <StyledPostSummary onClick={() => clickPostHandler(postId)}>
       <Text size={1}>{title}</Text>
       <IconTextWrapper>
         <LikeComment {...rest}></LikeComment>

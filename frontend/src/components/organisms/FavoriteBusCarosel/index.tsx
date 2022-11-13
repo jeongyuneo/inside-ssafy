@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Text from '../../atoms/Text';
 import FavoriteBusBody from '../../molecules/FavoriteBusBody';
 import FavoriteBusHeader from '../../molecules/FavoriteBusHeader';
 import {
+  EmptyBusBodyContainer,
+  EmptyBusContainer,
   FavoriteBusContainer,
   FlexContainer,
   StyledFavoriteBusCarosel,
@@ -20,6 +22,8 @@ const FavoriteBusCarosel = ({
   busNum,
   previousBusStop,
   nextBusStop,
+  errorMessage,
+  busLikes,
   clickRefreshHandler,
   clickPlusHandler,
   clickBusNumHandler,
@@ -31,21 +35,34 @@ const FavoriteBusCarosel = ({
           자주 타는 버스 정보
         </Text>
       </TextFlexContainer>
-      <FlexContainer>
-        <FaChevronLeft size={30} onClick={() => clickBusNumHandler('left')} />
-        <FavoriteBusContainer>
-          <FavoriteBusHeader
-            busNum={busNum}
-            clickRefreshHandler={clickRefreshHandler}
-            clickPlusHandler={clickPlusHandler}
+      {busLikes?.length ? (
+        <FlexContainer>
+          <FaChevronLeft size={30} onClick={() => clickBusNumHandler('left')} />
+          <FavoriteBusContainer>
+            <FavoriteBusHeader
+              busNum={busNum}
+              clickRefreshHandler={clickRefreshHandler}
+              clickPlusHandler={clickPlusHandler}
+            />
+            {previousBusStop ? (
+              <FavoriteBusBody
+                previousBusStop={previousBusStop}
+                nextBusStop={nextBusStop}
+              />
+            ) : (
+              <EmptyBusBodyContainer>{errorMessage}</EmptyBusBodyContainer>
+            )}
+          </FavoriteBusContainer>
+          <FaChevronRight
+            size={30}
+            onClick={() => clickBusNumHandler('right')}
           />
-          <FavoriteBusBody
-            previousBusStop={previousBusStop}
-            nextBusStop={nextBusStop}
-          />
-        </FavoriteBusContainer>
-        <FaChevronRight size={30} onClick={() => clickBusNumHandler('right')} />
-      </FlexContainer>
+        </FlexContainer>
+      ) : (
+        <EmptyBusContainer>
+          <Text>즐겨찾기 등록한 버스가 없거나 운영 시간이 아닙니다</Text>
+        </EmptyBusContainer>
+      )}
     </StyledFavoriteBusCarosel>
   );
 };
