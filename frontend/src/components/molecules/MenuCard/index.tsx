@@ -24,12 +24,7 @@ const MenuCard = ({
   ...menuCardRest
 }: MenuCardTypes) => {
   return (
-    <StyledMenuCard
-      dayOfTheWeek={dayOfTheWeek}
-      items={items}
-      subItems={subItems}
-      {...menuCardRest}
-    >
+    <StyledMenuCard {...menuCardRest}>
       <StyledTitle>
         <Text size={fontSize ? fontSize + 0.2 : 1} bold={true}>
           {dayOfTheWeek}
