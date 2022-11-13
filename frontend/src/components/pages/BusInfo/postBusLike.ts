@@ -5,7 +5,7 @@ const postBusLike = async (busNum: number) => {
     await axios({
       method: 'POST',
       url: '/api/v1/buses/like',
-      params: {
+      data: {
         number: busNum,
       },
     });
