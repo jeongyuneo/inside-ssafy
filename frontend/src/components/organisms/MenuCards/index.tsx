@@ -12,7 +12,7 @@ import { PropsTypes } from './types';
 
 const MenuCards = ({ menus, cardColor, ...menuRest }: PropsTypes) => {
   return (
-    <StyledMenuCards menus={menus} {...menuRest}>
+    <StyledMenuCards {...menuRest}>
       <MenuCardsWrapper>
         {menus?.map(({ dayOfTheWeek, subItems, items, ...menuRest }) => (
           <MenuCardWrapper key={dayOfTheWeek}>
