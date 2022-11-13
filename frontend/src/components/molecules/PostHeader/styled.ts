@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { PropTypes } from './types';
+import { StyledPostHeaderType } from './types';
 
-export const StyledPostHeader = styled.div<PropTypes>`
+export const StyledPostHeader = styled.div<StyledPostHeaderType>`
   ${({ width }) =>
     css`
       width: ${width || 25}rem;

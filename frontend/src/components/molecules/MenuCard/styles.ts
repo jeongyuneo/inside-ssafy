@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { MenuCardTypes } from './types';
+import { StyledMenuCardType } from './types';
 
-export const StyledMenuCard = styled.div<MenuCardTypes>`
+export const StyledMenuCard = styled.div<StyledMenuCardType>`
   background-color: ${({ backgroundColor }) => backgroundColor || 'white'};
   display: flex;
   flex-direction: column;

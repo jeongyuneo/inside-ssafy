@@ -23,23 +23,18 @@ import { GrMoreVertical } from 'react-icons/gr';
 const PostHeader = ({
   title,
   createTime,
-  myPost,
+  isMyPost,
   clickBackButtonHandler,
   clickMenuButtonHandler,
-  ...rest
+  width,
 }: PropTypes) => {
   return (
-    <StyledPostHeader
-      title={title}
-      createTime={createTime}
-      myPost={myPost}
-      {...rest}
-    >
+    <StyledPostHeader width={width}>
       <ButtonWrapper>
         <Button isText clickHandler={clickBackButtonHandler}>
           뒤로가기
         </Button>
-        {myPost && (
+        {isMyPost && (
           <Button isText clickHandler={clickMenuButtonHandler}>
             <GrMoreVertical size={22} />
           </Button>
