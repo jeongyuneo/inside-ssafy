@@ -9,21 +9,39 @@ import {
   TextWrapper,
 } from './styled';
 import { PropTypes } from './types';
-import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const PostHeader = ({ title, createTime, myPost, width }: PropTypes) => {
+/**
+ * 글의 제목과 날짜, 본인이 쓴 글인지를 인자로 받는다.
+ * 왼쪽에 뒤로가기버튼, 오른쪽에 메뉴 버튼을 만들었으며
+ * menuButtonClickHandler와 backButtonClickHandler로 이벤트를 설정할 수 있다.
+ * 너비는 25rem이 default이지만 width로 조절 가능하다.
+ *
+ * @author jun
+ */
+
+const PostHeader = ({
+  title,
+  createTime,
+  myPost,
+  backButtonClickHandler,
+  menuButtonClickHandler,
+  ...rest
+}: PropTypes) => {
   return (
     <StyledPostHeader
       title={title}
       createTime={createTime}
       myPost={myPost}
-      width={width}
+      {...rest}
     >
       <ButtonWrapper>
-        <Button isText>뒤로가기</Button>
+        <Button isText clickHandler={backButtonClickHandler}>
+          뒤로가기
+        </Button>
         {myPost && (
-          <Button isText>
-            <DensityMediumIcon />
+          <Button isText clickHandler={menuButtonClickHandler}>
+            <MoreVertIcon />
           </Button>
         )}
       </ButtonWrapper>

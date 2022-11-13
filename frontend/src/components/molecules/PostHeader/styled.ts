@@ -1,19 +1,19 @@
-import { css } from '@emotion/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { PropTypes } from './types';
 
 export const StyledPostHeader = styled.div<PropTypes>`
-  ${({ width }) => {
+  ${({ width }) =>
     css`
-      width: ${width || 22}rem;
-    `;
-  }}
+      width: ${width || 25}rem;
+    `}
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 `;
 
 export const ButtonWrapper = styled.div`
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
