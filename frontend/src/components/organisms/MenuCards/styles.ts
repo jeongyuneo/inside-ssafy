@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { PropsTypes } from './types';
+import { StyledMenuCardsType } from './types';
 
-export const StyledMenuCards = styled.div<PropsTypes>`
+export const StyledMenuCards = styled.div<StyledMenuCardsType>`
   width: 24rem;
   height: 70vh;
   background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
