@@ -1,8 +1,11 @@
-export interface PropTypes {
+export interface StyledPostHeaderType {
+  width?: number;
+}
+
+export interface PropTypes extends StyledPostHeaderType {
   title: string;
   createTime: string;
-  myPost: boolean;
-  width?: number;
-  clickBackButtonHandler?: () => void;
-  clickMenuButtonHandler?: () => void;
+  isMyPost: boolean;
+  clickBackButtonHandler: () => void;
+  clickMenuButtonHandler: () => void;
 }
