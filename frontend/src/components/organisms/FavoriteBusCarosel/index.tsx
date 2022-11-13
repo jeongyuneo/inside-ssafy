@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Text from '../../atoms/Text';
 import FavoriteBusBody from '../../molecules/FavoriteBusBody';
@@ -60,7 +60,7 @@ const FavoriteBusCarosel = ({
         </FlexContainer>
       ) : (
         <EmptyBusContainer>
-          <Text>즐겨찾기 등록한 버스가 없습니다</Text>
+          <Text>즐겨찾기 등록한 버스가 없거나 운영 시간이 아닙니다</Text>
         </EmptyBusContainer>
       )}
     </StyledFavoriteBusCarosel>
