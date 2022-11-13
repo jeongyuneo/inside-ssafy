@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { MainDataType } from './types';
 
 const getMainData = async () => {
@@ -10,8 +10,14 @@ const getMainData = async () => {
 
     return data;
   } catch (e) {
-    console.log(e);
-    throw e;
+    // 주말에는 식단표를 제공하지 않아 400 에러
+    if (e instanceof AxiosError && e?.response?.status === 400) {
+      console.log(e?.response?.data);
+      return e?.response?.data.message;
+    } else {
+      console.log(e);
+      throw e;
+    }
   }
 };
 
