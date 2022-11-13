@@ -5,6 +5,6 @@ export interface PropTypes {
   createTime: string;
   myPost: boolean;
   width?: number;
-  backButtonClickHandler?: MouseEventHandler<HTMLButtonElement>;
-  menuButtonClickHandler?: MouseEventHandler<HTMLButtonElement>;
+  clickBackButtonHandler?: MouseEventHandler<HTMLButtonElement>;
+  clickMenuButtonHandler?: MouseEventHandler<HTMLButtonElement>;
 }
