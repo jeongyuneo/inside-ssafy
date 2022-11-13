@@ -9,7 +9,7 @@ import {
   TextWrapper,
 } from './styled';
 import { PropTypes } from './types';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { GrMoreVertical } from 'react-icons/gr';
 
 /**
  * 글의 제목과 날짜, 본인이 쓴 글인지를 인자로 받는다.
@@ -41,7 +41,7 @@ const PostHeader = ({
         </Button>
         {myPost && (
           <Button isText clickHandler={menuButtonClickHandler}>
-            <MoreVertIcon />
+            <GrMoreVertical size={22} />
           </Button>
         )}
       </ButtonWrapper>
