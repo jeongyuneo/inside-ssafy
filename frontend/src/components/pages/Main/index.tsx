@@ -25,7 +25,7 @@ const Main = () => {
   const { data: mainData } = useQuery(['menusHotPosts'], () => getMainData());
   const { data: likeBus } = useQuery(
     ['likeBuses', mainData, busIdx],
-    () => getLikeBuses(mainData?.busLikes[busIdx]),
+    () => getLikeBuses(mainData?.busLikes?.[busIdx]),
     {
       enabled: !!mainData?.busLikes,
     },
@@ -54,7 +54,7 @@ const Main = () => {
         />
         <ImageTextButtonGroup imageTextInfos={getImageInfos(navigate)} />
         <FavoriteBusCarosel
-          busNum={mainData?.busLikes[busIdx] || 0}
+          busNum={mainData?.busLikes?.[busIdx] || 0}
           previousBusStop={likeBus?.previousBusStop}
           nextBusStop={likeBus?.nextBusStop}
           errorMessage={likeBus?.message}
@@ -62,15 +62,15 @@ const Main = () => {
           clickRefreshHandler={clickRefreshHandler}
           clickPlusHandler={
             navigator(navigate, {
-              state: { busNum: mainData?.busLikes[busIdx] },
+              state: { busNum: mainData?.busLikes?.[busIdx] },
             }).busInfo
           }
           clickBusNumHandler={clickBusNumHandlerWrapper}
         />
         <TodayMenuWrapper>
           <MenuCard
-            items={mainData?.menu.items}
-            subItems={mainData?.menu.subItems}
+            items={mainData?.menu?.items}
+            subItems={mainData?.menu?.subItems}
             dayOfTheWeek="오늘의 식단"
           />
         </TodayMenuWrapper>
