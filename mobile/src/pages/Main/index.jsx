@@ -30,9 +30,9 @@ const Main = ({ navigation }) => {
     }
   };
 
-  const getBusInfoAndMovePage = async (num) => {
-    const busLine = await getBusLine(num);
-    navigation.navigate("Driving", { busLine });
+  const getBusInfoAndMovePage = async (busNum) => {
+    const busLine = await getBusLine(busNum);
+    navigation.navigate("Driving", { busLine, busNum });
   };
 
   const showAlert = (num) => {
