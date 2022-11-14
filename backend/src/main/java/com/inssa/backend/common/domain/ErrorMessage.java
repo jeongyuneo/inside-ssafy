@@ -43,7 +43,7 @@ public enum ErrorMessage {
 
     EXISTING_EMAIL("이미 가입된 이메일입니다."),
     EXISTING_POST_LIKE("이미 좋아요한 게시물입니다."),
-    EXISTING_BUS_LIKE("이미 즐겨차기에 추가된 버스입니다.");
+    EXISTING_BUS_LIKE("이미 즐겨찾기에 추가된 버스입니다.");
 
     private final String message;
 }
