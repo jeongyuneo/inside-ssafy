@@ -3,4 +3,5 @@ export interface PropTypes {
   color?: string;
   size?: number;
   bold?: boolean;
+  isPost?: boolean;
 }
