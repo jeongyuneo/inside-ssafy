@@ -4,8 +4,19 @@ export const StyledMenu = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 90vh;
+  background: linear-gradient(rgb(12, 235, 176, 0.14), white);
   gap: 1rem;
+`;
+
+export const NavbarWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: start;
+  padding-left: 1rem;
 `;
 
 export const MenuWeekWrapper = styled.div`
@@ -16,4 +27,5 @@ export const MenuWeekWrapper = styled.div`
 export const MenuCardsWrapper = styled.div`
   display: flex;
   justify-content: center;
+  padding-bottom: 1rem;
 `;

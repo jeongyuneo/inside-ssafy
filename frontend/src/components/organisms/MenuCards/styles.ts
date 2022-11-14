@@ -4,7 +4,7 @@ import { StyledMenuCardsType } from './types';
 export const StyledMenuCards = styled.div<StyledMenuCardsType>`
   width: 24rem;
   height: 70vh;
-  background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
+  background-color: ${({ backgroundColor }) => backgroundColor || 'none'};
   display: flex;
   flex-direction: column;
   justify-contents: center;
@@ -14,7 +14,7 @@ export const StyledMenuCards = styled.div<StyledMenuCardsType>`
   border-radius: 1rem;
   overflow: auto;
   &::-webkit-scrollbar {
-    background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
+    background-color: ${({ backgroundColor }) => backgroundColor || 'none'};
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
     width: 1rem;
