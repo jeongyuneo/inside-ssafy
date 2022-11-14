@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class MainService {
 
     private static final String DELIMITER = ", ";
-    private static final List<String> EMPTY_LIST = new ArrayList<>();
+    private static final List<String> NO_MENU = new ArrayList<>();
     private static final int HOT_POST_STANDARD = 10;
 
     private final MemberRepository memberRepository;
@@ -66,7 +66,7 @@ public class MainService {
             Menu menu = findMenuByDate(today);
             return getMenuResponse(menu.getItem(), menu.getSubItem());
         }
-        return getMenuResponse(EMPTY_LIST, EMPTY_LIST);
+        return getMenuResponse();
     }
 
     private Menu findMenuByDate(LocalDate today) {
@@ -74,17 +74,17 @@ public class MainService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
     }
 
+    private MenuResponse getMenuResponse() {
+        return MenuResponse.builder()
+                .items(NO_MENU)
+                .subItems(NO_MENU)
+                .build();
+    }
+
     private MenuResponse getMenuResponse(String item, String subItem) {
         return MenuResponse.builder()
                 .items(Arrays.stream(item.split(DELIMITER)).collect(Collectors.toList()))
                 .subItems(Arrays.stream(subItem.split(DELIMITER)).collect(Collectors.toList()))
-                .build();
-    }
-
-    private MenuResponse getMenuResponse(List<String> items, List<String> subItems) {
-        return MenuResponse.builder()
-                .items(items)
-                .subItems(subItems)
                 .build();
     }
 }
