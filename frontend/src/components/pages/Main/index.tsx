@@ -22,7 +22,7 @@ const Main = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: mainData } = useQuery(['menusHotPosts'], () => getMainData());
+  const { data: mainData } = useQuery(['mainData'], () => getMainData());
   const { data: likeBus } = useQuery(
     ['likeBuses', mainData, busIdx],
     () => getLikeBuses(mainData?.busLikes?.[busIdx]),
