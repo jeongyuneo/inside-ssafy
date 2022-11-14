@@ -25,13 +25,13 @@ export const getImageInfos = (navigate: NavigateFunction) => {
     {
       src: './images/speaker.png',
       alt: 'speaker',
-      clickImageHandler: () => movePage('myPage'),
+      clickImageHandler: () => window.alert('준비중인 서비스입니다.'),
       children: '익명게시판',
     },
     {
       src: './images/plate.png',
       alt: 'plate',
-      clickImageHandler: () => movePage('myPage'),
+      clickImageHandler: () => movePage('menu'),
       children: '식단표',
     },
   ];

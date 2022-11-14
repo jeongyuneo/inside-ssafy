@@ -11,6 +11,8 @@ import Spinner from './utils/Spinner';
 import { ErrorBoundary } from './utils/ErrorBoundary';
 import Menu from './components/pages/Menu';
 import interceptResponse from './utils/interceptResponse';
+import PrivateRoute from './utils/PrivateRoute';
+import PublicRoute from './utils/PublicRoute';
 
 function App() {
   const queryClient = new QueryClient({
@@ -30,12 +32,54 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/join" element={<Join />} />
-              <Route path="/businfo" element={<BusInfo />} />
-              <Route path="/mypage" element={<MyPage />} />
-              <Route path="/menu" element={<Menu />} />
+              <Route
+                path="/*"
+                element={
+                  <PrivateRoute>
+                    <Main />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/join"
+                element={
+                  <PublicRoute>
+                    <Join />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/businfo"
+                element={
+                  <PrivateRoute>
+                    <BusInfo />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/mypage"
+                element={
+                  <PrivateRoute>
+                    <MyPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/menu"
+                element={
+                  <PrivateRoute>
+                    <Menu />
+                  </PrivateRoute>
+                }
+              />
             </Routes>
           </BrowserRouter>
         </QueryClientProvider>
