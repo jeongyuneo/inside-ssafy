@@ -9,7 +9,7 @@ export const StyledDriving = styled.View`
 
 export const MainText = styled.Text`
   font-size: 80px;
-  margin-bottom: 30%;
+  margin-bottom: 10%;
 `;
 
 export const TitleText = styled.Text`
