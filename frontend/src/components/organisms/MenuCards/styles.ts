@@ -16,11 +16,6 @@ export const StyledMenuCards = styled.div<StyledMenuCardsType>`
   &::-webkit-scrollbar {
     width: 0;
   }
-  ::-webkit-scrollbar-thumb {
-    width: 10px;
-    background-color: #d9d9d9;
-    border-radius: 1rem;
-  }
   gap: 0.5rem;
 `;
 
