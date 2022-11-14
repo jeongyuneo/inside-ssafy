@@ -8,8 +8,6 @@ const getMainData = async () => {
       url: '/api/v1',
     });
 
-    console.log();
-
     return data;
   } catch (e) {
     console.log(e);
