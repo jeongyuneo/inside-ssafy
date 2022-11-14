@@ -12,7 +12,9 @@ const MenuWeek = ({ startDate, endDate }: MenuWeekTypes) => {
   return (
     <StyledMenuWeek>
       <TextWrapper>
-        <Text size={1.6}> 이번주 식단</Text>
+        <Text size={1.6} bold>
+          이번주 식단
+        </Text>
         <Text size={1}>{`${startDate} ~ ${endDate}`}</Text>
       </TextWrapper>
     </StyledMenuWeek>
