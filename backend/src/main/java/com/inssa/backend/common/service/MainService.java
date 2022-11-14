@@ -3,7 +3,6 @@ package com.inssa.backend.common.service;
 import com.inssa.backend.common.controller.dto.MainResponse;
 import com.inssa.backend.common.controller.dto.MenuResponse;
 import com.inssa.backend.common.domain.ErrorMessage;
-import com.inssa.backend.common.exception.BadRequestException;
 import com.inssa.backend.common.exception.NotFoundException;
 import com.inssa.backend.member.domain.BusLike;
 import com.inssa.backend.member.domain.Member;
@@ -27,13 +26,14 @@ public class MainService {
 
     private static final String DELIMITER = ", ";
     private static final int HOT_POST_STANDARD = 10;
+    private static final String WEEKEND_MENU = "주말엔 식사가 제공되지 않습니다.";
+    private static final String PREPARING_MENU = "식단 준비 중";
 
     private final MemberRepository memberRepository;
     private final MenuRepository menuRepository;
     private final PostRepository postRepository;
 
     public MainResponse getMain(Long memberId) {
-        Menu menu = findMenuOfToday();
         return MainResponse.builder()
                 .busLikes(findMember(memberId).getBusLikes()
                         .stream()
@@ -41,10 +41,7 @@ public class MainService {
                         .sorted(Comparator.comparing(current -> current.getBus().getNumber()))
                         .map(busLikes -> busLikes.getBus().getNumber())
                         .collect(Collectors.toList()))
-                .menu(MenuResponse.builder()
-                        .items(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()))
-                        .subItems(Arrays.stream(menu.getSubItem().split(DELIMITER)).collect(Collectors.toList()))
-                        .build())
+                .menu(findMenuOfToday())
                 .hotPosts(postRepository.findTop5ByIsActiveTrueAndLikeCountGreaterThanEqualOrderByCreatedDateDesc(HOT_POST_STANDARD)
                         .stream()
                         .map(post -> PostsResponse.builder()
@@ -58,18 +55,33 @@ public class MainService {
                 .build();
     }
 
-    private Menu findMenuOfToday() {
+    private MenuResponse findMenuOfToday() {
         LocalDate today = LocalDate.now();
-        validateWeekday(today);
-        return menuRepository.findByDateEqualsAndIsActiveTrue(today)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
-    }
-    
-    private void validateWeekday(LocalDate today) {
-        DayOfWeek dayOfWeek = today.getDayOfWeek();
-        if (dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
-            throw new BadRequestException(ErrorMessage.NOT_WEEKDAY);
+        if (validateMenu(today)) {
+            Menu menu = menuRepository.findByDateEqualsAndIsActiveTrue(today)
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
+            return MenuResponse.builder()
+                    .items(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()))
+                    .subItems(Arrays.stream(menu.getSubItem().split(DELIMITER)).collect(Collectors.toList()))
+                    .build();
         }
+        if (isWeekend(today)) {
+            return MenuResponse.builder()
+                    .message(WEEKEND_MENU)
+                    .build();
+        }
+        return MenuResponse.builder()
+                .message(PREPARING_MENU)
+                .build();
+    }
+
+    private boolean validateMenu(LocalDate today) {
+        return menuRepository.existsByDateEqualsAndIsActiveTrue(today);
+    }
+
+    private boolean isWeekend(LocalDate today) {
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
     }
 
     private Member findMember(Long memberId) {
