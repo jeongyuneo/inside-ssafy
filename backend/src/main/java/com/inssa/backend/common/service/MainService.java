@@ -64,10 +64,10 @@ public class MainService {
         LocalDate today = LocalDate.now().minusDays(3);
         if (menuRepository.existsByDateEqualsAndIsActiveTrue(today)) {
             Menu menu = findMenuByDate(today);
-            return buildMenuResponse(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()),
+            return getMenuResponse(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()),
                     Arrays.stream(menu.getSubItem().split(DELIMITER)).collect(Collectors.toList()));
         }
-        return buildMenuResponse(EMPTY_LIST, EMPTY_LIST);
+        return getMenuResponse(EMPTY_LIST, EMPTY_LIST);
     }
 
     private Menu findMenuByDate(LocalDate today) {
@@ -75,7 +75,7 @@ public class MainService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
     }
 
-    private MenuResponse buildMenuResponse(List<String> items, List<String> subItems) {
+    private MenuResponse getMenuResponse(List<String> items, List<String> subItems) {
         return MenuResponse.builder()
                 .items(items)
                 .subItems(subItems)
