@@ -10,5 +10,7 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
 
     List<Menu> findByIsActiveTrue();
 
+    boolean existsByDateEqualsAndIsActiveTrue(LocalDate date);
+
     Optional<Menu> findByDateEqualsAndIsActiveTrue(LocalDate date);
 }
