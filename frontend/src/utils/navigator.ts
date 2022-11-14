@@ -22,7 +22,7 @@ const navigator = (navigate: NavigateFunction, param?: ParamType) => {
       navigate('/businfo', param);
     },
     mypage: () => {
-      navigate('mypage', param);
+      navigate('/mypage', param);
     },
   };
 };

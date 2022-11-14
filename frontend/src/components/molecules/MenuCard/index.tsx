@@ -32,8 +32,8 @@ const MenuCard = ({
       </StyledTitle>
       <StyledHr />
       <StyledMenu>
-        {!items ? (
-          <Text bold={true}>미운영</Text>
+        {!items?.length ? (
+          <Text>식단 정보가 존재하지 않습니다.</Text>
         ) : (
           items.map(menu => (
             <Text size={fontSize ? fontSize : 0.8} key={menu}>
