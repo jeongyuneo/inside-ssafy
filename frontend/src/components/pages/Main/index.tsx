@@ -10,7 +10,13 @@ import ImageTextButtonGroup from '../../organisms/ImageTextButtonGroup';
 import { getImageInfos } from './getImageInfos';
 import getLikeBuses from './getLikeBuses';
 import getMainData from './getMainData';
-import { FlexWrapper, StyledMain, TodayMenuWrapper } from './styles';
+import {
+  FlexWrapper,
+  NavbarWrapper,
+  StyledMain,
+  TodayMenuWrapper,
+} from './styles';
+import HotPostGroup from '../../organisms/HotPostGroup';
 
 /**
  * 로그인 혹은 Navbar의 로고 클릭 시 라우팅 되는 메인 페이지
@@ -48,11 +54,13 @@ const Main = () => {
   return (
     <StyledMain>
       <FlexWrapper>
-        <Navbar
-          clickLogoHandler={navigator(navigate).main}
-          clickMypageHandler={navigator(navigate).mypage}
-        />
-        <ImageTextButtonGroup imageTextInfos={getImageInfos(navigate)} />
+        <NavbarWrapper>
+          <Navbar
+            clickLogoHandler={navigator(navigate).main}
+            clickMypageHandler={navigator(navigate).mypage}
+          />
+          <ImageTextButtonGroup imageTextInfos={getImageInfos(navigate)} />
+        </NavbarWrapper>
         <FavoriteBusCarosel
           busNum={mainData?.busLikes?.[busIdx] || 0}
           previousBusStop={likeBus?.previousBusStop}
@@ -74,6 +82,7 @@ const Main = () => {
             dayOfTheWeek="오늘의 식단"
           />
         </TodayMenuWrapper>
+        <HotPostGroup />
       </FlexWrapper>
     </StyledMain>
   );
