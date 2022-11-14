@@ -1,7 +1,7 @@
 export interface MenuCardTypes extends StyledMenuCardType {
   dayOfTheWeek: string;
-  items: string[];
-  subItems: string[];
+  items?: string[];
+  subItems?: string[];
   date?: string;
 }
 
