@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MenuResponse {
 
+    private String message;
     private List<String> items;
     private List<String> subItems;
 }
