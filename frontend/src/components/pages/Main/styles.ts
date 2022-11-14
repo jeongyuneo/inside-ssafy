@@ -8,9 +8,12 @@ export const StyledMain = styled.div`
 export const FlexWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  height: 70vh;
+  height: 90vh;
+  gap: 2rem;
+`;
+export const NavbarWrapper = styled.div`
+  width: 100%;
 `;
 
 export const TodayMenuWrapper = styled.div`
