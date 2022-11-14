@@ -14,10 +14,11 @@ import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -25,9 +26,8 @@ import java.util.stream.Collectors;
 public class MainService {
 
     private static final String DELIMITER = ", ";
+    private static final List<String> EMPTY_LIST = new ArrayList<>();
     private static final int HOT_POST_STANDARD = 10;
-    private static final String WEEKEND_MENU = "주말엔 식사가 제공되지 않습니다.";
-    private static final String PREPARING_MENU = "식단 준비 중";
 
     private final MemberRepository memberRepository;
     private final MenuRepository menuRepository;
@@ -61,26 +61,13 @@ public class MainService {
     }
 
     private MenuResponse findMenuOfToday() {
-        LocalDate today = LocalDate.now();
-        if (validateMenu(today)) {
+        LocalDate today = LocalDate.now().minusDays(3);
+        if (menuRepository.existsByDateEqualsAndIsActiveTrue(today)) {
             Menu menu = findMenuByDate(today);
-            return MenuResponse.builder()
-                    .items(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()))
-                    .subItems(Arrays.stream(menu.getSubItem().split(DELIMITER)).collect(Collectors.toList()))
-                    .build();
+            return buildMenuResponse(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()),
+                    Arrays.stream(menu.getSubItem().split(DELIMITER)).collect(Collectors.toList()));
         }
-        if (isWeekend(today)) {
-            return MenuResponse.builder()
-                    .message(WEEKEND_MENU)
-                    .build();
-        }
-        return MenuResponse.builder()
-                .message(PREPARING_MENU)
-                .build();
-    }
-
-    private boolean validateMenu(LocalDate today) {
-        return menuRepository.existsByDateEqualsAndIsActiveTrue(today);
+        return buildMenuResponse(EMPTY_LIST, EMPTY_LIST);
     }
 
     private Menu findMenuByDate(LocalDate today) {
@@ -88,8 +75,10 @@ public class MainService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
     }
 
-    private boolean isWeekend(LocalDate today) {
-        DayOfWeek dayOfWeek = today.getDayOfWeek();
-        return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
+    private MenuResponse buildMenuResponse(List<String> items, List<String> subItems) {
+        return MenuResponse.builder()
+                .items(items)
+                .subItems(subItems)
+                .build();
     }
 }
