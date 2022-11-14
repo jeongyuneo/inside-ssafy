@@ -55,11 +55,15 @@ public class MainService {
                 .build();
     }
 
+    private Member findMember(Long memberId) {
+        return memberRepository.findByIdAndIsActiveTrue(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
+    }
+
     private MenuResponse findMenuOfToday() {
         LocalDate today = LocalDate.now();
         if (validateMenu(today)) {
-            Menu menu = menuRepository.findByDateEqualsAndIsActiveTrue(today)
-                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
+            Menu menu = findMenuByDate(today);
             return MenuResponse.builder()
                     .items(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()))
                     .subItems(Arrays.stream(menu.getSubItem().split(DELIMITER)).collect(Collectors.toList()))
@@ -79,13 +83,13 @@ public class MainService {
         return menuRepository.existsByDateEqualsAndIsActiveTrue(today);
     }
 
+    private Menu findMenuByDate(LocalDate today) {
+        return menuRepository.findByDateEqualsAndIsActiveTrue(today)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
+    }
+
     private boolean isWeekend(LocalDate today) {
         DayOfWeek dayOfWeek = today.getDayOfWeek();
         return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
-    }
-
-    private Member findMember(Long memberId) {
-        return memberRepository.findByIdAndIsActiveTrue(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
     }
 }
