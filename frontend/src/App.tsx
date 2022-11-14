@@ -10,6 +10,7 @@ import Main from './components/pages/Main';
 import Spinner from './utils/Spinner';
 import { ErrorBoundary } from './utils/ErrorBoundary';
 import Menu from './components/pages/Menu';
+import interceptResponse from './utils/interceptResponse';
 
 function App() {
   const queryClient = new QueryClient({
@@ -21,6 +22,7 @@ function App() {
   });
 
   axios.defaults.baseURL = 'https://www.inside-ssafy.com/';
+  interceptResponse();
 
   return (
     <ErrorBoundary>
