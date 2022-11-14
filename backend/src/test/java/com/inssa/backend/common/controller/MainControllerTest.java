@@ -41,7 +41,6 @@ public class MainControllerTest extends ApiDocument {
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final List<Integer> BUS_LIKES = Arrays.asList(1, 2);
     private static final String DELIMITER = ", ";
-    private static final String MESSAGE = null;
     private static final List<String> ITEMS = Arrays.stream("코다리조림[명태:러시아산], 혼합잡곡밥, 비지찌개, 만두탕수, 상추겉절이, 포기김치".split(DELIMITER)).collect(Collectors.toList());
     private static final List<String> SUB_ITEMS = Arrays.stream("숭늉".split(DELIMITER)).collect(Collectors.toList());
     private static final Long ID = 1L;
@@ -57,7 +56,6 @@ public class MainControllerTest extends ApiDocument {
     @BeforeEach
     void setUp() {
         MenuResponse menuResponse = MenuResponse.builder()
-                .message(MESSAGE)
                 .items(ITEMS)
                 .subItems(SUB_ITEMS)
                 .build();
