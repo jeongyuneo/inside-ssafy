@@ -14,10 +14,7 @@ export const StyledMenuCards = styled.div<StyledMenuCardsType>`
   border-radius: 1rem;
   overflow: auto;
   &::-webkit-scrollbar {
-    background-color: ${({ backgroundColor }) => backgroundColor || 'none'};
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    width: 1rem;
+    width: 0;
   }
   ::-webkit-scrollbar-thumb {
     width: 10px;
