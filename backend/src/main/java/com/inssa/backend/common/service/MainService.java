@@ -61,11 +61,10 @@ public class MainService {
     }
 
     private MenuResponse findMenuOfToday() {
-        LocalDate today = LocalDate.now().minusDays(3);
+        LocalDate today = LocalDate.now();
         if (menuRepository.existsByDateEqualsAndIsActiveTrue(today)) {
             Menu menu = findMenuByDate(today);
-            return getMenuResponse(Arrays.stream(menu.getItem().split(DELIMITER)).collect(Collectors.toList()),
-                    Arrays.stream(menu.getSubItem().split(DELIMITER)).collect(Collectors.toList()));
+            return getMenuResponse(menu.getItem(), menu.getSubItem());
         }
         return getMenuResponse(EMPTY_LIST, EMPTY_LIST);
     }
@@ -73,6 +72,13 @@ public class MainService {
     private Menu findMenuByDate(LocalDate today) {
         return menuRepository.findByDateEqualsAndIsActiveTrue(today)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MENU));
+    }
+
+    private MenuResponse getMenuResponse(String item, String subItem) {
+        return MenuResponse.builder()
+                .items(Arrays.stream(item.split(DELIMITER)).collect(Collectors.toList()))
+                .subItems(Arrays.stream(subItem.split(DELIMITER)).collect(Collectors.toList()))
+                .build();
     }
 
     private MenuResponse getMenuResponse(List<String> items, List<String> subItems) {
