@@ -10,6 +10,7 @@ import Main from './components/pages/Main';
 import Spinner from './utils/Spinner';
 import { ErrorBoundary } from './utils/ErrorBoundary';
 import Menu from './components/pages/Menu';
+import MyInfoEdit from './components/pages/MyInfoEdit';
 import interceptResponse from './utils/interceptResponse';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
@@ -77,6 +78,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <Menu />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/myinfoedit"
+                element={
+                  <PrivateRoute>
+                    <MyInfoEdit />
                   </PrivateRoute>
                 }
               />
