@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../../atoms/Button';
 import Image from '../../atoms/Image';
 import Text from '../../atoms/Text';
 import LikeComment from '../LikeComment';
@@ -37,7 +36,12 @@ const PostBody = ({
         </Text>
       </ContentWrapper>
       <LikeWrapper>
-        <LikeComment likeCount={likeCount} commentCount={commentCount} />
+        <LikeComment
+          likeCount={likeCount}
+          commentCount={commentCount}
+          iconSize={20}
+          fontSize={1.2}
+        />
       </LikeWrapper>
     </StyledPostBody>
   );

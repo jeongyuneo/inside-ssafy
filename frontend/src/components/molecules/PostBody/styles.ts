@@ -4,7 +4,7 @@ import { StyledPostBodyTypes } from './types';
 export const StyledPostBody = styled.div<StyledPostBodyTypes>`
   ${({ width }) =>
     css`
-      width: ${width || 25}rem;
+      width: ${width || 23}rem;
     `}
   display: flex;
   align-items: center;
