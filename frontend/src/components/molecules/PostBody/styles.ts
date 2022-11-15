@@ -32,5 +32,5 @@ export const LikeWrapper = styled.div`
   padding-top: 2rem;
   display: flex;
   width: 100%;
-  justify-content: end;
+  justify-content: flex-end;
 `;

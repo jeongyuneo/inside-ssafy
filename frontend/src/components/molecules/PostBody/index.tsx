@@ -23,8 +23,8 @@ const PostBody = ({
       <ImageWrapper width={width}>
         {imgSrc && (
           <Image
-            width={width ? `${width.toString()}rem` : '25rem'}
-            height={height ? `${height.toString()}rem` : '100%'}
+            width={width ? `${width}rem` : '25rem'}
+            height={height ? `${height}rem` : '100%'}
             src={imgSrc}
             alt="logo"
           />

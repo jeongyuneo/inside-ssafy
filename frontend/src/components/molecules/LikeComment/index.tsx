@@ -19,14 +19,14 @@ const LikeComment = ({
   return (
     <StyledLikeComment>
       <TextWrapper>
-        <FaRegThumbsUp color="#D55555" size={iconSize ? iconSize : 15} />
-        <Text color="#D55555" size={fontSize ? fontSize : 0.9}>
+        <FaRegThumbsUp color="#D55555" size={iconSize || 15} />
+        <Text color="#D55555" size={fontSize || 0.9}>
           {likeCount.toString()}
         </Text>
       </TextWrapper>
       <TextWrapper>
-        <FaRegCommentDots color="#5B9CCE" size={iconSize ? iconSize : 15} />
-        <Text color="#5B9CCE" size={fontSize ? fontSize : 0.9}>
+        <FaRegCommentDots color="#5B9CCE" size={iconSize || 15} />
+        <Text color="#5B9CCE" size={fontSize || 0.9}>
           {commentCount.toString()}
         </Text>
       </TextWrapper>
