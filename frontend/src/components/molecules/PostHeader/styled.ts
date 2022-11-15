@@ -23,7 +23,7 @@ export const PostWrapper = styled.div`
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0 1rem 0 1rem;
+  padding: 0 1rem;
   justify-content: space-between;
 `;
 
@@ -32,5 +32,7 @@ export const DateWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: end;
-  padding: 0 1rem 0 1rem;
+  padding: 0 1rem;
 `;
+
+export const ButtonIconWrapper = styled.div``;

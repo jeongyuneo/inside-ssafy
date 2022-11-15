@@ -21,7 +21,7 @@ export const ImageWrapper = styled.div`
   height: auto;
   display: flex;
   justify-content: center;
-  padding: 0 1rem 0 1rem;
+  padding: 0 1rem;
 `;
 
 export const ContentWrapper = styled.div``;

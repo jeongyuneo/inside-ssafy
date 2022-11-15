@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../../atoms/Button';
 import Text from '../../atoms/Text';
 import {
+  ButtonIconWrapper,
   ButtonWrapper,
   DateWrapper,
   PostWrapper,
@@ -55,10 +56,10 @@ const PostHeader = ({
             clickHandler={clickLikeButtonHandler}
             borderColor={'#A0A0A0'}
           >
-            <span>
+            <ButtonIconWrapper>
               {isLike ? <FaThumbsUp size={15} /> : <FaRegThumbsUp size={15} />}
               {' 공감'}
-            </span>
+            </ButtonIconWrapper>
           </Button>
         </DateWrapper>
       </PostWrapper>
