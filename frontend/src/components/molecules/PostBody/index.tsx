@@ -6,35 +6,24 @@ import {
   ContentWrapper,
   ImageWrapper,
   LikeWrapper,
+  PostWrapper,
   StyledPostBody,
 } from './styles';
 import { PropTypes } from './types';
 
-const PostBody = ({
-  contents,
-  imgSrc,
-  likeCount,
-  commentCount,
-  width,
-  height,
-}: PropTypes) => {
+const PostBody = ({ contents, imgSrc, likeCount, commentCount }: PropTypes) => {
   return (
-    <StyledPostBody width={width}>
-      <ImageWrapper width={width}>
-        {imgSrc && (
-          <Image
-            width={width ? `${width}rem` : '25rem'}
-            height={height ? `${height}rem` : '100%'}
-            src={imgSrc}
-            alt="logo"
-          />
-        )}
-      </ImageWrapper>
-      <ContentWrapper>
-        <Text size={1.05} isPost>
-          {contents}
-        </Text>
-      </ContentWrapper>
+    <StyledPostBody>
+      <PostWrapper>
+        <ImageWrapper>
+          {imgSrc && <Image width={`100%`} src={imgSrc} alt="logo" />}
+        </ImageWrapper>
+        <ContentWrapper>
+          <Text size={1.05} isPost>
+            {contents}
+          </Text>
+        </ContentWrapper>
+      </PostWrapper>
       <LikeWrapper>
         <LikeComment
           likeCount={likeCount}
