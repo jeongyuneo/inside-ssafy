@@ -1,12 +1,13 @@
 import { ChangeEvent } from 'react';
 import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
+import { ChangePasswordType } from '../../pages/MyInfoEdit/types';
 
 export interface PropTypes {
   id: string;
   name: string;
   labelValue: string;
-  inputs?: AccountValueTypes | LoginInputsType;
+  inputs?: AccountValueTypes | LoginInputsType | ChangePasswordType;
   width?: number;
   height?: number;
   type?: string;
