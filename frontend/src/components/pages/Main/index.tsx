@@ -41,7 +41,7 @@ const Main = () => {
     ['likeBuses', mainData, busIdx],
     () => getLikeBuses(mainData?.busLikes?.[busIdx]),
     {
-      enabled: !!mainData?.busLikes,
+      enabled: !!mainData?.busLikes?.length,
     },
   );
   const { data: busInfoImage } = useQuery<BusInfoImageType>(
