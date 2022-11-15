@@ -91,7 +91,7 @@ public class BusService {
     }
 
     public List<RouteResponse> startBus(int number) {
-        return routeRepository.findByBusOrderByOrderAsc(findBusByNumber(number))
+        return routeRepository.findByBusAndIsActiveTrueOrderByOrderAsc(findBusByNumber(number))
                 .stream()
                 .map(route -> RouteResponse.builder()
                         .routeId(route.getId())
