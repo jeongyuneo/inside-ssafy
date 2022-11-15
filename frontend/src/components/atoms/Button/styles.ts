@@ -44,7 +44,14 @@ export const StyledButton = styled.button<PropTypes>`
           }`};
         `}
 
-  border: none;
+  ${({ borderColor }) =>
+    borderColor
+      ? css`
+          border: 1px solid ${borderColor};
+        `
+      : css`
+          border: none;
+        `}
   border-radius: 1rem;
   ${({ disabled }) =>
     !disabled &&
