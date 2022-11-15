@@ -1,6 +1,9 @@
 import { NavigateFunction } from 'react-router-dom';
 
-export const getImageInfos = (navigate: NavigateFunction) => {
+export const getImageInfos = (
+  navigate: NavigateFunction,
+  clickShuttleInfoButtonHandler: () => void,
+) => {
   const movePage = (address: string) => {
     navigate(`/${address}`);
   };
@@ -19,7 +22,7 @@ export const getImageInfos = (navigate: NavigateFunction) => {
     {
       src: './images/tayo_bus.png',
       alt: 'bus',
-      clickImageHandler: () => movePage('businfo'),
+      clickImageHandler: () => clickShuttleInfoButtonHandler(),
       children: '셔틀 정보',
     },
     {
