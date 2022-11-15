@@ -1,11 +1,14 @@
 import styled, { css } from 'styled-components';
-import { StyledPostBodyTypes } from './types';
 
-export const StyledPostBody = styled.div<StyledPostBodyTypes>`
-  ${({ width }) =>
-    css`
-      width: ${width || 23}rem;
-    `}
+export const StyledPostBody = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const PostWrapper = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -13,24 +16,19 @@ export const StyledPostBody = styled.div<StyledPostBodyTypes>`
   gap: 1rem;
 `;
 
-export const ImageWrapper = styled.div<StyledPostBodyTypes>`
-  ${({ width }) =>
-    css`
-      width: ${width || 24}rem;
-    `}
+export const ImageWrapper = styled.div`
+  width: 100%;
   height: auto;
-
   display: flex;
   justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 1rem;
 `;
 
 export const ContentWrapper = styled.div``;
 
 export const LikeWrapper = styled.div`
-  padding-top: 2rem;
+  padding: 1rem 0 1rem 1rem;
   display: flex;
   width: 100%;
-  justify-content: flex-end;
+  justify-content: end;
 `;

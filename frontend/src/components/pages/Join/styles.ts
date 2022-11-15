@@ -19,7 +19,6 @@ export const JoinPageWrapper = styled.div`
 export const InputLabelWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  // align-items: center;
   gap: 1rem;
 `;
 
@@ -48,7 +47,10 @@ export const SelectFormWrapper = styled.div`
   padding-top: 1.44rem;
 `;
 
-export const TextNavigateWrapper = styled.div``;
+export const TextNavigateWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 export const ValidateEmailWrapper = styled.div`
   display: flex;
