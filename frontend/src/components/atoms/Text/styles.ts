@@ -19,4 +19,10 @@ export const StyledText = styled.div<PropTypes>`
     css`
       font-weight: bold;
     `}
+  
+  ${({ isPost }) =>
+    isPost &&
+    css`
+      white-space: pre-line;
+    `}
 `;

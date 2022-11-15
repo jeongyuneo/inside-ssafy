@@ -7,9 +7,9 @@ import { PropTypes } from './types';
  *
  * @author jojo
  */
-const Text = ({ children, color, size, bold }: PropTypes) => {
+const Text = ({ children, color, size, bold, isPost }: PropTypes) => {
   return (
-    <StyledText color={color} size={size} bold={bold}>
+    <StyledText color={color} size={size} bold={bold} isPost={isPost}>
       {children}
     </StyledText>
   );
