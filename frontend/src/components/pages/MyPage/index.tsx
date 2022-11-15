@@ -17,7 +17,7 @@ const MyPage = () => {
   );
 
   const clickEditBtnHandler = () => {
-    console.log('button clicked');
+    navigate('/myinfoedit');
   };
 
   const clickLogoHandler = () => {
