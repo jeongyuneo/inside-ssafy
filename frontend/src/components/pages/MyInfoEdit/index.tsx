@@ -73,11 +73,7 @@ const MyInfoEdit = () => {
         height={3}
         changeHandler={e => changeHandler(e)}
       />
-      {!isPasswordSame ? (
-        <Text color="red">비밀번호가 일치하지 않습니다.</Text>
-      ) : (
-        ''
-      )}
+      {isPasswordSame || <Text color="red">비밀번호가 일치하지 않습니다.</Text>}
       <ButtonsWrapper>
         <Button width={20} height={3} clickHandler={clickEditBtnHandler}>
           수정하기
