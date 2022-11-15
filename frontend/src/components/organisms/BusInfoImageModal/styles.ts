@@ -15,5 +15,5 @@ export const StyledBusInfoImageModal = styled.div`
   flex-direction: column;
   align-items: flex-end;
   position: absolute;
-  width: 90%;
+  width: 95%;
 `;
