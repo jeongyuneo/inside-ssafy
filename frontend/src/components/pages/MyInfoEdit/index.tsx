@@ -28,16 +28,16 @@ const MyInfoEdit = () => {
 
   const clickEditBtnHandler = async () => {
     const { password, newPassword, newPasswordAgain } = inputs;
-    if (await patchPassword({ password, newPassword })) {
-      if (newPassword !== newPasswordAgain) {
-        setErrorMsg('비밀번호가 일치하지 않습니다.');
-      } else {
+    if (newPassword === newPasswordAgain) {
+      if (await patchPassword({ password, newPassword })) {
         setErrorMsg('');
         alert('비밀번호가 수정되었습니다');
         navigate('/');
+      } else {
+        setErrorMsg('비밀번호를 확인해주세요.');
       }
     } else {
-      setErrorMsg('비밀번호를 확인해주세요.');
+      setErrorMsg('비밀번호가 일치하지 않습니다.');
     }
   };
 
