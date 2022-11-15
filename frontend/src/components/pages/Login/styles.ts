@@ -4,6 +4,7 @@ export const StyledLogin = styled.div`
   display: flex;
   justify-content: center;
   height: 80vh;
+  background: linear-gradient(rgb(12, 235, 176, 0.14), white);
 `;
 
 export const LoginPageWrapper = styled.div`
