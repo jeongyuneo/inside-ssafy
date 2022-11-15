@@ -17,6 +17,10 @@ import {
   TodayMenuWrapper,
 } from './styles';
 import HotPostGroup from '../../organisms/HotPostGroup';
+import AskingBusTimeModal from '../../organisms/AskingBusTimeModal';
+import BusInfoImageModal from '../../organisms/BusInfoImageModal';
+import { BusInfoImageType } from '../BusInfo/types';
+import getBusInfoImage from '../BusInfo/getBusInfoImage';
 
 /**
  * 로그인 혹은 Navbar의 로고 클릭 시 라우팅 되는 메인 페이지
@@ -25,6 +29,10 @@ import HotPostGroup from '../../organisms/HotPostGroup';
  */
 const Main = () => {
   const [busIdx, setBusIdx] = useState(0);
+  const [openedAskingBusTimeModal, setOpenedAskingBusTimeModal] =
+    useState(false);
+  const [openedEveningBusInfoImageModal, setOpenedEveningBusInfoImageModal] =
+    useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -36,6 +44,27 @@ const Main = () => {
       enabled: !!mainData?.busLikes,
     },
   );
+  const { data: busInfoImage } = useQuery<BusInfoImageType>(
+    ['busInfoImage'],
+    () => getBusInfoImage({ busNum: 0 }),
+    {
+      enabled: openedEveningBusInfoImageModal,
+    },
+  );
+
+  const clickShuttleInfoButtonHandler = () => {
+    setOpenedAskingBusTimeModal(true);
+  };
+
+  const clickCancelModalHandler = () => {
+    setOpenedAskingBusTimeModal(false);
+    setOpenedEveningBusInfoImageModal(false);
+  };
+
+  const clickEveningHandler = () => {
+    setOpenedAskingBusTimeModal(prev => !prev);
+    setOpenedEveningBusInfoImageModal(prev => !prev);
+  };
 
   const clickRefreshHandler = () => {
     // likeBus를 refetch하도록 query key를 invalidate
@@ -59,7 +88,12 @@ const Main = () => {
             clickLogoHandler={navigator(navigate).main}
             clickMypageHandler={navigator(navigate).mypage}
           />
-          <ImageTextButtonGroup imageTextInfos={getImageInfos(navigate)} />
+          <ImageTextButtonGroup
+            imageTextInfos={getImageInfos(
+              navigate,
+              clickShuttleInfoButtonHandler,
+            )}
+          />
         </NavbarWrapper>
         <FavoriteBusCarosel
           busNum={mainData?.busLikes?.[busIdx] || 0}
@@ -83,6 +117,19 @@ const Main = () => {
           />
         </TodayMenuWrapper>
         <HotPostGroup />
+        {openedAskingBusTimeModal && (
+          <AskingBusTimeModal
+            clickCancelHandler={clickCancelModalHandler}
+            clickMorningHandler={navigator(navigate).busInfo}
+            clickEveningHandler={clickEveningHandler}
+          />
+        )}
+        {openedEveningBusInfoImageModal && (
+          <BusInfoImageModal
+            busInfoImage={busInfoImage?.url || ''}
+            toggleBusInfoModalHandler={clickCancelModalHandler}
+          />
+        )}
       </FlexWrapper>
     </StyledMain>
   );

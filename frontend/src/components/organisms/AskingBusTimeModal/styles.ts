@@ -15,5 +15,16 @@ export const StyledBusInfoImageModal = styled.div`
   flex-direction: column;
   align-items: flex-end;
   position: absolute;
-  width: 95%;
+  width: 70%;
+  background-color: rgba(256, 256, 256, 0.9);
+  border-radius: 1rem;
+`;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 7rem;
+  gap: 1rem;
 `;
