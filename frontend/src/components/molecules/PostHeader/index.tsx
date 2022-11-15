@@ -10,7 +10,7 @@ import {
 } from './styled';
 import { PropTypes } from './types';
 import { GrMoreVertical } from 'react-icons/gr';
-import { FaRegThumbsUp } from 'react-icons/fa';
+import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa';
 
 /**
  * 글의 제목과 날짜, 본인이 쓴 글인지를 인자로 받는다.
@@ -50,13 +50,13 @@ const PostHeader = ({
         <DateWrapper>
           <Text size={0.8}>{createTime}</Text>
           <Button
-            backgroundColor={isLike ? '#01A7EB' : 'white'}
-            textColor={isLike ? 'white' : '#01A7EB'}
+            backgroundColor={'white'}
+            textColor={'#696666'}
             clickHandler={clickLikeButtonHandler}
-            borderColor={'#01A7EB'}
+            borderColor={'#A0A0A0'}
           >
             <span>
-              <FaRegThumbsUp />
+              {isLike ? <FaThumbsUp size={15} /> : <FaRegThumbsUp size={15} />}
               {' 공감'}
             </span>
           </Button>

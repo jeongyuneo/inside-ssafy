@@ -8,8 +8,7 @@ export const StyledPostHeader = styled.div`
 `;
 
 export const ButtonWrapper = styled.div`
-  padding-left: 0.5rem;
-  padding-right: 1rem;
+  padding: 0 1rem 0 0.5rem;
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -24,8 +23,7 @@ export const PostWrapper = styled.div`
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 1rem 0 1rem;
   justify-content: space-between;
 `;
 
@@ -34,6 +32,5 @@ export const DateWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: end;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding: 0 1rem 0 1rem;
 `;

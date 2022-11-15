@@ -13,6 +13,7 @@ export const PostWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 1rem;
+  gap: 1rem;
 `;
 
 export const ImageWrapper = styled.div`
@@ -20,15 +21,13 @@ export const ImageWrapper = styled.div`
   height: auto;
   display: flex;
   justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 1rem 0 1rem;
 `;
 
 export const ContentWrapper = styled.div``;
 
 export const LikeWrapper = styled.div`
-  padding: 1rem;
-  padding-right: 0;
+  padding: 1rem 0 1rem 1rem;
   display: flex;
   width: 100%;
   justify-content: end;
