@@ -368,7 +368,7 @@ const Join = () => {
         </InputLabelWrapper>
         <StyledButtonGroup>
           <TextNavigateWrapper>
-            <Text color={joinMessage.color} size={0.5}>
+            <Text color={joinMessage.color} size={1}>
               {joinMessage.message}
             </Text>
           </TextNavigateWrapper>

@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '../../atoms/Button';
 import Text from '../../atoms/Text';
 import {
+  ButtonIconWrapper,
   ButtonWrapper,
   DateWrapper,
   PostWrapper,
@@ -10,12 +11,14 @@ import {
 } from './styled';
 import { PropTypes } from './types';
 import { GrMoreVertical } from 'react-icons/gr';
+import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa';
 
 /**
  * 글의 제목과 날짜, 본인이 쓴 글인지를 인자로 받는다.
  * 왼쪽에 뒤로가기버튼, 오른쪽에 메뉴 버튼을 만들었으며
- * clickMenuButtonHandler와 clickBackButtonHandler로 이벤트를 설정할 수 있다.
- * 너비는 25rem이 default이지만 width로 조절 가능하다.
+ * 우측 하단에도 공감버튼이 있다.
+ * clickMenuButtonHandler와 clickBackButtonHandler, clickLikeButtonHandler로
+ * 이벤트를 설정할 수 있다.
  *
  * @author jun
  */
@@ -24,28 +27,40 @@ const PostHeader = ({
   title,
   createTime,
   isMyPost,
+  isLike,
+  clickLikeButtonHandler,
   clickBackButtonHandler,
   clickMenuButtonHandler,
-  width,
 }: PropTypes) => {
   return (
-    <StyledPostHeader width={width}>
+    <StyledPostHeader>
       <ButtonWrapper>
         <Button isText clickHandler={clickBackButtonHandler}>
           뒤로가기
         </Button>
-        {isMyPost && (
-          <Button isText clickHandler={clickMenuButtonHandler}>
-            <GrMoreVertical size={22} />
-          </Button>
-        )}
       </ButtonWrapper>
       <PostWrapper>
         <TextWrapper>
           <Text size={1.4}>{title}</Text>
+          {isMyPost && (
+            <Button isText clickHandler={clickMenuButtonHandler}>
+              <GrMoreVertical size={22} />
+            </Button>
+          )}
         </TextWrapper>
         <DateWrapper>
           <Text size={0.8}>{createTime}</Text>
+          <Button
+            backgroundColor={'white'}
+            textColor={'#696666'}
+            clickHandler={clickLikeButtonHandler}
+            borderColor={'#A0A0A0'}
+          >
+            <ButtonIconWrapper>
+              {isLike ? <FaThumbsUp size={15} /> : <FaRegThumbsUp size={15} />}
+              {' 공감'}
+            </ButtonIconWrapper>
+          </Button>
         </DateWrapper>
       </PostWrapper>
     </StyledPostHeader>
