@@ -5,6 +5,7 @@ export const StyledJoin = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: linear-gradient(rgb(12, 235, 176, 0.14), white);
 `;
 
 export const JoinPageWrapper = styled.div`
