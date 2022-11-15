@@ -9,6 +9,7 @@ export const FlexWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   height: 90vh;
   gap: 2rem;
 `;
