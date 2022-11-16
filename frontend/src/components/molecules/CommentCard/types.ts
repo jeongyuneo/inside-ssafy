@@ -1,9 +1,7 @@
-export interface CommentCardTypes {
+import { CommonCommentTypes } from '../../organisms/CommentSection/types';
+
+export interface CommentCardTypes extends CommonCommentTypes {
   commentId: number;
-  content: string;
-  createdDate: string;
-  editable: boolean;
-  isPostWriter: boolean;
   clickReCommentHandler: (id?: number) => void;
   clickDeleteHandler: (id?: number) => void;
 }
