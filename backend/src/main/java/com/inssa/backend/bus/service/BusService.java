@@ -81,6 +81,7 @@ public class BusService {
                 .previousBusStop(lastVisited.getBusStop().getName())
                 .nextBusStop(bus.getRoutes()
                         .stream()
+                        .filter(Route::isActive)
                         .sorted(Comparator.comparing(Route::getOrder))
                         .collect(Collectors.toList())
                         .get(lastVisited.getOrder()).getBusStop().getName())
