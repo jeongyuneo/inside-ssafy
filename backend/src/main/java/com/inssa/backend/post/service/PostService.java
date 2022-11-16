@@ -57,6 +57,7 @@ public class PostService {
     public PostResponse getPost(Long memberId, Long postId) {
         Post post = findPost(postId);
         return PostResponse.builder()
+                .postId(postId)
                 .title(post.getTitle())
                 .content(post.getContent())
                 .likeCount(post.getLikeCount())
