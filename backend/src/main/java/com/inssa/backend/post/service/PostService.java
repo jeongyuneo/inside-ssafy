@@ -73,6 +73,7 @@ public class PostService {
                 .commentResponses(post.getComments()
                         .stream()
                         .map(comment -> CommentResponse.builder()
+                                .commentId(comment.getId())
                                 .content(comment.getContent())
                                 .createdDate(comment.getCreatedDate())
                                 .isEditable(comment.isEditableBy(memberId))
