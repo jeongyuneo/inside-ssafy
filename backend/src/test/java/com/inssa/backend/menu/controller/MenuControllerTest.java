@@ -19,10 +19,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import javax.servlet.http.Cookie;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -47,15 +46,20 @@ public class MenuControllerTest extends ApiDocument {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.MANAGER);
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
     @MockBean
     private MenuService menuService;
 
+    private String refreshToken;
     private MenuRequest menuRequest;
     private MenuResponse menuResponse;
 
     @BeforeEach
     void setUp() {
+        Map<String, String> memberInfo = new HashMap<>();
+        memberInfo.put("id", "1L");
+        memberInfo.put("role", "GENERAL");
         List<ItemsResponse> itemsResponse = IntStream.range(0, 5)
                 .mapToObj(n -> ItemsResponse.builder()
                         .date(DATE)
@@ -64,6 +68,7 @@ public class MenuControllerTest extends ApiDocument {
                         .subItems(SUB_ITEMS)
                         .build())
                 .collect(Collectors.toList());
+        refreshToken = JwtUtil.generateToken(memberInfo);
         menuRequest = MenuRequest.builder()
                 .date(DATE)
                 .dayOfTheWeek(DAY_OF_THE_WEEK)
@@ -125,6 +130,7 @@ public class MenuControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/menus")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(menuRequest)));
     }
@@ -145,7 +151,8 @@ public class MenuControllerTest extends ApiDocument {
     private ResultActions 식단_조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/menus")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 식단_조회_성공(ResultActions resultActions) throws Exception {

@@ -17,6 +17,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import javax.servlet.http.Cookie;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -34,17 +38,23 @@ public class CommentControllerTest extends ApiDocument {
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
     @MockBean
     private CommentService commentService;
 
+    private String refreshToken;
     private CommentRequest commentRequest;
 
     @BeforeEach
     void setUp() {
+        Map<String, String> memberInfo = new HashMap<>();
+        memberInfo.put("id", "1L");
+        memberInfo.put("role", "GENERAL");
         commentRequest = CommentRequest.builder()
                 .content(CONTENT)
                 .build();
+        refreshToken = JwtUtil.generateToken(memberInfo);
     }
 
     @DisplayName("익명 게시판 댓글 등록 성공")
@@ -117,6 +127,7 @@ public class CommentControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/comments/posts/" + postId)
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(commentRequest)));
     }
@@ -138,6 +149,7 @@ public class CommentControllerTest extends ApiDocument {
         return mockMvc.perform(patch("/api/v1/comments/" + commentId)
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(commentRequest)));
     }
@@ -158,7 +170,8 @@ public class CommentControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_댓글_삭제_요청(Long commentId) throws Exception {
         return mockMvc.perform(delete("/api/v1/comments/" + commentId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 익명_게시판_댓글_삭제_성공(ResultActions resultActions) throws Exception {
