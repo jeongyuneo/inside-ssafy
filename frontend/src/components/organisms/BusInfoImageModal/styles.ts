@@ -5,7 +5,7 @@ export const ModalBackground = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.25);
 `;
