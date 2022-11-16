@@ -1,8 +1,8 @@
-interface CommonCommentTypes {
+export interface CommonCommentTypes {
   content: string;
   createdDate: string;
   editable: boolean;
-  isPostWriter: boolean;
+  postWriter: boolean;
 }
 
 export interface ReCommentResponseTypes extends CommonCommentTypes {
