@@ -38,6 +38,7 @@ public class BusService {
                 .lastVisitedBusStop(bus.getRoutes().indexOf(bus.getLastVisited()))
                 .busStops(bus.getRoutes()
                         .stream()
+                        .filter(Route::isActive)
                         .map(Route::getBusStop)
                         .map(BusStop::getName)
                         .collect(Collectors.toList()))
