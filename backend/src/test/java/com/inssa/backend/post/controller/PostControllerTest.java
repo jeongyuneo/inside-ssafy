@@ -41,6 +41,7 @@ public class PostControllerTest extends ApiDocument {
     private static final int COMMENT_COUNT = 3;
     private static final boolean HAS_POST_LIKE = true;
     private static final boolean IS_EDITABLE = true;
+    private static final boolean IS_POST_WRITER = false;
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final String CONTENT = "본문";
     private static final String URL = "{file_url}";
@@ -88,6 +89,7 @@ public class PostControllerTest extends ApiDocument {
                         .reCommentId(ID)
                         .content(CONTENT)
                         .isEditable(IS_EDITABLE)
+                        .isPostWriter(IS_POST_WRITER)
                         .createdDate(CREATED_DATE)
                         .build())
                 .collect(Collectors.toList());
@@ -96,6 +98,7 @@ public class PostControllerTest extends ApiDocument {
                         .commentId(ID)
                         .content(CONTENT)
                         .isEditable(IS_EDITABLE)
+                        .isPostWriter(IS_POST_WRITER)
                         .createdDate(CREATED_DATE)
                         .reCommentResponses(reCommentResponses)
                         .build())

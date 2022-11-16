@@ -14,6 +14,7 @@ public class ReCommentResponse {
     private Long reCommentId;
     private String content;
     private boolean isEditable;
+    private boolean isPostWriter;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
     private LocalDateTime createdDate;
