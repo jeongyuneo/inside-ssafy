@@ -96,12 +96,18 @@ const Driving = ({ navigation, route }) => {
     }
   };
 
+  const DrivingDoneAndMovePage = () => {
+    patchDrivingDone(busNumber);
+    alert("운행이 종료되었습니다.");
+    navigation.navigate("Main");
+  };
+
   useEffect(() => {
     setBusLine(route.params.busLine);
     const busLineLength = busLine.length;
 
     if (busLine[busLineLength - 1]?.routeId === currentRouteId) {
-      alert("마지막 목적지에 도착했습니다. 운행종료를 눌러주세요");
+      DrivingDoneAndMovePage();
     }
 
     (async () => {
@@ -141,11 +147,6 @@ const Driving = ({ navigation, route }) => {
     })();
   }, [currentLocation.latitude]);
 
-  const movePage = () => {
-    patchDrivingDone(busNumber);
-    navigation.navigate("Main");
-  };
-
   return (
     <StyledDriving>
       <MainText>
@@ -159,7 +160,7 @@ const Driving = ({ navigation, route }) => {
       ) : (
         ""
       )}
-      <StyledButton onPress={() => movePage()}>
+      <StyledButton onPress={() => DrivingDoneAndMovePage()}>
         <TitleText>운행종료</TitleText>
       </StyledButton>
     </StyledDriving>
