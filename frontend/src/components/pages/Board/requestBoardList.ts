@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PostSummaryItemTypes } from '../../molecules/PostSummary/types';
 
-export const requestMenu = async (page: number, size: number) => {
+export const requestBoardList = async (page: number, size: number) => {
   try {
     const { data }: { data: PostSummaryItemTypes[] } = await axios({
       method: 'GET',
