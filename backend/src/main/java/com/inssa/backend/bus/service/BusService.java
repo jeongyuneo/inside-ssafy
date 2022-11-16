@@ -32,17 +32,18 @@ public class BusService {
 
     public BusResponse getBus(Long memberId, int number) {
         Bus bus = findBusByNumber(number);
-        List<String> busStops = bus.getRoutes()
+        List<Route> routes = bus.getRoutes()
                 .stream()
                 .filter(Route::isActive)
-                .map(Route::getBusStop)
-                .map(BusStop::getName)
                 .collect(Collectors.toList());
         return BusResponse.builder()
                 .isLast(number == TOTAL_BUS_NUMBER)
                 .hasBusLike(busLikeRepository.existsByMemberAndBusAndIsActiveTrue(findMember(memberId), bus))
-                .lastVisitedBusStop(busStops.indexOf(bus.getLastVisited().getBusStop().getName()))
-                .busStops(busStops)
+                .lastVisitedBusStop(routes.indexOf(bus.getLastVisited()))
+                .busStops(routes.stream()
+                        .map(Route::getBusStop)
+                        .map(BusStop::getName)
+                        .collect(Collectors.toList()))
                 .build();
     }
 
