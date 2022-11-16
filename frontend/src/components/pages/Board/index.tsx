@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import navigator from '../../../utils/navigator';
 import BoardNavbar from '../../molecules/BoardNavbar';
@@ -16,10 +16,12 @@ import { PostsWrapper, StyledBoard } from './styles';
  */
 
 const Board = () => {
+  const [] = useState();
+
   const navigate = useNavigate();
 
-  const clickBack = () => {
-    console.log('back');
+  const goToBeforePage = () => {
+    navigate(-1);
   };
 
   const clickSearch = () => {
@@ -37,7 +39,7 @@ const Board = () => {
         clickMypageHandler={navigator(navigate).mypage}
       ></Navbar>
       <BoardNavbar
-        clickBackButtonHandler={clickBack}
+        clickBackButtonHandler={goToBeforePage}
         clickSearchButtonHandler={clickSearch}
       ></BoardNavbar>
       <PostsWrapper>
