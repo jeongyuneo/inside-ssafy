@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReCommentResponse {
 
+    private Long reCommentId;
     private String content;
     private boolean isEditable;
 

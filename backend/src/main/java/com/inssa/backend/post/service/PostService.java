@@ -57,6 +57,7 @@ public class PostService {
     public PostResponse getPost(Long memberId, Long postId) {
         Post post = findPost(postId);
         return PostResponse.builder()
+                .postId(postId)
                 .title(post.getTitle())
                 .content(post.getContent())
                 .likeCount(post.getLikeCount())
@@ -72,12 +73,14 @@ public class PostService {
                 .commentResponses(post.getComments()
                         .stream()
                         .map(comment -> CommentResponse.builder()
+                                .commentId(comment.getId())
                                 .content(comment.getContent())
                                 .createdDate(comment.getCreatedDate())
                                 .isEditable(comment.isEditableBy(memberId))
                                 .reCommentResponses(comment.getReComments()
                                         .stream()
                                         .map(reComment -> ReCommentResponse.builder()
+                                                .reCommentId(reComment.getId())
                                                 .content(reComment.getContent())
                                                 .createdDate(reComment.getCreatedDate())
                                                 .isEditable(reComment.isEditableBy(memberId))

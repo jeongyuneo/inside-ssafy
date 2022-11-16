@@ -16,9 +16,9 @@ public class ReCommentController {
 
     private final ReCommentService reCommentService;
 
-    @PostMapping("/{reCommentId}")
-    public ResponseEntity<Void> createReComment(@RequestHeader("Authorization") String token, @PathVariable Long reCommentId, @RequestBody CommentRequest commentRequest) {
-        reCommentService.createReComment(JwtUtil.getMemberId(token), reCommentId, commentRequest);
+    @PostMapping("/{commentId}")
+    public ResponseEntity<Void> createReComment(@RequestHeader("Authorization") String token, @PathVariable Long commentId, @RequestBody CommentRequest commentRequest) {
+        reCommentService.createReComment(JwtUtil.getMemberId(token), commentId, commentRequest);
         log.info("대댓글 등록 성공");
         return ResponseEntity.ok().build();
     }

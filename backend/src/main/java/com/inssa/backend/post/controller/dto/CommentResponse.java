@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentResponse {
 
+    private Long commentId;
     private String content;
     private boolean isEditable;
     private List<ReCommentResponse> reCommentResponses;
