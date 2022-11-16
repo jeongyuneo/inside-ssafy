@@ -9,7 +9,6 @@ export const FlexContainer = styled.div`
 export const StyledHotPostGroup = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 90%;
   height: 12rem;
@@ -23,7 +22,7 @@ export const TitleWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 8rem;
+  height: 2rem;
 `;
 
 export const StyledHr = styled.hr`
@@ -35,7 +34,7 @@ export const PostSummaryWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 90%;
-  height: 50rem;
+  height: 10rem;
   gap: 0.5rem;
 `;
 
