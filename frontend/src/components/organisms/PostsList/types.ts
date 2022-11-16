@@ -1,6 +1,6 @@
-import { PostSummaryTypes } from '../../molecules/PostSummary/types';
+import { PostSummaryItemTypes } from '../../molecules/PostSummary/types';
 
 export interface PropsTypes {
-  items: PostSummaryTypes[];
+  items: PostSummaryItemTypes[];
   clickPostItemHandler: (postId: number) => void;
 }
