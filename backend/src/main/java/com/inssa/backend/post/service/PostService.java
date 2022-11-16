@@ -80,6 +80,7 @@ public class PostService {
                                 .reCommentResponses(comment.getReComments()
                                         .stream()
                                         .map(reComment -> ReCommentResponse.builder()
+                                                .reCommentId(reComment.getId())
                                                 .content(reComment.getContent())
                                                 .createdDate(reComment.getCreatedDate())
                                                 .isEditable(reComment.isEditableBy(memberId))
