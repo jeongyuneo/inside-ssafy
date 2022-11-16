@@ -6,6 +6,7 @@ import Navbar from '../../molecules/Navbar';
 import Text from '../../atoms/Text';
 import { StyledMyInfoEdit, ButtonsWrapper } from './styles';
 import navigator from '../../../utils/navigator';
+import { validatePassword } from './validatePassword';
 
 const MyInfoEdit = () => {
   const [inputs, setInputs] = useState({
@@ -13,7 +14,7 @@ const MyInfoEdit = () => {
     newPassword: '',
     newPasswordAgain: '',
   });
-  const [isPasswordSame, setIsPasswordSame] = useState(true);
+  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,12 +26,14 @@ const MyInfoEdit = () => {
     });
   };
 
-  const clickEditBtnHandler = () => {
-    const { newPassword, newPasswordAgain } = inputs;
-    if (newPassword !== newPasswordAgain) {
-      setIsPasswordSame(false);
+  const clickEditBtnHandler = async () => {
+    const returnData = await validatePassword(inputs);
+    if (!returnData.status) {
+      setErrorMsg(returnData.message);
     } else {
-      setIsPasswordSame(true);
+      setErrorMsg('');
+      alert('비밀번호가 수정되었습니다.');
+      navigate('/');
     }
   };
 
@@ -54,6 +57,7 @@ const MyInfoEdit = () => {
         inputs={inputs}
         changeHandler={e => changeHandler(e)}
       />
+
       <InputLabel
         id="newPassword"
         name="newPassword"
@@ -73,7 +77,8 @@ const MyInfoEdit = () => {
         height={3}
         changeHandler={e => changeHandler(e)}
       />
-      {isPasswordSame || <Text color="red">비밀번호가 일치하지 않습니다.</Text>}
+
+      <Text color="red">{errorMsg}</Text>
       <ButtonsWrapper>
         <Button width={20} height={3} clickHandler={clickEditBtnHandler}>
           수정하기
