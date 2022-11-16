@@ -15,6 +15,7 @@ import interceptResponse from './utils/interceptResponse';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
 import Board from './components/pages/Board';
+import PostDetail from './components/pages/PostDetail';
 
 function App() {
   const queryClient = new QueryClient({
@@ -95,6 +96,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <Board />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/postdetail"
+                element={
+                  <PrivateRoute>
+                    <PostDetail />
                   </PrivateRoute>
                 }
               />
