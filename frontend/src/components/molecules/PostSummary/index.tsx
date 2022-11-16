@@ -17,10 +17,6 @@ const PostSummary = ({
   clickPostItemHandler,
   ...rest
 }: PostSummaryTypes) => {
-  // const clickPostHandler = (postId: number) => {
-  //   console.log(postId);
-  // };
-
   return (
     <StyledPostSummary onClick={() => clickPostItemHandler?.(postId)}>
       <Text size={1}>{title}</Text>
