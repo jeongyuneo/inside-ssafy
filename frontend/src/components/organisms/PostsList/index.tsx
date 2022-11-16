@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../../atoms/Button';
 import PostSummary from '../../molecules/PostSummary';
 import { StyledPostsList } from './styles';
 import { PropsTypes } from './types';
