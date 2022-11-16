@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardNavbar from '../../molecules/BoardNavbar';
+import PostsList from '../../organisms/PostsList';
+import { items } from '../../organisms/PostsList/testitems';
 import { StyledBoard } from './styles';
 
 /**
@@ -19,6 +21,10 @@ const clickSearch = () => {
   console.log('search');
 };
 
+const clickPostItem = (postId: number) => {
+  console.log('click : ' + postId);
+};
+
 const Board = () => {
   return (
     <StyledBoard>
@@ -26,6 +32,7 @@ const Board = () => {
         clickBackButtonHandler={clickBack}
         clickSearchButtonHandler={clickSearch}
       ></BoardNavbar>
+      <PostsList items={items} clickPostItemHandler={clickPostItem}></PostsList>
     </StyledBoard>
   );
 };

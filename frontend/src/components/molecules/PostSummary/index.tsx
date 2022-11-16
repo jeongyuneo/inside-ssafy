@@ -14,14 +14,15 @@ const PostSummary = ({
   postId,
   title,
   createdDate,
+  clickPostItemHandler,
   ...rest
 }: PostSummaryTypes) => {
-  const clickPostHandler = (postId: number) => {
-    console.log(postId);
-  };
+  // const clickPostHandler = (postId: number) => {
+  //   console.log(postId);
+  // };
 
   return (
-    <StyledPostSummary onClick={() => clickPostHandler(postId)}>
+    <StyledPostSummary onClick={() => clickPostItemHandler?.(postId)}>
       <Text size={1}>{title}</Text>
       <IconTextWrapper>
         <LikeComment {...rest}></LikeComment>
