@@ -3,3 +3,7 @@ export interface ChangePasswordType {
   password: string;
   newPassword: string;
 }
+
+export interface ValidatePasswordTypes extends ChangePasswordType {
+  newPasswordAgain: string;
+}
