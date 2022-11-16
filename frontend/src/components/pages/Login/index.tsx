@@ -39,6 +39,7 @@ const Login = () => {
     const isLoggedIn = await requestLogin(inputs);
 
     if (isLoggedIn) {
+      localStorage.setItem('isLogin', 'true');
       setValidated(true);
       saveEmail({ checked, email: inputs['email'] });
       window.alert('로그인 성공!');

@@ -1,7 +1,5 @@
-import axios from 'axios';
-
 const getIsLogin = () => {
-  return !!axios.defaults.headers.common['Authorization'];
+  return !!localStorage.getItem('isLogin');
 };
 
 export default getIsLogin;
