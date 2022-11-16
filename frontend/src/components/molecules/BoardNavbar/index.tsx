@@ -13,9 +13,7 @@ const BoardNavbar = ({
       <Button fontSize={1} clickHandler={clickBackButtonHandler} isText>
         뒤로가기
       </Button>
-      <Button clickHandler={clickSearchButtonHandler} isText>
-        <BiSearchAlt size={25} />
-      </Button>
+      <BiSearchAlt size={25} onClick={clickSearchButtonHandler} />
     </StyledBoardNavbar>
   );
 };
