@@ -21,8 +21,12 @@ export const StyledButton = styled.TouchableOpacity`
   width: 200px;
   height: 200px;
   border-radius: 100px;
-  background-color: red;
-  color: white;
-  align-items: center;
   justify-content: center;
+  background-color: red;
+  align-items: center;
+  color: white;
+  margin-top: 20px;
+`;
+export const Paragraph = styled.Text`
+  font-size: 20px;
 `;
