@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledPostsList = styled.div`
-  width: 90%;
+  width: 95%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  gap: 0.5rem;
 `;
