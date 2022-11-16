@@ -6,4 +6,6 @@ export const StyledBoard = styled.div`
   flex-direction: column;
   align-items: center;
   background: linear-gradient(rgb(12, 235, 176, 0.14), white);
+  padding-top: 1rem;
+  gap: 1rem;
 `;
