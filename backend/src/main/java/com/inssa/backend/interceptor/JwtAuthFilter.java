@@ -44,7 +44,7 @@ public class JwtAuthFilter implements HandlerInterceptor {
         String refreshToken = BEARER + cookie.getValue();
 
         if (accessToken == null) {
-            throw new UnAuthorizedException(ErrorMessage.NOT_FOUND_TOKEN);
+            throw new UnAuthorizedException(JwtUtil.generateToken(JwtUtil.getMemberId(refreshToken), JwtUtil.getMemberRole(refreshToken)));
         }
 
         if (JwtUtil.isExpired(accessToken)) {
