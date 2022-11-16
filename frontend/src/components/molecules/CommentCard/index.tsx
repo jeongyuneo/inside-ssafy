@@ -16,14 +16,14 @@ const CommentCard = ({
   createdDate,
   editable,
   isReComment,
-  isPostWriter,
+  postWriter,
   clickReCommentHandler,
   clickDeleteHandler,
 }: PropTypes) => {
   return (
     <StyledCommentCard isReComment={isReComment}>
       <CommentHeader>
-        {isPostWriter ? (
+        {postWriter ? (
           <Text color="blue">익명(글쓴이)</Text>
         ) : (
           <Text>익명</Text>
