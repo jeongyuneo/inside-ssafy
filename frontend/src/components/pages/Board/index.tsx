@@ -1,7 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import navigator from '../../../utils/navigator';
 import BoardNavbar from '../../molecules/BoardNavbar';
-import { StyledBoard } from './styles';
+import Navbar from '../../molecules/Navbar';
+import PostsList from '../../organisms/PostsList';
+import { items } from '../../organisms/PostsList/testitems';
+import { PostsWrapper, StyledBoard } from './styles';
 
 /**
  * 현재 구현할 목적으로 route만 연결한 상태
@@ -11,21 +15,37 @@ import { StyledBoard } from './styles';
  * @author jun
  */
 
-const clickBack = () => {
-  console.log('back');
-};
-
-const clickSearch = () => {
-  console.log('search');
-};
-
 const Board = () => {
+  const navigate = useNavigate();
+
+  const clickBack = () => {
+    console.log('back');
+  };
+
+  const clickSearch = () => {
+    console.log('search');
+  };
+
+  const clickPostItem = (postId: number) => {
+    console.log('click : ' + postId);
+  };
+
   return (
     <StyledBoard>
+      <Navbar
+        clickLogoHandler={navigator(navigate).main}
+        clickMypageHandler={navigator(navigate).mypage}
+      ></Navbar>
       <BoardNavbar
         clickBackButtonHandler={clickBack}
         clickSearchButtonHandler={clickSearch}
       ></BoardNavbar>
+      <PostsWrapper>
+        <PostsList
+          items={items}
+          clickPostItemHandler={clickPostItem}
+        ></PostsList>
+      </PostsWrapper>
     </StyledBoard>
   );
 };
