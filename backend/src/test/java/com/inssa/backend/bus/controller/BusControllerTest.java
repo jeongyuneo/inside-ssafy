@@ -16,7 +16,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import javax.servlet.http.Cookie;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,17 +43,19 @@ public class BusControllerTest extends ApiDocument {
     private static final int BUS_NUMBER = 1;
     private static final String PREVIOUS_BUS_STOP = "수통골";
     private static final String NEXT_BUS_STOP = "한밭대";
-    private static final String URL = "https://j7b304.p.ssafy.io/api/image/1";
+    private static final String URL = "https://inside-ssafy.com/images/image-file";
     private static final String NAME = "삼성화재유성연수원";
     private static final String ADDRESS = "대전광역시 유성구 덕명동 124";
     private static final Long ID = 1L;
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer ";
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
     @MockBean
     private BusService busService;
 
+    private String refreshToken;
     private BusRequest busRequest;
     private BusResponse busResponse;
     private BusLikeResponse busLikeResponse;
@@ -59,11 +64,15 @@ public class BusControllerTest extends ApiDocument {
 
     @BeforeEach
     void setUp() {
+        Map<String, String> memberInfo = new HashMap<>();
+        memberInfo.put("id", "1L");
+        memberInfo.put("role", "GENERAL");
         RouteResponse routeResponse = RouteResponse.builder()
                 .routeId(ID)
                 .name(NAME)
                 .address(ADDRESS)
                 .build();
+        refreshToken = JwtUtil.generateToken(memberInfo);
         busRequest = BusRequest.builder()
                 .number(NUMBER)
                 .build();
@@ -267,6 +276,7 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(get("/api/v1/buses")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
@@ -288,6 +298,7 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/buses/like")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(busRequest)));
     }
@@ -309,6 +320,7 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(delete("/api/v1/buses/like")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
@@ -329,6 +341,7 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(get("/api/v1/buses/like")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
@@ -350,6 +363,7 @@ public class BusControllerTest extends ApiDocument {
         return mockMvc.perform(get("/api/v1/buses/route/image")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .param(NUMBER_PARAMETER_NAME, String.valueOf(number)));
     }
 
