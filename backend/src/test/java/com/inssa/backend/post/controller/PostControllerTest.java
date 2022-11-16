@@ -85,6 +85,7 @@ public class PostControllerTest extends ApiDocument {
                 .collect(Collectors.toList());
         List<ReCommentResponse> reCommentResponses = IntStream.range(0, 2)
                 .mapToObj(m -> ReCommentResponse.builder()
+                        .reCommentId(ID)
                         .content(CONTENT)
                         .isEditable(IS_EDITABLE)
                         .createdDate(CREATED_DATE)
@@ -92,6 +93,7 @@ public class PostControllerTest extends ApiDocument {
                 .collect(Collectors.toList());
         List<CommentResponse> commentResponses = IntStream.range(0, 2)
                 .mapToObj(n -> CommentResponse.builder()
+                        .commentId(ID)
                         .content(CONTENT)
                         .isEditable(IS_EDITABLE)
                         .createdDate(CREATED_DATE)
@@ -102,6 +104,7 @@ public class PostControllerTest extends ApiDocument {
                 .mapToObj(n -> postsResponse)
                 .collect(Collectors.toList());
         postResponse = PostResponse.builder()
+                .postId(ID)
                 .title(TITLE)
                 .likeCount(LIKE_COUNT)
                 .commentCount(COMMENT_COUNT)

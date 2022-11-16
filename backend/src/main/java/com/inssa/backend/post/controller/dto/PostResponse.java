@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostResponse {
 
+    private Long postId;
     private String title;
     private String content;
     private int likeCount;
