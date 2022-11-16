@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { StyleSheet, Dimensions } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import { StyledDriving, MainText, StyledButton, TitleText } from "./styles";
+import {
+  StyledDriving,
+  MainText,
+  StyledButton,
+  TitleText,
+  Paragraph,
+} from "./styles";
 
 /**
  * navigation을 받아서 페이지 이동에 사용한다.
@@ -26,6 +30,7 @@ const Driving = ({ navigation, route }) => {
   const [distance, setDistance] = useState(100000000);
   const [busIdx, setBusIdx] = useState(0);
   const [currentRouteId, setCurrentRouteId] = useState(0);
+  const [refreshStatus, setRefreshStatus] = useState(0);
 
   // 유저의 현재 좌표와 목적지까지의 거리 요청
   const getDistance = async (address, coordinate) => {
@@ -62,11 +67,13 @@ const Driving = ({ navigation, route }) => {
       }).then((res) => {
         console.log("버스 위치 최신화", res.status);
         setCurrentRouteId(routeId);
+        setRefreshStatus(res.status);
         return res.status;
       });
     } catch (e) {
       console.log(e);
     }
+    setRefreshStatus(0);
   };
 
   // 버스가 운행 종료시 운행 종료 요청
@@ -109,7 +116,7 @@ const Driving = ({ navigation, route }) => {
       await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.BestForNavigation,
-          distanceInterval: 1,
+          distanceInterval: 10,
         },
         (loc) => {
           setCurrentLocation({
@@ -125,7 +132,7 @@ const Driving = ({ navigation, route }) => {
         `${currentLocation.longitude},${currentLocation.latitude}`
       );
 
-      if (distance <= 10) {
+      if (distance <= 50) {
         refreshBusLocation(busLine[busIdx].routeId);
         setBusIdx((prev) => prev + 1);
       }
@@ -145,47 +152,17 @@ const Driving = ({ navigation, route }) => {
         운행중
         <FontAwesome5 name="bus-alt" size={50} color="#01a7eb" />
       </MainText>
-      <MapView
-        initialRegion={{
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        style={styles.map}
-      >
-        <Marker
-          coordinate={{
-            latitude: currentLocation.latitude,
-            longitude: currentLocation.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          title={"여기"}
-          description={"여기다 여기"}
-        />
-      </MapView>
+      <Paragraph>{`거리 = ${distance}`}</Paragraph>
+      <Paragraph>{`주소 = ${busLine[busIdx]?.address}`}</Paragraph>
+      {refreshStatus === 200 ? (
+        <Paragraph>{`${busIdx + 1}번째 목적지에 도착했습니다`}</Paragraph>
+      ) : (
+        ""
+      )}
       <StyledButton onPress={() => movePage()}>
         <TitleText>운행종료</TitleText>
       </StyledButton>
     </StyledDriving>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 50,
-    padding: 16,
-  },
-  paragraph: {
-    flex: 2,
-    fontSize: 30,
-  },
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 2,
-  },
-});
 export default Driving;
