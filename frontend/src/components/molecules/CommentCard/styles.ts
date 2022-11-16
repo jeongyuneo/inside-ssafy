@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 import { StyledCommentCardTypes } from './types';
 
 export const StyledCommentCard = styled.div<StyledCommentCardTypes>`
-  ${({ isRecomment }) =>
-    isRecomment &&
+  ${({ isReComment }) =>
+    isReComment &&
     css`
       background-color: #e7e7e7;
     `}
@@ -22,4 +22,5 @@ export const CommentHeader = styled.div`
 export const IconButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 0.3rem;
 `;
