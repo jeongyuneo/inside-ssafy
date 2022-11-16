@@ -5,7 +5,7 @@ import BoardNavbar from '../../molecules/BoardNavbar';
 import Navbar from '../../molecules/Navbar';
 import PostsList from '../../organisms/PostsList';
 import { items } from '../../organisms/PostsList/testitems';
-import { StyledBoard } from './styles';
+import { PostsWrapper, StyledBoard } from './styles';
 
 /**
  * 현재 구현할 목적으로 route만 연결한 상태
@@ -40,7 +40,12 @@ const Board = () => {
         clickBackButtonHandler={clickBack}
         clickSearchButtonHandler={clickSearch}
       ></BoardNavbar>
-      <PostsList items={items} clickPostItemHandler={clickPostItem}></PostsList>
+      <PostsWrapper>
+        <PostsList
+          items={items}
+          clickPostItemHandler={clickPostItem}
+        ></PostsList>
+      </PostsWrapper>
     </StyledBoard>
   );
 };
