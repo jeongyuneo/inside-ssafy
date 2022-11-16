@@ -1,12 +1,15 @@
 export interface CommentCardTypes {
-  writer: string;
+  commentId: number;
   content: string;
   createdDate: string;
   editable: boolean;
+  isPostWriter: boolean;
+  clickReCommentHandler: (id?: number) => void;
+  clickDeleteHandler: (id?: number) => void;
 }
 
 export interface StyledCommentCardTypes {
-  isRecomment: boolean;
+  isReComment: boolean;
 }
 
 export interface PropTypes extends CommentCardTypes, StyledCommentCardTypes {}
