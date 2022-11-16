@@ -15,6 +15,7 @@ public class CommentResponse {
     private Long commentId;
     private String content;
     private boolean isEditable;
+    private boolean isPostWriter;
     private List<ReCommentResponse> reCommentResponses;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm")

@@ -46,6 +46,10 @@ public class Comment extends BaseEntity {
         return member.is(memberId);
     }
 
+    public boolean isPostWriter(Long memberId) {
+        return this.member.is(memberId);
+    }
+
     public void update(String content) {
         this.content = content;
     }
