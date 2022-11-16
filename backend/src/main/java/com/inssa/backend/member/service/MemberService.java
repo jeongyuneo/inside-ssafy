@@ -72,6 +72,7 @@ public class MemberService {
         Member member = findMember(memberId);
         member.validatePassword(passwordEncoder, memberUpdateRequest.getPassword());
         member.updatePassword(passwordEncoder.encode(memberUpdateRequest.getNewPassword()));
+        memberRepository.save(member);
     }
 
     public void deleteMember(Long memberId) {
