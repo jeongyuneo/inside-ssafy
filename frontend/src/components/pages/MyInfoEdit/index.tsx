@@ -6,7 +6,6 @@ import Navbar from '../../molecules/Navbar';
 import Text from '../../atoms/Text';
 import { StyledMyInfoEdit, ButtonsWrapper } from './styles';
 import navigator from '../../../utils/navigator';
-import patchPassword from './patchPassword';
 import { validatePassword } from './validatePassword';
 
 const MyInfoEdit = () => {
@@ -28,9 +27,9 @@ const MyInfoEdit = () => {
   };
 
   const clickEditBtnHandler = async () => {
-    const returnData = validatePassword(inputs);
-    if (!(await returnData).status) {
-      setErrorMsg((await returnData).message);
+    const returnData = await validatePassword(inputs);
+    if (!returnData.status) {
+      setErrorMsg(returnData.message);
     } else {
       setErrorMsg('');
       alert('비밀번호가 수정되었습니다.');
