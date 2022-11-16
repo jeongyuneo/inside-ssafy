@@ -37,16 +37,17 @@ public class JwtAuthFilter implements HandlerInterceptor {
             throw new ForbiddenException(ErrorMessage.WRONG_ACCESS);
         }
 
+        Cookie cookie = Arrays.stream(request.getCookies())
+                .filter(cookieInfo -> cookieInfo.getName().equals(REFRESH_TOKEN))
+                .findFirst()
+                .orElseThrow(() -> new UnAuthorizedException(ErrorMessage.NOT_FOUND_TOKEN));
+        String refreshToken = BEARER + cookie.getValue();
+
         if (accessToken == null) {
             throw new UnAuthorizedException(ErrorMessage.NOT_FOUND_TOKEN);
         }
 
         if (JwtUtil.isExpired(accessToken)) {
-            Cookie cookie = Arrays.stream(request.getCookies())
-                    .filter(cookieInfo -> cookieInfo.getName().equals(REFRESH_TOKEN))
-                    .findFirst()
-                    .orElseThrow(() -> new UnAuthorizedException(ErrorMessage.NOT_FOUND_TOKEN));
-            String refreshToken = BEARER + cookie.getValue();
             JwtUtil.validateToken(refreshToken);
             throw new UnAuthorizedException(JwtUtil.generateToken(JwtUtil.getMemberId(refreshToken), JwtUtil.getMemberRole(refreshToken)));
         }
