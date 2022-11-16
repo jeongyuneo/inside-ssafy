@@ -14,6 +14,7 @@ import MyInfoEdit from './components/pages/MyInfoEdit';
 import interceptResponse from './utils/interceptResponse';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
+import Board from './components/pages/Board';
 
 function App() {
   const queryClient = new QueryClient({
@@ -86,6 +87,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <MyInfoEdit />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/board"
+                element={
+                  <PrivateRoute>
+                    <Board />
                   </PrivateRoute>
                 }
               />
