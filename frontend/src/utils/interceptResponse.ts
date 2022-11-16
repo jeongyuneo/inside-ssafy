@@ -17,6 +17,7 @@ const interceptResponse = () => {
       if (status === 401) {
         // refreshToken 만료
         if (data.message === '만료된 토큰입니다.') {
+          localStorage.removeItem('isLogin');
           window.alert('세션이 만료되어 로그인이 필요합니다.');
           window.location.href = '/login';
         }
