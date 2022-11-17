@@ -10,10 +10,17 @@ import React from 'react';
  *
  * @author jojo
  */
-const Image = ({ width, height, src, alt, clickHandler }: PropTypes) => {
+const Image = ({
+  width,
+  height,
+  src,
+  alt,
+  isCircle,
+  clickHandler,
+}: PropTypes) => {
   return (
     <ImageWrapper width={width} height={height} onClick={clickHandler}>
-      <StyledImage src={src} alt={alt} />
+      <StyledImage src={src} alt={alt} isCircle={isCircle} />
     </ImageWrapper>
   );
 };
