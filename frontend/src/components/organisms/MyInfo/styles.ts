@@ -17,5 +17,12 @@ export const TextWrapper = styled.div`
 
 export const ImageTextWrapper = styled.div`
   display: flex;
-  gap: 2rem;
+  width: 100%;
+  justify-content: space-around;
+`;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;

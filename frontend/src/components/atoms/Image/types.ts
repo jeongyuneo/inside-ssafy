@@ -7,6 +7,7 @@ export interface ImageWrapperPropTypes {
 export interface ImagePropTypes {
   src: string;
   alt: string;
+  isCircle?: boolean;
 }
 
 export interface PropTypes extends ImagePropTypes, ImageWrapperPropTypes {}

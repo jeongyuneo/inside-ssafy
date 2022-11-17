@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import MyInfo from '../../organisms/MyInfo';
@@ -7,7 +7,8 @@ import MyPosts from '../../organisms/MyPosts';
 import { StyledMyPage } from './styles';
 import getUserInfo from './getUserInfo';
 import { UserInfoTypes } from './types';
-import Text from '../../atoms/Text';
+import requestLogout from './requestLogout';
+import navigator from '../../../utils/navigator';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -16,21 +17,25 @@ const MyPage = () => {
     getUserInfo(),
   );
 
-  const clickEditBtnHandler = () => {
-    navigate('/myinfoedit');
-  };
+  const clickLogoutHandler = async () => {
+    if (!window.confirm('로그아웃 하시겠습니까?')) {
+      return;
+    }
 
-  const clickLogoHandler = () => {
-    navigate('/');
+    if (await requestLogout()) {
+      localStorage.removeItem('isLogin');
+      navigate('/login');
+    }
   };
 
   return (
     <StyledMyPage>
-      <Navbar clickLogoHandler={clickLogoHandler} />
+      <Navbar clickLogoHandler={navigator(navigate).main} />
       <MyInfo
         name={userInfo ? userInfo.name : ''}
         studentNumber={userInfo ? userInfo.studentNumber : ''}
-        clickEditBtnHandler={clickEditBtnHandler}
+        clickEditBtnHandler={navigator(navigate).myInfoEdit}
+        clickLogoutHandler={clickLogoutHandler}
       />
       {userInfo?.postsResponses.length ? (
         <MyPosts postsInfo={userInfo.postsResponses} />
