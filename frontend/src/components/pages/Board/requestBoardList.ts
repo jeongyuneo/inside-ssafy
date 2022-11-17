@@ -1,14 +1,15 @@
 import axios from 'axios';
-import { PostSummaryItemTypes } from '../../molecules/PostSummary/types';
 import { InfiniteBoardListTypes } from './types';
 
-export const requestBoardList = async (page: number, size: number) => {
+export const requestBoardList = async (pageParam: number, size: number) => {
   try {
-    const { data }: { data: InfiniteBoardListTypes } = await axios({
+    const {
+      data: { postsResponses, last },
+    }: { data: InfiniteBoardListTypes } = await axios({
       method: 'GET',
-      url: `/api/v1/posts?page=${page}&size=${size}`,
+      url: `/api/v1/posts?page=${pageParam}&size=${size}`,
     });
-    return data;
+    return { postsResponses, nextPage: pageParam + 1, last };
   } catch (e) {
     console.log(e);
     throw e;

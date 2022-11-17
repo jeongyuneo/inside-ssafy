@@ -13,5 +13,21 @@ export const StyledBoard = styled.div`
 export const PostsWrapper = styled.div`
   width: 90%;
   display: flex;
-  justify-content: end;
+  flex-direction: column;
+  align-items: end;
+  gap: 1rem;
+`;
+
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  // width: 3.5rem;
+  // height: 3.5rem;
+  // background-color: white;
+  // border: 0.1rem solid black;
+  border-radius: 2rem;
+  align-items: center;
+  justify-content: center;
 `;
