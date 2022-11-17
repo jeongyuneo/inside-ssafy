@@ -9,9 +9,14 @@ import {
   PostWrapper,
   StyledPostBody,
 } from './styles';
-import { PropTypes } from './types';
+import { PostBodyTypes } from './types';
 
-const PostBody = ({ contents, imgSrc, likeCount, commentCount }: PropTypes) => {
+const PostBody = ({
+  content,
+  imgSrc,
+  likeCount,
+  commentCount,
+}: PostBodyTypes) => {
   return (
     <StyledPostBody>
       <PostWrapper>
@@ -20,7 +25,7 @@ const PostBody = ({ contents, imgSrc, likeCount, commentCount }: PropTypes) => {
         </ImageWrapper>
         <ContentWrapper>
           <Text size={1.05} isPost>
-            {contents}
+            {content}
           </Text>
         </ContentWrapper>
       </PostWrapper>

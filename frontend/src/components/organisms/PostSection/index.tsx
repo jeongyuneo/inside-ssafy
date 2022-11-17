@@ -5,18 +5,18 @@ import { StyledPostSection } from './styles';
 import { PropTypes } from './types';
 
 const PostSection = ({
-  contents,
+  content,
   likeCount,
   commentCount,
-  imgSrc,
-  ...headRest
+  files,
+  ...postHeaderRest
 }: PropTypes) => {
   return (
     <StyledPostSection>
-      <PostHeader {...headRest} />
+      <PostHeader {...postHeaderRest} />
       <PostBody
-        contents={contents}
-        imgSrc={imgSrc}
+        content={content}
+        imgSrc={files[0]?.url}
         likeCount={likeCount}
         commentCount={commentCount}
       />

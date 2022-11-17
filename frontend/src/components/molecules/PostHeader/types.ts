@@ -1,9 +1,14 @@
-export interface PropTypes {
-  title: string;
-  createTime: string;
-  isMyPost: boolean;
-  isLike: boolean;
+export interface PostHeaderHandlersTypes {
   clickBackButtonHandler: () => void;
   clickMenuButtonHandler: () => void;
   clickLikeButtonHandler: () => void;
 }
+
+export interface PostHeaderTypes {
+  title: string;
+  createdDate: string;
+  editable: boolean;
+  hasPostLike: boolean;
+}
+
+export interface PropTypes extends PostHeaderTypes, PostHeaderHandlersTypes {}
