@@ -97,6 +97,7 @@ public class PostService {
                                         .collect(Collectors.toList()))
                                 .build())
                         .collect(Collectors.toList()))
+                .createdDate(post.getCreatedDate())
                 .build();
     }
 
