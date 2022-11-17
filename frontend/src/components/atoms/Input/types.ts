@@ -14,6 +14,7 @@ export interface PropTypes {
   backgroundColor?: string;
   type?: string;
   id?: string;
+  accept?: string;
   placeholder?: string;
   disabled?: boolean;
   borderRadius?: number;
