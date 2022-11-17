@@ -3,12 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import CommentSection from '../../organisms/CommentSection';
 import PostSection from '../../organisms/PostSection';
 import getPostDetail from './getPostDetail';
-import { HorizontalLineWrapper, StyledPostDetail } from './styles';
+import { StyledPostDetail } from './styles';
 import { PostDetailTypes } from './types';
 import navigator from '../../../utils/navigator';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../molecules/Navbar';
-import HorizontalLine from '../../../utils/HorizontalLine';
 
 /**
  * 게시글 상세 컴포넌트
@@ -58,9 +57,6 @@ const PostDetail = () => {
             clickMenuButtonHandler={clickMenuButtonHandler}
             clickLikeButtonHandler={clickLikeButtonHandler}
           />
-          <HorizontalLineWrapper>
-            <HorizontalLine width="90%" />
-          </HorizontalLineWrapper>
           <CommentSection
             commentResponses={post.commentResponses}
             clickReCommentHandler={clickReCommentHandler}

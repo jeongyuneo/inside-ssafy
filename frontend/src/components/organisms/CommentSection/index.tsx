@@ -1,6 +1,13 @@
 import React from 'react';
+import HorizontalLine from '../../../utils/HorizontalLine';
 import CommentCard from '../../molecules/CommentCard';
-import { EachCommentGroup, ReComments, StyledCommentSection } from './styles';
+import CommentInput from '../../molecules/CommentInput';
+import {
+  EachCommentGroup,
+  HorizontalLineWrapper,
+  ReComments,
+  StyledCommentSection,
+} from './styles';
 import {
   PropTypes,
   CommentResponseTypes,
@@ -22,6 +29,9 @@ const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
           ...restComment
         }: CommentResponseTypes) => (
           <EachCommentGroup key={commentId}>
+            <HorizontalLineWrapper>
+              <HorizontalLine width="90%" />
+            </HorizontalLineWrapper>
             <CommentCard
               commentId={commentId}
               isReComment={false}
@@ -43,6 +53,11 @@ const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
           </EachCommentGroup>
         ),
       )}
+      <CommentInput
+        inputs={{ comment: 'b' }}
+        clickSubmitHandler={() => console.log('click')}
+        changeHandler={() => console.log('change')}
+      />
     </StyledCommentSection>
   );
 };
