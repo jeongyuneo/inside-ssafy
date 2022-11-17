@@ -23,7 +23,7 @@ const CommentInput = ({
         inputs={inputs}
         changeHandler={changeHandler}
       />
-      <IoMdPaperPlane onClick={clickSubmitHandler} />
+      <IoMdPaperPlane size={20} onClick={clickSubmitHandler} />
     </StyledCommentInput>
   );
 };
