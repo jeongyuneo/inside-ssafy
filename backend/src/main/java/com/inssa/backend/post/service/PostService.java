@@ -45,17 +45,20 @@ public class PostService {
                 .build();
     }
 
-    public List<PostsResponse> searchPost(String keyword) {
-        return postRepository.SearchByTitleOrContentAndIsActiveTrue(keyword)
-                .stream()
-                .map(post -> PostsResponse.builder()
-                        .postId(post.getId())
-                        .title(post.getTitle())
-                        .likeCount(post.getLikeCount())
-                        .commentCount(post.getCommentCount())
-                        .createdDate(post.getCreatedDate())
-                        .build())
-                .collect(Collectors.toList());
+    public PostsResponseWithPageInfo searchPost(String keyword, Pageable pageable) {
+        Page<Post> posts = postRepository.SearchByTitleOrContentAndIsActiveTrue(keyword, pageable);
+        return PostsResponseWithPageInfo.builder()
+                .postsResponses(posts.stream()
+                        .map(post -> PostsResponse.builder()
+                                .postId(post.getId())
+                                .title(post.getTitle())
+                                .likeCount(post.getLikeCount())
+                                .commentCount(post.getCommentCount())
+                                .createdDate(post.getCreatedDate())
+                                .build())
+                        .collect(Collectors.toList()))
+                .isLast(posts.isLast())
+                .build();
     }
 
     public PostResponse getPost(Long memberId, Long postId) {
