@@ -24,6 +24,7 @@ const Input = ({
   type,
   name,
   id,
+  accept,
   placeholder,
   disabled,
   changeHandler,
@@ -41,6 +42,7 @@ const Input = ({
       id={id}
       placeholder={placeholder}
       disabled={disabled}
+      accept={accept}
       onChange={e => changeHandler?.(e)}
     />
   );
