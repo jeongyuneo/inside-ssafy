@@ -13,12 +13,6 @@ export const NavbarWrapper = styled.div`
   justify-content: center;
 `;
 
-export const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: start;
-  padding-left: 1rem;
-`;
-
 export const MenuWeekWrapper = styled.div`
   display: flex;
   justify-content: center;

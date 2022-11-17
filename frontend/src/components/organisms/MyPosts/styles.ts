@@ -16,6 +16,7 @@ export const PostSummaryWrapper = styled.div`
   border-radius: 1rem;
   padding: 2rem;
   gap: 1rem;
+  overflow-y: auto;
 `;
 
 export const TextWrapper = styled.div<PostsTypes>`
