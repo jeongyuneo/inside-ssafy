@@ -20,14 +20,14 @@ export const PostsWrapper = styled.div`
 
 export const StyledButtonWrapper = styled.div`
   display: flex;
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  // width: 3.5rem;
-  // height: 3.5rem;
-  // background-color: white;
-  // border: 0.1rem solid black;
-  border-radius: 2rem;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: ${`#01A7EB`};
+  border-radius: 2rem;
+  box-shadow: 2px 2px 10px rgb(0, 0, 0, 0.5);
 `;

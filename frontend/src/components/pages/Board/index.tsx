@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import navigator from '../../../utils/navigator';
@@ -8,11 +8,11 @@ import Navbar from '../../molecules/Navbar';
 import PostsList from '../../organisms/PostsList';
 import { PostsWrapper, StyledBoard, StyledButtonWrapper } from './styles';
 import { requestBoardList } from './requestBoardList';
-import { CiCirclePlus } from 'react-icons/ci';
+import { AiFillEdit } from 'react-icons/ai';
 
 /**
  * PAGE_AMount 만큼 게시글을 불러오는 infiniteScroll을 사용한다
- *
+ * 현재 페이지 이동 clickEvent는 주석처리하였다(이후 연결 예정)
  * @author jun
  */
 
@@ -42,18 +42,25 @@ const Board = () => {
   };
 
   const clickSearch = () => {
-    console.log('search');
-    // 게시글 검색 기능으로 이동
+    window.alert('준비중입니다');
+    // postSearch로 이동
+    // navigator(navigate).postSearch;
   };
 
   const clickPostItem = (postId: number) => {
+    window.alert('준비중입니다');
     console.log('click : ' + postId);
     // PostDetail페이지로 이동
+    // navigator(navigate, {
+    //   state: { postId: postId },
+    // }).postDetail;
   };
 
   const clickAddPost = () => {
+    window.alert('준비중입니다');
     console.log('AddPost');
-    // PostAdd 생성
+    // PostAdd 페이지 이동
+    //navigator(navigate).postAdd;
   };
 
   return (
@@ -83,13 +90,7 @@ const Board = () => {
         <div ref={ref}>게시글의 끝입니다.</div>
       )}
       <StyledButtonWrapper>
-        <CiCirclePlus
-          style={{
-            backgroundColor: 'white',
-          }}
-          size={42}
-          onClick={clickAddPost}
-        />
+        <AiFillEdit color={'white'} size={42} onClick={clickAddPost} />
       </StyledButtonWrapper>
     </StyledBoard>
   );
