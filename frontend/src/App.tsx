@@ -16,6 +16,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
 import Board from './components/pages/Board';
 import PostDetail from './components/pages/PostDetail';
+import PostSearch from './components/pages/PostSearch';
 
 function App() {
   const queryClient = new QueryClient({
@@ -105,6 +106,14 @@ function App() {
                   <PrivateRoute>
                     <PostDetail />
                   </PrivateRoute>
+                }
+              />
+              <Route
+                path="/postsearch"
+                element={
+                  <PublicRoute>
+                    <PostSearch />
+                  </PublicRoute>
                 }
               />
             </Routes>

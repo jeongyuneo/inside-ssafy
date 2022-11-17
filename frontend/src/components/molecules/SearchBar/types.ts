@@ -8,6 +8,7 @@ export interface SearchInputType {
 export interface PropTypes {
   name: string;
   inputs?: SearchInputType;
-  changeInputHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  clickBackButtonHandler: () => void;
   clickSearchButtonHandler: () => void;
+  changeInputHandler: (e: ChangeEvent<HTMLInputElement>) => void;
 }
