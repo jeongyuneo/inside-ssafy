@@ -4,5 +4,4 @@ export interface TextareaLabelPropTypes extends PropTypes {
   children: string;
   labelFontSize?: number;
   labelTextColor?: string;
-  htmlFor: string;
 }

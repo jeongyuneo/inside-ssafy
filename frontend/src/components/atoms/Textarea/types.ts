@@ -7,8 +7,6 @@ export interface PropTypes {
   height?: number;
   fontSize?: number;
   backgroundColor?: string;
-  value?: string;
-  inputs?: any;
   placeholder?: string;
   changeHandler?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
