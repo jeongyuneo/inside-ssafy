@@ -27,7 +27,7 @@ export const StyledButtonWrapper = styled.div`
   right: 2rem;
   width: 3.5rem;
   height: 3.5rem;
-  background: ${`#01A7EB`};
+  background: #01a7eb;
   border-radius: 2rem;
   box-shadow: 2px 2px 10px rgb(0, 0, 0, 0.5);
 `;

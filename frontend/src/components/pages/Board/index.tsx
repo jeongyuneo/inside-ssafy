@@ -9,6 +9,7 @@ import PostsList from '../../organisms/PostsList';
 import { PostsWrapper, StyledBoard, StyledButtonWrapper } from './styles';
 import { requestBoardList } from './requestBoardList';
 import { AiFillEdit } from 'react-icons/ai';
+import Text from '../../atoms/Text';
 
 /**
  * PAGE_AMount 만큼 게시글을 불러오는 infiniteScroll을 사용한다
@@ -85,7 +86,7 @@ const Board = () => {
         })}
       </PostsWrapper>
       {isFetchingNextPage ? (
-        <div>Loading...</div>
+        <Text>Loading...</Text>
       ) : (
         <div ref={ref}>게시글의 끝입니다.</div>
       )}

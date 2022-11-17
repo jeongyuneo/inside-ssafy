@@ -6,7 +6,7 @@ import { PropsTypes } from './types';
 const PostsList = ({ items, clickPostItemHandler }: PropsTypes) => {
   return (
     <StyledPostsList>
-      {items ? (
+      {items &&
         items.map(({ title, createdDate, postId, likeCount, commentCount }) => {
           return (
             <PostSummary
@@ -19,10 +19,7 @@ const PostsList = ({ items, clickPostItemHandler }: PropsTypes) => {
               key={title + postId}
             ></PostSummary>
           );
-        })
-      ) : (
-        <div>게시판이 없습니다.</div>
-      )}
+        })}
     </StyledPostsList>
   );
 };
