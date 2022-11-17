@@ -3,6 +3,7 @@ package com.inssa.backend.post.controller;
 import com.inssa.backend.post.controller.dto.PostRequest;
 import com.inssa.backend.post.controller.dto.PostResponse;
 import com.inssa.backend.post.controller.dto.PostsResponse;
+import com.inssa.backend.post.controller.dto.PostsResponseWithPageInfo;
 import com.inssa.backend.post.service.PostService;
 import com.inssa.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<List<PostsResponse>> getPosts(Pageable pageable) {
-        List<PostsResponse> postsResponses = postService.getPosts(pageable);
+    public ResponseEntity<PostsResponseWithPageInfo> getPosts(Pageable pageable) {
+        PostsResponseWithPageInfo postsResponses = postService.getPosts(pageable);
         log.info("게시글 목록 조회 성공");
         return ResponseEntity.ok().body(postsResponses);
     }
