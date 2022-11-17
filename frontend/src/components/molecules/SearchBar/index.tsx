@@ -4,6 +4,13 @@ import Input from '../../atoms/Input';
 import { StyledSearchBar } from './styles';
 import { PropTypes } from './types';
 
+/**
+ * 양끝의 버튼과 input으로 구성된 컴포넌트
+ * clickBackButtonHandler, changeInputHandler, clickSearchButtonHandler로 이벤트를 처리한다.
+ *
+ * @author jun
+ */
+
 const SearchBar = ({
   name,
   inputs,
