@@ -11,14 +11,12 @@ const PostSearch = () => {
   const navigate = useNavigate();
 
   const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target);
     setSearchBarInput(prev => {
       return {
         ...prev,
         [e.target.name]: e.target.value,
       };
     });
-    console.log(searchBarInput);
   };
 
   const clickSearch = () => {
