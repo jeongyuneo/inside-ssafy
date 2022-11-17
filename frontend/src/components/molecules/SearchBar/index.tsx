@@ -4,10 +4,15 @@ import Input from '../../atoms/Input';
 import { StyledSearchBar } from './styles';
 import { PropTypes } from './types';
 
-const SearchBar = ({ name, inputs, clickSearchButtonHandler }: PropTypes) => {
+const SearchBar = ({
+  name,
+  inputs,
+  clickSearchButtonHandler,
+  changeInputHandler,
+}: PropTypes) => {
   return (
     <StyledSearchBar>
-      <Input name={name} inputs={inputs} />
+      <Input name={name} inputs={inputs} onChange={changeInputHandler} />
       <BiSearchAlt size={25} onClick={clickSearchButtonHandler} />
     </StyledSearchBar>
   );
