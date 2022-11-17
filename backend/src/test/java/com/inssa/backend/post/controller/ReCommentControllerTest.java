@@ -123,7 +123,7 @@ public class ReCommentControllerTest extends ApiDocument {
     }
 
     private ResultActions 익명_게시판_대댓글_등록_요청(Long commentId, CommentRequest commentRequest) throws Exception {
-        return mockMvc.perform(post("/api/v1/recomments/" + commentId)
+        return mockMvc.perform(post("/api/v1/recomments/comments/" + commentId)
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                 .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
