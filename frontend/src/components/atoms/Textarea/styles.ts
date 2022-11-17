@@ -27,4 +27,5 @@ export const StyledTextarea = styled.textarea<PropTypes>`
   border-radius: 1rem;
   border: none;
   outline: none;
+  padding: 0.8rem 0.5rem;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Textarea from '../../atoms/Textarea';
 import Label from '../../atoms/Label';
-import { StyledTextareaLabel, LabelWrapper } from './styles';
+import { StyledTextareaLabel } from './styles';
 import { TextareaLabelPropTypes } from './types';
 
 const TextareaLabel = ({
@@ -13,11 +13,9 @@ const TextareaLabel = ({
 }: TextareaLabelPropTypes) => {
   return (
     <StyledTextareaLabel>
-      <LabelWrapper>
-        <Label htmlFor={id} fontSize={labelFontSize} textColor={labelTextColor}>
-          {children}
-        </Label>
-      </LabelWrapper>
+      <Label htmlFor={id} fontSize={labelFontSize} textColor={labelTextColor}>
+        {children}
+      </Label>
       <Textarea id={id} {...rest} />
     </StyledTextareaLabel>
   );
