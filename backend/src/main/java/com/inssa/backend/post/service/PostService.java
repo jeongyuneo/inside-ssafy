@@ -9,6 +9,7 @@ import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.member.domain.PostLike;
 import com.inssa.backend.member.domain.PostLikeRepository;
 import com.inssa.backend.post.controller.dto.*;
+import com.inssa.backend.post.domain.Comment;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,7 @@ public class PostService {
                         .collect(Collectors.toList()))
                 .commentResponses(post.getComments()
                         .stream()
+                        .filter(Comment::isActive)
                         .map(comment -> CommentResponse.builder()
                                 .commentId(comment.getId())
                                 .content(comment.getContent())
