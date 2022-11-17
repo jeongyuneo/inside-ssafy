@@ -2,7 +2,6 @@ package com.inssa.backend.post.controller;
 
 import com.inssa.backend.post.controller.dto.PostRequest;
 import com.inssa.backend.post.controller.dto.PostResponse;
-import com.inssa.backend.post.controller.dto.PostsResponse;
 import com.inssa.backend.post.controller.dto.PostsResponseWithPageInfo;
 import com.inssa.backend.post.service.PostService;
 import com.inssa.backend.util.JwtUtil;
@@ -31,8 +30,8 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<PostsResponse>> searchPost(@RequestParam String keyword) {
-        List<PostsResponse> postsResponses = postService.searchPost(keyword);
+    public ResponseEntity<PostsResponseWithPageInfo> searchPost(@RequestParam String keyword, Pageable pageable) {
+        PostsResponseWithPageInfo postsResponses = postService.searchPost(keyword, pageable);
         log.info("게시글 검색 성공");
         return ResponseEntity.ok().body(postsResponses);
     }
