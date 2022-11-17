@@ -443,9 +443,7 @@ public class MemberControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/members/logout")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(loginRequest)));
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 로그아웃_성공(ResultActions resultActions) throws Exception {
