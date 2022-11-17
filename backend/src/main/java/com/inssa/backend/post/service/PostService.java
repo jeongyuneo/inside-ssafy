@@ -12,6 +12,7 @@ import com.inssa.backend.post.controller.dto.*;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,17 +29,20 @@ public class PostService {
     private final MemberRepository memberRepository;
     private final PostLikeRepository postLikeRepository;
 
-    public List<PostsResponse> getPosts(Pageable pageable) {
-        return postRepository.findByIsActiveTrue(pageable)
-                .stream()
-                .map(post -> PostsResponse.builder()
-                        .postId(post.getId())
-                        .title(post.getTitle())
-                        .likeCount(post.getLikeCount())
-                        .commentCount(post.getCommentCount())
-                        .createdDate(post.getCreatedDate())
-                        .build())
-                .collect(Collectors.toList());
+    public PostsResponseWithPageInfo getPosts(Pageable pageable) {
+        Page<Post> posts = postRepository.findByIsActiveTrue(pageable);
+        return PostsResponseWithPageInfo.builder()
+                .postsResponses(posts.stream()
+                        .map(post -> PostsResponse.builder()
+                                .postId(post.getId())
+                                .title(post.getTitle())
+                                .likeCount(post.getLikeCount())
+                                .commentCount(post.getCommentCount())
+                                .createdDate(post.getCreatedDate())
+                                .build())
+                        .collect(Collectors.toList()))
+                .isLast(posts.isLast())
+                .build();
     }
 
     public List<PostsResponse> searchPost(String keyword) {
