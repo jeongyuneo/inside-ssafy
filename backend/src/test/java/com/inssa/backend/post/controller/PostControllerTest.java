@@ -63,13 +63,14 @@ public class PostControllerTest extends ApiDocument {
     private static final int PAGE = 1;
     private static final String SIZE_PARAMETER_NAME = "size";
     private static final int SIZE = 5;
+    private static final boolean IS_LAST = false;
     private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
     @MockBean
     private PostService postService;
 
     private String refreshToken;
-    private List<PostsResponse> postsResponses;
+    private PostsResponseWithPageInfo postsResponseWithPageInfo;
     private PostResponse postResponse;
     private PostRequest postRequest;
     private MockMultipartFile file;
@@ -87,6 +88,9 @@ public class PostControllerTest extends ApiDocument {
                 .commentCount(COMMENT_COUNT)
                 .createdDate(CREATED_DATE)
                 .build();
+        List<PostsResponse> postsResponses = IntStream.range(PAGE * SIZE, (PAGE + 1) * SIZE)
+                .mapToObj(n -> postsResponse)
+                .collect(Collectors.toList());
         List<FileResponse> fileResponses = IntStream.range(0, 2)
                 .mapToObj(n -> FileResponse.builder()
                         .url(URL)
@@ -112,9 +116,10 @@ public class PostControllerTest extends ApiDocument {
                         .build())
                 .collect(Collectors.toList());
         refreshToken = JwtUtil.generateToken(memberInfo);
-        postsResponses = IntStream.range(PAGE * SIZE, (PAGE + 1) * SIZE)
-                .mapToObj(n -> postsResponse)
-                .collect(Collectors.toList());
+        postsResponseWithPageInfo = PostsResponseWithPageInfo.builder()
+                .postsResponses(postsResponses)
+                .isLast(IS_LAST)
+                .build();
         postResponse = PostResponse.builder()
                 .postId(ID)
                 .title(TITLE)
@@ -138,7 +143,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void get_posts_success() throws Exception {
         // given
-        willReturn(postsResponses).given(postService).getPosts(any(Pageable.class));
+        willReturn(postsResponseWithPageInfo).given(postService).getPosts(any(Pageable.class));
         // when
         ResultActions resultActions = 익명_게시판_목록_조회_요청();
         // then
@@ -160,7 +165,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void search_post_success() throws Exception {
         // given
-        willReturn(postsResponses).given(postService).searchPost(anyString());
+        willReturn(postsResponseWithPageInfo).given(postService).searchPost(anyString(), any(Pageable.class));
         // when
         ResultActions resultActions = 익명_게시판_검색_요청(KEYWORD);
         // then
@@ -171,7 +176,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void search_post_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEARCH_POST.getMessage())).given(postService).searchPost(anyString());
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEARCH_POST.getMessage())).given(postService).searchPost(anyString(), any(Pageable.class));
         // when
         ResultActions resultActions = 익명_게시판_검색_요청(KEYWORD);
         // then
@@ -321,7 +326,7 @@ public class PostControllerTest extends ApiDocument {
 
     private void 익명_게시판_목록_조회_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(postsResponses)))
+                .andExpect(content().json(toJson(postsResponseWithPageInfo)))
                 .andDo(print())
                 .andDo(toDocument("get-posts-success"));
     }
@@ -343,7 +348,7 @@ public class PostControllerTest extends ApiDocument {
 
     private void 익명_게시판_검색_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(postsResponses)))
+                .andExpect(content().json(toJson(postsResponseWithPageInfo)))
                 .andDo(print())
                 .andDo(toDocument("search-post-success"));
     }
