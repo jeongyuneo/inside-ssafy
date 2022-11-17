@@ -4,6 +4,7 @@ import { SearchInputType } from '../../molecules/SearchBar/types';
 import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
 import { ChangePasswordType } from '../../pages/MyInfoEdit/types';
+import { PostInputType } from '../../pages/CreatePost/types';
 
 export interface PropTypes {
   name: string;
@@ -14,6 +15,7 @@ export interface PropTypes {
   backgroundColor?: string;
   type?: string;
   id?: string;
+  accept?: string;
   placeholder?: string;
   disabled?: boolean;
   borderRadius?: number;
@@ -23,7 +25,7 @@ export interface PropTypes {
     | LoginInputsType
     | ChangePasswordType
     | CommentInputTypes
-    | SearchInputType;
+    | PostInputType;
   value?: string;
   changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;

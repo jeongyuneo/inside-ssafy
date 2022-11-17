@@ -25,9 +25,9 @@ import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa';
 
 const PostHeader = ({
   title,
-  createTime,
-  isMyPost,
-  isLike,
+  createdDate,
+  editable,
+  hasPostLike,
   clickLikeButtonHandler,
   clickBackButtonHandler,
   clickMenuButtonHandler,
@@ -42,14 +42,14 @@ const PostHeader = ({
       <PostWrapper>
         <TextWrapper>
           <Text size={1.4}>{title}</Text>
-          {isMyPost && (
+          {editable && (
             <Button isText clickHandler={clickMenuButtonHandler}>
               <GrMoreVertical size={22} />
             </Button>
           )}
         </TextWrapper>
         <DateWrapper>
-          <Text size={0.8}>{createTime}</Text>
+          <Text size={0.8}>{createdDate}</Text>
           <Button
             backgroundColor={'white'}
             textColor={'#696666'}
@@ -57,7 +57,11 @@ const PostHeader = ({
             borderColor={'#A0A0A0'}
           >
             <ButtonIconWrapper>
-              {isLike ? <FaThumbsUp size={15} /> : <FaRegThumbsUp size={15} />}
+              {hasPostLike ? (
+                <FaThumbsUp size={15} />
+              ) : (
+                <FaRegThumbsUp size={15} />
+              )}
               {' 공감'}
             </ButtonIconWrapper>
           </Button>

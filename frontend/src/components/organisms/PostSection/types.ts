@@ -1,13 +1,16 @@
-export interface PropTypes {
-  title: string;
-  createTime: string;
-  isMyPost: boolean;
-  isLike: boolean;
-  contents: string;
-  likeCount: number;
-  commentCount: number;
-  imgSrc?: string;
-  clickBackButtonHandler: () => void;
-  clickMenuButtonHandler: () => void;
-  clickLikeButtonHandler: () => void;
+import { PostBodyTypes } from '../../molecules/PostBody/types';
+import {
+  PostHeaderHandlersTypes,
+  PostHeaderTypes,
+} from '../../molecules/PostHeader/types';
+
+interface FileTypes {
+  url: string;
 }
+
+export interface PostSectionTypes extends PostHeaderTypes, PostBodyTypes {
+  postId: number;
+  files: FileTypes[];
+}
+
+export interface PropTypes extends PostSectionTypes, PostHeaderHandlersTypes {}
