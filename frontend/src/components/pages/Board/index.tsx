@@ -6,9 +6,10 @@ import navigator from '../../../utils/navigator';
 import BoardNavbar from '../../molecules/BoardNavbar';
 import Navbar from '../../molecules/Navbar';
 import PostsList from '../../organisms/PostsList';
-import { items } from '../../organisms/PostsList/testitems';
 import { PostsWrapper, StyledBoard } from './styles';
 import { requestBoardList } from './requestBoardList';
+import { PostSummaryItemTypes } from '../../molecules/PostSummary/types';
+import { items } from '../../organisms/PostsList/testitems';
 
 /**
  * 현재 구현할 목적으로 route만 연결한 상태
@@ -19,7 +20,6 @@ import { requestBoardList } from './requestBoardList';
  */
 
 const Board = () => {
-
   const PAGE_AMOUNT = 5;
 
   const [query, setQuery] = useState(null);
@@ -40,12 +40,13 @@ const Board = () => {
     ({ pageParam = 0 }) => requestBoardList(pageParam, PAGE_AMOUNT), // queryFn
     {
       getNextPageParam: lastPage =>
-        !lastPage.last ? lastPage.nextPage : undefined,
+        !lastPage.isLast ? lastPage.items : undefined,
     },
   );
 
   useEffect(() => {
     if (inView) fetchNextPage();
+    console.log('inView');
   }, [inView]);
 
   const navigate = useNavigate();
@@ -56,6 +57,9 @@ const Board = () => {
 
   const clickSearch = () => {
     console.log('search');
+    console.log(data?.pages);
+    console.log(data?.pages[0].items);
+    console.log(data?.pageParams);
   };
 
   const clickPostItem = (postId: number) => {
@@ -73,12 +77,23 @@ const Board = () => {
         clickSearchButtonHandler={clickSearch}
       ></BoardNavbar>
       <PostsWrapper>
-        <PostsList
-          items={items}
-          clickPostItemHandler={clickPostItem}
-        ></PostsList>
+        {data?.pages.map((page, index) => {
+          return (
+            !page.isLast && (
+              <PostsList
+                key={'page' + index}
+                items={page.items}
+                clickPostItemHandler={clickPostItem}
+              ></PostsList>
+            )
+          );
+        })}
       </PostsWrapper>
-      {isFetchingNextPage ? <div>Loading...</div> : <div ref={ref}></div>}
+      {isFetchingNextPage ? (
+        <div>Loading...</div>
+      ) : (
+        <div ref={ref}>게시글의 끝입니다.</div>
+      )}
     </StyledBoard>
   );
 };
