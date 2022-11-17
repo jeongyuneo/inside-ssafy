@@ -6,7 +6,7 @@ import { PropsTypes } from './types';
 const PostsList = ({ items, clickPostItemHandler }: PropsTypes) => {
   return (
     <StyledPostsList>
-      {items &&
+      {items?.map &&
         items.map(({ title, createdDate, postId, likeCount, commentCount }) => {
           return (
             <PostSummary

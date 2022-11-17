@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StyledBoard = styled.div`
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   background: linear-gradient(rgb(12, 235, 176, 0.14), white);
@@ -23,11 +24,11 @@ export const StyledButtonWrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: fixed;
-  bottom: 1.5rem;
-  right: 2rem;
+  bottom: 3%;
+  right: 5%;
   width: 3.5rem;
   height: 3.5rem;
-  background: #01a7eb;
+  background: white;
   border-radius: 2rem;
   box-shadow: 2px 2px 10px rgb(0, 0, 0, 0.5);
 `;

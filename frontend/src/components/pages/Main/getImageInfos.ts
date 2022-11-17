@@ -29,7 +29,6 @@ export const getImageInfos = (
       src: './images/speaker.png',
       alt: 'speaker',
       clickImageHandler: () => movePage('board'),
-      //clickImageHandler: () => window.alert('준비중인 서비스입니다.'),
       children: '익명게시판',
     },
     {

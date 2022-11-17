@@ -12,8 +12,9 @@ import { AiFillEdit } from 'react-icons/ai';
 import Text from '../../atoms/Text';
 
 /**
- * PAGE_AMount 만큼 게시글을 불러오는 infiniteScroll을 사용한다
+ * PAGE_AMOUNT 만큼 게시글을 불러오는 infiniteScroll을 사용한다
  * 현재 페이지 이동 clickEvent는 주석처리하였다(이후 연결 예정)
+ *
  * @author jun
  */
 
@@ -91,7 +92,7 @@ const Board = () => {
         <div ref={ref}>게시글의 끝입니다.</div>
       )}
       <StyledButtonWrapper>
-        <AiFillEdit color={'white'} size={42} onClick={clickAddPost} />
+        <AiFillEdit color={'#01a7eb'} size={25} onClick={clickAddPost} />
       </StyledButtonWrapper>
     </StyledBoard>
   );
