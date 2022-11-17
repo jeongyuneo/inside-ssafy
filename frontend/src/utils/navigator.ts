@@ -24,6 +24,9 @@ const navigator = (navigate: NavigateFunction, param?: ParamType) => {
     mypage: () => {
       navigate('/mypage', param);
     },
+    myInfoEdit: () => {
+      navigate('/myinfoedit', param);
+    },
   };
 };
 
