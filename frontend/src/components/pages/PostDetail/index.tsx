@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import CommentSection from '../../organisms/CommentSection';
 import PostSection from '../../organisms/PostSection';
@@ -8,6 +8,8 @@ import { PostDetailTypes } from './types';
 import navigator from '../../../utils/navigator';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../molecules/Navbar';
+import deletePostLike from './deletePostLike';
+import postPostLike from './postPostLike';
 
 /**
  * 게시글 상세 컴포넌트
@@ -16,17 +18,17 @@ import Navbar from '../../molecules/Navbar';
  */
 const PostDetail = () => {
   const navigate = useNavigate();
+  const postId = 1;
+
+  const [postLiked, setPostLiked] = useState(false);
 
   const { data: post } = useQuery<PostDetailTypes>(['postDetail'], () =>
-    getPostDetail(1),
+    getPostDetail(postId),
   );
   console.log(post);
 
   const clickMenuButtonHandler = () => {
     console.log('menu click');
-  };
-  const clickLikeButtonHandler = () => {
-    console.log('like!');
   };
 
   const clickReCommentHandler = () => {
@@ -35,6 +37,20 @@ const PostDetail = () => {
   const clickDeleteHandler = () => {
     console.log('delete!');
   };
+
+  const togglePostLikeHandler = async () => {
+    console.log(postLiked);
+
+    const isSuccessful: boolean = await (postLiked
+      ? deletePostLike(postId)
+      : postPostLike(postId));
+
+    isSuccessful && setPostLiked(prev => !prev);
+  };
+
+  useEffect(() => {
+    post && setPostLiked(post.hasPostLike);
+  }, [post]);
   return (
     <StyledPostDetail>
       {post && (
@@ -55,7 +71,7 @@ const PostDetail = () => {
             hasPostLike={post.hasPostLike}
             clickBackButtonHandler={navigator(navigate).back}
             clickMenuButtonHandler={clickMenuButtonHandler}
-            clickLikeButtonHandler={clickLikeButtonHandler}
+            togglePostLikeHandler={togglePostLikeHandler}
           />
           <CommentSection
             commentResponses={post.commentResponses}

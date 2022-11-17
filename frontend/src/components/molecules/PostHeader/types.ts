@@ -1,7 +1,7 @@
 export interface PostHeaderHandlersTypes {
   clickBackButtonHandler: () => void;
   clickMenuButtonHandler: () => void;
-  clickLikeButtonHandler: () => void;
+  togglePostLikeHandler: () => void;
 }
 
 export interface PostHeaderTypes {
