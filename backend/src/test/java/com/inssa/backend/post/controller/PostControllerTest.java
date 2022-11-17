@@ -130,6 +130,7 @@ public class PostControllerTest extends ApiDocument {
                 .isEditable(IS_EDITABLE)
                 .files(fileResponses)
                 .commentResponses(commentResponses)
+                .createdDate(CREATED_DATE)
                 .build();
         postRequest = PostRequest.builder()
                 .title(TITLE)
