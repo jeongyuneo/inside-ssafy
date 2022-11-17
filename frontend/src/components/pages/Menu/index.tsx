@@ -1,14 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import navigator from '../../../utils/navigator';
-import Button from '../../atoms/Button';
 import MenuWeek from '../../molecules/MenuWeek';
 import Navbar from '../../molecules/Navbar';
 import MenuCards from '../../organisms/MenuCards';
 import { requestMenu } from './requestMenu';
 import {
-  ButtonWrapper,
   MenuCardsWrapper,
   MenuWeekWrapper,
   NavbarWrapper,
@@ -23,10 +21,6 @@ const Menu = () => {
 
   const navigate = useNavigate();
 
-  const goToBeforePage = () => {
-    navigate(-1);
-  };
-
   return (
     <StyledMenu>
       <NavbarWrapper>
@@ -35,11 +29,6 @@ const Menu = () => {
           clickMypageHandler={navigator(navigate).mypage}
         ></Navbar>
       </NavbarWrapper>
-      <ButtonWrapper>
-        <Button width={5} fontSize={1} clickHandler={goToBeforePage} isText>
-          뒤로가기
-        </Button>
-      </ButtonWrapper>
       <MenuWeekWrapper>
         <MenuWeek
           startDate={menuOfWeek?.startDate}
