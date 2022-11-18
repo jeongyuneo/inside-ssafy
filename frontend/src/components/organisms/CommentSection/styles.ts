@@ -16,7 +16,7 @@ export const EachCommentGroup = styled.div`
 export const ReComments = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 10%;
+  padding: 0 1rem 0 10%;
 `;
 
 export const HorizontalLineWrapper = styled.div`
