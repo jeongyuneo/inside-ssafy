@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import CommentSection from '../../organisms/CommentSection';
 import PostSection from '../../organisms/PostSection';
@@ -15,6 +15,7 @@ import deleteComment from './deleteComment';
 import useFocus from '../../../hooks/useFocus';
 import postComment from './postComment';
 import postRecomment from './postRecomment';
+import Blank from '../../../utils/Blank';
 
 /**
  * 게시글 상세 컴포넌트
@@ -39,7 +40,6 @@ const PostDetail = () => {
     ['postDetail', postLiked],
     () => getPostDetail(postId),
   );
-  console.log(post);
 
   const clickMenuButtonHandler = () => {
     console.log('menu click');
@@ -83,13 +83,17 @@ const PostDetail = () => {
   };
 
   const togglePostLikeHandler = async () => {
-    console.log(postLiked);
-
     const isSuccessful: boolean = await (postLiked
       ? deletePostLike(postId)
       : postPostLike(postId));
 
     isSuccessful && setPostLiked(prev => !prev);
+  };
+
+  const pressEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      clickSubmitHandler();
+    }
   };
 
   useEffect(() => {
@@ -126,7 +130,9 @@ const PostDetail = () => {
             clickDeleteHandler={clickDeleteHandler}
             clickSubmitHandler={clickSubmitHandler}
             changeCommentInputHandler={changeCommentInputHandler}
+            pressEnterHandler={pressEnterHandler}
           />
+          <Blank />
         </>
       )}
     </StyledPostDetail>
