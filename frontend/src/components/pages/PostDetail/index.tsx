@@ -37,9 +37,11 @@ const PostDetail = () => {
   const { ref, setIsFocused } = useFocus();
 
   const { data: post } = useQuery<PostDetailTypes>(
-    ['postDetail', postLiked],
+    ['postDetail', postId, postLiked],
     () => getPostDetail(postId),
   );
+
+  console.log(post);
 
   const clickMenuButtonHandler = () => {
     console.log('menu click');
@@ -56,6 +58,9 @@ const PostDetail = () => {
     if (confirm('삭제하시겠습니까?')) {
       isReComment ? deleteRecomment(commentId) : deleteComment(commentId);
     }
+
+    // 대댓글 버튼 클릭 초기화
+    setCommentIdWritingRecomment(-1);
   };
 
   const clickSubmitHandler = async () => {
@@ -67,7 +72,7 @@ const PostDetail = () => {
       ? await postComment(postId, inputs.comment)
       : await postRecomment(commentIdWritingRecomment, inputs.comment);
 
-    queryClient.invalidateQueries(['postDetail', postLiked]);
+    queryClient.invalidateQueries(['postDetail', postId, postLiked]);
 
     setInputs(prev => ({
       ...prev,
