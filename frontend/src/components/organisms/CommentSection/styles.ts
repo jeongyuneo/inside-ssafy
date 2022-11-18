@@ -17,6 +17,7 @@ export const ReComments = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1rem 0 10%;
+  gap: 1rem;
 `;
 
 export const HorizontalLineWrapper = styled.div`

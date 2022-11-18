@@ -50,19 +50,20 @@ const CommentSection = (
               {...restHandlers}
               {...restComment}
             />
-            {reCommentResponses.map(
-              ({ reCommentId, ...restRecomment }: ReCommentResponseTypes) => (
-                <ReComments key={reCommentId}>
+            <ReComments>
+              {reCommentResponses.map(
+                ({ reCommentId, ...restRecomment }: ReCommentResponseTypes) => (
                   <CommentCard
+                    key={reCommentId}
                     commentId={reCommentId}
                     isReComment
                     commentIdWritingRecomment={commentIdWritingRecomment}
                     {...restRecomment}
                     {...restHandlers}
                   />
-                </ReComments>
-              ),
-            )}
+                ),
+              )}
+            </ReComments>
           </EachCommentGroup>
         ),
       )}
