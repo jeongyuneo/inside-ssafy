@@ -9,6 +9,12 @@ import ButtonGroup from '../../molecules/ButtonGroup';
 import Navbar from '../../molecules/Navbar';
 import requestPost from './requestPost';
 
+/**
+ * 유저에게 제목, 내용, 이미지 파일을 받아서 게시글을 등록합니다.
+ * 제목, 내용, 이미지파일을 FormData로 묶어서 Post 요청을 보냅니다.
+ *
+ * @author jini
+ */
 const CreatePost = () => {
   const navigate = useNavigate();
   const [textareaValue, setTextareaValue] = useState('');
