@@ -44,25 +44,17 @@ const Board = () => {
   };
 
   const clickSearch = () => {
-    window.alert('준비중입니다');
-    // postSearch로 이동
-    // navigator(navigate).postSearch;
+    navigate('/postsearch');
   };
 
   const clickPostItem = (postId: number) => {
-    window.alert('준비중입니다');
-    console.log('click : ' + postId);
     // PostDetail페이지로 이동
-    // navigator(navigate, {
-    //   state: { postId: postId },
-    // }).postDetail;
+    navigate('/postdetail', { state: { postId: postId } });
   };
 
   const clickAddPost = () => {
-    window.alert('준비중입니다');
-    console.log('AddPost');
     // PostAdd 페이지 이동
-    //navigator(navigate).postAdd;
+    navigate('/createpost');
   };
 
   return (
