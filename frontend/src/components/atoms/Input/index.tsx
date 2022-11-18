@@ -29,6 +29,7 @@ const Input = (
     placeholder,
     disabled,
     changeHandler,
+    pressKeyHandler,
   }: PropTypes,
   ref: ForwardedRef<HTMLInputElement>,
 ) => {
@@ -48,6 +49,7 @@ const Input = (
       accept={accept}
       ref={ref}
       onChange={e => changeHandler?.(e)}
+      onKeyUp={pressKeyHandler}
     />
   );
 };
