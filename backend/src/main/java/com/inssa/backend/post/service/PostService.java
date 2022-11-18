@@ -135,7 +135,8 @@ public class PostService {
         Post post = findPost(postId);
         validatePostLikeDuplication(member, post);
         if (postLikeRepository.existsByMemberAndPostAndIsActiveFalse(member, post)) {
-            PostLike postLike = getPostLikeByMemberAndPost(member, post);
+            PostLike postLike = postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post)
+                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
             postLike.activatePostLike();
             postLikeRepository.save(postLike);
             return;
