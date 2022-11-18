@@ -8,6 +8,7 @@ import Input from '../../atoms/Input';
 import ButtonGroup from '../../molecules/ButtonGroup';
 import Navbar from '../../molecules/Navbar';
 import requestPost from './requestPost';
+import Blank from '../../../utils/Blank';
 
 /**
  * 유저에게 제목, 내용, 이미지 파일을 받아서 게시글을 등록합니다.
@@ -17,6 +18,7 @@ import requestPost from './requestPost';
  */
 const CreatePost = () => {
   const navigate = useNavigate();
+
   const [textareaValue, setTextareaValue] = useState('');
   const [inputValue, setInputValue] = useState({
     title: '',
@@ -43,7 +45,7 @@ const CreatePost = () => {
     }
   };
 
-  const clickAddButtonHandler = () => {
+  const clickAddButtonHandler = async () => {
     const postRequest = {
       title: inputValue.title,
       content: textareaValue,
@@ -52,16 +54,14 @@ const CreatePost = () => {
     const json = JSON.stringify(postRequest);
     const blob = new Blob([json], { type: 'application/json' });
     formData.append('postRequest', blob);
-    requestPost(formData);
-  };
-
-  const clickExitButtonHandler = () => {
-    navigate(-1);
+    (await requestPost(formData))
+      ? navigator(navigate).board()
+      : window.alert('서버가 원활하지 않습니다.');
   };
 
   const buttonInfos = [
     { text: '등록하기', clickHandler: clickAddButtonHandler },
-    { text: '나가기', clickHandler: clickExitButtonHandler },
+    { text: '나가기', clickHandler: navigator(navigate).back },
   ];
 
   return (
@@ -99,6 +99,7 @@ const CreatePost = () => {
           changeHandler={changeImgHandler}
         />
         <ButtonGroup width={22} height={3} buttonInfos={buttonInfos} isColumn />
+        <Blank />
       </StyledCreatePost>
     </FlexContainer>
   );
