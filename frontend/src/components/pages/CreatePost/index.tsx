@@ -7,13 +7,21 @@ import InputLabel from '../../molecules/InputLabel';
 import Input from '../../atoms/Input';
 import ButtonGroup from '../../molecules/ButtonGroup';
 import Navbar from '../../molecules/Navbar';
+import requestPost from './requestPost';
 
+/**
+ * 유저에게 제목, 내용, 이미지 파일을 받아서 게시글을 등록합니다.
+ * 제목, 내용, 이미지파일을 FormData로 묶어서 Post 요청을 보냅니다.
+ *
+ * @author jini
+ */
 const CreatePost = () => {
   const navigate = useNavigate();
   const [textareaValue, setTextareaValue] = useState('');
   const [inputValue, setInputValue] = useState({
     title: '',
   });
+  const formData = new FormData();
 
   const changeContentInfo = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.target.value);
@@ -28,12 +36,27 @@ const CreatePost = () => {
     });
   };
 
+  const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      formData.append('files', uploadFile);
+    }
+  };
+
   const clickAddButtonHandler = () => {
-    console.log('addHandler clicked');
+    const postRequest = {
+      title: inputValue.title,
+      content: textareaValue,
+    };
+
+    const json = JSON.stringify(postRequest);
+    const blob = new Blob([json], { type: 'application/json' });
+    formData.append('postRequest', blob);
+    requestPost(formData);
   };
 
   const clickExitButtonHandler = () => {
-    console.log('exitHandle clicked');
+    navigate(-1);
   };
 
   const buttonInfos = [
@@ -73,6 +96,7 @@ const CreatePost = () => {
           accept="image/*"
           width={22}
           backgroundColor="none"
+          changeHandler={changeImgHandler}
         />
         <ButtonGroup width={22} height={3} buttonInfos={buttonInfos} isColumn />
       </StyledCreatePost>
