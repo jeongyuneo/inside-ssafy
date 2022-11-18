@@ -60,8 +60,8 @@ const CreatePost = () => {
         <TextareaLabel
           id="content"
           name="content"
-          width={22}
-          height={30}
+          width="22rem"
+          height="30rem"
           changeHandler={e => changeContentInfo(e)}
         >
           {'내용'}

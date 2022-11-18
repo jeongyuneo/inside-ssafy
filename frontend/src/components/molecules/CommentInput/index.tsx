@@ -14,6 +14,7 @@ const CommentInput = (
     inputs,
     clickSubmitHandler,
     changeCommentInputHandler,
+    pressEnterHandler,
   }: CommentInputPropTypes,
   ref: ForwardedRef<HTMLInputElement>,
 ) => {
@@ -21,11 +22,13 @@ const CommentInput = (
     <StyledCommentInput>
       <Input
         ref={ref}
+        width={20}
         name="comment"
         backgroundColor="#E7E7E7"
         placeholder="댓글을 입력하세요"
         inputs={inputs}
         changeHandler={changeCommentInputHandler}
+        pressKeyHandler={pressEnterHandler}
       />
       <IoMdPaperPlane size={20} onClick={clickSubmitHandler} />
     </StyledCommentInput>
