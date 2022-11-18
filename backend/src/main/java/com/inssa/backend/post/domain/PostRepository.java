@@ -13,7 +13,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Optional<Post> findByIdAndIsActiveTrue(Long postId);
 
-    Page<Post> findByIsActiveTrue(Pageable pageable);
+    Page<Post> findByIsActiveTrueOrderByCreatedDateDesc(Pageable pageable);
 
     @Query("SELECT p FROM Post p WHERE p.isActive = true AND (p.title LIKE CONCAT('%', :keyword, '%') OR p.content LIKE CONCAT('%', :keyword, '%'))")
     Page<Post> SearchByTitleOrContentAndIsActiveTrue(@Param("keyword") String keyword, Pageable pageable);
