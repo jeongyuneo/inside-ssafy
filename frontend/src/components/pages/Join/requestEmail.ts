@@ -2,7 +2,6 @@ import axios, { AxiosError } from 'axios';
 import { AccountValueTypes, FailToJoin } from './types';
 
 export const requestEmailToken = async ({ email }: AccountValueTypes) => {
-  console.log('request');
   const returnData = {
     status: false,
     message: '인증에 문제가 발생하였습니다',
@@ -16,7 +15,6 @@ export const requestEmailToken = async ({ email }: AccountValueTypes) => {
         email,
       },
     });
-    console.log(status);
     if (status === 200) {
       returnData.message = '인증번호가 전송되었습니다.';
       returnData.status = true;

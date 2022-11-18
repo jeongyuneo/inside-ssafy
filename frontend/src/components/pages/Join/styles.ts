@@ -4,11 +4,12 @@ export const StyledJoin = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
   background: linear-gradient(rgb(12, 235, 176, 0.14), white);
 `;
 
 export const JoinPageWrapper = styled.div`
+  padding-top: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
