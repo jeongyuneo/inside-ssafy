@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler } from 'react';
+import { ChangeEvent, ChangeEventHandler, ForwardedRef } from 'react';
 import { CommentInputTypes } from '../../molecules/CommentInput/types';
 import { SearchInputType } from '../../molecules/SearchBar/types';
 import { AccountValueTypes } from '../../pages/Join/types';
@@ -28,6 +28,7 @@ export interface PropTypes {
     | PostInputType
     | SearchInputType;
   value?: string;
+  ref?: ForwardedRef<HTMLInputElement>;
   changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }

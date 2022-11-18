@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import { StyledInput } from './styles';
 import { PropTypes } from './types';
 
@@ -14,21 +14,23 @@ import { PropTypes } from './types';
  *
  * @author jun
  */
-const Input = ({
-  width,
-  height,
-  fontSize,
-  textColor,
-  backgroundColor,
-  inputs,
-  type,
-  name,
-  id,
-  accept,
-  placeholder,
-  disabled,
-  changeHandler,
-}: PropTypes) => {
+const Input = (
+  {
+    width,
+    height,
+    fontSize,
+    textColor,
+    backgroundColor,
+    inputs,
+    type,
+    name,
+    id,
+    placeholder,
+    disabled,
+    changeHandler,
+  }: PropTypes,
+  ref: ForwardedRef<HTMLInputElement>,
+) => {
   return (
     <StyledInput
       width={width}
@@ -43,9 +45,10 @@ const Input = ({
       placeholder={placeholder}
       disabled={disabled}
       accept={accept}
+      ref={ref}
       onChange={e => changeHandler?.(e)}
     />
   );
 };
 
-export default Input;
+export default forwardRef(Input);

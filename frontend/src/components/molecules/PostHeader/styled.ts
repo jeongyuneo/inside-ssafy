@@ -8,7 +8,7 @@ export const StyledPostHeader = styled.div`
 `;
 
 export const ButtonWrapper = styled.div`
-  padding: 0 1rem 0 0.5rem;
+  padding: 0 1rem 0 0.8rem;
   display: flex;
   flex-direction: row;
   justify-content: start;

@@ -5,8 +5,8 @@ export interface CommentInputTypes {
   comment: string;
 }
 
-export interface PropTypes {
+export interface CommentInputPropTypes {
   inputs: CommentInputTypes;
   clickSubmitHandler: () => void;
-  changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
+  changeCommentInputHandler: (e: ChangeEvent<HTMLInputElement>) => void;
 }
