@@ -48,12 +48,10 @@ const Board = () => {
   };
 
   const clickPostItem = (postId: number) => {
-    // PostDetail페이지로 이동
     navigate('/postdetail', { state: { postId: postId } });
   };
 
   const clickAddPost = () => {
-    // PostAdd 페이지 이동
     navigate('/createpost');
   };
 
