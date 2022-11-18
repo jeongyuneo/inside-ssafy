@@ -135,8 +135,7 @@ public class PostService {
         Post post = findPost(postId);
         validatePostLikeDuplication(member, post);
         if (postLikeRepository.existsByMemberAndPostAndIsActiveFalse(member, post)) {
-            PostLike postLike = postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post)
-                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
+            PostLike postLike = getDeletedPostLike(member, post);
             postLike.activatePostLike();
             postLikeRepository.save(postLike);
             return;
@@ -176,6 +175,11 @@ public class PostService {
         if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
             throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
         }
+    }
+
+    private PostLike getDeletedPostLike(Member member, Post post) {
+        return postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
     }
 
     private PostLike getPostLikeByMemberAndPost(Member member, Post post) {
