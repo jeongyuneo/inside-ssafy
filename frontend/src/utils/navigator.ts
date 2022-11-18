@@ -30,6 +30,9 @@ const navigator = (navigate: NavigateFunction, param?: ParamType) => {
     back: () => {
       navigate(-1);
     },
+    board: () => {
+      navigate('/board', param);
+    },
   };
 };
 
