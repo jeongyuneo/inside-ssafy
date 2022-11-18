@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-export const StyledPostsList = styled.div`
-  width: 95%;
+export const StyledTextareaLabel = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.2rem;
 `;

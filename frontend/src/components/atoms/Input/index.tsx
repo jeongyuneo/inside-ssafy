@@ -44,6 +44,7 @@ const Input = (
       id={id}
       placeholder={placeholder}
       disabled={disabled}
+      accept={accept}
       ref={ref}
       onChange={e => changeHandler?.(e)}
     />

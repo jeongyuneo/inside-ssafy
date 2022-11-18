@@ -1,33 +1,58 @@
-import React from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import navigator from '../../../utils/navigator';
 import BoardNavbar from '../../molecules/BoardNavbar';
 import Navbar from '../../molecules/Navbar';
 import PostsList from '../../organisms/PostsList';
-import { items } from '../../organisms/PostsList/testitems';
-import { PostsWrapper, StyledBoard } from './styles';
+import { PostsWrapper, StyledBoard, StyledButtonWrapper } from './styles';
+import { requestBoardList } from './requestBoardList';
+import { AiFillEdit } from 'react-icons/ai';
+import Text from '../../atoms/Text';
 
 /**
- * 현재 구현할 목적으로 route만 연결한 상태
- * 아래의 코드는 Board페이지 작성시 개선하여 새롭게 만들 예정
- * 현재 만든 컴포넌트 : BoardNavBar
+ * PAGE_AMOUNT 만큼 게시글을 불러오는 infiniteScroll을 사용한다
+ * 현재 페이지 이동 clickEvent는 주석처리하였다(이후 연결 예정)
  *
  * @author jun
  */
 
 const Board = () => {
+  const PAGE_AMOUNT = 15;
+  const [ref, inView] = useInView();
+
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    ['boardList'],
+    ({ pageParam = 0 }) => requestBoardList(pageParam, PAGE_AMOUNT),
+    {
+      getNextPageParam: lastPage =>
+        !lastPage.last ? lastPage.nextPage : undefined,
+    },
+  );
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
   const navigate = useNavigate();
 
-  const clickBack = () => {
-    console.log('back');
+  const goToBeforePage = () => {
+    navigate(-1);
   };
 
   const clickSearch = () => {
-    console.log('search');
+    navigate('/postsearch');
   };
 
   const clickPostItem = (postId: number) => {
-    console.log('click : ' + postId);
+    navigate('/postdetail', { state: { postId: postId } });
+  };
+
+  const clickAddPost = () => {
+    navigate('/createpost');
   };
 
   return (
@@ -37,15 +62,28 @@ const Board = () => {
         clickMypageHandler={navigator(navigate).mypage}
       ></Navbar>
       <BoardNavbar
-        clickBackButtonHandler={clickBack}
+        clickBackButtonHandler={goToBeforePage}
         clickSearchButtonHandler={clickSearch}
       ></BoardNavbar>
       <PostsWrapper>
-        <PostsList
-          items={items}
-          clickPostItemHandler={clickPostItem}
-        ></PostsList>
+        {data?.pages.map((page, index) => {
+          return (
+            <PostsList
+              key={'page' + index}
+              items={page.postsResponses}
+              clickPostItemHandler={clickPostItem}
+            ></PostsList>
+          );
+        })}
       </PostsWrapper>
+      {isFetchingNextPage ? (
+        <Text>Loading...</Text>
+      ) : (
+        <div ref={ref}>게시글의 끝입니다.</div>
+      )}
+      <StyledButtonWrapper>
+        <AiFillEdit color={'#01a7eb'} size={25} onClick={clickAddPost} />
+      </StyledButtonWrapper>
     </StyledBoard>
   );
 };

@@ -9,8 +9,10 @@ import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.member.domain.PostLike;
 import com.inssa.backend.member.domain.PostLikeRepository;
 import com.inssa.backend.post.controller.dto.*;
+import com.inssa.backend.post.domain.Comment;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
+import com.inssa.backend.post.domain.ReComment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +32,7 @@ public class PostService {
     private final PostLikeRepository postLikeRepository;
 
     public PostsResponseWithPageInfo getPosts(Pageable pageable) {
-        Page<Post> posts = postRepository.findByIsActiveTrue(pageable);
+        Page<Post> posts = postRepository.findByIsActiveTrueOrderByCreatedDateDesc(pageable);
         return PostsResponseWithPageInfo.builder()
                 .postsResponses(posts.stream()
                         .map(post -> PostsResponse.builder()
@@ -79,6 +81,7 @@ public class PostService {
                         .collect(Collectors.toList()))
                 .commentResponses(post.getComments()
                         .stream()
+                        .filter(Comment::isActive)
                         .map(comment -> CommentResponse.builder()
                                 .commentId(comment.getId())
                                 .content(comment.getContent())
@@ -87,6 +90,7 @@ public class PostService {
                                 .isPostWriter(comment.isPostWriter(post.getMember().getId()))
                                 .reCommentResponses(comment.getReComments()
                                         .stream()
+                                        .filter(ReComment::isActive)
                                         .map(reComment -> ReCommentResponse.builder()
                                                 .reCommentId(reComment.getId())
                                                 .content(reComment.getContent())
@@ -131,7 +135,7 @@ public class PostService {
         Post post = findPost(postId);
         validatePostLikeDuplication(member, post);
         if (postLikeRepository.existsByMemberAndPostAndIsActiveFalse(member, post)) {
-            PostLike postLike = getPostLikeByMemberAndPost(member, post);
+            PostLike postLike = getDeletedPostLike(member, post);
             postLike.activatePostLike();
             postLikeRepository.save(postLike);
             return;
@@ -171,6 +175,11 @@ public class PostService {
         if (postLikeRepository.existsByMemberAndPostAndIsActiveTrue(member, post)) {
             throw new DuplicationException(ErrorMessage.EXISTING_POST_LIKE);
         }
+    }
+
+    private PostLike getDeletedPostLike(Member member, Post post) {
+        return postLikeRepository.findByMemberAndPostAndIsActiveFalse(member, post)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST_LIKE));
     }
 
     private PostLike getPostLikeByMemberAndPost(Member member, Post post) {
