@@ -75,15 +75,15 @@ public class BusService {
     public BusLikeResponse getBusLike(int number) {
         Bus bus = findBusByNumber(number);
         Route lastVisited = bus.getLastVisited();
-        validateBusAvailability(lastVisited);
+        List<Route> routes = bus.getRoutes()
+                .stream()
+                .filter(Route::isActive)
+                .sorted(Comparator.comparing(Route::getOrder))
+                .collect(Collectors.toList());
+        validateBusAvailability(lastVisited, routes);
         return BusLikeResponse.builder()
                 .previousBusStop(lastVisited.getBusStop().getName())
-                .nextBusStop(bus.getRoutes()
-                        .stream()
-                        .filter(Route::isActive)
-                        .sorted(Comparator.comparing(Route::getOrder))
-                        .collect(Collectors.toList())
-                        .get(lastVisited.getOrder()).getBusStop().getName())
+                .nextBusStop(routes.get(lastVisited.getOrder()).getBusStop().getName())
                 .build();
     }
 
@@ -143,8 +143,8 @@ public class BusService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
     }
 
-    private void validateBusAvailability(Route lastVisited) {
-        if (lastVisited == null) {
+    private void validateBusAvailability(Route lastVisited, List<Route> routes) {
+        if (lastVisited == null || routes.indexOf(lastVisited) == routes.size() - 1) {
             throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_BUS);
         }
     }
