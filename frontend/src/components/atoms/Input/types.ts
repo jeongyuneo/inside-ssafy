@@ -1,5 +1,6 @@
 import { ChangeEvent, ChangeEventHandler } from 'react';
 import { CommentInputTypes } from '../../molecules/CommentInput/types';
+import { SearchInputType } from '../../molecules/SearchBar/types';
 import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
 import { ChangePasswordType } from '../../pages/MyInfoEdit/types';
@@ -24,7 +25,8 @@ export interface PropTypes {
     | LoginInputsType
     | ChangePasswordType
     | CommentInputTypes
-    | PostInputType;
+    | PostInputType
+    | SearchInputType;
   value?: string;
   changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;
