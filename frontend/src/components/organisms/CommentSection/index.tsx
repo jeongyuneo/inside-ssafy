@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import HorizontalLine from '../../../utils/HorizontalLine';
 import CommentCard from '../../molecules/CommentCard';
 import CommentInput from '../../molecules/CommentInput';
@@ -19,7 +19,17 @@ import {
  *
  * @author jojo
  */
-const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
+const CommentSection = (
+  {
+    commentResponses,
+    inputs,
+    commentIdWritingRecomment,
+    clickSubmitHandler,
+    changeCommentInputHandler,
+    ...restHandlers
+  }: PropTypes,
+  ref: ForwardedRef<HTMLInputElement>,
+) => {
   return (
     <StyledCommentSection>
       {commentResponses.map(
@@ -35,6 +45,7 @@ const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
             <CommentCard
               commentId={commentId}
               isReComment={false}
+              commentIdWritingRecomment={commentIdWritingRecomment}
               {...restHandlers}
               {...restComment}
             />
@@ -44,6 +55,7 @@ const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
                   <CommentCard
                     commentId={reCommentId}
                     isReComment
+                    commentIdWritingRecomment={commentIdWritingRecomment}
                     {...restRecomment}
                     {...restHandlers}
                   />
@@ -54,12 +66,13 @@ const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
         ),
       )}
       <CommentInput
-        inputs={{ comment: 'b' }}
-        clickSubmitHandler={() => console.log('click')}
-        changeHandler={() => console.log('change')}
+        ref={ref}
+        inputs={inputs}
+        clickSubmitHandler={clickSubmitHandler}
+        changeCommentInputHandler={changeCommentInputHandler}
       />
     </StyledCommentSection>
   );
 };
 
-export default CommentSection;
+export default forwardRef(CommentSection);
