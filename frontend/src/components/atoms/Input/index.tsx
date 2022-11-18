@@ -25,6 +25,7 @@ const Input = (
     type,
     name,
     id,
+    accept,
     placeholder,
     disabled,
     changeHandler,
