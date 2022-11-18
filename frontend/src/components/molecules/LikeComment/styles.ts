@@ -9,4 +9,5 @@ export const StyledLikeComment = styled.div`
 export const TextWrapper = styled.div`
   display: flex;
   width: 50%;
+  align-items: center;
 `;

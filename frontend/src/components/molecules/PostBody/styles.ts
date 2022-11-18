@@ -12,7 +12,6 @@ export const PostWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 1rem;
   gap: 1rem;
 `;
 
@@ -24,7 +23,10 @@ export const ImageWrapper = styled.div`
   padding: 0 1rem;
 `;
 
-export const ContentWrapper = styled.div``;
+export const ContentWrapper = styled.div`
+  width: 100%;
+  padding-left: 0.5rem;
+`;
 
 export const LikeWrapper = styled.div`
   padding: 1rem 0 1rem 1rem;

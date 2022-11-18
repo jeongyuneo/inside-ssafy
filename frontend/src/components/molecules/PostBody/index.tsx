@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from '../../atoms/Image';
 import Text from '../../atoms/Text';
+import Textarea from '../../atoms/Textarea';
 import LikeComment from '../LikeComment';
 import {
   ContentWrapper,
@@ -20,13 +21,21 @@ const PostBody = ({
   return (
     <StyledPostBody>
       <PostWrapper>
-        <ImageWrapper>
-          {imgSrc && <Image width={`100%`} src={imgSrc} alt="logo" />}
-        </ImageWrapper>
+        {imgSrc && (
+          <ImageWrapper>
+            <Image width={`100%`} src={imgSrc} alt="logo" />
+          </ImageWrapper>
+        )}
         <ContentWrapper>
-          <Text size={1.05} isPost>
-            {content}
-          </Text>
+          <Textarea
+            id="postContent"
+            name="postContent"
+            defaultValue={content}
+            width="100%"
+            fontSize={1}
+            backgroundColor="none"
+            disabled
+          />
         </ContentWrapper>
       </PostWrapper>
       <LikeWrapper>

@@ -6,13 +6,13 @@ export const StyledTextarea = styled.textarea<PropTypes>`
   ${({ width }) =>
     width &&
     css`
-      width: ${width}rem;
+      width: ${width};
     `}
 
   ${({ height }) =>
     height &&
     css`
-      height: ${height}rem;
+      height: ${height};
     `}
 
   ${({ fontSize }) => css`

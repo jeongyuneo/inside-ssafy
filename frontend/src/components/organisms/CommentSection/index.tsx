@@ -26,6 +26,7 @@ const CommentSection = (
     commentIdWritingRecomment,
     clickSubmitHandler,
     changeCommentInputHandler,
+    pressEnterHandler,
     ...restHandlers
   }: PropTypes,
   ref: ForwardedRef<HTMLInputElement>,
@@ -70,6 +71,7 @@ const CommentSection = (
         inputs={inputs}
         clickSubmitHandler={clickSubmitHandler}
         changeCommentInputHandler={changeCommentInputHandler}
+        pressEnterHandler={pressEnterHandler}
       />
     </StyledCommentSection>
   );

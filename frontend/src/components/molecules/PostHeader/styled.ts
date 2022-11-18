@@ -35,4 +35,7 @@ export const DateWrapper = styled.div`
   padding: 0 1rem;
 `;
 
-export const ButtonIconWrapper = styled.div``;
+export const ButtonIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
