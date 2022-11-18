@@ -1,3 +1,6 @@
+import { CommentHandlersType } from '../../molecules/CommentCard/types';
+import { CommentInputPropTypes } from '../../molecules/CommentInput/types';
+
 export interface CommonCommentTypes {
   content: string;
   createdDate: string;
@@ -14,8 +17,7 @@ export interface CommentResponseTypes extends CommonCommentTypes {
   reCommentResponses: ReCommentResponseTypes[];
 }
 
-export interface PropTypes {
+export interface PropTypes extends CommentHandlersType, CommentInputPropTypes {
+  commentIdWritingRecomment: number;
   commentResponses: CommentResponseTypes[];
-  clickReCommentHandler: (id?: number) => void;
-  clickDeleteHandler: (id?: number) => void;
 }
