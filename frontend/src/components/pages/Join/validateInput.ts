@@ -12,9 +12,10 @@ export const validateInput = (
   }: AccountValueTypes,
   validationkey: boolean,
 ): ValidResponseData => {
-  const ASCII_PATTERN = /[ -~]/;
+  const NAME_PATTERN = /^[가-힣]+$/;
   const NAME_LENGTH = /^.{2,7}$/;
-  const STUDENT_NUMBER_PATTERN = /[0-9]/;
+  const STUDENT_NUMBER_LENGTH = /^.{8,8}$/;
+  const STUDENT_NUMBER_PATTERN = /^[0-9]+$/;
   const PASSWORD_PATTERN = /\S{8,20}/;
   const PASSWORD_AVOID_PATTERN = /['\'"\\']/;
   const returnData = {
@@ -23,8 +24,10 @@ export const validateInput = (
   };
   if (!NAME_LENGTH.test(name)) {
     returnData.message = '올바른 이름을 입력해주세요.';
-  } else if (ASCII_PATTERN.test(name)) {
+  } else if (!NAME_PATTERN.test(name)) {
     returnData.message = '이름은 한글만 허용됩니다.';
+  } else if (!STUDENT_NUMBER_LENGTH.test(studentNumber)) {
+    returnData.message = '학번은 8자의 숫자 입니다';
   } else if (!STUDENT_NUMBER_PATTERN.test(studentNumber)) {
     returnData.message = '학번은 숫자만 입력 가능합니다';
   } else if (campus.length === 0) {

@@ -44,7 +44,6 @@ const PostSearch = () => {
   };
 
   const clickPostItems = (postId: number) => {
-    // PostDetail페이지로 이동
     navigate('/postdetail', { state: { postId: postId } });
   };
 
