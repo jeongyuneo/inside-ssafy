@@ -53,8 +53,7 @@ public class BusService {
         Bus bus = findBusByNumber(busRequest.getNumber());
         validateBusLikeDuplication(member, bus);
         if (busLikeRepository.existsByMemberAndBusAndIsActiveFalse(member, bus)) {
-            BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveFalse(member, bus)
-                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+            BusLike busLike = getDeletedBusLike(member, bus);
             busLike.create();
             busLikeRepository.save(busLike);
             return;
@@ -132,6 +131,11 @@ public class BusService {
         if (busLikeRepository.existsByMemberAndBusAndIsActiveTrue(member, bus)) {
             throw new DuplicationException(ErrorMessage.EXISTING_BUS_LIKE);
         }
+    }
+
+    private BusLike getDeletedBusLike(Member member, Bus bus) {
+        return busLikeRepository.findByMemberAndBusAndIsActiveFalse(member, bus)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
     }
 
     private BusLike findBusLikeByMemberAndBus(Long memberId, int number) {
