@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
+import HorizontalLine from '../../../utils/HorizontalLine';
 import CommentCard from '../../molecules/CommentCard';
-import { EachCommentGroup, ReComments, StyledCommentSection } from './styles';
+import CommentInput from '../../molecules/CommentInput';
+import {
+  EachCommentGroup,
+  HorizontalLineWrapper,
+  ReComments,
+  StyledCommentSection,
+} from './styles';
 import {
   PropTypes,
   CommentResponseTypes,
@@ -12,7 +19,17 @@ import {
  *
  * @author jojo
  */
-const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
+const CommentSection = (
+  {
+    commentResponses,
+    inputs,
+    commentIdWritingRecomment,
+    clickSubmitHandler,
+    changeCommentInputHandler,
+    ...restHandlers
+  }: PropTypes,
+  ref: ForwardedRef<HTMLInputElement>,
+) => {
   return (
     <StyledCommentSection>
       {commentResponses.map(
@@ -22,9 +39,13 @@ const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
           ...restComment
         }: CommentResponseTypes) => (
           <EachCommentGroup key={commentId}>
+            <HorizontalLineWrapper>
+              <HorizontalLine width="90%" />
+            </HorizontalLineWrapper>
             <CommentCard
               commentId={commentId}
               isReComment={false}
+              commentIdWritingRecomment={commentIdWritingRecomment}
               {...restHandlers}
               {...restComment}
             />
@@ -34,6 +55,7 @@ const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
                   <CommentCard
                     commentId={reCommentId}
                     isReComment
+                    commentIdWritingRecomment={commentIdWritingRecomment}
                     {...restRecomment}
                     {...restHandlers}
                   />
@@ -43,8 +65,14 @@ const CommentSection = ({ commentResponses, ...restHandlers }: PropTypes) => {
           </EachCommentGroup>
         ),
       )}
+      <CommentInput
+        ref={ref}
+        inputs={inputs}
+        clickSubmitHandler={clickSubmitHandler}
+        changeCommentInputHandler={changeCommentInputHandler}
+      />
     </StyledCommentSection>
   );
 };
 
-export default CommentSection;
+export default forwardRef(CommentSection);

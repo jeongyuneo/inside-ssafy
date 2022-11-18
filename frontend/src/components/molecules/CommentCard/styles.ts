@@ -9,7 +9,7 @@ export const StyledCommentCard = styled.div<StyledCommentCardTypes>`
     `}
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   padding: 1rem;
   border-radius: 1rem;
 `;

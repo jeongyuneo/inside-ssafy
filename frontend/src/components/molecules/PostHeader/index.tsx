@@ -28,9 +28,9 @@ const PostHeader = ({
   createdDate,
   editable,
   hasPostLike,
-  clickLikeButtonHandler,
   clickBackButtonHandler,
   clickMenuButtonHandler,
+  togglePostLikeHandler,
 }: PropTypes) => {
   return (
     <StyledPostHeader>
@@ -53,7 +53,7 @@ const PostHeader = ({
           <Button
             backgroundColor={'white'}
             textColor={'#696666'}
-            clickHandler={clickLikeButtonHandler}
+            clickHandler={togglePostLikeHandler}
             borderColor={'#A0A0A0'}
           >
             <ButtonIconWrapper>

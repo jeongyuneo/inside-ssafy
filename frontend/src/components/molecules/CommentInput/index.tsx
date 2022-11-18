@@ -1,31 +1,35 @@
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import Input from '../../atoms/Input';
 import { IoMdPaperPlane } from 'react-icons/io';
 import { StyledCommentInput } from './styles';
-import { PropTypes } from './types';
+import { CommentInputPropTypes } from './types';
 
 /**
  * inputs는 key-value 하나짜리 객체
  *
  * @author jojo
  */
-const CommentInput = ({
-  inputs,
-  clickSubmitHandler,
-  changeHandler,
-}: PropTypes) => {
+const CommentInput = (
+  {
+    inputs,
+    clickSubmitHandler,
+    changeCommentInputHandler,
+  }: CommentInputPropTypes,
+  ref: ForwardedRef<HTMLInputElement>,
+) => {
   return (
     <StyledCommentInput>
       <Input
-        name="commentInput"
+        ref={ref}
+        name="comment"
         backgroundColor="#E7E7E7"
         placeholder="댓글을 입력하세요"
         inputs={inputs}
-        changeHandler={changeHandler}
+        changeHandler={changeCommentInputHandler}
       />
-      <IoMdPaperPlane onClick={clickSubmitHandler} />
+      <IoMdPaperPlane size={20} onClick={clickSubmitHandler} />
     </StyledCommentInput>
   );
 };
 
-export default CommentInput;
+export default forwardRef(CommentInput);

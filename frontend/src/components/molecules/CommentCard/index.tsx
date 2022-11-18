@@ -2,7 +2,7 @@ import React from 'react';
 import Text from '../../atoms/Text';
 import { CommentHeader, IconButtonsWrapper, StyledCommentCard } from './styles';
 import { PropTypes } from './types';
-import { FaRegComment, FaRegTrashAlt } from 'react-icons/fa';
+import { FaComment, FaRegComment, FaRegTrashAlt } from 'react-icons/fa';
 
 /**
  * isRecomment가 false면 댓글, true면 대댓글
@@ -17,6 +17,7 @@ const CommentCard = ({
   editable,
   isReComment,
   postWriter,
+  commentIdWritingRecomment,
   clickReCommentHandler,
   clickDeleteHandler,
 }: PropTypes) => {
@@ -29,11 +30,16 @@ const CommentCard = ({
           <Text>익명</Text>
         )}
         <IconButtonsWrapper>
-          {!isReComment && (
-            <FaRegComment onClick={() => clickReCommentHandler(commentId)} />
-          )}
+          {!isReComment &&
+            (commentIdWritingRecomment === commentId ? (
+              <FaComment onClick={() => clickReCommentHandler(commentId)} />
+            ) : (
+              <FaRegComment onClick={() => clickReCommentHandler(commentId)} />
+            ))}
           {editable && (
-            <FaRegTrashAlt onClick={() => clickDeleteHandler(commentId)} />
+            <FaRegTrashAlt
+              onClick={() => clickDeleteHandler(commentId, isReComment)}
+            />
           )}
         </IconButtonsWrapper>
       </CommentHeader>
