@@ -62,7 +62,7 @@ public class Post extends BaseEntity {
     }
 
     private static boolean hasNotUpdateFiles(List<MultipartFile> files) {
-        return files.size() == 1 && files.get(0).getContentType() == null;
+        return files == null;
     }
 
     public boolean isEditableBy(Long memberId) {

@@ -44,14 +44,14 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestHeader("Authorization") String token, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+    public ResponseEntity<Void> createPost(@RequestHeader("Authorization") String token, @RequestPart PostRequest postRequest, @RequestPart(value = "files", required = false) List<MultipartFile> files) {
         postService.createPost(JwtUtil.getMemberId(token), postRequest, files);
         log.info("게시글 등록 성공");
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/update/{postId}")
-    public ResponseEntity<Void> updatePost(@RequestHeader("Authorization") String token, @PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart("files") List<MultipartFile> files) {
+    public ResponseEntity<Void> updatePost(@RequestHeader("Authorization") String token, @PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart(value = "files", required = false) List<MultipartFile> files) {
         postService.updatePost(JwtUtil.getMemberId(token), postId, postRequest, files);
         log.info("게시글 수정 성공");
         return ResponseEntity.ok().build();
