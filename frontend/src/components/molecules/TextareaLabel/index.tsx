@@ -4,6 +4,12 @@ import Label from '../../atoms/Label';
 import { StyledTextareaLabel } from './styles';
 import { TextareaLabelPropTypes } from './types';
 
+/**
+ * Labe과 Textarea를 함께 사용이 가능하다.
+ * Label의 속성과 Textarea 속성을 모두 받아서 사용이 가능하다.
+ *
+ * @author jini
+ */
 const TextareaLabel = ({
   id,
   labelFontSize,
