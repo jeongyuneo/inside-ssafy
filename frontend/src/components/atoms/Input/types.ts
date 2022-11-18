@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler } from 'react';
+import { ChangeEvent, ChangeEventHandler, ForwardedRef } from 'react';
 import { CommentInputTypes } from '../../molecules/CommentInput/types';
 import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
@@ -23,6 +23,7 @@ export interface PropTypes {
     | ChangePasswordType
     | CommentInputTypes;
   value?: string;
+  ref?: ForwardedRef<HTMLInputElement>;
   changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
