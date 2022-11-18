@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
 
+    private static final String SITE_URL = "https://inside-ssafy.com";
+
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final PostLikeRepository postLikeRepository;
@@ -76,7 +78,7 @@ public class PostService {
                 .files(post.getImages()
                         .stream()
                         .map(image -> FileResponse.builder()
-                                .url(image.getUrl())
+                                .url(SITE_URL + image.getUrl())
                                 .build())
                         .collect(Collectors.toList()))
                 .commentResponses(post.getComments()
