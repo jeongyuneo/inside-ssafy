@@ -25,7 +25,8 @@ export interface PropTypes {
     | LoginInputsType
     | ChangePasswordType
     | CommentInputTypes
-    | PostInputType;
+    | PostInputType
+    | SearchInputType;
   value?: string;
   changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
   onChange?: ChangeEventHandler<HTMLInputElement>;
