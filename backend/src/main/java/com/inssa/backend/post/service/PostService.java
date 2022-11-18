@@ -32,7 +32,7 @@ public class PostService {
     private final PostLikeRepository postLikeRepository;
 
     public PostsResponseWithPageInfo getPosts(Pageable pageable) {
-        Page<Post> posts = postRepository.findByIsActiveTrue(pageable);
+        Page<Post> posts = postRepository.findByIsActiveTrueOrderByCreatedDateDesc(pageable);
         return PostsResponseWithPageInfo.builder()
                 .postsResponses(posts.stream()
                         .map(post -> PostsResponse.builder()
