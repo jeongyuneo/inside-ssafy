@@ -14,6 +14,9 @@ export interface CommentCardTypes
 
 export interface StyledCommentCardTypes {
   isReComment: boolean;
+  isWritingRecomment: boolean;
 }
 
-export interface PropTypes extends CommentCardTypes, StyledCommentCardTypes {}
+export interface PropTypes extends CommentCardTypes {
+  isReComment: boolean;
+}

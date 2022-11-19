@@ -72,6 +72,7 @@ const PostDetail = () => {
       ? await postComment(postId, inputs.comment)
       : await postRecomment(commentIdWritingRecomment, inputs.comment);
 
+    setCommentIdWritingRecomment(-1);
     queryClient.invalidateQueries(['postDetail', postId, postLiked]);
 
     setInputs(prev => ({

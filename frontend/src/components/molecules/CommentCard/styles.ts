@@ -7,11 +7,23 @@ export const StyledCommentCard = styled.div<StyledCommentCardTypes>`
     css`
       background-color: #e7e7e7;
     `}
+
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 1rem;
   border-radius: 1rem;
+
+  ${({ isReComment, isWritingRecomment }) =>
+    (isReComment &&
+      css`
+        background-color: #e7e7e7;
+      `) ||
+    (isWritingRecomment &&
+      css`
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 0;
+      `)}
 `;
 
 export const CommentHeader = styled.div`
