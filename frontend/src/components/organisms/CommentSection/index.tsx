@@ -1,4 +1,5 @@
 import React, { ForwardedRef, forwardRef } from 'react';
+import Blank from '../../../utils/Blank';
 import HorizontalLine from '../../../utils/HorizontalLine';
 import CommentCard from '../../molecules/CommentCard';
 import CommentInput from '../../molecules/CommentInput';
@@ -67,6 +68,7 @@ const CommentSection = (
           </EachCommentGroup>
         ),
       )}
+      <Blank />
       <CommentInput
         ref={ref}
         inputs={inputs}

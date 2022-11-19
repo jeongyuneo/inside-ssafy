@@ -29,8 +29,8 @@ export const ContentWrapper = styled.div`
 `;
 
 export const LikeWrapper = styled.div`
-  padding-bottom: 1rem;
   display: flex;
   width: 100%;
   justify-content: end;
+  padding-right: 1rem;
 `;
