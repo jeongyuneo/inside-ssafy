@@ -3,15 +3,14 @@ import Text from '../../atoms/Text';
 import PostSummary from '../../molecules/PostSummary';
 import {
   StyledHotPostGroup,
-  FlexContainer,
   StyledHr,
   PostSummaryWrapper,
   TitleWrapper,
   TextWrapper,
 } from './styles';
-import { PostsTypes } from '../MyPosts/types';
+import { PropTypes } from '../MyPosts/types';
 
-const HotPostGroup = ({ postsInfo }: PostsTypes) => {
+const HotPostGroup = ({ postsInfo, clickPostItemHandler }: PropTypes) => {
   return (
     <StyledHotPostGroup>
       <TitleWrapper>
@@ -21,7 +20,12 @@ const HotPostGroup = ({ postsInfo }: PostsTypes) => {
       <PostSummaryWrapper>
         {postsInfo?.length ? (
           postsInfo?.map(({ postId, ...rest }) => (
-            <PostSummary key={postId} postId={postId} {...rest} />
+            <PostSummary
+              key={postId}
+              postId={postId}
+              clickPostItemHandler={clickPostItemHandler}
+              {...rest}
+            />
           ))
         ) : (
           <TextWrapper>
