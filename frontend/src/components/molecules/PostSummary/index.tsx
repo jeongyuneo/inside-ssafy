@@ -19,7 +19,7 @@ const PostSummary = ({
 }: PostSummaryTypes) => {
   return (
     <StyledPostSummary onClick={() => clickPostItemHandler(postId)}>
-      <Text size={1}>{title}</Text>
+      <Text size={0.9}>{title}</Text>
       <IconTextWrapper>
         <LikeComment {...rest}></LikeComment>
         <Text size={0.7}>{createdDate}</Text>

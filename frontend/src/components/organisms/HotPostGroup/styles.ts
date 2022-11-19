@@ -32,10 +32,10 @@ export const StyledHr = styled.hr`
 export const PostSummaryWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 90%;
   height: 10rem;
   gap: 0.5rem;
+  padding: 0.5rem 0;
 `;
 
 export const TextWrapper = styled.div`

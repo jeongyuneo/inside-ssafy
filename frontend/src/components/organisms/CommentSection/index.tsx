@@ -47,6 +47,7 @@ const CommentSection = (
             <CommentCard
               commentId={commentId}
               isReComment={false}
+              hasReComment={!!reCommentResponses.length}
               commentIdWritingRecomment={commentIdWritingRecomment}
               {...restHandlers}
               {...restComment}
