@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import navigator from '../../../utils/navigator';
 import Text from '../../atoms/Text';
@@ -29,7 +29,6 @@ const PostSearch = () => {
 
   const clickSearch = async () => {
     if (searchBarInput.value.length === 0 || searchBarInput.value === '') {
-      console.log('Search');
       setItems(null);
       return;
     }
@@ -47,6 +46,12 @@ const PostSearch = () => {
     navigate('/postdetail', { state: { postId: postId } });
   };
 
+  const pressEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      clickSearch();
+    }
+  };
+
   return (
     <StyledPostSearch>
       <NavbarWrapper>
@@ -62,6 +67,7 @@ const PostSearch = () => {
           changeInputHandler={changeInput}
           clickSearchButtonHandler={clickSearch}
           clickBackButtonHandler={goToBeforePage}
+          pressEnterHandler={pressEnterHandler}
         />
       </SearchBarWrapper>
       <PostListWrapper>

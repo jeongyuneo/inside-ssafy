@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 
 export interface SearchInputType {
   [key: string]: string;
@@ -11,4 +11,5 @@ export interface PropTypes {
   clickBackButtonHandler: () => void;
   clickSearchButtonHandler: () => void;
   changeInputHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  pressEnterHandler: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
