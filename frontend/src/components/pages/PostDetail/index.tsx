@@ -61,6 +61,7 @@ const PostDetail = () => {
 
     // 대댓글 버튼 클릭 초기화
     setCommentIdWritingRecomment(-1);
+    queryClient.invalidateQueries(['postDetail', postId, postLiked]);
   };
 
   const clickSubmitHandler = async () => {
