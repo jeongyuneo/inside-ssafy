@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private static final String SITE_URL = "https://inside-ssafy.com";
+    private static final String DELETED_COMMENT = "삭제된 메시지입니다.";
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
@@ -83,10 +84,9 @@ public class PostService {
                         .collect(Collectors.toList()))
                 .commentResponses(post.getComments()
                         .stream()
-                        .filter(Comment::isActive)
                         .map(comment -> CommentResponse.builder()
                                 .commentId(comment.getId())
-                                .content(comment.getContent())
+                                .content(getContent(comment.isActive(), comment.getContent()))
                                 .campus(comment.getMember().getCampus())
                                 .createdDate(comment.getCreatedDate())
                                 .isEditable(comment.isEditableBy(memberId))
@@ -162,6 +162,13 @@ public class PostService {
     private Post findPost(Long postId) {
         return postRepository.findByIdAndIsActiveTrue(postId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_POST));
+    }
+
+    private String getContent(boolean isActive, String content) {
+        if (isActive) {
+            return content;
+        }
+        return DELETED_COMMENT;
     }
 
     private Member findMember(Long memberId) {
