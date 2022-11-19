@@ -6,7 +6,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TokenResponse {
+public class LoginResponse {
 
     private String accessToken;
+    private String campus;
 }

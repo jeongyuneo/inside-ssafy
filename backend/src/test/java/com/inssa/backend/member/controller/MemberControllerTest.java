@@ -66,7 +66,7 @@ public class MemberControllerTest extends ApiDocument {
     private MemberResponse memberResponse;
     private PasswordUpdateRequest memberUpdateRequest;
     private LoginRequest loginRequest;
-    private TokenResponse tokenResponse;
+    private LoginResponse loginResponse;
 
     @BeforeEach
     void setUp() {
@@ -114,8 +114,9 @@ public class MemberControllerTest extends ApiDocument {
                 .email(EMAIL)
                 .password(PASSWORD)
                 .build();
-        tokenResponse = TokenResponse.builder()
+        loginResponse = LoginResponse.builder()
                 .accessToken(ACCESS_TOKEN)
+                .campus(CAMPUS)
                 .build();
     }
 
@@ -255,7 +256,7 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void login_success() throws Exception {
         // given
-        willReturn(tokenResponse).given(memberService).login(any(LoginRequest.class));
+        willReturn(loginResponse).given(memberService).login(any(LoginRequest.class));
         // when
         ResultActions resultActions = 로그인_요청(loginRequest);
         // then
@@ -427,7 +428,7 @@ public class MemberControllerTest extends ApiDocument {
 
     private void 로그인_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(tokenResponse)))
+                .andExpect(content().json(toJson(loginResponse)))
                 .andDo(print())
                 .andDo(toDocument("login-success"));
     }
