@@ -2,7 +2,7 @@ import React from 'react';
 import Text from '../../atoms/Text';
 import PostSummary from '../../molecules/PostSummary';
 import { StyledMyPosts, PostSummaryWrapper, TextWrapper } from './styles';
-import { PostsTypes } from './types';
+import { PropTypes } from './types';
 
 /**
  * 게시글을 배열로 받아서 PostSummary로 내려줍니다.
@@ -11,7 +11,7 @@ import { PostsTypes } from './types';
  *
  * @author jini
  */
-const MyPosts = ({ postsInfo }: PostsTypes) => {
+const MyPosts = ({ postsInfo, clickPostItemHandler }: PropTypes) => {
   return (
     <StyledMyPosts>
       <TextWrapper>
@@ -20,7 +20,12 @@ const MyPosts = ({ postsInfo }: PostsTypes) => {
       <PostSummaryWrapper>
         {postsInfo?.length ? (
           postsInfo?.map(({ postId, ...rest }) => (
-            <PostSummary key={postId} postId={postId} {...rest} />
+            <PostSummary
+              key={postId}
+              postId={postId}
+              clickPostItemHandler={clickPostItemHandler}
+              {...rest}
+            />
           ))
         ) : (
           <TextWrapper isContent>

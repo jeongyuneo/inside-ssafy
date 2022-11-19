@@ -7,5 +7,5 @@ export interface PostSummaryItemTypes extends PropTypes {
 }
 
 export interface PostSummaryTypes extends PostSummaryItemTypes {
-  clickPostItemHandler?: (postId: number) => void;
+  clickPostItemHandler: (postId: number) => void;
 }
