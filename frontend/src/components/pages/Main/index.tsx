@@ -120,7 +120,10 @@ const Main = () => {
             dayOfTheWeek="오늘의 식단"
           />
         </TodayMenuWrapper>
-        <HotPostGroup clickPostItemHandler={clickPostItemHandler} />
+        <HotPostGroup
+          postsInfo={mainData?.hotPosts}
+          clickPostItemHandler={clickPostItemHandler}
+        />
         {openedAskingBusTimeModal && (
           <ChoosingOptionModal
             firstOption="출근 버스 보기"
