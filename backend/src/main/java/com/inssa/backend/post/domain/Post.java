@@ -49,10 +49,10 @@ public class Post extends BaseEntity {
     private List<Comment> comments = new ArrayList<>();
 
     public void saveImages(List<MultipartFile> files) {
-        images.clear();
         if (hasNotUpdateFiles(files)) {
             return;
         }
+        images.clear();
         IntStream.range(1, files.size() + 1)
                 .mapToObj(order -> Image.builder()
                         .url(ImageUtil.saveImage(files.get(order - 1)))
@@ -69,9 +69,12 @@ public class Post extends BaseEntity {
         return member.is(memberId);
     }
 
-    public void update(String title, String content, List<MultipartFile> files) {
+    public void update(String title, String content, boolean willDeleteImage, List<MultipartFile> files) {
         this.title = title;
         this.content = content;
+        if (willDeleteImage) {
+            images.clear();
+        }
         saveImages(files);
     }
 
