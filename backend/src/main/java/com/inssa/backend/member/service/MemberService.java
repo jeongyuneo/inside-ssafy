@@ -86,6 +86,7 @@ public class MemberService {
         member.validatePassword(passwordEncoder, loginRequest.getPassword());
         return LoginResponse.builder()
                 .accessToken(JwtUtil.generateToken(member.getId(), member.getRole()))
+                .campus(member.getCampus())
                 .build();
     }
 
