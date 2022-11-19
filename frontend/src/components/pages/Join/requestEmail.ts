@@ -83,7 +83,7 @@ export const joinRequest = async ({
       },
     });
     if (status === 200) {
-      alert('인증 성공하였습니다.');
+      alert('회원가입에 성공하였습니다.');
       return true;
     }
     return false;

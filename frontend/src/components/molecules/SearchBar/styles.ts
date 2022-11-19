@@ -8,5 +8,6 @@ export const StyledSearchBar = styled.div`
   justify-content: space-between;
   border: 1px solid black;
   box-shadow: 1px 2px 4px;
+  background-color: white;
   padding: 0 0.5rem;
 `;

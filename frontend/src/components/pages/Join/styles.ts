@@ -50,7 +50,8 @@ export const SelectFormWrapper = styled.div`
 
 export const TextNavigateWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
+  padding-left: 0.5rem;
 `;
 
 export const ValidateEmailWrapper = styled.div`
