@@ -21,7 +21,7 @@ export const StyledCommentCard = styled.div<StyledCommentCardTypes>`
       `) ||
     (isWritingRecomment &&
       css`
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.2);
         border-radius: 0;
       `)}
 `;
