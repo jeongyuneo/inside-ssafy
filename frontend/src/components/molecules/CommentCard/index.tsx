@@ -21,8 +21,13 @@ const CommentCard = ({
   clickReCommentHandler,
   clickDeleteHandler,
 }: PropTypes) => {
+  const isWritingRecomment = commentIdWritingRecomment === commentId;
+
   return (
-    <StyledCommentCard isReComment={isReComment}>
+    <StyledCommentCard
+      isReComment={isReComment}
+      isWritingRecomment={isWritingRecomment}
+    >
       <CommentHeader>
         {postWriter ? (
           <Text color="blue">익명(글쓴이)</Text>
@@ -31,7 +36,7 @@ const CommentCard = ({
         )}
         <IconButtonsWrapper>
           {!isReComment &&
-            (commentIdWritingRecomment === commentId ? (
+            (isWritingRecomment ? (
               <FaComment onClick={() => clickReCommentHandler(commentId)} />
             ) : (
               <FaRegComment onClick={() => clickReCommentHandler(commentId)} />
