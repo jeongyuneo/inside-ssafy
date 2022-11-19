@@ -47,6 +47,7 @@ public class PostControllerTest extends ApiDocument {
     private static final boolean IS_POST_WRITER = false;
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final String CONTENT = "본문";
+    private static final String CAMPUS = "대전";
     private static final String URL = "{file_url}";
     private static final String KEYWORD = "검색 키워드";
     private static final String POST_REQUEST_PARAMETER_NAME = "postRequest";
@@ -100,6 +101,7 @@ public class PostControllerTest extends ApiDocument {
                 .mapToObj(m -> ReCommentResponse.builder()
                         .reCommentId(ID)
                         .content(CONTENT)
+                        .campus(CAMPUS)
                         .isEditable(IS_EDITABLE)
                         .isPostWriter(IS_POST_WRITER)
                         .createdDate(CREATED_DATE)
@@ -109,6 +111,7 @@ public class PostControllerTest extends ApiDocument {
                 .mapToObj(n -> CommentResponse.builder()
                         .commentId(ID)
                         .content(CONTENT)
+                        .campus(CAMPUS)
                         .isEditable(IS_EDITABLE)
                         .isPostWriter(IS_POST_WRITER)
                         .createdDate(CREATED_DATE)
