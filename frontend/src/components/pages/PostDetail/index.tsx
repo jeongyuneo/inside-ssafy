@@ -70,9 +70,14 @@ const PostDetail = () => {
       : setCommentIdWritingRecomment(-1);
   };
 
-  const clickDeleteHandler = (commentId: number, isReComment: boolean) => {
+  const clickDeleteHandler = async (
+    commentId: number,
+    isReComment: boolean,
+  ) => {
     if (confirm('삭제하시겠습니까?')) {
-      isReComment ? deleteRecomment(commentId) : deleteComment(commentId);
+      isReComment
+        ? await deleteRecomment(commentId)
+        : await deleteComment(commentId);
     }
 
     // 대댓글 버튼 클릭 초기화
