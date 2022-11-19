@@ -60,7 +60,8 @@ const FavoriteBusCarosel = ({
         </FlexContainer>
       ) : (
         <EmptyBusContainer>
-          <Text>즐겨찾기 등록한 버스가 없거나 운영 시간이 아닙니다</Text>
+          <Text>즐겨찾기 등록한 버스가 없거나</Text>
+          <Text>운영 시간이 아닙니다</Text>
         </EmptyBusContainer>
       )}
     </StyledFavoriteBusCarosel>

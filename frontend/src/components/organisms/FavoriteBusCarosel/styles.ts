@@ -32,6 +32,7 @@ export const FavoriteBusContainer = styled.div`
 
 export const EmptyBusContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 90%;
