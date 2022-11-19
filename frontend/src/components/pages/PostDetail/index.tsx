@@ -16,6 +16,8 @@ import useFocus from '../../../hooks/useFocus';
 import postComment from './postComment';
 import postRecomment from './postRecomment';
 import Blank from '../../../utils/Blank';
+import ChoosingOptionModal from '../../organisms/ChoosingOptionModal';
+import deletePost from './deletePost';
 
 /**
  * 게시글 상세 컴포넌트
@@ -25,26 +27,40 @@ import Blank from '../../../utils/Blank';
 const PostDetail = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { ref, setIsFocused } = useFocus();
   const location = useLocation();
   const postId: number = location.state.postId;
 
   const [commentIdWritingRecomment, setCommentIdWritingRecomment] =
     useState(-1);
   const [postLiked, setPostLiked] = useState(false);
+  const [openedEditModal, setOpenedEditModal] = useState(false);
   const [inputs, setInputs] = useState({
     comment: '',
   });
-  const { ref, setIsFocused } = useFocus();
 
   const { data: post } = useQuery<PostDetailTypes>(
     ['postDetail', postId, postLiked],
     () => getPostDetail(postId),
   );
 
-  console.log(post);
-
   const clickMenuButtonHandler = () => {
-    console.log('menu click');
+    setOpenedEditModal(true);
+  };
+
+  const clickCancelModalHandler = () => {
+    setOpenedEditModal(false);
+  };
+
+  const clickSecondOptionHandler = async () => {
+    if (confirm('정말 게시글을 삭제하시겠습니까?')) {
+      if (await deletePost(postId)) {
+        window.alert('게시글이 삭제되었습니다.');
+        navigator(navigate).board();
+      } else {
+        window.alert('서버가 불안정합니다. 다음에 시도해주세요.');
+      }
+    }
   };
 
   const clickReCommentHandler = (commentId: number) => {
@@ -140,6 +156,17 @@ const PostDetail = () => {
             pressEnterHandler={pressEnterHandler}
           />
           <Blank />
+          {openedEditModal && (
+            <ChoosingOptionModal
+              firstOption="수정"
+              secondOption="삭제"
+              clickCancelHandler={clickCancelModalHandler}
+              clickFirstOptionHandler={() =>
+                console.log('수정 페이지 생기면 거기로 이동')
+              }
+              clickSecondOptionHandler={clickSecondOptionHandler}
+            />
+          )}
         </>
       )}
     </StyledPostDetail>
