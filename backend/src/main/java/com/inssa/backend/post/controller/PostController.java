@@ -2,6 +2,7 @@ package com.inssa.backend.post.controller;
 
 import com.inssa.backend.post.controller.dto.PostRequest;
 import com.inssa.backend.post.controller.dto.PostResponse;
+import com.inssa.backend.post.controller.dto.PostUpdateRequest;
 import com.inssa.backend.post.controller.dto.PostsResponseWithPageInfo;
 import com.inssa.backend.post.service.PostService;
 import com.inssa.backend.util.JwtUtil;
@@ -51,8 +52,8 @@ public class PostController {
     }
 
     @PostMapping("/update/{postId}")
-    public ResponseEntity<Void> updatePost(@RequestHeader("Authorization") String token, @PathVariable Long postId, @RequestPart PostRequest postRequest, @RequestPart(value = "files", required = false) List<MultipartFile> files) {
-        postService.updatePost(JwtUtil.getMemberId(token), postId, postRequest, files);
+    public ResponseEntity<Void> updatePost(@RequestHeader("Authorization") String token, @PathVariable Long postId, @RequestPart PostUpdateRequest postUpdateRequest, @RequestPart(value = "files", required = false) List<MultipartFile> files) {
+        postService.updatePost(JwtUtil.getMemberId(token), postId, postUpdateRequest, files);
         log.info("게시글 수정 성공");
         return ResponseEntity.ok().build();
     }
