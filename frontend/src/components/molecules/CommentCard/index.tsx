@@ -12,6 +12,7 @@ import { FaComment, FaRegComment, FaRegTrashAlt } from 'react-icons/fa';
  */
 const CommentCard = ({
   commentId,
+  campus,
   content,
   createdDate,
   editable,
@@ -30,9 +31,9 @@ const CommentCard = ({
     >
       <CommentHeader>
         {postWriter ? (
-          <Text color="blue">익명(글쓴이)</Text>
+          <Text color="blue">{`글쓴이(${campus})`}</Text>
         ) : (
-          <Text>익명</Text>
+          <Text>{`익명(${campus})`}</Text>
         )}
         <IconButtonsWrapper>
           {!isReComment &&
