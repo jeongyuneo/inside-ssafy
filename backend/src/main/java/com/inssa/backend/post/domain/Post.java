@@ -69,12 +69,15 @@ public class Post extends BaseEntity {
         return member.is(memberId);
     }
 
-    public void update(String title, String content, boolean willDeleteImage, List<MultipartFile> files) {
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
-        if (willDeleteImage) {
-            images.clear();
-        }
+        images.clear();
+    }
+
+    public void update(String title, String content, List<MultipartFile> files) {
+        this.title = title;
+        this.content = content;
         saveImages(files);
     }
 
