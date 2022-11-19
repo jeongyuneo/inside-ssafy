@@ -119,10 +119,10 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public void updatePost(Long memberId, Long postId, PostRequest postRequest, List<MultipartFile> files) {
+    public void updatePost(Long memberId, Long postId, PostUpdateRequest postUpdateRequest, List<MultipartFile> files) {
         Post post = findPost(postId);
         validateEditable(memberId, post);
-        post.update(postRequest.getTitle(), postRequest.getContent(), files);
+        post.update(postUpdateRequest.getTitle(), postUpdateRequest.getContent(), postUpdateRequest.isWillDeleteImage(), files);
         postRepository.save(post);
     }
 
