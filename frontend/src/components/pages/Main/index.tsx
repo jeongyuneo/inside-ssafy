@@ -80,6 +80,10 @@ const Main = () => {
     });
   };
 
+  const clickPostItemHandler = (postId: number) => {
+    navigate('/postdetail', { state: { postId } });
+  };
+
   return (
     <StyledMain>
       <FlexWrapper>
@@ -116,7 +120,7 @@ const Main = () => {
             dayOfTheWeek="오늘의 식단"
           />
         </TodayMenuWrapper>
-        <HotPostGroup />
+        <HotPostGroup clickPostItemHandler={clickPostItemHandler} />
         {openedAskingBusTimeModal && (
           <ChoosingOptionModal
             firstOption="출근 버스 보기"

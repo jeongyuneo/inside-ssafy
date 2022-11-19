@@ -28,6 +28,10 @@ const MyPage = () => {
     }
   };
 
+  const clickPostItemHandler = (postId: number) => {
+    navigate('/postdetail', { state: { postId } });
+  };
+
   return (
     <StyledMyPage>
       <Navbar clickLogoHandler={navigator(navigate).main} />
@@ -38,9 +42,12 @@ const MyPage = () => {
         clickLogoutHandler={clickLogoutHandler}
       />
       {userInfo?.postsResponses.length ? (
-        <MyPosts postsInfo={userInfo.postsResponses} />
+        <MyPosts
+          postsInfo={userInfo.postsResponses}
+          clickPostItemHandler={clickPostItemHandler}
+        />
       ) : (
-        <MyPosts />
+        <MyPosts clickPostItemHandler={clickPostItemHandler} />
       )}
     </StyledMyPage>
   );

@@ -42,8 +42,8 @@ const PostBody = ({
         <LikeComment
           likeCount={likeCount}
           commentCount={commentCount}
-          iconSize={20}
-          fontSize={1.2}
+          iconSize={16}
+          fontSize={1}
         />
       </LikeWrapper>
     </StyledPostBody>
