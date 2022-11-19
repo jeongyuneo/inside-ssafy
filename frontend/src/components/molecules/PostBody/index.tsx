@@ -23,7 +23,7 @@ const PostBody = ({
       <PostWrapper>
         {imgSrc && (
           <ImageWrapper>
-            <Image width={`100%`} src={imgSrc} alt="logo" />
+            <Image width={`100%`} src={imgSrc} alt="image" />
           </ImageWrapper>
         )}
         <ContentWrapper>

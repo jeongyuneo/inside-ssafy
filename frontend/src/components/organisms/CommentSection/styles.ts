@@ -10,7 +10,6 @@ export const EachCommentGroup = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-bottom: 1rem;
 `;
 
 export const ReComments = styled.div`

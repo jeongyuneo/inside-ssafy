@@ -20,7 +20,7 @@ export const ImageWrapper = styled.div`
   height: auto;
   display: flex;
   justify-content: center;
-  padding: 0 1rem;
+  padding: 1rem 1rem 0 1rem;
 `;
 
 export const ContentWrapper = styled.div`
@@ -29,7 +29,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const LikeWrapper = styled.div`
-  padding: 1rem 0 1rem 1rem;
+  padding-bottom: 1rem;
   display: flex;
   width: 100%;
   justify-content: end;
