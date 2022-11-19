@@ -81,11 +81,12 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public TokenResponse login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         Member member = findMemberByEmail(loginRequest.getEmail());
         member.validatePassword(passwordEncoder, loginRequest.getPassword());
-        return TokenResponse.builder()
+        return LoginResponse.builder()
                 .accessToken(JwtUtil.generateToken(member.getId(), member.getRole()))
+                .campus(member.getCampus())
                 .build();
     }
 

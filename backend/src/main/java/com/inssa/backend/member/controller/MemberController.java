@@ -61,8 +61,8 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
-        TokenResponse tokenResponse = memberService.login(loginRequest);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        LoginResponse loginResponse = memberService.login(loginRequest);
         ResponseCookie responseCookie = ResponseCookie.from("refreshToken", JwtUtil.generateToken(memberService.getMemberInfo(loginRequest)))
                 .httpOnly(true)
                 .secure(true)
@@ -72,11 +72,11 @@ public class MemberController {
                 .domain("inside-ssafy.com")
                 .build();
         log.info("로그인 성공");
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(tokenResponse);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString()).body(loginResponse);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<TokenResponse> logout() {
+    public ResponseEntity<LoginResponse> logout() {
         ResponseCookie responseCookie = ResponseCookie.from("refreshToken", null)
                 .path("/")
                 .maxAge(0)
