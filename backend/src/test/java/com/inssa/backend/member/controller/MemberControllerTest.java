@@ -66,7 +66,7 @@ public class MemberControllerTest extends ApiDocument {
     private MemberResponse memberResponse;
     private PasswordUpdateRequest memberUpdateRequest;
     private LoginRequest loginRequest;
-    private TokenResponse tokenResponse;
+    private LoginResponse loginResponse;
 
     @BeforeEach
     void setUp() {
@@ -114,7 +114,7 @@ public class MemberControllerTest extends ApiDocument {
                 .email(EMAIL)
                 .password(PASSWORD)
                 .build();
-        tokenResponse = TokenResponse.builder()
+        loginResponse = LoginResponse.builder()
                 .accessToken(ACCESS_TOKEN)
                 .build();
     }
