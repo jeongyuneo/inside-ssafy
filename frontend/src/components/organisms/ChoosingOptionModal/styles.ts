@@ -16,7 +16,7 @@ export const StyledBusInfoImageModal = styled.div`
   align-items: flex-end;
   position: absolute;
   width: 70%;
-  background-color: rgba(256, 256, 256, 0.9);
+  background-color: white;
   border-radius: 1rem;
 `;
 

@@ -16,8 +16,8 @@ import {
   StyledMain,
   TodayMenuWrapper,
 } from './styles';
+import ChoosingOptionModal from '../../organisms/ChoosingOptionModal';
 import HotPostGroup from '../../organisms/HotPostGroup';
-import AskingBusTimeModal from '../../organisms/AskingBusTimeModal';
 import BusInfoImageModal from '../../organisms/BusInfoImageModal';
 import { BusInfoImageType } from '../BusInfo/types';
 import getBusInfoImage from '../BusInfo/getBusInfoImage';
@@ -118,10 +118,12 @@ const Main = () => {
         </TodayMenuWrapper>
         <HotPostGroup />
         {openedAskingBusTimeModal && (
-          <AskingBusTimeModal
+          <ChoosingOptionModal
+            firstOption="출근 버스 보기"
+            secondOption="퇴근 버스 보기"
             clickCancelHandler={clickCancelModalHandler}
-            clickMorningHandler={navigator(navigate).busInfo}
-            clickEveningHandler={clickEveningHandler}
+            clickFirstOptionHandler={navigator(navigate).busInfo}
+            clickSecondOptionHandler={clickEveningHandler}
           />
         )}
         {openedEveningBusInfoImageModal && (
