@@ -13,6 +13,7 @@ public class ReCommentResponse {
 
     private Long reCommentId;
     private String content;
+    private String campus;
     private boolean isEditable;
     private boolean isPostWriter;
 

@@ -14,6 +14,7 @@ public class CommentResponse {
 
     private Long commentId;
     private String content;
+    private String campus;
     private boolean isEditable;
     private boolean isPostWriter;
     private List<ReCommentResponse> reCommentResponses;
