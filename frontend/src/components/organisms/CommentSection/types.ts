@@ -2,6 +2,7 @@ import { CommentHandlersType } from '../../molecules/CommentCard/types';
 import { CommentInputPropTypes } from '../../molecules/CommentInput/types';
 
 export interface CommonCommentTypes {
+  campus: string;
   content: string;
   createdDate: string;
   editable: boolean;

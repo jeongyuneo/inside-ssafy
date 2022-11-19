@@ -17,6 +17,7 @@ const SearchBar = ({
   clickBackButtonHandler,
   clickSearchButtonHandler,
   changeInputHandler,
+  pressEnterHandler,
 }: PropTypes) => {
   return (
     <StyledSearchBar>
@@ -28,6 +29,7 @@ const SearchBar = ({
         name={name}
         inputs={inputs}
         changeHandler={changeInputHandler}
+        pressKeyHandler={pressEnterHandler}
       />
       <BiSearchAlt size={28} onClick={clickSearchButtonHandler} />
     </StyledSearchBar>

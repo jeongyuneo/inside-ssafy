@@ -5,7 +5,7 @@ import { LoginInputsType, SuccessLoginType } from './types';
 const requestLogin = async ({ email, password }: LoginInputsType) => {
   try {
     const {
-      data: { accessToken },
+      data: { accessToken, campus },
     }: { data: SuccessLoginType } = await axios({
       method: 'POST',
       url: '/api/v1/members/login',
@@ -16,6 +16,7 @@ const requestLogin = async ({ email, password }: LoginInputsType) => {
     });
 
     saveAccessToken({ accessToken });
+    localStorage.setItem('campus', campus);
 
     return true;
   } catch (e) {
