@@ -18,6 +18,6 @@ public class CommentResponse {
     private boolean isPostWriter;
     private List<ReCommentResponse> reCommentResponses;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDate;
 }
