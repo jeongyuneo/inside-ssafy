@@ -21,6 +21,7 @@ export interface PropTypes {
   type?: string;
   id?: string;
   accept?: string;
+  defaultValue?: string;
   placeholder?: string;
   disabled?: boolean;
   borderRadius?: number;
