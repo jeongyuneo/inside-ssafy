@@ -23,6 +23,8 @@ const MyPosts = ({ postsInfo, clickPostItemHandler }: PropTypes) => {
             <PostSummary
               key={postId}
               postId={postId}
+              iconSize={12}
+              fontSize={0.7}
               clickPostItemHandler={clickPostItemHandler}
               {...rest}
             />
