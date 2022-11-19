@@ -29,7 +29,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const LikeWrapper = styled.div`
-  padding-right: 1rem;
+  padding-bottom: 1rem;
   display: flex;
   width: 100%;
   justify-content: end;
