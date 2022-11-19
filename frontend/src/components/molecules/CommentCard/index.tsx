@@ -17,6 +17,7 @@ const CommentCard = ({
   createdDate,
   editable,
   isReComment,
+  hasReComment,
   postWriter,
   commentIdWritingRecomment,
   clickReCommentHandler,
@@ -27,6 +28,7 @@ const CommentCard = ({
   return (
     <StyledCommentCard
       isReComment={isReComment}
+      hasReComment={hasReComment}
       isWritingRecomment={isWritingRecomment}
     >
       <CommentHeader>
