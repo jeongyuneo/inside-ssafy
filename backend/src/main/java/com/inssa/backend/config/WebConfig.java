@@ -15,7 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
             "/members/login",
             "/members/join/**",
             "/buses/start",
-            "/buses/arrive/**"
+            "/buses/arrive/**",
+            "/buses/end"
     };
 
     @Override

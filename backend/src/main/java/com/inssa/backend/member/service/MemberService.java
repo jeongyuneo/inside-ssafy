@@ -8,6 +8,7 @@ import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.member.domain.Role;
 import com.inssa.backend.post.controller.dto.PostsResponse;
+import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.util.JwtUtil;
 import com.inssa.backend.util.MailUtil;
 import com.inssa.backend.util.RedisUtil;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,12 +25,6 @@ import java.util.stream.Collectors;
 @Service
 public class MemberService {
 
-    private static final String VALIDATION_EMAIL_SUBJECT = "[inside-SSAFY] 인증번호 발송";
-    private static final String VALIDATION_EMAIL_TEXT_HEADER =
-            "본 메일은 inside-SSAFY 사이트의 회원가입을 위한 이메일 인증입니다.\n아래의 [이메일 인증번호]를 입력하여 본인확인을 해주시기 바랍니다.";
-    private static final String VALIDATION_EMAIL_TEXT_BODY = "\n\n인증번호: ";
-    private static final String VALIDATION_EMAIL_TEXT_FOOTER = "\n\n감사합니다.\ninside-SSAFY 드림";
-    private static final Long VALIDATION_TOKEN_DURATION = 60 * 5L;
     private static final String ID = "id";
     private static final String ROLE = "role";
 
@@ -37,11 +33,8 @@ public class MemberService {
 
     public void sendValidationToken(EmailRequest emailRequest) {
         String email = emailRequest.getEmail();
-        checkEmail(email);
-        String validationToken = MailUtil.createValidationToken();
-        RedisUtil.setValidationTokenDuration(email, validationToken, VALIDATION_TOKEN_DURATION);
-        MailUtil.sendEmail(email, VALIDATION_EMAIL_SUBJECT,
-                VALIDATION_EMAIL_TEXT_HEADER + VALIDATION_EMAIL_TEXT_BODY + validationToken + VALIDATION_EMAIL_TEXT_FOOTER);
+        validateEmailDuplication(email);
+        MailUtil.sendValidationToken(email);
     }
 
     public void validateToken(ValidationRequest validationRequest) {
@@ -49,15 +42,14 @@ public class MemberService {
     }
 
     public void join(MemberRequest memberRequest) {
-        memberRepository.save(
-                Member.builder()
-                        .email(memberRequest.getEmail())
-                        .password(passwordEncoder.encode(memberRequest.getPassword()))
-                        .name(memberRequest.getName())
-                        .studentNumber(memberRequest.getStudentNumber())
-                        .role(Role.GENERAL)
-                        .build()
-        );
+        memberRepository.save(Member.builder()
+                .email(memberRequest.getEmail())
+                .password(passwordEncoder.encode(memberRequest.getPassword()))
+                .name(memberRequest.getName())
+                .campus(memberRequest.getCampus())
+                .studentNumber(memberRequest.getStudentNumber())
+                .role(Role.GENERAL)
+                .build());
     }
 
     public MemberResponse getMember(Long memberId) {
@@ -67,6 +59,8 @@ public class MemberService {
                 .studentNumber(member.getStudentNumber())
                 .postsResponses(member.getPosts()
                         .stream()
+                        .filter(Post::isActive)
+                        .sorted(Comparator.comparing(Post::getCreatedDate).reversed())
                         .map(post -> PostsResponse.builder()
                                 .postId(post.getId())
                                 .title(post.getTitle())
@@ -82,6 +76,7 @@ public class MemberService {
         Member member = findMember(memberId);
         member.validatePassword(passwordEncoder, memberUpdateRequest.getPassword());
         member.updatePassword(passwordEncoder.encode(memberUpdateRequest.getNewPassword()));
+        memberRepository.save(member);
     }
 
     public void deleteMember(Long memberId) {
@@ -90,11 +85,12 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public TokenResponse login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         Member member = findMemberByEmail(loginRequest.getEmail());
         member.validatePassword(passwordEncoder, loginRequest.getPassword());
-        return TokenResponse.builder()
+        return LoginResponse.builder()
                 .accessToken(JwtUtil.generateToken(member.getId(), member.getRole()))
+                .campus(member.getCampus())
                 .build();
     }
 
@@ -108,6 +104,12 @@ public class MemberService {
         };
     }
 
+    private void validateEmailDuplication(String email) {
+        if (memberRepository.existsByEmail(email)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
+        }
+    }
+
     private Member findMember(Long memberId) {
         return memberRepository.findByIdAndIsActiveTrue(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
@@ -116,11 +118,5 @@ public class MemberService {
     private Member findMemberByEmail(String email) {
         return memberRepository.findByEmailAndIsActiveTrue(email)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
-    private void checkEmail(String email) {
-        if (memberRepository.existsByEmail(email)) {
-            throw new DuplicationException(ErrorMessage.EXISTING_EMAIL);
-        }
     }
 }

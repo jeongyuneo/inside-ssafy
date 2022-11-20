@@ -29,5 +29,5 @@ export const StyledInput = styled.input<PropTypes>`
   border: none;
   outline: none;
   padding-left: 0.5rem;
-  border-radius: 0.4rem;
+  border-radius: 1rem;
 `;

@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import javax.servlet.http.Cookie;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -36,7 +38,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MemberControllerTest extends ApiDocument {
 
     private static final String EMAIL = "ssafy@ssafy.com";
-    private static final String EMAIL_PARAMETER_NAME = "email";
     private static final String VALIDATION_TOKEN = "OGM61X";
     private static final String PASSWORD = "ssafy";
     private static final String NAME = "김싸피";
@@ -52,31 +53,38 @@ public class MemberControllerTest extends ApiDocument {
     private static final String ACCESS_TOKEN = JwtUtil.generateToken(ID, Role.GENERAL);
     private static final String EXPIRED_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwicm9sZSI6IkdFTkVSQUwiLCJpYXQiOjE2Njc0NzU1ODcsImV4cCI6MTY2NzQ3OTE4N30.Dv47oX_5CqSIs_i6LRyndLfge-MXnrB2ny9z57w-M1g";
     private static final Cookie COOKIE = new Cookie("refreshToken", EXPIRED_ACCESS_TOKEN);
+    private static final String CAMPUS = "대전";
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
     @MockBean
     private MemberService memberService;
 
+    private String refreshToken;
     private EmailRequest emailRequest;
     private ValidationRequest validationRequest;
     private MemberRequest memberRequest;
     private MemberResponse memberResponse;
     private PasswordUpdateRequest memberUpdateRequest;
     private LoginRequest loginRequest;
-    private TokenResponse tokenResponse;
+    private LoginResponse loginResponse;
 
     @BeforeEach
     void setUp() {
-        COOKIE.setHttpOnly(true);
-        COOKIE.setSecure(true);
-        COOKIE.setPath("/");
-        COOKIE.setMaxAge(0);
-        COOKIE.setDomain("inside-ssafy.com");
+        Map<String, String> memberInfo = new HashMap<>();
+        memberInfo.put("id", "1L");
+        memberInfo.put("role", "GENERAL");
         PostsResponse postsResponse = PostsResponse.builder()
                 .title(TITLE)
                 .likeCount(LIKE_COUNT)
                 .commentCount(COMMENT_COUNT)
                 .createdDate(CREATED_DATE)
                 .build();
+        COOKIE.setHttpOnly(true);
+        COOKIE.setSecure(true);
+        COOKIE.setPath("/");
+        COOKIE.setMaxAge(0);
+        COOKIE.setDomain("inside-ssafy.com");
+        refreshToken = JwtUtil.generateToken(memberInfo);
         emailRequest = EmailRequest.builder()
                 .email(EMAIL)
                 .build();
@@ -88,6 +96,7 @@ public class MemberControllerTest extends ApiDocument {
                 .email(EMAIL)
                 .password(PASSWORD)
                 .name(NAME)
+                .campus(CAMPUS)
                 .studentNumber(STUDENT_NUMBER)
                 .build();
         memberResponse = MemberResponse.builder()
@@ -105,8 +114,9 @@ public class MemberControllerTest extends ApiDocument {
                 .email(EMAIL)
                 .password(PASSWORD)
                 .build();
-        tokenResponse = TokenResponse.builder()
+        loginResponse = LoginResponse.builder()
                 .accessToken(ACCESS_TOKEN)
+                .campus(CAMPUS)
                 .build();
     }
 
@@ -246,7 +256,7 @@ public class MemberControllerTest extends ApiDocument {
     @Test
     void login_success() throws Exception {
         // given
-        willReturn(tokenResponse).given(memberService).login(any(LoginRequest.class));
+        willReturn(loginResponse).given(memberService).login(any(LoginRequest.class));
         // when
         ResultActions resultActions = 로그인_요청(loginRequest);
         // then
@@ -348,7 +358,8 @@ public class MemberControllerTest extends ApiDocument {
     private ResultActions 회원조회_요청() throws Exception {
         return mockMvc.perform(get("/api/v1/members")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 회원조회_성공(ResultActions resultActions) throws Exception {
@@ -369,6 +380,7 @@ public class MemberControllerTest extends ApiDocument {
         return mockMvc.perform(patch("/api/v1/members")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(memberUpdateRequest)));
     }
@@ -389,7 +401,8 @@ public class MemberControllerTest extends ApiDocument {
     private ResultActions 회원탈퇴_요청() throws Exception {
         return mockMvc.perform(delete("/api/v1/members")
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 회원탈퇴_성공(ResultActions resultActions) throws Exception {
@@ -415,7 +428,7 @@ public class MemberControllerTest extends ApiDocument {
 
     private void 로그인_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(tokenResponse)))
+                .andExpect(content().json(toJson(loginResponse)))
                 .andDo(print())
                 .andDo(toDocument("login-success"));
     }
@@ -431,8 +444,7 @@ public class MemberControllerTest extends ApiDocument {
         return mockMvc.perform(post("/api/v1/members/logout")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(loginRequest)));
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 로그아웃_성공(ResultActions resultActions) throws Exception {

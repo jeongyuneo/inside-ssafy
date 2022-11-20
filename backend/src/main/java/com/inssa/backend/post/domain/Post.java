@@ -48,6 +48,38 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments = new ArrayList<>();
 
+    public void saveImages(List<MultipartFile> files) {
+        images.clear();
+        if (hasNotUpdateFiles(files)) {
+            return;
+        }
+        IntStream.range(1, files.size() + 1)
+                .mapToObj(order -> Image.builder()
+                        .url(ImageUtil.saveImage(files.get(order - 1)))
+                        .order(order)
+                        .post(this).build())
+                .forEach(image -> images.add(image));
+    }
+
+    private static boolean hasNotUpdateFiles(List<MultipartFile> files) {
+        return files == null;
+    }
+
+    public boolean isEditableBy(Long memberId) {
+        return member.is(memberId);
+    }
+
+    public void update(String title, String content, List<MultipartFile> files) {
+        this.title = title;
+        this.content = content;
+        saveImages(files);
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public void addLike(PostLike postLike) {
         postLikes.add(postLike);
         likeCount++;
@@ -72,32 +104,5 @@ public class Post extends BaseEntity {
 
     public void deleteComment() {
         commentCount--;
-    }
-
-    public void saveImages(List<MultipartFile> files) {
-        images.clear();
-        if (hasNotUpdateFiles(files)) {
-            return;
-        }
-        IntStream.range(1, files.size() + 1)
-                .mapToObj(order -> Image.builder()
-                        .url(ImageUtil.saveImage(files.get(order - 1)))
-                        .order(order)
-                        .post(this).build())
-                .forEach(image -> images.add(image));
-    }
-
-    public void update(String title, String content, List<MultipartFile> files) {
-        this.title = title;
-        this.content = content;
-        saveImages(files);
-    }
-
-    private static boolean hasNotUpdateFiles(List<MultipartFile> files) {
-        return files.size() == 1 && files.get(0).getContentType() == null;
-    }
-
-    public boolean isEditableBy(Long memberId) {
-        return member.is(memberId);
     }
 }

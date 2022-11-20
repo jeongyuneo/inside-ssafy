@@ -17,6 +17,7 @@ const Button = ({
   fontSize,
   textColor,
   backgroundColor,
+  borderColor,
   isText,
   disabled,
   clickHandler,
@@ -28,6 +29,7 @@ const Button = ({
       fontSize={fontSize}
       textColor={textColor}
       backgroundColor={backgroundColor}
+      borderColor={borderColor}
       isText={isText}
       disabled={disabled}
       onClick={clickHandler}

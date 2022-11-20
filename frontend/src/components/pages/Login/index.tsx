@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Image from '../../atoms/Image';
 import Text from '../../atoms/Text';
@@ -39,10 +39,13 @@ const Login = () => {
     const isLoggedIn = await requestLogin(inputs);
 
     if (isLoggedIn) {
+      localStorage.setItem('isLogin', 'true');
       setValidated(true);
       saveEmail({ checked, email: inputs['email'] });
       window.alert('로그인 성공!');
       navigate('/');
+    } else {
+      setValidated(false);
     }
   };
 
@@ -61,6 +64,12 @@ const Login = () => {
 
   const toggleHandler = () => {
     setChecked(prev => !prev);
+  };
+
+  const pressKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      clickLogin();
+    }
   };
 
   const buttonInfos = [
@@ -94,6 +103,7 @@ const Login = () => {
             height={3}
             inputs={inputs}
             changeHandler={e => changeHandler(e)}
+            pressKeyHandler={pressKeyHandler}
           />
           <InputLabel
             id="password"
@@ -105,6 +115,7 @@ const Login = () => {
             height={3}
             inputs={inputs}
             changeHandler={e => changeHandler(e)}
+            pressKeyHandler={pressKeyHandler}
           />
         </LogoInputsWrapper>
         <CheckboxButtonsWrapper>

@@ -1,21 +1,29 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
+import { ChangePasswordType } from '../../pages/MyInfoEdit/types';
+import { PostInputType } from '../../pages/CreatePost/types';
 
 export interface PropTypes {
   id: string;
   name: string;
   labelValue: string;
-  inputs?: AccountValueTypes | LoginInputsType;
+  inputs?:
+    | AccountValueTypes
+    | LoginInputsType
+    | ChangePasswordType
+    | PostInputType;
   width?: number;
   height?: number;
   type?: string;
   placeholder?: string;
   disabled?: boolean;
+  defaultValue?: string;
   inputFontSize?: number;
   inputTextColor?: string;
   inputBackgroundColor?: string;
   labelColor?: string;
   labelFontSize?: number;
   changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
+  pressKeyHandler?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }

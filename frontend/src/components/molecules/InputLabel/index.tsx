@@ -17,6 +17,7 @@ const InputLabel = ({
   labelValue,
   labelColor,
   labelFontSize,
+  defaultValue,
   ...inputPropsRest
 }: PropTypes) => {
   return (
@@ -31,6 +32,7 @@ const InputLabel = ({
           id={id}
           fontSize={inputFontSize}
           textColor={inputTextColor}
+          defaultValue={defaultValue}
           backgroundColor={inputBackgroundColor}
           {...inputPropsRest}
         />

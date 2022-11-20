@@ -4,10 +4,12 @@ export const StyledJoin = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
+  background: linear-gradient(rgb(12, 235, 176, 0.14), white);
 `;
 
 export const JoinPageWrapper = styled.div`
+  padding-top: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +20,6 @@ export const JoinPageWrapper = styled.div`
 export const InputLabelWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 1rem;
 `;
 
@@ -35,7 +36,7 @@ export const StyledEmailWrapper = styled.div`
 `;
 
 export const ButtonWrapper = styled.div`
-  padding-top: 1.4rem;
+  padding-top: 1.44rem;
 `;
 
 export const TextWrapper = styled.div`
@@ -43,7 +44,15 @@ export const TextWrapper = styled.div`
   left: 50%;
 `;
 
-export const TextNavigateWrapper = styled.div``;
+export const SelectFormWrapper = styled.div`
+  padding-top: 1.44rem;
+`;
+
+export const TextNavigateWrapper = styled.div`
+  display: flex;
+  justify-content: start;
+  padding-left: 0.5rem;
+`;
 
 export const ValidateEmailWrapper = styled.div`
   display: flex;

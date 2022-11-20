@@ -1,24 +1,20 @@
 import styled from 'styled-components';
-import { PropTypes } from './types';
+import { StyledMenuCardsType } from './types';
 
-export const StyledMenuCards = styled.div<PropTypes>`
-  width: ${({ width }) => width || 22}rem;
-  height: ${({ height }) => height || 80}vh;
-  background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
+export const StyledMenuCards = styled.div<StyledMenuCardsType>`
+  width: 24rem;
+  height: 70vh;
+  background-color: ${({ backgroundColor }) => backgroundColor || 'none'};
   display: flex;
   flex-direction: column;
   justify-contents: center;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   padding-bottom: 1rem;
+  border-radius: 1rem;
   overflow: auto;
   &::-webkit-scrollbar {
-    background-color: ${({ backgroundColor }) => backgroundColor || '#d1ebfa'};
-  }
-  ::-webkit-scrollbar-thumb {
-    width: 10px;
-    background-color: #d9d9d9;
-    border-radius: 1rem;
+    width: 0;
   }
   gap: 0.5rem;
 `;

@@ -10,19 +10,24 @@ import { PropTypes } from './types';
  *
  * @author jini
  */
-const LikeComment = ({ likeCount, commentCount }: PropTypes) => {
+const LikeComment = ({
+  likeCount,
+  commentCount,
+  iconSize,
+  fontSize,
+}: PropTypes) => {
   return (
     <StyledLikeComment>
       <TextWrapper>
-        <FaRegThumbsUp color="#D55555" size={15} />
-        <Text color="#D55555" size={0.9}>
-          {likeCount}
+        <FaRegThumbsUp color="#D55555" size={iconSize || 15} />
+        <Text color="#D55555" size={fontSize || 0.9}>
+          {likeCount.toString()}
         </Text>
       </TextWrapper>
       <TextWrapper>
-        <FaRegCommentDots color="#5B9CCE" size={15} />
-        <Text color="#5B9CCE" size={0.9}>
-          {commentCount}
+        <FaRegCommentDots color="#5B9CCE" size={iconSize || 15} />
+        <Text color="#5B9CCE" size={fontSize || 0.9}>
+          {commentCount.toString()}
         </Text>
       </TextWrapper>
     </StyledLikeComment>

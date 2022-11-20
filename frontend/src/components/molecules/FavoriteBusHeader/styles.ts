@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const StyledBusInfoHeader = styled.div`
+export const StyledFavoriteBusHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
+  padding: 0 0.5rem 0.5rem 0.5rem;
 `;
 
 export const ButtonsWrapper = styled.div`

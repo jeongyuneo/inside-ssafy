@@ -44,10 +44,6 @@ public class ImageUtil {
         return IMAGE_REQUEST + File.separator + POST + File.separator + imageFileName;
     }
 
-    private static String extractExt(String contentType) {
-        return contentType.substring(contentType.lastIndexOf(SEPARATOR) + 1);
-    }
-
     private static void validateContentType(String contentType) {
         if (isWrongContentType(contentType)) {
             throw new BadRequestException(ErrorMessage.WRONG_CONTENT_TYPE);
@@ -56,5 +52,9 @@ public class ImageUtil {
 
     private static boolean isWrongContentType(String contentType) {
         return !(contentType.contains(IMAGE_JPG) || contentType.contains(IMAGE_JPEG) || contentType.contains(IMAGE_PNG) || contentType.contains(IMAGE_GIF));
+    }
+
+    private static String extractExt(String contentType) {
+        return contentType.substring(contentType.lastIndexOf(SEPARATOR) + 1);
     }
 }

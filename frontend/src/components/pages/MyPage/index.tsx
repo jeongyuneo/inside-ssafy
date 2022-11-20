@@ -1,22 +1,55 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import MyInfo from '../../organisms/MyInfo';
+import Navbar from '../../molecules/Navbar';
+import MyPosts from '../../organisms/MyPosts';
 import { StyledMyPage } from './styles';
+import getUserInfo from './getUserInfo';
+import { UserInfoTypes } from './types';
+import requestLogout from './requestLogout';
+import navigator from '../../../utils/navigator';
 
 const MyPage = () => {
-  const name = '홍길동';
-  const studentNumber = '0732206';
+  const navigate = useNavigate();
 
-  const clickEditBtnHandler = () => {
-    console.log('button clicked');
+  const { data: userInfo } = useQuery<UserInfoTypes>(['userInfo'], () =>
+    getUserInfo(),
+  );
+
+  const clickLogoutHandler = async () => {
+    if (!window.confirm('로그아웃 하시겠습니까?')) {
+      return;
+    }
+
+    if (await requestLogout()) {
+      localStorage.removeItem('isLogin');
+      localStorage.removeItem('campus');
+      navigate('/login');
+    }
+  };
+
+  const clickPostItemHandler = (postId: number) => {
+    navigate('/postdetail', { state: { postId } });
   };
 
   return (
     <StyledMyPage>
+      <Navbar clickLogoHandler={navigator(navigate).main} />
       <MyInfo
-        name={name}
-        studentNumber={studentNumber}
-        clickEditBtnHandler={clickEditBtnHandler}
+        name={userInfo ? userInfo.name : ''}
+        studentNumber={userInfo ? userInfo.studentNumber : ''}
+        clickEditBtnHandler={navigator(navigate).myInfoEdit}
+        clickLogoutHandler={clickLogoutHandler}
       />
+      {userInfo?.postsResponses.length ? (
+        <MyPosts
+          postsInfo={userInfo.postsResponses}
+          clickPostItemHandler={clickPostItemHandler}
+        />
+      ) : (
+        <MyPosts clickPostItemHandler={clickPostItemHandler} />
+      )}
     </StyledMyPage>
   );
 };

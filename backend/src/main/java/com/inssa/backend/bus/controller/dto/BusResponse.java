@@ -11,6 +11,7 @@ import java.util.List;
 public class BusResponse {
 
     private boolean isLast;
-    private String lastVisitedBusStop;
+    private boolean hasBusLike;
+    private int lastVisitedBusStop;
     private List<String> busStops;
 }

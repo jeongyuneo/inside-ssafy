@@ -1,4 +1,6 @@
 export interface PropTypes {
-  likeCount: string;
-  commentCount: string;
+  likeCount: number;
+  commentCount: number;
+  iconSize?: number;
+  fontSize?: number;
 }

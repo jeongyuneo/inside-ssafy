@@ -19,8 +19,11 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 
+import javax.servlet.http.Cookie;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -41,11 +44,15 @@ public class PostControllerTest extends ApiDocument {
     private static final int COMMENT_COUNT = 3;
     private static final boolean HAS_POST_LIKE = true;
     private static final boolean IS_EDITABLE = true;
+    private static final boolean IS_POST_WRITER = false;
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final String CONTENT = "본문";
+    private static final boolean WILL_DELETE_IMAGE = false;
+    private static final String CAMPUS = "대전";
     private static final String URL = "{file_url}";
     private static final String KEYWORD = "검색 키워드";
     private static final String POST_REQUEST_PARAMETER_NAME = "postRequest";
+    private static final String POST_UPDATE_REQUEST_PARAMETER_NAME = "postUpdateRequest";
     private static final String POST_REQUEST_FILENAME = "";
     private static final String POST_REQUEST_CONTENT_TYPE = "application/json";
     private static final String IMAGE_PARAMETER_NAME = "files";
@@ -59,18 +66,26 @@ public class PostControllerTest extends ApiDocument {
     private static final int PAGE = 1;
     private static final String SIZE_PARAMETER_NAME = "size";
     private static final int SIZE = 5;
+    private static final boolean IS_LAST = false;
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
     @MockBean
     private PostService postService;
 
-    private List<PostsResponse> postsResponses;
+    private String refreshToken;
+    private PostsResponseWithPageInfo postsResponseWithPageInfo;
     private PostResponse postResponse;
+    private PostCreateResponse postCreateResponse;
     private PostRequest postRequest;
     private MockMultipartFile file;
     private MockMultipartFile postRequestPart;
+    private MockMultipartFile postUpdateRequestPart;
 
     @BeforeEach
     void setUp() {
+        Map<String, String> memberInfo = new HashMap<>();
+        memberInfo.put("id", "1L");
+        memberInfo.put("role", "GENERAL");
         PostsResponse postsResponse = PostsResponse.builder()
                 .postId(ID)
                 .title(TITLE)
@@ -78,6 +93,9 @@ public class PostControllerTest extends ApiDocument {
                 .commentCount(COMMENT_COUNT)
                 .createdDate(CREATED_DATE)
                 .build();
+        List<PostsResponse> postsResponses = IntStream.range(PAGE * SIZE, (PAGE + 1) * SIZE)
+                .mapToObj(n -> postsResponse)
+                .collect(Collectors.toList());
         List<FileResponse> fileResponses = IntStream.range(0, 2)
                 .mapToObj(n -> FileResponse.builder()
                         .url(URL)
@@ -85,23 +103,37 @@ public class PostControllerTest extends ApiDocument {
                 .collect(Collectors.toList());
         List<ReCommentResponse> reCommentResponses = IntStream.range(0, 2)
                 .mapToObj(m -> ReCommentResponse.builder()
+                        .reCommentId(ID)
                         .content(CONTENT)
+                        .campus(CAMPUS)
                         .isEditable(IS_EDITABLE)
+                        .isPostWriter(IS_POST_WRITER)
                         .createdDate(CREATED_DATE)
                         .build())
                 .collect(Collectors.toList());
         List<CommentResponse> commentResponses = IntStream.range(0, 2)
                 .mapToObj(n -> CommentResponse.builder()
+                        .commentId(ID)
                         .content(CONTENT)
+                        .campus(CAMPUS)
                         .isEditable(IS_EDITABLE)
+                        .isPostWriter(IS_POST_WRITER)
                         .createdDate(CREATED_DATE)
                         .reCommentResponses(reCommentResponses)
                         .build())
                 .collect(Collectors.toList());
-        postsResponses = IntStream.range(PAGE * SIZE, (PAGE + 1) * SIZE)
-                .mapToObj(n -> postsResponse)
-                .collect(Collectors.toList());
+        PostUpdateRequest postUpdateRequest = PostUpdateRequest.builder()
+                .title(TITLE)
+                .content(CONTENT)
+                .willDeleteImage(WILL_DELETE_IMAGE)
+                .build();
+        refreshToken = JwtUtil.generateToken(memberInfo);
+        postsResponseWithPageInfo = PostsResponseWithPageInfo.builder()
+                .postsResponses(postsResponses)
+                .isLast(IS_LAST)
+                .build();
         postResponse = PostResponse.builder()
+                .postId(ID)
                 .title(TITLE)
                 .likeCount(LIKE_COUNT)
                 .commentCount(COMMENT_COUNT)
@@ -110,12 +142,17 @@ public class PostControllerTest extends ApiDocument {
                 .isEditable(IS_EDITABLE)
                 .files(fileResponses)
                 .commentResponses(commentResponses)
+                .createdDate(CREATED_DATE)
+                .build();
+        postCreateResponse = PostCreateResponse.builder()
+                .postId(ID)
                 .build();
         postRequest = PostRequest.builder()
                 .title(TITLE)
                 .content(CONTENT)
                 .build();
         postRequestPart = new MockMultipartFile(POST_REQUEST_PARAMETER_NAME, POST_REQUEST_FILENAME, POST_REQUEST_CONTENT_TYPE, toJson(postRequest).getBytes());
+        postUpdateRequestPart = new MockMultipartFile(POST_UPDATE_REQUEST_PARAMETER_NAME, POST_REQUEST_FILENAME, POST_REQUEST_CONTENT_TYPE, toJson(postUpdateRequest).getBytes());
         file = new MockMultipartFile(IMAGE_PARAMETER_NAME, IMAGE, IMAGE_CONTENT_TYPE, IMAGE_CONTENT);
     }
 
@@ -123,7 +160,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void get_posts_success() throws Exception {
         // given
-        willReturn(postsResponses).given(postService).getPosts(any(Pageable.class));
+        willReturn(postsResponseWithPageInfo).given(postService).getPosts(any(Pageable.class));
         // when
         ResultActions resultActions = 익명_게시판_목록_조회_요청();
         // then
@@ -145,7 +182,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void search_post_success() throws Exception {
         // given
-        willReturn(postsResponses).given(postService).searchPost(anyString());
+        willReturn(postsResponseWithPageInfo).given(postService).searchPost(anyString(), any(Pageable.class));
         // when
         ResultActions resultActions = 익명_게시판_검색_요청(KEYWORD);
         // then
@@ -156,7 +193,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void search_post_fail() throws Exception {
         // given
-        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEARCH_POST.getMessage())).given(postService).searchPost(anyString());
+        willThrow(new InternalException(ErrorMessage.FAIL_TO_SEARCH_POST.getMessage())).given(postService).searchPost(anyString(), any(Pageable.class));
         // when
         ResultActions resultActions = 익명_게시판_검색_요청(KEYWORD);
         // then
@@ -189,7 +226,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void create_post_success() throws Exception {
         // given
-        willDoNothing().given(postService).createPost(anyLong(), any(PostRequest.class), anyList());
+        willReturn(postCreateResponse).given(postService).createPost(anyLong(), any(PostRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_등록_요청(postRequest);
         // then
@@ -211,7 +248,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void update_post_success() throws Exception {
         // given
-        willDoNothing().given(postService).updatePost(anyLong(), anyLong(), any(PostRequest.class), anyList());
+        willDoNothing().given(postService).updatePost(anyLong(), anyLong(), any(PostUpdateRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_수정_요청(ID);
         // then
@@ -222,7 +259,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void update_post_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).updatePost(anyLong(), anyLong(), any(PostRequest.class), anyList());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).updatePost(anyLong(), anyLong(), any(PostUpdateRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_수정_요청(ID);
         // then
@@ -299,13 +336,14 @@ public class PostControllerTest extends ApiDocument {
         return mockMvc.perform(get("/api/v1/posts")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .param(PAGE_PARAMETER_NAME, String.valueOf(PAGE))
                 .param(SIZE_PARAMETER_NAME, String.valueOf(SIZE)));
     }
 
     private void 익명_게시판_목록_조회_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(postsResponses)))
+                .andExpect(content().json(toJson(postsResponseWithPageInfo)))
                 .andDo(print())
                 .andDo(toDocument("get-posts-success"));
     }
@@ -321,12 +359,13 @@ public class PostControllerTest extends ApiDocument {
         return mockMvc.perform(get("/api/v1/posts/search")
                 .contextPath("/api/v1")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken))
                 .param("keyword", keyword));
     }
 
     private void 익명_게시판_검색_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
-                .andExpect(content().json(toJson(postsResponses)))
+                .andExpect(content().json(toJson(postsResponseWithPageInfo)))
                 .andDo(print())
                 .andDo(toDocument("search-post-success"));
     }
@@ -341,7 +380,8 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_상세_조회_요청(Long postId) throws Exception {
         return mockMvc.perform(get("/api/v1/posts/" + postId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 익명_게시판_상세_조회_성공(ResultActions resultActions) throws Exception {
@@ -365,11 +405,13 @@ public class PostControllerTest extends ApiDocument {
                 .file(file)
                 .accept(MediaType.APPLICATION_JSON)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 익명_게시판_등록_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
+                .andExpect(content().json(toJson(postCreateResponse)))
                 .andDo(print())
                 .andDo(toDocument("create-post-success"));
     }
@@ -383,12 +425,13 @@ public class PostControllerTest extends ApiDocument {
 
     private ResultActions 익명_게시판_수정_요청(Long postId) throws Exception {
         return mockMvc.perform(multipart("/api/v1/posts/update/" + postId)
-                .file(postRequestPart)
+                .file(postUpdateRequestPart)
                 .file(file)
                 .file(file)
                 .accept(MediaType.APPLICATION_JSON)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 익명_게시판_수정_성공(ResultActions resultActions) throws Exception {
@@ -407,7 +450,8 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_삭제_요청(Long postId) throws Exception {
         return mockMvc.perform(delete("/api/v1/posts/" + postId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 익명_게시판_삭제_성공(ResultActions resultActions) throws Exception {
@@ -426,7 +470,8 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_좋아요_등록_요청(Long postId) throws Exception {
         return mockMvc.perform(post("/api/v1/posts/like/" + postId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 익명_게시판_좋아요_등록_성공(ResultActions resultActions) throws Exception {
@@ -445,7 +490,8 @@ public class PostControllerTest extends ApiDocument {
     private ResultActions 익명_게시판_좋아요_삭제_요청(Long postId) throws Exception {
         return mockMvc.perform(delete("/api/v1/posts/like/" + postId)
                 .contextPath("/api/v1")
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN));
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .cookie(new Cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken)));
     }
 
     private void 익명_게시판_좋아요_삭제_성공(ResultActions resultActions) throws Exception {

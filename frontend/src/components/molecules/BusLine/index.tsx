@@ -14,7 +14,7 @@ const BusLine = ({ currentStop, busStops }: PropTypes) => {
   return (
     <StyledBusLine>
       <Stepper activeStep={currentStop} orientation="vertical">
-        {busStops.map((busStop, idx) => (
+        {busStops?.map((busStop, idx) => (
           <Step key={busStop + idx}>
             <StepLabel>{busStop}</StepLabel>
           </Step>

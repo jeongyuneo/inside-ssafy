@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import BusInfoImageModal from '../../organisms/BusInfoImageModal';
 import BusInfoBody from '../../organisms/BusInfoBody';
-import { StyledBusInfo } from './styles';
-import { useNavigate } from 'react-router-dom';
 import BusInfoHeader from '../../organisms/BusInfoHeader';
+import { BusInfoImageType, BusInfoType } from './types';
+import { StyledBusInfo } from './styles';
+import getBusInfo from './getBusInfo';
+import getBusInfoImage from './getBusInfoImage';
+import clickBusNumHandler from '../../../utils/clickBusNumHandler';
+import postBusLike from './postBusLike';
+import deleteBusLike from './deleteBusLike';
+import navigator from '../../../utils/navigator';
+import calculateInitialBusIdx from './calculateInitialBusIdx';
 
 /**
  * 해당 페이지의 liked 유무를 받아와서 liked 상태를 변경해 렌더링
@@ -11,75 +20,76 @@ import BusInfoHeader from '../../organisms/BusInfoHeader';
  * @author jojo
  */
 const BusInfo = () => {
-  const [busNum, setBusNum] = useState(1);
-  const [currentStop, setCurrentStop] = useState(4);
+  const ALL_BUS_NUMS = [1, 2, 3, 4, 5, 6];
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  // param으로 넘어온 busNum이 있으면 그 값에 맞는 idx를 찾아 초기 인덱스로 설정, 아니면 0
+  const initialBusIdx = calculateInitialBusIdx({
+    ALL_BUS_NUMS,
+    busNum: location.state?.busNum,
+  });
+  const queryClient = useQueryClient();
+
+  // ALL_BUS_NUMS 배열에서 인덱스에 맞는 버스 번호를 찾도록 busIdx를 상태로 관리
+  const [busIdx, setBusIdx] = useState(initialBusIdx);
+  const [currentStop, setCurrentStop] = useState(-1);
   const [liked, setLiked] = useState(false);
   const [openedBusInfoModal, setOpenedBusInfoModal] = useState(false);
-  const navigate = useNavigate();
 
-  const clickBusNumHandler = (direction: string) => {
-    if (
-      (busNum === 1 && direction === 'left') ||
-      (busNum === 6 && direction === 'right')
-    ) {
-      return;
-    }
+  const { data: busInfo } = useQuery<BusInfoType>(['busInfo', busIdx], () =>
+    getBusInfo({ busNum: ALL_BUS_NUMS[busIdx] }),
+  );
 
-    direction === 'left'
-      ? setBusNum(prev => prev - 1)
-      : setBusNum(prev => prev + 1);
+  const { data: busInfoImage } = useQuery<BusInfoImageType>(
+    ['busInfoImage', busIdx],
+    () => getBusInfoImage({ busNum: ALL_BUS_NUMS[busIdx] }),
+  );
+
+  const clickBusNumHandlerWrapper = (direction: string) => {
+    clickBusNumHandler({ direction, busIdx, setBusIdx });
   };
 
   const clickRefreshHandler = () => {
-    console.log('refresh');
-  };
-
-  const clickLogoHandler = () => {
-    navigate('/');
+    queryClient.invalidateQueries(['busInfo', busIdx]);
   };
 
   const toggleBusInfoModalHandler = () => {
     setOpenedBusInfoModal(prev => !prev);
   };
 
-  const toggleLikeHandler = () => {
-    setLiked(prev => !prev);
+  const toggleLikeHandler = async () => {
+    const isSuccessful: boolean = await (liked
+      ? deleteBusLike(ALL_BUS_NUMS[busIdx])
+      : postBusLike(ALL_BUS_NUMS[busIdx]));
+
+    isSuccessful && setLiked(prev => !prev);
   };
 
-  const busStops = [
-    '용전네거리',
-    '서대전네거리',
-    '엘니아',
-    '페리온',
-    '헤네시스',
-    '충대정문',
-    '유성문화원',
-    '유성온천역6번출구',
-    '구암역',
-    '현충원역',
-  ];
-
-  const busInfoImage =
-    'https://cdn.pixabay.com/photo/2019/10/05/19/40/pumpkins-4528653_960_720.jpg';
+  useEffect(() => {
+    busInfo && setCurrentStop(busInfo.lastVisitedBusStop);
+    busInfo && setLiked(busInfo.hasBusLike);
+  }, [busInfo]);
 
   return (
     <StyledBusInfo>
       <BusInfoHeader
-        clickLogoHandler={clickLogoHandler}
-        clickBusNumHandler={clickBusNumHandler}
-        busNum={busNum}
+        clickLogoHandler={navigator(navigate).main}
+        clickMypageHandler={navigator(navigate).mypage}
+        clickBusNumHandler={clickBusNumHandlerWrapper}
+        busNum={ALL_BUS_NUMS[busIdx]}
         liked={liked}
         toggleLikeHandler={toggleLikeHandler}
         toggleBusInfoModalHandler={toggleBusInfoModalHandler}
       />
       <BusInfoBody
         currentStop={currentStop}
-        busStops={busStops}
+        busStops={busInfo?.busStops}
         clickRefreshHandler={clickRefreshHandler}
       />
       {openedBusInfoModal && (
         <BusInfoImageModal
-          busInfoImage={busInfoImage}
+          busInfoImage={busInfoImage?.url || ''}
           toggleBusInfoModalHandler={toggleBusInfoModalHandler}
         />
       )}
