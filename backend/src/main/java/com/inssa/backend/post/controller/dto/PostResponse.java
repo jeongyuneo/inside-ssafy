@@ -22,6 +22,6 @@ public class PostResponse {
     private List<FileResponse> files;
     private List<CommentResponse> commentResponses;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDate;
 }
