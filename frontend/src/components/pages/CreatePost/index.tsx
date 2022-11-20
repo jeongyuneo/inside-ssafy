@@ -46,6 +46,11 @@ const CreatePost = () => {
   };
 
   const clickAddButtonHandler = async () => {
+    if (inputValue.title.trim() === '' || textareaValue.trim() === '') {
+      window.alert('제목 혹은 본문을 입력해주세요');
+      return;
+    }
+
     const postRequest = {
       title: inputValue.title,
       content: textareaValue,
@@ -54,9 +59,13 @@ const CreatePost = () => {
     const json = JSON.stringify(postRequest);
     const blob = new Blob([json], { type: 'application/json' });
     formData.append('postRequest', blob);
-    (await requestPost(formData))
-      ? navigator(navigate).board()
-      : window.alert('서버가 원활하지 않습니다.');
+
+    if (await requestPost(formData)) {
+      window.alert('게시글이 작성되었습니다.');
+      navigator(navigate).board();
+    } else {
+      window.alert('서버가 원활하지 않습니다.');
+    }
   };
 
   const buttonInfos = [
