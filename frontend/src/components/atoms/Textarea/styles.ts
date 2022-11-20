@@ -22,7 +22,8 @@ export const StyledTextarea = styled.textarea<PropTypes>`
   ${({ backgroundColor }) => css`
     background: ${backgroundColor || '#D1EBFA'};
   `}
-
+  
+  color: black;
   resize: none;
   border-radius: 1rem;
   border: none;
