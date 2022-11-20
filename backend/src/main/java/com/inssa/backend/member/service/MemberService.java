@@ -1,6 +1,5 @@
 package com.inssa.backend.member.service;
 
-import com.inssa.backend.bus.domain.Route;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.NotFoundException;
