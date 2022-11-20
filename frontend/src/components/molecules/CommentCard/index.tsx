@@ -31,28 +31,37 @@ const CommentCard = ({
       hasReComment={hasReComment}
       isWritingRecomment={isWritingRecomment}
     >
-      <CommentHeader>
-        {postWriter ? (
-          <Text color="blue">{`글쓴이(${campus})`}</Text>
-        ) : (
-          <Text>{`익명(${campus})`}</Text>
-        )}
-        <IconButtonsWrapper>
-          {!isReComment &&
-            (isWritingRecomment ? (
-              <FaComment onClick={() => clickReCommentHandler(commentId)} />
-            ) : (
-              <FaRegComment onClick={() => clickReCommentHandler(commentId)} />
-            ))}
-          {editable && (
-            <FaRegTrashAlt
-              onClick={() => clickDeleteHandler(commentId, isReComment)}
-            />
-          )}
-        </IconButtonsWrapper>
-      </CommentHeader>
-      <Text>{content}</Text>
-      <Text>{createdDate}</Text>
+      {!!campus ? (
+        <>
+          <CommentHeader>
+            <Text>{`익명(${campus})`}</Text>
+            <IconButtonsWrapper>
+              {!isReComment &&
+                (isWritingRecomment ? (
+                  <FaComment onClick={() => clickReCommentHandler(commentId)} />
+                ) : (
+                  <FaRegComment
+                    onClick={() => clickReCommentHandler(commentId)}
+                  />
+                ))}
+              {editable && (
+                <FaRegTrashAlt
+                  onClick={() => clickDeleteHandler(commentId, isReComment)}
+                />
+              )}
+            </IconButtonsWrapper>
+          </CommentHeader>
+          <Text>{content}</Text>
+          <Text>{createdDate}</Text>
+        </>
+      ) : (
+        <>
+          <CommentHeader>
+            <Text color="gray">(삭제)</Text>
+          </CommentHeader>
+          <Text color="gray">삭제된 댓글입니다</Text>
+        </>
+      )}
     </StyledCommentCard>
   );
 };
