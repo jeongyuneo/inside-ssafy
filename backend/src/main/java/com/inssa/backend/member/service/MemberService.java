@@ -1,5 +1,6 @@
 package com.inssa.backend.member.service;
 
+import com.inssa.backend.bus.domain.Route;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.exception.DuplicationException;
 import com.inssa.backend.common.exception.NotFoundException;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,6 +61,7 @@ public class MemberService {
                 .postsResponses(member.getPosts()
                         .stream()
                         .filter(Post::isActive)
+                        .sorted(Comparator.comparing(Post::getCreatedDate).reversed())
                         .map(post -> PostsResponse.builder()
                                 .postId(post.getId())
                                 .title(post.getTitle())
