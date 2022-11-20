@@ -8,6 +8,7 @@ import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.member.domain.Role;
 import com.inssa.backend.post.controller.dto.PostsResponse;
+import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.util.JwtUtil;
 import com.inssa.backend.util.MailUtil;
 import com.inssa.backend.util.RedisUtil;
@@ -57,6 +58,7 @@ public class MemberService {
                 .studentNumber(member.getStudentNumber())
                 .postsResponses(member.getPosts()
                         .stream()
+                        .filter(Post::isActive)
                         .map(post -> PostsResponse.builder()
                                 .postId(post.getId())
                                 .title(post.getTitle())
