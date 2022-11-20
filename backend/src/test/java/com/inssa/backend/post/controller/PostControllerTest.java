@@ -47,10 +47,12 @@ public class PostControllerTest extends ApiDocument {
     private static final boolean IS_POST_WRITER = false;
     private static final LocalDateTime CREATED_DATE = LocalDateTime.now();
     private static final String CONTENT = "본문";
+    private static final boolean WILL_DELETE_IMAGE = false;
     private static final String CAMPUS = "대전";
     private static final String URL = "{file_url}";
     private static final String KEYWORD = "검색 키워드";
     private static final String POST_REQUEST_PARAMETER_NAME = "postRequest";
+    private static final String POST_UPDATE_REQUEST_PARAMETER_NAME = "postUpdateRequest";
     private static final String POST_REQUEST_FILENAME = "";
     private static final String POST_REQUEST_CONTENT_TYPE = "application/json";
     private static final String IMAGE_PARAMETER_NAME = "files";
@@ -76,6 +78,7 @@ public class PostControllerTest extends ApiDocument {
     private PostRequest postRequest;
     private MockMultipartFile file;
     private MockMultipartFile postRequestPart;
+    private MockMultipartFile postUpdateRequestPart;
 
     @BeforeEach
     void setUp() {
@@ -118,6 +121,11 @@ public class PostControllerTest extends ApiDocument {
                         .reCommentResponses(reCommentResponses)
                         .build())
                 .collect(Collectors.toList());
+        PostUpdateRequest postUpdateRequest = PostUpdateRequest.builder()
+                .title(TITLE)
+                .content(CONTENT)
+                .willDeleteImage(WILL_DELETE_IMAGE)
+                .build();
         refreshToken = JwtUtil.generateToken(memberInfo);
         postsResponseWithPageInfo = PostsResponseWithPageInfo.builder()
                 .postsResponses(postsResponses)
@@ -140,6 +148,7 @@ public class PostControllerTest extends ApiDocument {
                 .content(CONTENT)
                 .build();
         postRequestPart = new MockMultipartFile(POST_REQUEST_PARAMETER_NAME, POST_REQUEST_FILENAME, POST_REQUEST_CONTENT_TYPE, toJson(postRequest).getBytes());
+        postUpdateRequestPart = new MockMultipartFile(POST_UPDATE_REQUEST_PARAMETER_NAME, POST_REQUEST_FILENAME, POST_REQUEST_CONTENT_TYPE, toJson(postUpdateRequest).getBytes());
         file = new MockMultipartFile(IMAGE_PARAMETER_NAME, IMAGE, IMAGE_CONTENT_TYPE, IMAGE_CONTENT);
     }
 
@@ -235,7 +244,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void update_post_success() throws Exception {
         // given
-        willDoNothing().given(postService).updatePost(anyLong(), anyLong(), any(PostRequest.class), anyList());
+        willDoNothing().given(postService).updatePost(anyLong(), anyLong(), any(PostUpdateRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_수정_요청(ID);
         // then
@@ -246,7 +255,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void update_post_fail() throws Exception {
         // given
-        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).updatePost(anyLong(), anyLong(), any(PostRequest.class), anyList());
+        willThrow(new NotFoundException(ErrorMessage.NOT_FOUND_POST)).given(postService).updatePost(anyLong(), anyLong(), any(PostUpdateRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_수정_요청(ID);
         // then
@@ -411,7 +420,7 @@ public class PostControllerTest extends ApiDocument {
 
     private ResultActions 익명_게시판_수정_요청(Long postId) throws Exception {
         return mockMvc.perform(multipart("/api/v1/posts/update/" + postId)
-                .file(postRequestPart)
+                .file(postUpdateRequestPart)
                 .file(file)
                 .file(file)
                 .accept(MediaType.APPLICATION_JSON)
