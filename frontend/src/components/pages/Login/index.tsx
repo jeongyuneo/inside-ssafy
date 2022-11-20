@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Image from '../../atoms/Image';
 import Text from '../../atoms/Text';
@@ -66,6 +66,12 @@ const Login = () => {
     setChecked(prev => !prev);
   };
 
+  const pressKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      clickLogin();
+    }
+  };
+
   const buttonInfos = [
     {
       text: '로그인',
@@ -97,6 +103,7 @@ const Login = () => {
             height={3}
             inputs={inputs}
             changeHandler={e => changeHandler(e)}
+            pressKeyHandler={pressKeyHandler}
           />
           <InputLabel
             id="password"
@@ -108,6 +115,7 @@ const Login = () => {
             height={3}
             inputs={inputs}
             changeHandler={e => changeHandler(e)}
+            pressKeyHandler={pressKeyHandler}
           />
         </LogoInputsWrapper>
         <CheckboxButtonsWrapper>
