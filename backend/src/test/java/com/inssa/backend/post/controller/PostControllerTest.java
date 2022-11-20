@@ -75,6 +75,7 @@ public class PostControllerTest extends ApiDocument {
     private String refreshToken;
     private PostsResponseWithPageInfo postsResponseWithPageInfo;
     private PostResponse postResponse;
+    private PostCreateResponse postCreateResponse;
     private PostRequest postRequest;
     private MockMultipartFile file;
     private MockMultipartFile postRequestPart;
@@ -142,6 +143,9 @@ public class PostControllerTest extends ApiDocument {
                 .files(fileResponses)
                 .commentResponses(commentResponses)
                 .createdDate(CREATED_DATE)
+                .build();
+        postCreateResponse = PostCreateResponse.builder()
+                .postId(ID)
                 .build();
         postRequest = PostRequest.builder()
                 .title(TITLE)
@@ -222,7 +226,7 @@ public class PostControllerTest extends ApiDocument {
     @Test
     void create_post_success() throws Exception {
         // given
-        willDoNothing().given(postService).createPost(anyLong(), any(PostRequest.class), anyList());
+        willReturn(postCreateResponse).given(postService).createPost(anyLong(), any(PostRequest.class), anyList());
         // when
         ResultActions resultActions = 익명_게시판_등록_요청(postRequest);
         // then
@@ -407,6 +411,7 @@ public class PostControllerTest extends ApiDocument {
 
     private void 익명_게시판_등록_성공(ResultActions resultActions) throws Exception {
         resultActions.andExpect(status().isOk())
+                .andExpect(content().json(toJson(postCreateResponse)))
                 .andDo(print())
                 .andDo(toDocument("create-post-success"));
     }
