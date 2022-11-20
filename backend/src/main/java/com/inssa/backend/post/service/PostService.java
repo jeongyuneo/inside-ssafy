@@ -9,7 +9,6 @@ import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.member.domain.PostLike;
 import com.inssa.backend.member.domain.PostLikeRepository;
 import com.inssa.backend.post.controller.dto.*;
-import com.inssa.backend.post.domain.Comment;
 import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.post.domain.PostRepository;
 import com.inssa.backend.post.domain.ReComment;
