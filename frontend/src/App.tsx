@@ -18,6 +18,7 @@ import Board from './components/pages/Board';
 import PostDetail from './components/pages/PostDetail';
 import CreatePost from './components/pages/CreatePost';
 import PostSearch from './components/pages/PostSearch';
+import UpdatePost from './components/pages/UpdatePost';
 
 function App() {
   const queryClient = new QueryClient({
@@ -122,6 +123,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <PostSearch />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/updatepost"
+                element={
+                  <PrivateRoute>
+                    <UpdatePost />
                   </PrivateRoute>
                 }
               />

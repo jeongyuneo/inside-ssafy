@@ -18,6 +18,7 @@ export interface PropTypes {
   type?: string;
   placeholder?: string;
   disabled?: boolean;
+  defaultValue?: string;
   inputFontSize?: number;
   inputTextColor?: string;
   inputBackgroundColor?: string;
