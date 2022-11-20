@@ -34,7 +34,11 @@ const CommentCard = ({
       {!!campus ? (
         <>
           <CommentHeader>
-            <Text>{`익명(${campus})`}</Text>
+            {postWriter ? (
+              <Text color="blue">{`글쓴이(${campus})`}</Text>
+            ) : (
+              <Text>{`익명(${campus})`}</Text>
+            )}
             <IconButtonsWrapper>
               {!isReComment &&
                 (isWritingRecomment ? (
