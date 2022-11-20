@@ -1,7 +1,18 @@
 import React from 'react';
+import Image from '../../components/atoms/Image';
+import { StyledSpinner } from './styles';
 
 const Spinner = () => {
-  return <div>로딩중입니다...</div>;
+  return (
+    <StyledSpinner>
+      <Image
+        width="10rem"
+        height="10rem"
+        src="/images/Spinner.gif"
+        alt="loading..."
+      />
+    </StyledSpinner>
+  );
 };
 
 export default Spinner;
