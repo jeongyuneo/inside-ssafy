@@ -108,14 +108,17 @@ public class PostService {
                 .build();
     }
 
-    public void createPost(Long memberId, PostRequest postRequest, List<MultipartFile> files) {
+    public PostCreateResponse createPost(Long memberId, PostRequest postRequest, List<MultipartFile> files) {
         Post post = Post.builder()
                 .title(postRequest.getTitle())
                 .content(postRequest.getContent())
                 .member(findMember(memberId))
                 .build();
         post.saveImages(files);
-        postRepository.save(post);
+        Post savedPost = postRepository.save(post);
+        return PostCreateResponse.builder()
+                .postId(savedPost.getId())
+                .build();
     }
 
     public void updatePost(Long memberId, Long postId, PostUpdateRequest postUpdateRequest, List<MultipartFile> files) {

@@ -1,9 +1,6 @@
 package com.inssa.backend.post.controller;
 
-import com.inssa.backend.post.controller.dto.PostRequest;
-import com.inssa.backend.post.controller.dto.PostResponse;
-import com.inssa.backend.post.controller.dto.PostUpdateRequest;
-import com.inssa.backend.post.controller.dto.PostsResponseWithPageInfo;
+import com.inssa.backend.post.controller.dto.*;
 import com.inssa.backend.post.service.PostService;
 import com.inssa.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -45,10 +42,10 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestHeader("Authorization") String token, @RequestPart PostRequest postRequest, @RequestPart(value = "files", required = false) List<MultipartFile> files) {
-        postService.createPost(JwtUtil.getMemberId(token), postRequest, files);
+    public ResponseEntity<PostCreateResponse> createPost(@RequestHeader("Authorization") String token, @RequestPart PostRequest postRequest, @RequestPart(value = "files", required = false) List<MultipartFile> files) {
+        PostCreateResponse postCreateResponse = postService.createPost(JwtUtil.getMemberId(token), postRequest, files);
         log.info("게시글 등록 성공");
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(postCreateResponse);
     }
 
     @PostMapping("/update/{postId}")
