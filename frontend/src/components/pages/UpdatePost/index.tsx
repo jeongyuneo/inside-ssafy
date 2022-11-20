@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import TextareaLabel from '../../molecules/TextareaLabel';
 import InputLabel from '../../molecules/InputLabel';
 import Input from '../../atoms/Input';
@@ -22,13 +22,16 @@ import { GiCancel } from 'react-icons/gi';
  * @author jini
  */
 const UpdatePost = () => {
-  const postId = 146;
-  const { data: post } = useQuery<PostDetailType>(['postDetail'], () =>
-    getPostDetail(postId),
-  );
-
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
+  const postId = location.state.postId;
+  const postLiked = location.state.postLiked;
+
+  const { data: post } = useQuery<PostDetailType>(
+    ['postDetail', postId, postLiked],
+    () => getPostDetail(postId),
+  );
 
   const [willDeleteImage, setWillDeleteImage] = useState(false);
   const [prevImg, setPrevImg] = useState(!!post?.files[0]);
@@ -65,8 +68,10 @@ const UpdatePost = () => {
     formData.append('postUpdateRequest', blob);
 
     if (await updatePost(formData, postId)) {
+      queryClient.invalidateQueries(['postDetail', postId, postLiked]);
       alert('게시글이 수정되었습니다.');
-      navigator(navigate).back();
+      // navigator(navigate).back();
+      navigate('/postdetail', { state: { postId } });
     } else {
       window.alert('서버가 원활하지 않습니다.');
     }

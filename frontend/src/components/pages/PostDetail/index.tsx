@@ -52,6 +52,10 @@ const PostDetail = () => {
     setOpenedEditModal(false);
   };
 
+  const clickFirstOptionHandler = async () => {
+    navigate('/updatepost', { state: { postId, postLiked } });
+  };
+
   const clickSecondOptionHandler = async () => {
     if (confirm('정말 게시글을 삭제하시겠습니까?')) {
       if (await deletePost(postId)) {
@@ -166,9 +170,7 @@ const PostDetail = () => {
               firstOption="수정"
               secondOption="삭제"
               clickCancelHandler={clickCancelModalHandler}
-              clickFirstOptionHandler={() =>
-                console.log('수정 페이지 생기면 거기로 이동')
-              }
+              clickFirstOptionHandler={clickFirstOptionHandler}
               clickSecondOptionHandler={clickSecondOptionHandler}
             />
           )}
