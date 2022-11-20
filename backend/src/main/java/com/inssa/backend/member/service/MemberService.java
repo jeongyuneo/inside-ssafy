@@ -8,6 +8,7 @@ import com.inssa.backend.member.domain.Member;
 import com.inssa.backend.member.domain.MemberRepository;
 import com.inssa.backend.member.domain.Role;
 import com.inssa.backend.post.controller.dto.PostsResponse;
+import com.inssa.backend.post.domain.Post;
 import com.inssa.backend.util.JwtUtil;
 import com.inssa.backend.util.MailUtil;
 import com.inssa.backend.util.RedisUtil;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -57,6 +59,8 @@ public class MemberService {
                 .studentNumber(member.getStudentNumber())
                 .postsResponses(member.getPosts()
                         .stream()
+                        .filter(Post::isActive)
+                        .sorted(Comparator.comparing(Post::getCreatedDate).reversed())
                         .map(post -> PostsResponse.builder()
                                 .postId(post.getId())
                                 .title(post.getTitle())
