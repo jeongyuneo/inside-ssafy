@@ -24,12 +24,7 @@ const MenuCard = ({
   ...menuCardRest
 }: MenuCardTypes) => {
   return (
-    <StyledMenuCard
-      dayOfTheWeek={dayOfTheWeek}
-      items={items}
-      subItems={subItems}
-      {...menuCardRest}
-    >
+    <StyledMenuCard {...menuCardRest}>
       <StyledTitle>
         <Text size={fontSize ? fontSize + 0.2 : 1} bold={true}>
           {dayOfTheWeek}
@@ -37,8 +32,8 @@ const MenuCard = ({
       </StyledTitle>
       <StyledHr />
       <StyledMenu>
-        {!items.length ? (
-          <Text bold={true}>미운영</Text>
+        {!items?.length ? (
+          <Text>식단 정보가 존재하지 않습니다.</Text>
         ) : (
           items.map(menu => (
             <Text size={fontSize ? fontSize : 0.8} key={menu}>
@@ -49,14 +44,18 @@ const MenuCard = ({
       </StyledMenu>
       <StyledHr />
       <StyledSubMenu>
-        {!subItems.length ? (
+        {!subItems?.length ? (
           <StyledBr />
         ) : (
-          subItems.map(subItem => (
-            <Text size={fontSize ? fontSize : 0.8} key={subItem}>
-              {subItem}
-            </Text>
-          ))
+          subItems.map(subItem =>
+            !subItem.length ? (
+              <StyledBr key={subItem} />
+            ) : (
+              <Text size={fontSize ? fontSize : 0.8} key={subItem}>
+                {subItem}
+              </Text>
+            ),
+          )
         )}
       </StyledSubMenu>
     </StyledMenuCard>

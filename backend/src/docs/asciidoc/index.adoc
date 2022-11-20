@@ -462,20 +462,20 @@ include::{snippets}/delete-bus-like-fail/http-request.adoc[]
 .response
 include::{snippets}/delete-bus-like-fail/http-response.adoc[]
 
-==== 버스 즐겨찾기 목록 조회
+==== 버스 즐겨찾기 조회
 ===== 성공
 .request
-include::{snippets}/get-bus-likes-success/http-request.adoc[]
+include::{snippets}/get-bus-like-success/http-request.adoc[]
 
 .response
-include::{snippets}/get-bus-likes-success/http-response.adoc[]
+include::{snippets}/get-bus-like-success/http-response.adoc[]
 
 ===== 실패
 .request
-include::{snippets}/get-bus-likes-fail/http-request.adoc[]
+include::{snippets}/get-bus-like-fail/http-request.adoc[]
 
 .response
-include::{snippets}/get-bus-likes-fail/http-response.adoc[]
+include::{snippets}/get-bus-like-fail/http-response.adoc[]
 
 ==== 버스 노선 이미지 조회
 ===== 성공
@@ -521,3 +521,18 @@ include::{snippets}/arrive-at-bus-stop-fail/http-request.adoc[]
 
 .response
 include::{snippets}/arrive-at-bus-stop-fail/http-response.adoc[]
+
+==== 버스 운행 종료
+===== 성공
+.request
+include::{snippets}/end-bus-success/http-request.adoc[]
+
+.response
+include::{snippets}/end-bus-success/http-response.adoc[]
+
+===== 실패
+.request
+include::{snippets}/end-bus-fail/http-request.adoc[]
+
+.response
+include::{snippets}/end-bus-fail/http-response.adoc[]

@@ -2,11 +2,10 @@ import styled from 'styled-components';
 
 export const StyledLikeComment = styled.div`
   display: flex;
-  width: 6rem;
-  justify-content: space-between;
+  gap: 0.5rem;
 `;
 
 export const TextWrapper = styled.div`
   display: flex;
-  width: 50%;
+  align-items: center;
 `;

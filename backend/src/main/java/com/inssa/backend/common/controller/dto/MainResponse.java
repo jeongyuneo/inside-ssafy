@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MainResponse {
 
-    private List<String> menus;
+    private List<Integer> busLikes;
+    private MenuResponse menu;
     private List<PostsResponse> hotPosts;
 }

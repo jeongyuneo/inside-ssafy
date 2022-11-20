@@ -9,5 +9,5 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
 
     Optional<Route> findByIdAndIsActiveTrue(Long routeId);
 
-    List<Route> findByBusOrderByOrderAsc(Bus bus);
+    List<Route> findByBusAndIsActiveTrueOrderByOrderAsc(Bus bus);
 }

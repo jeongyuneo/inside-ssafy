@@ -23,14 +23,12 @@ public class MenuService {
     private final MenuRepository menuRepository;
 
     public void createMenu(MenuRequest menuRequest) {
-        menuRepository.save(
-                Menu.builder()
-                        .date(menuRequest.getDate())
-                        .dayOfTheWeek(menuRequest.getDayOfTheWeek())
-                        .item(String.join(DELIMITER, menuRequest.getItems()))
-                        .subItem(String.join(DELIMITER, menuRequest.getSubItems()))
-                        .build()
-        );
+        menuRepository.save(Menu.builder()
+                .date(menuRequest.getDate())
+                .dayOfTheWeek(menuRequest.getDayOfTheWeek())
+                .item(String.join(DELIMITER, menuRequest.getItems()))
+                .subItem(String.join(DELIMITER, menuRequest.getSubItems()))
+                .build());
     }
 
     public MenuResponse getMenu() {

@@ -1,4 +1,4 @@
-package com.inssa.backend.member.controller.dto;
+package com.inssa.backend.bus.controller.dto;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TokenResponse {
+public class BusRequest {
 
-    private String accessToken;
+    private int number;
 }

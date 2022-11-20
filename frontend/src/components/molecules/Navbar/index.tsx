@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../../atoms/Button';
 import Image from '../../atoms/Image';
 import Text from '../../atoms/Text';
 import { NavbarWrapper, StyledNavbar } from './styles';
@@ -9,7 +10,8 @@ import { PropTypes } from './types';
  *
  * @author jojo
  */
-const Navbar = ({ clickLogoHandler }: PropTypes) => {
+const Navbar = ({ clickLogoHandler, clickMypageHandler }: PropTypes) => {
+  const campus = localStorage.getItem('campus');
   return (
     <NavbarWrapper>
       <StyledNavbar>
@@ -19,7 +21,13 @@ const Navbar = ({ clickLogoHandler }: PropTypes) => {
           alt="logo"
           clickHandler={clickLogoHandler}
         />
-        <Text>대전 캠퍼스</Text>
+        {clickMypageHandler ? (
+          <Button clickHandler={clickMypageHandler} isText>
+            내 정보
+          </Button>
+        ) : (
+          <Text>{`${campus} 캠퍼스`}</Text>
+        )}
       </StyledNavbar>
     </NavbarWrapper>
   );

@@ -33,6 +33,9 @@ public class Member extends BaseEntity {
     private String name;
 
     @NotNull
+    private String campus;
+
+    @NotNull
     private String studentNumber;
 
     @NotNull
@@ -57,15 +60,15 @@ public class Member extends BaseEntity {
         }
     }
 
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
     public boolean is(Long memberId) {
         return id.equals(memberId);
     }
 
     public void addBusLike(BusLike busLike) {
         busLikes.add(busLike);
-    }
-
-    public void updatePassword(String password) {
-        this.password = password;
     }
 }

@@ -12,10 +12,13 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommentResponse {
 
+    private Long commentId;
     private String content;
+    private String campus;
     private boolean isEditable;
+    private boolean isPostWriter;
     private List<ReCommentResponse> reCommentResponses;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDate;
 }

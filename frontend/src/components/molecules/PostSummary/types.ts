@@ -1,6 +1,11 @@
 import { PropTypes } from '../LikeComment/types';
 
-export interface PostSummaryTypes extends PropTypes {
+export interface PostSummaryItemTypes extends PropTypes {
   title: string;
-  date: string;
+  createdDate: string;
+  postId: number;
+}
+
+export interface PostSummaryTypes extends PostSummaryItemTypes {
+  clickPostItemHandler: (postId: number) => void;
 }

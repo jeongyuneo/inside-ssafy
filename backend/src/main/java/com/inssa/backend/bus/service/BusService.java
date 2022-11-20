@@ -1,9 +1,6 @@
 package com.inssa.backend.bus.service;
 
-import com.inssa.backend.bus.controller.dto.BusLikeResponse;
-import com.inssa.backend.bus.controller.dto.BusResponse;
-import com.inssa.backend.bus.controller.dto.RouteImageResponse;
-import com.inssa.backend.bus.controller.dto.RouteResponse;
+import com.inssa.backend.bus.controller.dto.*;
 import com.inssa.backend.bus.domain.*;
 import com.inssa.backend.common.domain.ErrorMessage;
 import com.inssa.backend.common.exception.BadRequestException;
@@ -26,7 +23,6 @@ import java.util.stream.Collectors;
 public class BusService {
 
     private static final String SITE_URL = "https://inside-ssafy.com";
-    private static final String NO_VISITED_BUS_STOP = "none";
     private static final int TOTAL_BUS_NUMBER = 6;
 
     private final BusRepository busRepository;
@@ -34,62 +30,61 @@ public class BusService {
     private final BusLikeRepository busLikeRepository;
     private final MemberRepository memberRepository;
 
-    public BusResponse getBus(int number) {
+    public BusResponse getBus(Long memberId, int number) {
         Bus bus = findBusByNumber(number);
-        Route lastVisited = bus.getLastVisited();
-        if (bus.getLastVisited() == null) {
-            return getBusResponse(bus, NO_VISITED_BUS_STOP, number == TOTAL_BUS_NUMBER);
-        }
-        return getBusResponse(bus, lastVisited.getBusStop().getName(), number == TOTAL_BUS_NUMBER);
+        List<Route> routes = bus.getRoutes()
+                .stream()
+                .filter(Route::isActive)
+                .collect(Collectors.toList());
+        return BusResponse.builder()
+                .isLast(number == TOTAL_BUS_NUMBER)
+                .hasBusLike(busLikeRepository.existsByMemberAndBusAndIsActiveTrue(findMember(memberId), bus))
+                .lastVisitedBusStop(routes.indexOf(bus.getLastVisited()))
+                .busStops(routes.stream()
+                        .map(Route::getBusStop)
+                        .map(BusStop::getName)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     @Transactional
-    public void createBusLike(Long memberId, int number) {
+    public void createBusLike(Long memberId, BusRequest busRequest) {
         Member member = findMember(memberId);
-        Bus bus = findBusByNumber(number);
-        if (busLikeRepository.existsByMemberAndBusAndIsActiveTrue(member, bus)) {
-            throw new DuplicationException(ErrorMessage.EXISTING_BUS_LIKE);
-        }
-
+        Bus bus = findBusByNumber(busRequest.getNumber());
+        validateBusLikeDuplication(member, bus);
         if (busLikeRepository.existsByMemberAndBusAndIsActiveFalse(member, bus)) {
-            BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveFalse(member, bus)
-                    .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+            BusLike busLike = getDeletedBusLike(member, bus);
             busLike.create();
             busLikeRepository.save(busLike);
             return;
         }
 
-        member.addBusLike(
-                BusLike.builder()
-                        .member(member)
-                        .bus(bus)
-                        .build()
-        );
+        member.addBusLike(BusLike.builder()
+                .member(member)
+                .bus(bus)
+                .build());
         memberRepository.save(member);
     }
 
     public void deleteBusLike(Long memberId, int number) {
-        BusLike busLike = busLikeRepository.findByMemberAndBusAndIsActiveTrue(findMember(memberId), findBusByNumber(number))
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+        BusLike busLike = findBusLikeByMemberAndBus(memberId, number);
         busLike.delete();
         busLikeRepository.save(busLike);
     }
 
-    public List<BusLikeResponse> getBusLikes(Long memberId) {
-        return findMember(memberId).getBusLikes()
+    public BusLikeResponse getBusLike(int number) {
+        Bus bus = findBusByNumber(number);
+        Route lastVisited = bus.getLastVisited();
+        List<Route> routes = bus.getRoutes()
                 .stream()
-                .sorted(Comparator.comparing(current -> current.getBus().getNumber()))
-                .map(busLike -> {
-                    Bus bus = busLike.getBus();
-                    Route lastVisited = bus.getLastVisited();
-                    validateBusAvailability(lastVisited);
-                    return BusLikeResponse.builder()
-                            .number(bus.getNumber())
-                            .previousBusStop(lastVisited.getBusStop().getName())
-                            .nextBusStop(bus.getRoutes().get(lastVisited.getOrder()).getBusStop().getName())
-                            .build();
-                })
+                .filter(Route::isActive)
+                .sorted(Comparator.comparing(Route::getOrder))
                 .collect(Collectors.toList());
+        validateBusAvailability(lastVisited, routes);
+        return BusLikeResponse.builder()
+                .previousBusStop(lastVisited.getBusStop().getName())
+                .nextBusStop(routes.get(lastVisited.getOrder()).getBusStop().getName())
+                .build();
     }
 
     public RouteImageResponse getRouteImage(int number) {
@@ -99,7 +94,7 @@ public class BusService {
     }
 
     public List<RouteResponse> startBus(int number) {
-        return routeRepository.findByBusOrderByOrderAsc(findBusByNumber(number))
+        return routeRepository.findByBusAndIsActiveTrueOrderByOrderAsc(findBusByNumber(number))
                 .stream()
                 .map(route -> RouteResponse.builder()
                         .routeId(route.getId())
@@ -116,26 +111,10 @@ public class BusService {
         routeRepository.save(route);
     }
 
-    private Member findMember(Long memberId) {
-        return memberRepository.findByIdAndIsActiveTrue(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
-    }
-
-    private BusResponse getBusResponse(Bus bus, String lastVisitedBusStop, boolean isLast) {
-        return BusResponse.builder()
-                .lastVisitedBusStop(lastVisitedBusStop)
-                .busStops(bus.getRoutes()
-                        .stream()
-                        .map(Route::getBusStop)
-                        .map(BusStop::getName)
-                        .collect(Collectors.toList()))
-                .isLast(isLast)
-                .build();
-    }
-
-    private Route findRoute(Long routeId) {
-        return routeRepository.findByIdAndIsActiveTrue(routeId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE));
+    public void endBus(BusRequest busRequest) {
+        Bus bus = findBusByNumber(busRequest.getNumber());
+        bus.end();
+        busRepository.save(bus);
     }
 
     private Bus findBusByNumber(int number) {
@@ -143,9 +122,35 @@ public class BusService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS));
     }
 
-    private void validateBusAvailability(Route lastVisited) {
-        if (lastVisited == null) {
+    private Member findMember(Long memberId) {
+        return memberRepository.findByIdAndIsActiveTrue(memberId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_MEMBER));
+    }
+
+    private void validateBusLikeDuplication(Member member, Bus bus) {
+        if (busLikeRepository.existsByMemberAndBusAndIsActiveTrue(member, bus)) {
+            throw new DuplicationException(ErrorMessage.EXISTING_BUS_LIKE);
+        }
+    }
+
+    private BusLike getDeletedBusLike(Member member, Bus bus) {
+        return busLikeRepository.findByMemberAndBusAndIsActiveFalse(member, bus)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+    }
+
+    private BusLike findBusLikeByMemberAndBus(Long memberId, int number) {
+        return busLikeRepository.findByMemberAndBusAndIsActiveTrue(findMember(memberId), findBusByNumber(number))
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_BUS_LIKE));
+    }
+
+    private void validateBusAvailability(Route lastVisited, List<Route> routes) {
+        if (lastVisited == null || routes.indexOf(lastVisited) == routes.size() - 1) {
             throw new BadRequestException(ErrorMessage.NOT_AVAILABLE_BUS);
         }
+    }
+
+    private Route findRoute(Long routeId) {
+        return routeRepository.findByIdAndIsActiveTrue(routeId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.NOT_FOUND_ROUTE));
     }
 }

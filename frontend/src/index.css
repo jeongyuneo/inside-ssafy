@@ -1,4 +1,14 @@
 * {
     box-sizing: border-box;
     margin: 0;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+@media (min-width: 480px) {
+    html {
+        display: flex;
+        justify-content: center;
+    }
+    body {
+        width: 25rem;
+    }
 }

@@ -11,9 +11,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReCommentResponse {
 
+    private Long reCommentId;
     private String content;
+    private String campus;
     private boolean isEditable;
+    private boolean isPostWriter;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDate;
 }

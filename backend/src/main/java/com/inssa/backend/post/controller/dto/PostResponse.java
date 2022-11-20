@@ -1,7 +1,9 @@
 package com.inssa.backend.post.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -10,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostResponse {
 
+    private Long postId;
     private String title;
     private String content;
     private int likeCount;
@@ -18,4 +21,7 @@ public class PostResponse {
     private boolean isEditable;
     private List<FileResponse> files;
     private List<CommentResponse> commentResponses;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime createdDate;
 }

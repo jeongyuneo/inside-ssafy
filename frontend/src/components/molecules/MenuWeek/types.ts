@@ -1,4 +1,4 @@
-export interface PropTypes {
-  startDate: string;
-  endDate: string;
+export interface MenuWeekTypes {
+  startDate?: string;
+  endDate?: string;
 }

@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BusLikeResponse {
 
-    private int number;
     private String previousBusStop;
     private String nextBusStop;
 }

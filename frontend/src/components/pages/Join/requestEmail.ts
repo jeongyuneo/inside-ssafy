@@ -2,7 +2,6 @@ import axios, { AxiosError } from 'axios';
 import { AccountValueTypes, FailToJoin } from './types';
 
 export const requestEmailToken = async ({ email }: AccountValueTypes) => {
-  console.log('request');
   const returnData = {
     status: false,
     message: '인증에 문제가 발생하였습니다',
@@ -16,7 +15,6 @@ export const requestEmailToken = async ({ email }: AccountValueTypes) => {
         email,
       },
     });
-    console.log(status);
     if (status === 200) {
       returnData.message = '인증번호가 전송되었습니다.';
       returnData.status = true;
@@ -70,9 +68,10 @@ export const joinRequest = async ({
   password,
   email,
   studentNumber,
+  campus,
 }: AccountValueTypes) => {
   try {
-    const { status, data }: { status: number; data: FailToJoin } = await axios({
+    const { status }: { status: number; data: FailToJoin } = await axios({
       method: 'POST',
       url: '/api/v1/members',
       data: {
@@ -80,10 +79,11 @@ export const joinRequest = async ({
         password,
         name,
         studentNumber,
+        campus,
       },
     });
     if (status === 200) {
-      alert('인증 성공하였습니다.');
+      alert('회원가입에 성공하였습니다.');
       return true;
     }
     return false;
