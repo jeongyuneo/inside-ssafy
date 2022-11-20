@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const requestPost = async (formData: FormData) => {
   try {
-    const res = await axios({
+    const { data } = await axios({
       method: 'POST',
       url: '/api/v1/posts',
       headers: {
@@ -10,12 +10,11 @@ const requestPost = async (formData: FormData) => {
       },
       data: formData,
     });
-    console.log(res.status);
-    return true;
+
+    return data.postId;
   } catch (e) {
     console.log(e);
-
-    return false;
+    return -1;
   }
 };
 
