@@ -122,9 +122,9 @@ public class PostService {
         Post post = findPost(postId);
         validateEditable(memberId, post);
         if (postUpdateRequest.isWillDeleteImage()) {
-            post.update(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
-        } else {
             post.update(postUpdateRequest.getTitle(), postUpdateRequest.getContent(), files);
+        } else {
+            post.update(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
         }
         postRepository.save(post);
     }
