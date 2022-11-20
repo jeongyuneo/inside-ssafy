@@ -38,7 +38,6 @@ const UpdatePost = () => {
   const [inputValue, setInputValue] = useState(post?.title);
   const [textareaValue, setTextareaValue] = useState(post?.content);
   const ref = useRef<HTMLInputElement>(null);
-  const formData = new FormData();
 
   const changeTitleInfo = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -59,7 +58,7 @@ const UpdatePost = () => {
       content: textareaValue,
       willDeleteImage: willDeleteImage,
     };
-
+    const formData = new FormData();
     const uploadFile = ref.current?.files?.[0] || '';
     formData.append('files', uploadFile);
 
@@ -70,8 +69,7 @@ const UpdatePost = () => {
     if (await updatePost(formData, postId)) {
       queryClient.invalidateQueries(['postDetail', postId, postLiked]);
       alert('게시글이 수정되었습니다.');
-      // navigator(navigate).back();
-      navigate('/postdetail', { state: { postId } });
+      navigator(navigate).back();
     } else {
       window.alert('서버가 원활하지 않습니다.');
     }
