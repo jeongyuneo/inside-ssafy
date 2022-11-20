@@ -26,6 +26,7 @@ const Input = (
     name,
     id,
     accept,
+    defaultValue,
     placeholder,
     disabled,
     changeHandler,
@@ -40,7 +41,7 @@ const Input = (
       fontSize={fontSize}
       textColor={textColor}
       backgroundColor={backgroundColor}
-      value={inputs?.[name]}
+      value={defaultValue || inputs?.[name]}
       type={type}
       name={name}
       id={id}
