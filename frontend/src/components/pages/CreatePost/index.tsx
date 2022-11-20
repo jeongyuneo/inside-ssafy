@@ -57,9 +57,10 @@ const CreatePost = () => {
     const blob = new Blob([json], { type: 'application/json' });
     formData.append('postRequest', blob);
 
-    if (await requestPost(formData)) {
+    const postId = await requestPost(formData);
+    if (postId >= 0) {
       window.alert('게시글이 작성되었습니다.');
-      navigator(navigate).board();
+      navigate('/postdetail', { state: { postId } });
     } else {
       window.alert('서버가 원활하지 않습니다.');
     }
