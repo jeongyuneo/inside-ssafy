@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import navigator from '../../../utils/navigator';
 import TextareaLabel from '../../molecules/TextareaLabel';
@@ -23,7 +23,7 @@ const CreatePost = () => {
   const [inputValue, setInputValue] = useState({
     title: '',
   });
-  const formData = new FormData();
+  const ref = useRef<HTMLInputElement>(null);
 
   const changeContentInfo = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.target.value);
@@ -38,13 +38,6 @@ const CreatePost = () => {
     });
   };
 
-  const changeImgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const uploadFile = e.target.files[0];
-      formData.append('files', uploadFile);
-    }
-  };
-
   const clickAddButtonHandler = async () => {
     if (inputValue.title.trim() === '' || textareaValue.trim() === '') {
       window.alert('제목 혹은 본문을 입력해주세요');
@@ -55,6 +48,10 @@ const CreatePost = () => {
       title: inputValue.title,
       content: textareaValue,
     };
+
+    const formData = new FormData();
+    const uploadFile = ref.current?.files?.[0] || '';
+    formData.append('files', uploadFile);
 
     const json = JSON.stringify(postRequest);
     const blob = new Blob([json], { type: 'application/json' });
@@ -100,12 +97,12 @@ const CreatePost = () => {
         </TextareaLabel>
         <Input
           id="file"
+          ref={ref}
           name="file"
           type="file"
           accept="image/*"
           width={22}
           backgroundColor="none"
-          changeHandler={changeImgHandler}
         />
         <ButtonGroup width={22} height={3} buttonInfos={buttonInfos} isColumn />
         <Blank />
