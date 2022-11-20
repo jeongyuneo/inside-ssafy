@@ -26,10 +26,10 @@ public class ReCommentService {
     public void createReComment(Long memberId, Long commentId, CommentRequest commentRequest) {
         Comment comment = findComment(commentId);
         comment.addReComment(ReComment.builder()
-                        .content(commentRequest.getContent())
-                        .member(findMember(memberId))
-                        .comment(comment)
-                        .build());
+                .content(commentRequest.getContent())
+                .member(findMember(memberId))
+                .comment(comment)
+                .build());
         commentRepository.save(comment);
     }
 
