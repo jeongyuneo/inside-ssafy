@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 import { AccountValueTypes } from '../../pages/Join/types';
 import { LoginInputsType } from '../../pages/Login/types';
 import { ChangePasswordType } from '../../pages/MyInfoEdit/types';
@@ -24,4 +24,5 @@ export interface PropTypes {
   labelColor?: string;
   labelFontSize?: number;
   changeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
+  pressKeyHandler?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
