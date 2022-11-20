@@ -24,6 +24,7 @@ const MyPage = () => {
 
     if (await requestLogout()) {
       localStorage.removeItem('isLogin');
+      localStorage.removeItem('campus');
       navigate('/login');
     }
   };

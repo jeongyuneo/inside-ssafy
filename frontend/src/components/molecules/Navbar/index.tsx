@@ -11,6 +11,7 @@ import { PropTypes } from './types';
  * @author jojo
  */
 const Navbar = ({ clickLogoHandler, clickMypageHandler }: PropTypes) => {
+  const campus = localStorage.getItem('campus');
   return (
     <NavbarWrapper>
       <StyledNavbar>
@@ -25,7 +26,7 @@ const Navbar = ({ clickLogoHandler, clickMypageHandler }: PropTypes) => {
             내 정보
           </Button>
         ) : (
-          <Text>대전 캠퍼스</Text>
+          <Text>{`${campus} 캠퍼스`}</Text>
         )}
       </StyledNavbar>
     </NavbarWrapper>
