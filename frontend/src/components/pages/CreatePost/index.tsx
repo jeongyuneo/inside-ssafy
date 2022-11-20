@@ -46,6 +46,11 @@ const CreatePost = () => {
   };
 
   const clickAddButtonHandler = async () => {
+    if (inputValue.title.trim() === '' || textareaValue.trim() === '') {
+      window.alert('제목 혹은 본문을 입력해주세요');
+      return;
+    }
+
     const postRequest = {
       title: inputValue.title,
       content: textareaValue,
