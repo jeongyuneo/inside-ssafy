@@ -43,13 +43,13 @@ public class MemberService {
 
     public void join(MemberRequest memberRequest) {
         memberRepository.save(Member.builder()
-                        .email(memberRequest.getEmail())
-                        .password(passwordEncoder.encode(memberRequest.getPassword()))
-                        .name(memberRequest.getName())
-                        .campus(memberRequest.getCampus())
-                        .studentNumber(memberRequest.getStudentNumber())
-                        .role(Role.GENERAL)
-                        .build());
+                .email(memberRequest.getEmail())
+                .password(passwordEncoder.encode(memberRequest.getPassword()))
+                .name(memberRequest.getName())
+                .campus(memberRequest.getCampus())
+                .studentNumber(memberRequest.getStudentNumber())
+                .role(Role.GENERAL)
+                .build());
     }
 
     public MemberResponse getMember(Long memberId) {
